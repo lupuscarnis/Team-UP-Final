@@ -27,8 +27,7 @@ public class Field {
 	}
 
 	public String toString() {
-		return String.format("Type: %s \n " + "Feltnr: %s\n" + "Text1: %s\n", getFieldType(), getFieldNumber(),
+		return String.format("Type: %s\n" + "Feltnr: %s\n" + "Text1: %s\n", getFieldType(), getFieldNumber(),
 				getText1());
 	}
-
 }

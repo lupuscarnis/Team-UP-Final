@@ -9,29 +9,19 @@ import entities.enums.LotRentTier;
  *
  * Represents lot fields.
  */
-public class LotField extends Field {
+public class LotField extends OwnableField {
 
 	private int houseCount, hotelCount;
 	private LotColor color;
-	private int price;
-	private int pawnPrice;
 	private int housePrice;
 	private int hotelPrice;
 	private int[] rentTierList;
 
 	public LotField(FieldType fieldType, int fieldNo, String text1, int price, int pawnPrice) {
-		super(fieldType, fieldNo, text1);
-
-		this.price=price;
-		this.setPawnPrice(pawnPrice);
+		super(fieldType, fieldNo, text1, price, pawnPrice);
 	}
 
-	public int getPrice() {
-		return this.price;
-	}
-	public void setPrice(int price) {
-		this.price = price;
-	}
+	
 	
 	public void setHousePrice(int housePrice) {
 		this.housePrice=housePrice;
@@ -54,28 +44,19 @@ public class LotField extends Field {
 		this.color = color;
 	}
 
-	public int getPawnPrice() {
-		return pawnPrice;
-	}
-
-	public void setPawnPrice(int pawnPrice) {
-		this.pawnPrice = pawnPrice;
-	}
+	
 
 	public String toString()
 	{
-		return super.toString() + String.format("Price: %s\n"
-				+ "Color:%s\n"
-				+ "Pawnprice: %s\n"
+		return super.toString() + String.format(
+				"Color:%s\n"				
 				+ "Leje af grund: %s\n"
 				+ "Leje m. 1 hus: %s\n" 
 				+ "Leje m. 2 huse: %s\n" 
 				+ "Leje m. 3 huse: %s\n"
 				+ "Leje m. 4 huse: %s\n" 
-				+ "Leje m. hotel: %s\n", 
-				getPrice(),
-				getColor(), 
-				getPawnPrice(),
+				+ "Leje m. hotel: %s\n",				
+				getColor(),				
 				getRentFor(LotRentTier.Lot),
 				getRentFor(LotRentTier.OneHouse),
 				getRentFor(LotRentTier.TwoHouses),
@@ -86,7 +67,7 @@ public class LotField extends Field {
 
 	private int getRentFor(LotRentTier rentTier) {
 		
-		return rentTierList[rentTier.ordinal()];
+		return this.rentTierList[rentTier.ordinal()];
 	}
 
 	
