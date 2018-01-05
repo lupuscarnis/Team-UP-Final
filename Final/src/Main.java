@@ -1,7 +1,6 @@
 
-package entities;
-
 import controllers.GameController;
+import entities.Player;
 
 public class Main {
 
