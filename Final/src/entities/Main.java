@@ -6,6 +6,8 @@ import controllers.GameController;
 public class Main {
 
 
+	// Should be moved to Run.java
+	
 	public static void main(String[] args) {
 
 		GameController gc = new GameController();
@@ -41,6 +43,8 @@ public class Main {
 
 		public void setupGame(Player[] players) throws Exception {
 
+			System.out.println("Game: Setup!");
+			
 		}
 
 		/**
@@ -62,9 +66,10 @@ public class Main {
 		 */
 
 		public void play() throws Exception {
-
+			
 			
 			// if is Player inJail?
+			
 			
             // else Throw Die
 			
