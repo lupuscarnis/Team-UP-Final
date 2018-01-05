@@ -10,6 +10,7 @@ import entities.enums.LotColor;
 import entities.field.BreweryField;
 import entities.field.Field;
 import entities.field.LotField;
+import entities.field.ShippingField;
 
 /**
  * Added by Frederik on 24-11-2017 20:06:51
@@ -47,8 +48,10 @@ public class FieldLoader {
 
 					// set attribs. according to FieldType
 					switch (fieldType) {
-					case BREWERY:						
-						field = new BreweryField(fieldType, fieldNo, text1, Integer.parseInt(arr[3]),Integer.parseInt(arr[4]),new int[] {Integer.parseInt(arr[5]),Integer.parseInt(arr[6])});						
+					case BREWERY:
+						field = new BreweryField(fieldType, fieldNo, text1, Integer.parseInt(arr[3]),
+								Integer.parseInt(arr[4]),
+								new int[] { Integer.parseInt(arr[5]), Integer.parseInt(arr[6]) });
 						break;
 					case LOT:
 						int price = Integer.parseInt(arr[3]);
@@ -67,6 +70,12 @@ public class FieldLoader {
 
 						break;
 					case SHIPPING:
+						int[] shipRent = getShippingRent(new String[] { arr[6], arr[7], arr[8], arr[9] });
+						int shipPrice = Integer.parseInt(arr[3]);
+						int shipPawnPrice = Integer.parseInt(arr[4]);
+						String text2 = arr[5];
+
+						field = new ShippingField(fieldType, fieldNo, text1, shipPrice, shipPawnPrice, text2, shipRent);
 						break;
 					case START:
 						field = new Field(fieldType, fieldNo, text1);
@@ -78,7 +87,7 @@ public class FieldLoader {
 						field = new Field(fieldType, fieldNo, text1);
 						break;
 					case EXTRATAX:
-						field = new Field(fieldType, fieldNo, text1);
+						field = new Field(fieldType, fieldNo, text1, arr[3]);
 						break;
 					case FREEPARKING:
 						field = new Field(fieldType, fieldNo, text1);
@@ -87,36 +96,29 @@ public class FieldLoader {
 						field = new Field(fieldType, fieldNo, text1);
 						break;
 					case INCOMETAX:
-						field = new Field(fieldType, fieldNo, text1);
+						field = new Field(fieldType, fieldNo, text1, arr[3]);
 						break;
 					}
-
 					fields[fieldNo - 1] = field;
 				}
-
-				// switch (currentLine) {
-				// case "[LOTS]":
-				// System.out.println(currentLine);
-				// break;
-				// case "[SHIPPING]":
-				// System.out.println(currentLine);
-				// break;
-				// case "[BREWERIES]":
-				// System.out.println(currentLine);
-				// break;
-				// case "[REGULAR]":
-				// System.out.println(currentLine);
-				// break;
-				// }
-
-				// currentLine = br.readLine();
-
 				currentLine = br.readLine();
-				// index++;
 			}
 		}
 
 		return fields;
+	}
+
+	private int[] getShippingRent(String[] rents) {
+
+		int[] tmp = new int[4];
+
+		int index = 0;
+		for (String item : rents) {
+			tmp[index] = Integer.parseInt(item);
+			index++;
+		}
+
+		return tmp;
 	}
 
 	private int[] getRent(String lotRent, String oneHouseRent, String twoHouseRent, String threeHouseRent,
