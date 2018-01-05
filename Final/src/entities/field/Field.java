@@ -8,7 +8,7 @@ public class Field {
 	private String text1;
 	private FieldType fieldType;
 
-	public Field(int fieldNo, String text1, FieldType fieldType) {
+	public Field(FieldType fieldType, int fieldNo, String text1) {
 		this.fieldNumber = fieldNo;
 		this.text1 = text1;
 		this.fieldType = fieldType;
@@ -27,7 +27,8 @@ public class Field {
 	}
 
 	public String toString() {
-		return String.format("Feltnr: %s\n" + "Text1: %s\\n" + "" + "", getFieldNumber(), getText1());
+		return String.format("Type: %s \n " + "Feltnr: %s\n" + "Text1: %s\n", getFieldType(), getFieldNumber(),
+				getText1());
 	}
 
 }

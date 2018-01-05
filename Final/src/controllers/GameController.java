@@ -53,7 +53,7 @@ public class GameController {
 			 */
 
 			public void play(){
-				
+				System.out.println("Så er vi igang!");
 				
 				// if is Player inJail?
 				
