@@ -1,18 +1,20 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <chancecards>
 	<move>
+		<!--  Særtilfælde -->
 		<card id= "1" text = "Ryk brikken frem til det nærmeste rederi og betal to gange den leje han ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det."/>
 		<card id ="2" text = "Ryk brikken frem til det nærmeste rederi og betal to gange den leje han ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det."/>
-		<card id= "3" text = "Tag ind på rådhuspladsen."/>
-		<card id= "4" text = "Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start, indkasserer de ikke kr. 4000."/>
-		<card id ="5" text = "Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start, indkasserer de ikke kr. 4000. 	"/>
-		<card id ="12" text = "Ryk tre felter tilbage."/>
 		<card id ="19" text = "Ryk frem til Grønningen. Hvis De passerer start, indkasser da kr. 4000."/>
 		<card id ="20" text = "Ryk frem til start."/>
 		<card id ="29" text = "Ryk frem til Frederiksberg Allê. Hvis de passerer start, indkasser kr. 4000."/>
 		<card id ="30" text = "Tag med den nærmeste færge - ryk brikken frem, og hvis du passerer start indkasser da kr. 4000."/>
-	</move>
+		
+		<!--  !Særtilfælde -->
+		<card id= "3" text = "Tag ind på rådhuspladsen."/>
+		<card id= "4" text = "Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start, indkasserer de ikke kr. 4000."/>
+		<card id ="5" text = "Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start, indkasserer de ikke kr. 4000. 	"/>
+		<card id ="12" text = "Ryk tre felter tilbage."/>
+	</move>	
 	<pay>
 		<card id ="6" text = "Oliepriserne er steget, og de skal betale kr 500 pr. hus og kr 2000 pr. hotel."/>
 		<card id ="10" text = "De har måttet vedtage en parkeringsbøde. Betal kr. 200 i bøde."/>
@@ -34,7 +36,7 @@
 		<card id ="17" text = "Modtag udbytte af Deres aktier kr. 1000."/>
 		<card id ="18" text = "Modtag udbytte af Deres aktier kr. 1000."/>
 		<card id ="24" text = "Værdien af egen  avl fra nyttehaven udgør kr. 200, som De modtager af banken."/>
-		<card id ="25" text = "De modtager Matador-legatet for værdig trængende, stort kr. 40000. Ved værdig trængende forstås, at deres formu, d.v.s. Deres kontante penge + skøder + bygninger ikke overstiger kr. 15000."/>
+		<card id ="25" text = "De modtager Matador-legatet for værdig trængende, stort kr. 40000. Ved værdig trængende forstås, at deres formue, d.v.s. Deres kontante penge + skøder + bygninger ikke overstiger kr. 15000."/>
 		<card id ="26" text = "Det er deres fødselsdag. Modtag af hver medspiller kr. 200."/>
 		<card id ="27" text = "De har vundet i Klasselotteriet Modtag kr. 500"/>
 	</receive>
