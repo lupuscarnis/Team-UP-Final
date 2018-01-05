@@ -1,0 +1,49 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<chancecards>
+	<move>
+		<card id= "1" text = "Ryk brikken frem til det nærmeste rederi og betal to gange den leje han ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det."/>
+		<card id ="2" text = "Ryk brikken frem til det nærmeste rederi og betal to gange den leje han ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det."/>
+		<card id= "3" text = "Tag ind på rådhuspladsen."/>
+		<card id= "4" text = "Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start, indkasserer de ikke kr. 4000."/>
+		<card id ="5" text = "Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start, indkasserer de ikke kr. 4000. 	"/>
+		<card id ="12" text = "Ryk tre felter tilbage."/>
+		<card id ="19" text = "Ryk frem til Grønningen. Hvis De passerer start, indkasser da kr. 4000."/>
+		<card id ="20" text = "Ryk frem til start."/>
+		<card id ="29" text = "Ryk frem til Frederiksberg Allê. Hvis de passerer start, indkasser kr. 4000."/>
+		<card id ="30" text = "Tag med den nærmeste færge - ryk brikken frem, og hvis du passerer start indkasser da kr. 4000."/>
+	</move>
+	<pay>
+		<card id ="6" text = "Oliepriserne er steget, og de skal betale kr 500 pr. hus og kr 2000 pr. hotel."/>
+		<card id ="10" text = "De har måttet vedtage en parkeringsbøde. Betal kr. 200 i bøde."/>
+		<card id ="11" text = "kommunen har eftergivet et kvartals skat. Hæv i banken kr. 3000."/>
+		<card id ="13" text = "Ejendomsskatterne er steget, ekstraudgifterne er kr. 800 pr. hus og kr. 2300 pr. hotel."/>
+		<card id ="15" text = "De har modtaget Deres tandlægeregning. Betal kr. 2000."/>
+		<card id ="21" text = "Betal kr. 3000 for reparation af Deres vogn."/>
+		<card id ="22" text = "Betal kr. 3000 for reparation af Deres vogn."/>
+		<card id ="23" text = "Betal Deres bilforsikring kr. 1000."/>
+		<card id ="28" text = "De har været en tur i udlandet og har haft for mange cigaretter med hjem. Betal kr. 200"/>
+		<card id ="33" text = "De har kørt frem for fuld stop. Betal kr. 1000."/>
+	</pay>
+	<receive>
+		<card id ="7" text = "Deres premieobligation er kommet ud. De modtager kr 1000 af banken."/>
+		<card id ="8" text = "Deres premieobligation er kommet ud. De modtager kr 1000 af banken."/>
+		<card id ="9" text = "Grundet dyrtiden har de fået en gageforhøjelse. Modtag kr. 1000."/>
+		<card id ="14" text = "De havde en række med elleve rigtige i tipning. Modtag kr. 1000."/>
+		<card id ="16" text = "De modtager Deres aktieudbytte. Modtag kr. 1000 af banken. "/>
+		<card id ="17" text = "Modtag udbytte af Deres aktier kr. 1000."/>
+		<card id ="18" text = "Modtag udbytte af Deres aktier kr. 1000."/>
+		<card id ="24" text = "Værdien af egen  avl fra nyttehaven udgør kr. 200, som De modtager af banken."/>
+		<card id ="25" text = "De modtager Matador-legatet for værdig trængende, stort kr. 40000. Ved værdig trængende forstås, at deres formu, d.v.s. Deres kontante penge + skøder + bygninger ikke overstiger kr. 15000."/>
+		<card id ="26" text = "Det er deres fødselsdag. Modtag af hver medspiller kr. 200."/>
+		<card id ="27" text = "De har vundet i Klasselotteriet Modtag kr. 500"/>
+	</receive>
+	<misc>
+		<card id ="31" text = "I anledning af kongens fødselsdag benådes de herved for fængsel. Dette kort kan opbevares, indtil de får brug for det, eller de kan sælge det."/>
+		<card id ="32" text = "I anledning af kongens fødselsdag benådes de herved for fængsel. Dette kort kan opbevares, indtil de får brug for det, eller de kan sælge det."/>
+	</misc>
+</chancecards>
+
+
+
+
