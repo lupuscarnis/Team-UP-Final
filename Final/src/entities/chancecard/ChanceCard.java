@@ -1,6 +1,6 @@
 package entities.chancecard;
 
-public class ChanceCard {
+public abstract class ChanceCard {
 
 	private int id;
 	private String text;
