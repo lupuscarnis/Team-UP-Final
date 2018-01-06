@@ -1,4 +1,3 @@
-
 package entities;
 
 public class Game {
@@ -29,8 +28,23 @@ public class Game {
 
 	private boolean isJail(Player[] players) {
 		// TODO Auto-generated method stub
+		return true;
+	}	
+
+	private boolean getOutJail(Player[] players) {
+		// TODO Auto-generated method stub
 		return false;
-	}
+	}	
+	
+	private boolean sellProperty(Player[] players) {
+		// TODO Auto-generated method stub
+		return false;
+	}	
+	
+	private boolean buyProperty(Player[] players) {
+		// TODO Auto-generated method stub
+		return false;
+	}	
 
 	/**
 	 * 
@@ -53,7 +67,9 @@ public class Game {
 	 */
 
 	public void setupGame() throws Exception {
+
 		setupGame(null);
+
 	}
 
 	/**
@@ -65,44 +81,48 @@ public class Game {
 
 	public void play() throws Exception {
 
-
 		// Set the game up
-		
+
 		this.setupGame();
+
+		int turn = 1;
 
 		// Game loop
 
 		System.out.println("Running main game loop");
 
-		while (!gameOver(players)) {
+		while (!gameOver(players)) { // Checking if the player is gameover
+
+			System.out.println("Round:" + turn);
 
 			// if is Player inJail?
 
-			if (isJail(players)) {
+			if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player !isJail or isJail and pays a fee to get out
 
-				System.out.println("Player must pay 1000kr to get out of jail");		
+				if (isJail(players) && getOutJail(players)) System.out.println("Player payed 1000kr to get out of jail");
 
-			} else {
+				// Throw Die
 
-				// else Throw Die
-				
 				System.out.println("Player Throws Die");
 
 				// MovePlayer
-				
+
 				System.out.println("Player moves to field");
 
 				// Evaluate Field
-				
+
 				System.out.println("Player moves to field");
 
+			} else { // Player isJail and must therefore wait until next turn
+
+				System.out.println("Player must skip this turn");	
+				
 			}
 
+			turn++;
 
 		}
 
 	}
 
-
 }
-
