@@ -9,7 +9,7 @@ import gui_main.GUI;
  * Added by Frederik on 06-01-2018 03:02:05
  *
  */
-public class GUIController {
+public class GUIControllerHelp {
 
 	private GUI g = new GUI();
 	private GUI_Player[] gPlayers = null;
@@ -22,15 +22,15 @@ public class GUIController {
 	// TODO: Tjek for:
 	// - empty string som navn
 	// - samme navn
-	// - samme farve på bil
+	// - samme farve pÃ¥ bil
 	public String[] getNewPlayerNames() {
 		// get number of players
-		String noOfPlayers = g.getUserSelection("Vælg antal spillere", "3", "4", "5", "6");
+		String noOfPlayers = g.getUserSelection("VÃ¦lg antal spillere", "3", "4", "5", "6");
 		String[] players = new String[Integer.parseInt(noOfPlayers)];
 
 		// get names of players
 		for (int i = 0; i < players.length; i++) {
-			players[i] = g.getUserString("Navn på spiller " + (i + 1) + "?");
+			players[i] = g.getUserString("Navn pÃ¥ spiller " + (i + 1) + "?");
 		}
 		return players;
 	}
