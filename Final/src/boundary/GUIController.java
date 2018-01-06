@@ -1,11 +1,11 @@
 package boundary;
 
 import java.awt.Color;
-import java.io.IOException;
 
+import controllers.PlayerController;
 import entities.Player;
-import gui_fields.GUI_Car;
-import gui_fields.GUI_Player;
+import entities.field.*;
+import gui_fields.*;
 import gui_fields.GUI_Car.Pattern;
 import gui_fields.GUI_Car.Type;
 import gui_main.GUI;
@@ -16,31 +16,196 @@ import gui_main.GUI;
  */
 public class GUIController {
 
-	private GUI g = null;
-	private GUI_Player[] gPlayers = null;
+//	private GUI g = new GUI();
+	private GUI gui = null;
+	private GUI_Field[] guiFields = null;
+	private GUI_Player[] guiPlayers = null;
 	private GUI_Car[] carList = null;
-
-	public GUIController() throws IOException {
-		g = new BoardGenerator().makeBoard();
+	
+	
+	/**
+	 * Added by Frederik on 06-01-2018 03:02:01
+	 * 
+	 * @throws InterruptedException
+	 */
+	public void setup(Player[] players) {
+		
+		setupPlayers(players);
 	}
 
+	public void setupGUIBoard(Field[] fields) {
+	
+		guiFields = new GUI_Field[40];
+		
+		initializeFields(fields);
+		
+		gui = new GUI(guiFields);
+		
+	}
+
+	private void initializeFields(Field[] fields) {
+		
+		int fieldNumber = 0;
+		for (Field field : fields) {
+			
+			switch(field.getFieldType()) {
+			case BREWERY:
+				GUI_Field tmp = new GUI_Brewery();
+				BreweryField brewery = (BreweryField) field;
+				tmp.setTitle(field.getTitle());
+				tmp.setSubText(brewery.getPrice()+" kr.");
+				tmp.setDescription(field.getDesc());
+				
+				guiFields[fieldNumber]=tmp;
+				break;
+			case CHANCE:
+				tmp = new GUI_Chance();
+				tmp.setSubText(field.getTitle());
+				tmp.setDescription(field.getDesc());
+
+				guiFields[fieldNumber]=tmp;
+				break;
+			case EXTRATAX:
+				tmp = new GUI_Tax();
+				tmp.setTitle(field.getDesc());
+				tmp.setSubText(field.getTitle());
+				tmp.setDescription(field.getDesc());
+
+				guiFields[fieldNumber]=tmp;
+				break;
+			case FREEPARKING:
+				tmp = new GUI_Refuge();
+				tmp.setTitle(field.getTitle());
+				tmp.setDescription(field.getDesc());
+				tmp.setSubText("Helle");
+				tmp.setBackGroundColor(Color.white);
+
+				guiFields[fieldNumber]=tmp;
+				break;
+			case GOTOJAIL:
+				tmp = new GUI_Jail();
+				tmp.setTitle(field.getTitle());
+				tmp.setSubText(field.getTitle());
+				tmp.setDescription(field.getDesc());
+				
+				guiFields[fieldNumber]=tmp;
+				break;
+			case INCOMETAX:
+				tmp = new GUI_Tax();
+				tmp.setTitle(field.getDesc());
+				tmp.setSubText(field.getTitle());
+				tmp.setDescription(field.getDesc());
+
+				guiFields[fieldNumber]=tmp;
+				break;
+			case LOT:
+				tmp = new GUI_Street();
+				LotField lot = (LotField) field;
+				tmp.setTitle(field.getTitle());
+				tmp.setSubText(lot.getPrice()+" kr.");
+				tmp.setDescription(field.getDesc());
+				
+				Color color= Color.black;
+				switch(lot.getColor()) {
+				case BLUE:
+					color=Color.blue;
+					break;
+				case GRAY:
+					color=Color.gray;
+					break;
+				case GREEN:
+					color=Color.green;
+					break;
+				case PINK:
+					color=Color.pink;
+					break;
+				case PURPLE:
+					color=Color.magenta;
+					break;
+				case RED:
+					color=Color.red;
+					break;
+				case WHITE:
+					color=Color.white;
+					break;
+				case YELLOW:
+					color=Color.yellow;
+					break;
+				default:
+					break;						
+				}
+				tmp.setBackGroundColor(color);
+				
+				guiFields[fieldNumber]=tmp;
+				break;
+			case SHIPPING:
+				tmp = new GUI_Shipping();
+				ShippingField shipping = (ShippingField) field;
+				tmp.setTitle(field.getTitle());
+				tmp.setSubText(shipping.getPrice()+" kr.");
+				tmp.setDescription(field.getDesc());
+				
+				guiFields[fieldNumber]=tmp;
+				
+				break;
+			case START:
+				tmp = new GUI_Start();
+				tmp.setTitle(field.getTitle());
+				tmp.setDescription(field.getDesc());
+				tmp.setSubText("");
+				tmp.setBackGroundColor(Color.white);
+
+				guiFields[fieldNumber]=tmp;
+				break;
+			case VISITJAIL:
+				tmp = new GUI_Jail();
+				tmp.setTitle(field.getTitle());
+				tmp.setSubText(field.getDesc());
+				tmp.setDescription(field.getDesc());
+				
+				guiFields[fieldNumber]=tmp;
+				break;
+			default:
+				break;
+			
+			}
+			fieldNumber++;
+		}
+		
+	}
+	
+	
 	/**
 	 * Added by Frederik on 06-01-2018 03:18:12
 	 * 
 	 * @return
 	 */
-	// TODO: Tjek for:
-	// - empty string som navn
-	// - samme navn
-	// - samme farve på bil
+
 	public String[] getNewPlayerNames() {
 		// get number of players
-		String noOfPlayers = g.getUserSelection("Vælg antal spillere", "3", "4", "5", "6");
+		String noOfPlayers = gui.getUserSelection("Vælg antal spillere", "3", "4", "5", "6");
 		String[] players = new String[Integer.parseInt(noOfPlayers)];
 
 		// get names of players
+		String name;
 		for (int i = 0; i < players.length; i++) {
-			players[i] = g.getUserString("Navn på spiller " + (i + 1) + "?");
+			boolean invalidName=false;
+			do {
+				invalidName=false;
+				name = gui.getUserString("Navn på spiller " + (i + 1) + "?");
+				//checks for duplicate names
+				for(int a=i;a>0;a--) {
+					if(name.equals(players[a-1])) {
+						invalidName=true;
+					}
+				}
+				//checks if name is empty
+				if(name.length()<1) {
+					invalidName=true;
+				}
+			}
+			while(invalidName);
+			players[i] = name;
 		}
 		return players;
 	}
@@ -54,30 +219,30 @@ public class GUIController {
 		carList[4] = new GUI_Car(Color.blue, Color.yellow, Type.RACECAR, Pattern.ZEBRA);
 		carList[5] = new GUI_Car(Color.cyan, Color.yellow, Type.TRACTOR, Pattern.ZEBRA);
 	}
+	
+	
 
 	/**
-	 * Added by Frederik on 06-01-2018 03:02:01
-	 * 
-	 * @throws InterruptedException
+	 * @param players
 	 */
-	public void setup(Player[] players) {
+	private void setupPlayers(Player[] players) {
 		// init. array of GUI_Players
-		gPlayers = new GUI_Player[players.length];
+		guiPlayers = new GUI_Player[players.length];
 
 		// init. array of GUI_Cars
 		initializeCarList();
-
+		
 		// add players to GUI_Players array
 		int index = 0;
 		for (Player p : players) {
-
-			gPlayers[index] = new GUI_Player(p.getName());
+			//should use the same constant value for game start amount as argument instead of hardcoding
+			guiPlayers[index] = new GUI_Player(p.getName(), 30000, carList[index]);
 
 			index++;
 		}
 
 		// add player and car to board
-		for (GUI_Player gPlayer : this.gPlayers) {
+		for (GUI_Player gPlayer : this.guiPlayers) {
 
 			// add the player to the board/list
 			addPlayerToBoard(gPlayer);
@@ -96,7 +261,7 @@ public class GUIController {
 	 */
 
 	private void addPlayerToBoard(GUI_Player player) {
-		g.addPlayer(player);
+		gui.addPlayer(player);
 	}
 
 	private void moveCar(int fromField, int toField, GUI_Player player) {
@@ -111,7 +276,7 @@ public class GUIController {
 	 * @param player
 	 */
 	private void addCarToField(int fieldNo, GUI_Player player) {
-		g.getFields()[fieldNo - 1].setCar(player, true);
+		gui.getFields()[fieldNo - 1].setCar(player, true);
 	}
 
 	/**
@@ -121,7 +286,7 @@ public class GUIController {
 	 * @param player
 	 */
 	private void removeCarFromField(int fieldNo, GUI_Player player) {
-		g.getFields()[fieldNo - 1].setCar(player, false);
+		gui.getFields()[fieldNo - 1].setCar(player, false);
 	}
 
 	public void movePlayer(Player playerToMove, int toField) throws Exception {
@@ -135,7 +300,7 @@ public class GUIController {
 
 	private GUI_Player findPlayer(String playerNameToFind) throws Exception {
 
-		for (GUI_Player gPlayer : gPlayers) {
+		for (GUI_Player gPlayer : guiPlayers) {
 
 			if (gPlayer.getName().equals(playerNameToFind))
 				return gPlayer;
