@@ -28,8 +28,15 @@ public class BusinessLogicController {
 		// TODO: Implement
 	}
 
-	// set owner of Get Out Of Jail Card.
-	public void setGetOutOfJailCard(Player owner) {
-		// TODO: Implement
+	/**
+	 * Added by Frederik on 06-01-2018 22:06:20 
+	 * 
+	 * Set owner of Get Out Of Jail Card.
+	 * 
+	 * @param owner
+	 * @param hasCard
+	 */
+	public void setGetOutOfJailCard(Player owner, boolean hasCard) {		
+		owner.setJailCard(hasCard);
 	}
 }
