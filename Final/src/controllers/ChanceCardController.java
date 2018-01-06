@@ -162,7 +162,7 @@ public class ChanceCardController {
 			case 27:
 				ReceiveChanceCard rc = (ReceiveChanceCard) card;
 				rc.getAmount();
-				
+				// er de ting der kommer nu en lav prioritet
 				break;
 			// 25;De modtager Matador-legatet for værdig trængende, stort kr. 40000. Ved
 			// værdig trængende forstås, at deres formue, d.v.s. Deres kontante penge +

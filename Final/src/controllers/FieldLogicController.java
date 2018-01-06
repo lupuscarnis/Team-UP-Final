@@ -21,6 +21,7 @@ public class FieldLogicController {
 		{
 		case BREWERY:
 			BreweryField bf = (BreweryField)field;
+			
 			break;
 		case CHANCE:
 			// ingen grund til cast da den bare er en Field type
@@ -39,9 +40,11 @@ public class FieldLogicController {
 			break;
 		case LOT:
 			LotField lf = (LotField)field;
+			
 			break;
 		case SHIPPING:
 			ShippingField sf = (ShippingField)field;
+			
 			break;
 		case START:
 			// ingen grund til cast da den bare er en Field type
