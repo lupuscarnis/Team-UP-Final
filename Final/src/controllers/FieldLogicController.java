@@ -4,11 +4,13 @@ import entities.field.BreweryField;
 import entities.field.Field;
 import entities.field.LotField;
 import entities.field.ShippingField;
+import gui_main.GUI;
 
 public class FieldLogicController {
 	private controllers.ChanceCardController ccc;
 	private controllers.GameBoardController gbc;
-	
+	private boundary.GUIController guic;
+	private GUI gui = null;
 	public entities.Player currentPlayer;
 	// kan ikke finde en "currentplayer" i Game endnu, taenker at jeg kommer til at bruge den
 	//Game.getCurrentPlayer()
@@ -29,6 +31,7 @@ public class FieldLogicController {
 		case CHANCE:
 			ccc.drawChanceCard();
 			ccc.handleDraw(currentPlayer);
+			gui.showMessage();
 			// ingen grund til cast da den bare er en Field type
 			break;
 		case EXTRATAX:
