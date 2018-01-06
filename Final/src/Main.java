@@ -13,26 +13,8 @@ import utilities.FieldLoader;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
+		GameController gc = new GameController();
 
-		
-		
-		GUIController gui = new GUIController();
-		gui.setup();
-		
-		
-		//GameController gc = new GameController();
-
-		//gc.play();
-		
-		
-//		ChanceLoader cl = new ChanceLoader();
-//		
-//		ChanceCardController ccc = new ChanceCardController(cl.getCards());
-//		
-//		ccc.handleDraw(null);		
-		
-	
-		
-		
+		gc.play();
 	}
 }
