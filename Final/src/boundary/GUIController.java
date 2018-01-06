@@ -1,8 +1,8 @@
 package boundary;
 
 import java.awt.Color;
+import java.io.IOException;
 
-import controllers.PlayerController;
 import entities.Player;
 import gui_fields.GUI_Car;
 import gui_fields.GUI_Player;
@@ -16,9 +16,13 @@ import gui_main.GUI;
  */
 public class GUIController {
 
-	private GUI g = new GUI();
+	private GUI g = null;
 	private GUI_Player[] gPlayers = null;
 	private GUI_Car[] carList = null;
+
+	public GUIController() throws IOException {
+		g = new BoardGenerator().makeBoard();
+	}
 
 	/**
 	 * Added by Frederik on 06-01-2018 03:18:12
@@ -50,7 +54,7 @@ public class GUIController {
 		carList[4] = new GUI_Car(Color.blue, Color.yellow, Type.RACECAR, Pattern.ZEBRA);
 		carList[5] = new GUI_Car(Color.cyan, Color.yellow, Type.TRACTOR, Pattern.ZEBRA);
 	}
-	
+
 	/**
 	 * Added by Frederik on 06-01-2018 03:02:01
 	 * 
@@ -62,7 +66,7 @@ public class GUIController {
 
 		// init. array of GUI_Cars
 		initializeCarList();
-		
+
 		// add players to GUI_Players array
 		int index = 0;
 		for (Player p : players) {
