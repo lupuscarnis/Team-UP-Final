@@ -25,15 +25,15 @@ public class ShippingField extends OwnableField {
 		return super.toString() + String.format(
 				"Text2: %s\n" + "Leje for 1 rederi: %s\n" + "Leje for 2 rederi: %s\n" + "Leje for 3 rederi: %s\n"
 						+ "Leje for 4 rederi: %s\n",
-				getText2(), getRentFor(ShippingOwned.One), getRentFor(ShippingOwned.Two),
+				getDesc(), getRentFor(ShippingOwned.One), getRentFor(ShippingOwned.Two),
 				getRentFor(ShippingOwned.Three), getRentFor(ShippingOwned.Four));
 	}
 
-	public String getText2() {
+	public String getDesc() {
 		return text2;
 	}
 
-	public void setText2(String text2) {
+	public void setDesc(String text2) {
 		this.text2 = text2;
 	}
 }
