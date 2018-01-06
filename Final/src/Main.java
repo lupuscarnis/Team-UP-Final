@@ -12,6 +12,7 @@ import entities.enums.LotColor;
 import entities.field.Field;
 import entities.field.LotField;
 import entities.field.OwnableField;
+import gui_fields.GUI_Chance;
 import gui_fields.GUI_Field;
 import gui_fields.GUI_Player;
 import gui_fields.GUI_Start;
@@ -78,18 +79,25 @@ public class Main {
 			 */
 
 			case START:
-				//TODO: How do you make title larger?
+				// TODO: How do you make title larger?
 				desc = tmp.getDesc(); // TODO: How do you center the text?
 				sub = "Modtag 4000";
 				bgColor = Color.red;
 
 				fields[i] = new GUI_Start(title, sub, desc, bgColor, fgColor);
 				break;
+
+			case CHANCE:
+				GUI_Chance chanceField = new GUI_Chance();
+				chanceField.setDescription(title);
+				fields[i] = chanceField;
+				break;
+
 			case LOT:
 				desc = formatText(tmp.getTitle(), 10); // TODO: How do you center the text?
 				sub = "Pris: " + ((OwnableField) tmp).getPrice();
-				fgColor = getFgColor(((LotField) tmp).getColor());
-				bgColor = getBgColor(((LotField) tmp).getColor());
+				fgColor = getFgColor(((LotField) tmp).getColor()); // TODO: Rename method name: getLotFgColor
+				bgColor = getBgColor(((LotField) tmp).getColor()); // TODO: Rename method name: getLotBgColor
 
 				fields[i] = new GUI_Street(title, sub, desc, "0", bgColor, fgColor);
 				break;
