@@ -9,13 +9,13 @@ import utilities.FieldLoader;
 import utilities.MyRandom;
 
 public class GameController {
-
-	FieldLoader fl = new FieldLoader();
-	GUIController gui = null;
-	private PlayerController pc = new PlayerController();
+	
+	private FieldLogicController flc = null;
+	private GUIController gui = null;	
+	private PlayerController pc = null;	
+	private GameBoardController gbc = null;
 	// TODO: Move/share.
-	GameBoardController gbc = null;
-
+	
 
 	// CONSTANTS
 	private static final int PLAYER_MIN = 3;
@@ -40,6 +40,14 @@ public class GameController {
 
 	// Testing Gameover
 	
+	public GameController() throws IOException {
+		gui = new GUIController();
+		gbc = new GameBoardController(new FieldLoader().getFields());
+		flc = new FieldLogicController(gbc,gui);
+		pc = new PlayerController();
+	}	
+	
+	
 	private boolean gameOver(Player[] players) {
 		// TODO Auto-generated method stub
 		return false;
@@ -60,10 +68,7 @@ public class GameController {
 	}	
 
 
-	public GameController() throws IOException {
-		gui = new GUIController();
-		gbc = new GameBoardController(fl.getFields());
-	}	
+	
 
 
 	public void setupGame() throws Exception {
@@ -77,15 +82,6 @@ public class GameController {
 		// now GUI can be setup with players
 		gui.setup(players);				
 	}
-
-	/**
-	 * 
-	 * From CDIO3 @ Frederik
-	 * 
-	 * @throws Exception
-	 */
-
-
 
 	public void play() throws Exception{
 
@@ -119,7 +115,6 @@ public class GameController {
 			}
 
 			// Starting main round play through
-
 			System.out.println("-- Round: " + turn + " --");
 
 			if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player !isJail or (isJail and pays a fee to get out)
@@ -127,7 +122,7 @@ public class GameController {
 				if (isJail(players) && getOutJail(players)) System.out.println("-- Player payed 1000kr to get out of jail --");
 
 				
-				FieldLogicController flc = new FieldLogicController(gbc,gui);
+				
 				
 				// roll and move player				
 				flc.rollAndMove(currentPlayer);				
