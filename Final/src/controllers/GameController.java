@@ -10,156 +10,263 @@ import utilities.MyRandom;
 
 public class GameController {
 
-			FieldLoader fl = new FieldLoader();
-			GUIController gui = null;
-			private PlayerController pc = new PlayerController();
-			// TODO: Move/share.
-			GameBoardController gbc = null;
-					
-			
-			// CONSTANTS
-			private static final int PLAYER_MIN = 3;
-			private static final int PLAYER_MAX = 6;
-			private static final int DIE_MIN = 1;
-			private static final int DIE_MAX = 6;
+	FieldLoader fl = new FieldLoader();
+	GUIController gui = null;
+	private PlayerController pc = new PlayerController();
+	// TODO: Move/share.
+	GameBoardController gbc = null;
 
-			// Maybe move these to bank
 
-			private static final int MONEY_START = 4000; // Amount when passing START
-			private static final int MONEY_JAIL = 1000; // Amount to pay to leave jail
-			private static final int TAX_CASH_AMOUNT = 4000;
-			private static final double TAX_PERCENTAGE_AMOUNT = 0.1;
-			private static final int FIELD_COUNT = 40; // Move to GBC??
+	// CONSTANTS
+	private static final int PLAYER_MIN = 3;
+	private static final int PLAYER_MAX = 6;
 
-			// ATTRIBUTES
-			private Player[] players = null;
-			private Player lastPlayer = null; // Who played last turn
+	// Maybe move these to bank
 
-			
-			public GameController() throws IOException {
-				gui = new GUIController();
-				gbc = new GameBoardController(fl.getFields());
-			}	
-			
-			
-			public void setupGame() throws Exception {
+	private static final int MONEY_START_AMOUNT = 30000; // Amount for each player at game start
+	private static final int MONEY_START = 4000; // Amount when passing START
+	private static final int MONEY_JAIL = 1000; // Amount to pay to leave jail
+	private static final int TAX_CASH_AMOUNT = 4000;
+	private static final double TAX_PERCENTAGE_AMOUNT = 0.1;
+	private static final int FIELD_COUNT = 40; // Move to GBC??
 
-				// get player names from UI
-				String[] playerNames = gui.getNewPlayerNames();
-				
-				// create new players via PlayerCtrl.
-				players = pc.createNewPlayers(playerNames);
-				
-				// Lacks a step: Who should start?
-				
-				// now GUI can be setup with players
-				gui.setup(players);				
-			}
+	// ATTRIBUTES
+	private Player[] players = null;
+	private Player lastPlayer = null; // Who played last turn
+	private Player startPlayer = null; // Who starts first
+	private Player currentPlayer = null; // The current players round
 
-			/**
-			 * 
-			 * From CDIO3 @ Frederik
-			 * 
-			 * @throws Exception
-			 */
 
-			
+	// FOR TESTING PURPOSES!
 
-			public void play() throws Exception{
-
-				// setup
-				setupGame();
-				
-				
-				// start game loop
-				while(true)
-				{
-					// find next player
-					Player currentPlayer = getNextPlayer(players);					
-					
-					// "roll"
-					int faceValue = MyRandom.randInt(2, 12);
-					
-					// get next field
-					int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
-					Field nextField = this.getNextField(currentFieldNo, faceValue);
-					
-					Thread.sleep(500);
-					// update current pos on player object (should be moved to a controller...)
-					currentPlayer.setCurrentField(nextField);
-					
-					// move 
-					gui.movePlayer(currentPlayer, nextField.getFieldNumber());					
-				}
-				
-				
-				// if is Player inJail?
-				
-				
-	            // else Throw Die
-				
-				// MovePlayer
-				
-	            // Evaluate Field
-
-			}
-
+	// Testing Gameover
 	
-			/**
-			 * Added by Frederik on 23-11-2017 17:50:40
-			 * 
-			 * Calculates and returns next field for player.
-			 * 
-			 * @param faceValue
-			 * @param currentFieldNumber
-			 * @return
-			 */
-			public Field getNextField(int currentFieldNumber, int faceValue) {
+	private boolean gameOver(Player[] players) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-				int nextFieldNo = faceValue + currentFieldNumber;
+	// Testing player is in jail
+	
+	private boolean isJail(Player[] players) {
+		// TODO Auto-generated method stub
+		return false;
+	}	
 
-				// Check for valid next field
-				if (nextFieldNo > FIELD_COUNT)
-					nextFieldNo += -FIELD_COUNT;
+	// Testing player gets out of jail
+	
+	private boolean getOutJail(Player[] players) {
+		// TODO Auto-generated method stub
+		return false;
+	}	
 
-				return gbc.getFieldByNumber(nextFieldNo);
+
+	public GameController() throws IOException {
+		gui = new GUIController();
+		gbc = new GameBoardController(fl.getFields());
+	}	
+
+
+	public void setupGame() throws Exception {
+
+		// get player names from UI
+		String[] playerNames = gui.getNewPlayerNames();
+
+		// create new players via PlayerCtrl.
+		players = pc.createNewPlayers(playerNames);
+
+		// now GUI can be setup with players
+		gui.setup(players);				
+	}
+
+	/**
+	 * 
+	 * From CDIO3 @ Frederik
+	 * 
+	 * @throws Exception
+	 */
+
+
+
+	public void play() throws Exception{
+
+		// setup
+		setupGame();
+
+		// Start round count
+		int turn = 1;
+
+		System.out.println("-------------------------");
+		System.out.println("-- The Game has Begun! --");
+		System.out.println("-------------------------");
+
+		// start game loop
+
+		while(!gameOver(players))
+		{
+
+			// Checking which players starts first if turn == 1
+
+			if (turn == 1) {	
+
+				// Get first player from highest "roll"
+				currentPlayer = getStartPlayer(players);
+
+			} else {
+
+				// find next player
+				currentPlayer = getNextPlayer(players);	
+
 			}
-			/**
-			 * Added by Frederik on 23-11-2017 17:34:24
-			 * 
-			 * Gets the next player for the next turn.
-			 * 
-			 * @param players
-			 * @return
-			 * @throws Exception
-			 */
-			public Player getNextPlayer(Player[] players) throws Exception {
 
-				if (lastPlayer == null) {
-					lastPlayer = players[0];
+			// Starting main round play through
 
-					return players[0];
-				} else {
+			System.out.println("-- Round: " + turn + " --");
 
-					int indexMax = players.length - 1;
-					for (int i = 0; i < players.length; i++) {
-						Player player = players[i];
+			if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player !isJail or (isJail and pays a fee to get out)
 
-						if (player.equals(lastPlayer)) {
+				if (isJail(players) && getOutJail(players)) System.out.println("-- Player payed 1000kr to get out of jail --");
 
-							if (i < indexMax) {
-								lastPlayer = players[i + 1];
-								return players[i + 1];
-							} else {
-								lastPlayer = players[0];
-								return players[0];
-							}
-						}
+				// Throw Die
+
+				int faceValue = MyRandom.randInt(2, 12);
+
+				// get next field
+
+				int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
+				Field nextField = this.getNextField(currentFieldNo, faceValue);
+
+				Thread.sleep(1000);
+
+				// Update current pos on player object (should be moved to a controller...)
+
+				currentPlayer.setCurrentField(nextField);
+
+				// Move player
+
+				gui.movePlayer(currentPlayer, nextField.getFieldNumber());			
+
+				// Evaluate Field
+
+
+
+			} else { // Player isJail, doesn't pay the fee and must therefore wait until next turn
+
+				System.out.println("-- Player must skip this turn --");	
+
+			}			
+
+			turn++;
+
+		}
+
+		// if is Player inJail?
+
+		// else Throw Die
+
+		// MovePlayer
+
+		// Evaluate Field
+
+	}
+
+	/**
+	 * Added by Frederik on 23-11-2017 17:50:40
+	 * 
+	 * Calculates and returns next field for player.
+	 * 
+	 * @param faceValue
+	 * @param currentFieldNumber
+	 * @return
+	 */
+	public Field getNextField(int currentFieldNumber, int faceValue) {
+
+		int nextFieldNo = faceValue + currentFieldNumber;
+
+		// Check for valid next field
+		if (nextFieldNo > FIELD_COUNT)
+			nextFieldNo += -FIELD_COUNT;
+
+		return gbc.getFieldByNumber(nextFieldNo);
+	}
+	/**
+	 * Added by Frederik on 23-11-2017 17:34:24
+	 * 
+	 * Gets the next player for the next turn.
+	 * 
+	 * @param players
+	 * @return
+	 * @throws Exception
+	 */
+	public Player getNextPlayer(Player[] players) throws Exception {
+
+		if (lastPlayer == null) {
+			lastPlayer = players[0];
+
+			return players[0];
+		} else {
+
+			int indexMax = players.length - 1;
+			for (int i = 0; i < players.length; i++) {
+				Player player = players[i];
+
+				if (player.equals(lastPlayer)) {
+
+					if (i < indexMax) {
+						lastPlayer = players[i + 1];
+						return players[i + 1];
+					} else {
+						lastPlayer = players[0];
+						return players[0];
 					}
 				}
-
-				throw new Exception("Player was not found!");
 			}
-	
-	
+		}
+
+		throw new Exception("Player was not found!");
+	}
+
+	/**
+	 * Added by Kasper on 16-01-2017
+	 * 
+	 * Calculates and returns who starts first.
+	 * 
+	 * @param players
+	 * @return startPlayer
+	 * @throws Exception
+	 */
+
+	public Player getStartPlayer(Player[] players) throws Exception {
+
+
+		int numPlayers = players.length;
+		int newHighest = 0;
+
+		for(int i=0; i<numPlayers; i++) {
+
+			int resultRoll = MyRandom.randInt(1, 6);
+
+			if(resultRoll > newHighest) {
+
+				newHighest = resultRoll;
+
+				startPlayer = players[i];
+
+			}
+
+			System.out.println(players[i].getName() + " Rolled " + resultRoll);
+
+		} 
+
+		if(startPlayer != null) {
+
+			System.out.println("-- " + startPlayer.getName() + " goes first! --");
+
+			return startPlayer;
+		}
+
+		throw new Exception("No players were found!");
+	}
+
+
 }
