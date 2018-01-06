@@ -1,8 +1,13 @@
 package boundary;
 
+import java.awt.Color;
+
 import controllers.PlayerController;
 import entities.Player;
+import gui_fields.GUI_Car;
 import gui_fields.GUI_Player;
+import gui_fields.GUI_Car.Pattern;
+import gui_fields.GUI_Car.Type;
 import gui_main.GUI;
 
 /**
@@ -13,6 +18,7 @@ public class GUIController {
 
 	private GUI g = new GUI();
 	private GUI_Player[] gPlayers = null;
+	private GUI_Car[] carList = null;
 
 	/**
 	 * Added by Frederik on 06-01-2018 03:18:12
@@ -35,6 +41,16 @@ public class GUIController {
 		return players;
 	}
 
+	private void initializeCarList() {
+		carList = new GUI_Car[6];
+		carList[0] = new GUI_Car(Color.RED, Color.yellow, Type.RACECAR, Pattern.DOTTED);
+		carList[1] = new GUI_Car(Color.YELLOW, Color.yellow, Type.TRACTOR, Pattern.DOTTED);
+		carList[2] = new GUI_Car(Color.black, Color.yellow, Type.CAR, Pattern.DOTTED);
+		carList[3] = new GUI_Car(Color.green, Color.yellow, Type.UFO, Pattern.DOTTED);
+		carList[4] = new GUI_Car(Color.blue, Color.yellow, Type.RACECAR, Pattern.ZEBRA);
+		carList[5] = new GUI_Car(Color.cyan, Color.yellow, Type.TRACTOR, Pattern.ZEBRA);
+	}
+	
 	/**
 	 * Added by Frederik on 06-01-2018 03:02:01
 	 * 
@@ -48,7 +64,7 @@ public class GUIController {
 		int index = 0;
 		for (Player p : players) {
 
-			gPlayers[index] = new GUI_Player(p.getName(), p.getBalance());
+			gPlayers[index] = new GUI_Player(p.getName(), p.getBalance(), carList[index]);
 
 			index++;
 		}
