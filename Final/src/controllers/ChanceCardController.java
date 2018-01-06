@@ -16,7 +16,7 @@ public class ChanceCardController {
 		this.cardArray = cards;
 	}
 
-	private ChanceCard drawChanceCard() {
+	public ChanceCard drawChanceCard() {
 		int minIndex = 0;
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);

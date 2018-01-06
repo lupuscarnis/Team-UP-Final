@@ -6,9 +6,12 @@ import entities.field.LotField;
 import entities.field.ShippingField;
 
 public class FieldLogicController {
-	
-	
+	private controllers.ChanceCardController ccc;
 	private controllers.GameBoardController gbc;
+	
+	public entities.Player currentPlayer;
+	// kan ikke finde en "currentplayer" i Game endnu, taenker at jeg kommer til at bruge den
+	//Game.getCurrentPlayer()
 	
 	public FieldLogicController(GameBoardController gbc) {
 		this.gbc=gbc;
@@ -24,6 +27,8 @@ public class FieldLogicController {
 			
 			break;
 		case CHANCE:
+			ccc.drawChanceCard();
+			ccc.handleDraw();
 			// ingen grund til cast da den bare er en Field type
 			break;
 		case EXTRATAX:
