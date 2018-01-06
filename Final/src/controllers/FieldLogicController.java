@@ -26,12 +26,12 @@ public class FieldLogicController {
 		{
 		case BREWERY:
 			BreweryField bf = (BreweryField)field;
-			gui.showMessage("you have landed on a  "+field.getFieldType()+"do you wish to purchase it?");
+			gui.showMessage("you have landed on a  "+field.getFieldType()+" do you wish to purchase it?");
 			break;
 		case CHANCE:
 			ccc.drawChanceCard();
 			ccc.handleDraw(currentPlayer);
-			gui.showMessage("you have landed on "+field.getFieldType()+"");
+			gui.showMessage("you have landed on "+field.getFieldType()+" draw a card");
 			// ingen grund til cast da den bare er en Field type
 			break;
 		case EXTRATAX:
