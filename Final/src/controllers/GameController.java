@@ -28,7 +28,6 @@ public class GameController {
 	private static final int MONEY_JAIL = 1000; // Amount to pay to leave jail
 	private static final int TAX_CASH_AMOUNT = 4000;
 	private static final double TAX_PERCENTAGE_AMOUNT = 0.1;
-	private static final int FIELD_COUNT = 40; // Move to GBC??
 
 	// ATTRIBUTES
 	private Player[] players = null;
@@ -127,24 +126,18 @@ public class GameController {
 
 				if (isJail(players) && getOutJail(players)) System.out.println("-- Player payed 1000kr to get out of jail --");
 
-				// Throw Die
+				
+				FieldLogicController flc = new FieldLogicController(gbc,gui);
+				
+				// roll and move player				
+				flc.rollAndMove(currentPlayer);				
+				
+				// resolve field
+				flc.resolveField(currentPlayer);
 
-				int faceValue = MyRandom.randInt(2, 12);
+				Thread.sleep(1500);
 
-				// get next field
-
-				int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
-				Field nextField = this.getNextField(currentFieldNo, faceValue);
-
-				Thread.sleep(1000);
-
-				// Update current pos on player object (should be moved to a controller...)
-
-				currentPlayer.setCurrentField(nextField);
-
-				// Move player
-
-				gui.movePlayer(currentPlayer, nextField.getFieldNumber());			
+						
 
 				// Evaluate Field
 
@@ -170,25 +163,6 @@ public class GameController {
 
 	}
 
-	/**
-	 * Added by Frederik on 23-11-2017 17:50:40
-	 * 
-	 * Calculates and returns next field for player.
-	 * 
-	 * @param faceValue
-	 * @param currentFieldNumber
-	 * @return
-	 */
-	public Field getNextField(int currentFieldNumber, int faceValue) {
-
-		int nextFieldNo = faceValue + currentFieldNumber;
-
-		// Check for valid next field
-		if (nextFieldNo > FIELD_COUNT)
-			nextFieldNo += -FIELD_COUNT;
-
-		return gbc.getFieldByNumber(nextFieldNo);
-	}
 	/**
 	 * Added by Frederik on 23-11-2017 17:34:24
 	 * 

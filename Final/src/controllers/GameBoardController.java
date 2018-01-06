@@ -5,6 +5,8 @@ import entities.field.Field;
 
 public class GameBoardController {
 
+	public static final int FIELD_COUNT = 40;
+	
 	private Field[] fieldArray = null;
 
 	public GameBoardController(Field[] fields) {

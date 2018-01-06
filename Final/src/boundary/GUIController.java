@@ -293,9 +293,10 @@ public class GUIController {
 		this.gui.getFields()[fieldNo - 1].setCar(player, false);
 	}
 
-	public void movePlayer(Player playerToMove, int toField) throws Exception {
+	public void movePlayer(Player playerToMove) throws Exception {
 
 		int fromField = playerToMove.getPreviousField().getFieldNumber();
+		int toField = playerToMove.getCurrentField().getFieldNumber();
 		GUI_Player gPlayer = findPlayer(playerToMove.getName());
 
 		removeCarFromField(fromField, gPlayer);
@@ -312,4 +313,41 @@ public class GUIController {
 
 		throw new Exception("No player found!");
 	}
+
+	/**
+	 * Added by Frederik on 06-01-2018 22:51:40 
+	 * 
+	 * Changes sub-text of field to show current owner.
+	 * 
+	 * @param name
+	 * @param fieldId
+	 * @throws Exception
+	 */
+	public void updateLotOwner(String name, int fieldId) throws Exception {
+
+		// Find gPlayer (new owner)
+		GUI_Player gP = findPlayer(name);		
+		
+		// set subtext with owner name
+		gui.getFields()[fieldId-1].setSubText("Ejer: " + name);		
+	}
+
+	/**
+	 * Added by Frederik on 06-01-2018 23:30:48 
+	 * 
+	 * Updates the balance of the names in the array
+	 * 
+	 * @param names
+	 * @throws Exception 
+	 */
+	public void updateBalance(Player[] players) throws Exception {
+		
+		for (Player p : players) {
+			
+			// Find gPlayer
+			GUI_Player gP = findPlayer(p.getName());		
+			
+			gP.setBalance(p.getBalance());			
+		}		
+	}	
 }
