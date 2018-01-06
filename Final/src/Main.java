@@ -13,9 +13,12 @@ import entities.enums.LotColor;
 import entities.field.Field;
 import entities.field.LotField;
 import entities.field.OwnableField;
+import gui_fields.GUI_Brewery;
 import gui_fields.GUI_Chance;
 import gui_fields.GUI_Field;
+import gui_fields.GUI_Jail;
 import gui_fields.GUI_Player;
+import gui_fields.GUI_Refuge;
 import gui_fields.GUI_Shipping;
 import gui_fields.GUI_Start;
 import gui_fields.GUI_Street;
@@ -69,7 +72,7 @@ public class Main {
 
 			Field tmp = gbc.getFieldByNumber(i + 1);
 
-			String title = title = formatText(tmp.getTitle(), 8);
+			String title = formatText(tmp.getTitle(), 8);
 			String sub = "Sub";// tmp.getText2();
 			String desc = tmp.getDesc();
 			Color fgColor = Color.BLACK;
@@ -90,28 +93,62 @@ public class Main {
 				fields[i] = new GUI_Start(title, sub, desc, bgColor, fgColor);
 				break;
 
+			case BREWERY:
+				GUI_Brewery breweryField = new GUI_Brewery();
+				breweryField.setTitle(title);
+				breweryField.setBackGroundColor(Color.black);
+				breweryField.setForeGroundColor(Color.WHITE);
+				breweryField.setSubText("Pris: " + ((OwnableField) tmp).getPrice());
+				breweryField.setDescription(title);
+
+				fields[i] = breweryField;
+				break;
+				
+			case FREEPARKING:
+				GUI_Refuge refugeField = new GUI_Refuge();
+				refugeField.setTitle(title);
+				refugeField.setSubText("Helle");
+				refugeField.setBackGroundColor(Color.white);
+				refugeField.setDescription(desc);
+
+				fields[i] = refugeField;
+				break;
+
+			case VISITJAIL:
+			case GOTOJAIL:
+
+				GUI_Jail jailField = new GUI_Jail();
+				jailField.setTitle(title);
+				jailField.setSubText(title);
+				jailField.setDescription(desc);
+
+				fields[i] = jailField;
+
+				break;
+
 			case CHANCE:
 				GUI_Chance chanceField = new GUI_Chance();
 				chanceField.setDescription(title);
 				fields[i] = chanceField;
 				break;
-				
+
 			case INCOMETAX:
-			case EXTRATAX:				
+			case EXTRATAX:
 				// check wether it's a income or extra tax field,
 				// and insert subtext accordingly.
-				sub = tmp.getFieldType()==FieldType.INCOMETAX?"10% el. 4000":"Betal 2000";
-				
+				sub = tmp.getFieldType() == FieldType.INCOMETAX ? "10% el. 4000" : "Betal 2000";
+
 				GUI_Tax taxField = new GUI_Tax();
 				taxField.setTitle(title);
 				taxField.setDescription(desc);
 				taxField.setBackGroundColor(Color.CYAN);
 				taxField.setSubText(sub);
-				
+
 				fields[i] = taxField;
 				break;
 
-			case LOT://TODO: Change it!
+			// TODO: Insert rent info
+			case LOT:// TODO: Change it!
 				desc = formatText(tmp.getTitle(), 10); // TODO: How do you center the text?
 				sub = "Pris: " + ((OwnableField) tmp).getPrice();
 				fgColor = getFgColor(((LotField) tmp).getColor()); // TODO: Rename method name: getLotFgColor
@@ -119,17 +156,13 @@ public class Main {
 
 				fields[i] = new GUI_Street(title, sub, desc, "0", bgColor, fgColor);
 				break;
-			/*
-			 * case SHIPPING: break; case START: break; case VISITJAIL: break;
-			 */
-				
-			case SHIPPING:				
+			case SHIPPING:
 				GUI_Shipping shipField = new GUI_Shipping();
 				shipField.setTitle(title);
-				shipField.setSubText("Pris: " + ((OwnableField)tmp).getPrice());
-				shipField.setDescription(desc.length()==0?tmp.getTitle():desc); // If no desc. insert title
-				
-				fields[i]=shipField;
+				shipField.setSubText("Pris: " + ((OwnableField) tmp).getPrice());
+				shipField.setDescription(desc.length() == 0 ? tmp.getTitle() : desc); // If no desc. insert title
+
+				fields[i] = shipField;
 				break;
 			default:
 
