@@ -17,7 +17,5 @@ public class ChanceCardController {
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
 
 		return cardArray[nextCard];
-	}
-	
-	
+	}	
 }
