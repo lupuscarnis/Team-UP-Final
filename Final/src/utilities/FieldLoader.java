@@ -48,6 +48,20 @@ public class FieldLoader {
 
 					// set attribs. according to FieldType
 					switch (fieldType) {
+					
+					case START:
+					case INCOMETAX:
+					case EXTRATAX:
+					case GOTOJAIL:
+					case VISITJAIL:
+					case FREEPARKING:
+						field = new Field(fieldType, fieldNo, text1, arr[3]);
+						break;
+						
+					case CHANCE:					
+						field = new Field(fieldType, fieldNo, text1);
+						break;
+
 					case BREWERY:
 						field = new BreweryField(fieldType, fieldNo, text1, Integer.parseInt(arr[3]),
 								Integer.parseInt(arr[4]),
@@ -76,28 +90,6 @@ public class FieldLoader {
 						String text2 = arr[5];
 
 						field = new ShippingField(fieldType, fieldNo, text1, shipPrice, shipPawnPrice, text2, shipRent);
-						break;
-					case START:
-						String startT2 = arr[3];
-						field = new Field(fieldType, fieldNo, text1, startT2);
-						break;
-					case VISITJAIL:
-						field = new Field(fieldType, fieldNo, text1);
-						break;
-					case CHANCE:
-						field = new Field(fieldType, fieldNo, text1);
-						break;
-					case EXTRATAX:
-						field = new Field(fieldType, fieldNo, text1, arr[3]);
-						break;
-					case FREEPARKING:
-						field = new Field(fieldType, fieldNo, text1);
-						break;
-					case GOTOJAIL:
-						field = new Field(fieldType, fieldNo, text1);
-						break;
-					case INCOMETAX:
-						field = new Field(fieldType, fieldNo, text1, arr[3]);
 						break;
 					}
 					fields[fieldNo - 1] = field;

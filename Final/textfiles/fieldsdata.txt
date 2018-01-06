@@ -1,6 +1,6 @@
 [LOTS]
 [Type/Number/Text1/Price/PawnPrice/Color/houseCost/hotelCost/rentLot/rent1House/rent2Houses/rent3Houses/rent4Houses/rentHotel]
-LOT;2;Rødovrevej;1200;600;BLUE;8888;7777;50;250;750;2250;4000;6000;
+LOT;2;Rødovrevej;1200;600;BLUE;1000;1000;50;250;750;2250;4000;6000;
 LOT;4;Hvidovrevej;1200;600;BLUE;1000;1000;50;250;750;2250;4000;6000;
 LOT;7;Roskildevej;2000;1000;PINK;1000;1000;100;600;1800;5400;8000;11000;
 LOT;9;Valby Langgade;2000;1000;PINK;1000;1000;100;600;1800;5400;8000;11000;
@@ -26,18 +26,18 @@ LOT;40;Rådhuspladsen;8000;4000;PURPLE;4000;4000;1000;4000;12000;28000;34000;400
 [Type/Number/Text1/Price/PawnPrice/Text2/rentOne/rentTwo/rentThree/rentFour]
 SHIPPING;6;SFL;4000;2000;;500;1000;2000;4000;
 SHIPPING;16;DSB;4000;2000;Kalundborg/Århus;500;1000;2000;4000;
-SHIPPING;26;DFDS SEAWAYS;4000;2000;;500;1000;2000;4000;
+SHIPPING;26;DFDS;4000;2000;;500;1000;2000;4000;
 SHIPPING;36;DSB;4000;2000;Halsskov/Knudshoved;500;1000;2000;4000;
 [BREWERIES]
 [Type/Number/Text1/Price/PawnPrice/rentOneOwned/rentTwoOwned]
 BREWERY;13;Tuborg;3000;1500;100;200;
-BREWERY;29;Coca Cola;3000;1500;100;200;
+BREWERY;29;Carlsberg;3000;1500;100;200;
 [REGULAR]
 [Type/Number/Text1/Text2]
-START;1;Start;Modtag 4000;
-VISITJAIL;11;I fængsel;På besøg;
-FREEPARKING;21;Parkering;Den Danske Bank;
-GOTOJAIL;31;De fængsles;;
+START;1;Start;Hver gang De passerer modtag kr. 4000;
+VISITJAIL;11;Fængsel;På besøg;
+FREEPARKING;21;Parkering;Gratis parkering.;
+GOTOJAIL;31;De fængsles;Gå direkte i fængsel!;
 INCOMETAX;5;Indkomstskat;Betal indkomstskat - 10% eller kr. 4000;
 EXTRATAX;39;Ekstra skat;Ekstraordinær statsskat - betal kr. 2000;
 [CHANCE]
