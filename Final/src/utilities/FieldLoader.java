@@ -78,7 +78,8 @@ public class FieldLoader {
 						field = new ShippingField(fieldType, fieldNo, text1, shipPrice, shipPawnPrice, text2, shipRent);
 						break;
 					case START:
-						field = new Field(fieldType, fieldNo, text1);
+						String startT2 = arr[3];
+						field = new Field(fieldType, fieldNo, text1, startT2);
 						break;
 					case VISITJAIL:
 						field = new Field(fieldType, fieldNo, text1);

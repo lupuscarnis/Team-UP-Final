@@ -34,7 +34,7 @@ BREWERY;13;Tuborg;3000;1500;100;200;
 BREWERY;29;Coca Cola;3000;1500;100;200;
 [REGULAR]
 [Type/Number/Text1/Text2]
-START;1;Start;Hver gang De passerer modtag kr. 4000;
+START;1;Start;Modtag 4000;
 VISITJAIL;11;I fængsel;På besøg;
 FREEPARKING;21;Parkering;Den Danske Bank;
 GOTOJAIL;31;De fængsles;;
