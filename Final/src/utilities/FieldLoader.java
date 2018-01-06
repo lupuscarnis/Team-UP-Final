@@ -48,17 +48,17 @@ public class FieldLoader {
 
 					// set attribs. according to FieldType
 					switch (fieldType) {
-
+					
 					case START:
 					case INCOMETAX:
 					case EXTRATAX:
 					case GOTOJAIL:
 					case VISITJAIL:
+					case FREEPARKING:
 						field = new Field(fieldType, fieldNo, text1, arr[3]);
 						break;
 						
-					case CHANCE:
-					case FREEPARKING:
+					case CHANCE:					
 						field = new Field(fieldType, fieldNo, text1);
 						break;
 
