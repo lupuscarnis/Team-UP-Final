@@ -7,12 +7,17 @@ import controllers.ChanceCardController;
 import controllers.GameBoardController;
 import controllers.GameController;
 import entities.chancecard.ChanceCard;
+import entities.enums.BreweriesOwned;
 import entities.enums.FieldName;
 import entities.enums.FieldType;
 import entities.enums.LotColor;
+import entities.enums.LotRentTier;
+import entities.enums.ShippingOwned;
+import entities.field.BreweryField;
 import entities.field.Field;
 import entities.field.LotField;
 import entities.field.OwnableField;
+import entities.field.ShippingField;
 import gui_fields.GUI_Brewery;
 import gui_fields.GUI_Chance;
 import gui_fields.GUI_Field;
@@ -99,11 +104,11 @@ public class Main {
 				breweryField.setBackGroundColor(Color.black);
 				breweryField.setForeGroundColor(Color.WHITE);
 				breweryField.setSubText("Pris: " + ((OwnableField) tmp).getPrice());
-				breweryField.setDescription(title);
+				breweryField.setDescription(getBreweryDesc((BreweryField) tmp));
 
 				fields[i] = breweryField;
 				break;
-				
+
 			case FREEPARKING:
 				GUI_Refuge refugeField = new GUI_Refuge();
 				refugeField.setTitle(title);
@@ -147,9 +152,8 @@ public class Main {
 				fields[i] = taxField;
 				break;
 
-			// TODO: Insert rent info
-			case LOT:// TODO: Change it!
-				desc = formatText(tmp.getTitle(), 10); // TODO: How do you center the text?
+			case LOT:
+				desc = getLotDesc(tmp); // TODO: How do you center the text?
 				sub = "Pris: " + ((OwnableField) tmp).getPrice();
 				fgColor = getFgColor(((LotField) tmp).getColor()); // TODO: Rename method name: getLotFgColor
 				bgColor = getBgColor(((LotField) tmp).getColor()); // TODO: Rename method name: getLotBgColor
@@ -160,7 +164,7 @@ public class Main {
 				GUI_Shipping shipField = new GUI_Shipping();
 				shipField.setTitle(title);
 				shipField.setSubText("Pris: " + ((OwnableField) tmp).getPrice());
-				shipField.setDescription(desc.length() == 0 ? tmp.getTitle() : desc); // If no desc. insert title
+				shipField.setDescription(getShippingDesc((ShippingField) tmp));
 
 				fields[i] = shipField;
 				break;
@@ -175,12 +179,44 @@ public class Main {
 		GUI g = new GUI(fields);
 
 		g.addPlayer(new GUI_Player("Hansi"));
+	}
 
-		/*
-		 * GameController gc = new GameController();
-		 * 
-		 * gc.play();
-		 */
+	private static String getBreweryDesc(BreweryField field) {
+
+		return String.format(
+				"<div>%s</div>" + "<br>" + "<div>Leje:</div>" + "<br>" + "<div>1 bryggeri: %s x terninger</div>"
+						+ "<br>" + "<div>2 bryggerier: %s x terninger</div>" + "<br>",
+				field.getTitle(), field.getModifierFor(BreweriesOwned.ONE), field.getModifierFor(BreweriesOwned.TWO));
+	}
+
+	private static String getShippingDesc(ShippingField field) {
+
+		String desc = field.getTitle();
+
+		// if desc then insert in title like: DSB (Halskov/Knudshoved)
+		if (field.getDesc().length() > 0)
+			desc = field.getTitle() + " (" + field.getDesc() + ")";
+
+		return String.format(
+				"<div>%s</div>" + "<br />" + "<div>Leje: </div> " + "Hvis 1 rederi ejes: %s" + "<br />"
+						+ "Hvis 2 rederier ejes: %s" + "<br />" + "Hvis 3 rederier ejes: %s" + "<br />"
+						+ "Hvis 4 rederier ejes: %s" + "<br />",
+				desc, field.getRentFor(ShippingOwned.One), field.getRentFor(ShippingOwned.Two),
+				field.getRentFor(ShippingOwned.Three), field.getRentFor(ShippingOwned.Four));
+	}
+
+	private static String getLotDesc(Field field) {
+
+		LotField lf = (LotField) field;
+
+		return String.format("<html><div>%s</div>" + "<div>Pris pr. bygning: %s</div>"
+
+				+ "<div>Leje:</div>" + "<div>Grund: %s</div>" + "<div>m. 1 hus: %s</div>" + "<div>m. 2 hus: %s</div>"
+				+ "<div>m. 3 hus: %s</div>" + "<div>m. 4 hus: %s</div>" + "<div>m. hotel: %s</div>" + "</html>",
+				lf.getTitle(), lf.getBuildingCost(), lf.getRentFor(LotRentTier.Lot),
+				lf.getRentFor(LotRentTier.OneHouse), lf.getRentFor(LotRentTier.TwoHouses),
+				lf.getRentFor(LotRentTier.ThreeHouses), lf.getRentFor(LotRentTier.FourHouses),
+				lf.getRentFor(LotRentTier.Hotel));
 	}
 
 	private static Color getFgColor(LotColor color) {
