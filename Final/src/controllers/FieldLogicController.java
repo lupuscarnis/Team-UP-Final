@@ -1,17 +1,33 @@
 package controllers;
 
+import entities.Player;
 import entities.field.BreweryField;
 import entities.field.Field;
 import entities.field.LotField;
 import entities.field.ShippingField;
 import gui_main.GUI;
+import utilities.FieldLoader;
 
 public class FieldLogicController {
-	private controllers.ChanceCardController ccc;
+	FieldLoader Fl = new FieldLoader();
+	ChanceCardController ccc = new ChanceCardController(null);
 	private controllers.GameBoardController gbc;
 	private boundary.GUIController guic;
 	private GUI gui = null;
-	public entities.Player currentPlayer;
+	Player currentPlayer;
+	Field[] fieldlist = new Field[40];
+	Field[] Fieldlist = Field[40];
+	
+	
+	for (int i = 0; i < fieldlist.length; i++) 
+	{
+		Field tmp = gbc.getFieldByNumber(i + 1);
+
+		String title = tmp.getTitle();
+		String text = tmp.getDesc();
+}
+
+
 	// kan ikke finde en "currentplayer" i Game endnu, taenker at jeg kommer til at bruge den
 	//Game.getCurrentPlayer()
 	
@@ -72,4 +88,5 @@ public class FieldLogicController {
 			throw new Exception("Case not found!");
 		}
 	}	
+
 }
