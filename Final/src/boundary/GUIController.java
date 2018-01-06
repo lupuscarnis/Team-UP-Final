@@ -9,7 +9,7 @@ import gui_main.GUI;
  * Added by Frederik on 06-01-2018 03:02:05
  *
  */
-public class GUIControllerHelp {
+public class GUIController {
 
 	private GUI g = new GUI();
 	private GUI_Player[] gPlayers = null;
