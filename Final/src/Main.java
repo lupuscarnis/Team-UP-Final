@@ -8,6 +8,7 @@ import controllers.GameBoardController;
 import controllers.GameController;
 import entities.chancecard.ChanceCard;
 import entities.enums.FieldName;
+import entities.enums.FieldType;
 import entities.enums.LotColor;
 import entities.field.Field;
 import entities.field.LotField;
@@ -17,6 +18,7 @@ import gui_fields.GUI_Field;
 import gui_fields.GUI_Player;
 import gui_fields.GUI_Start;
 import gui_fields.GUI_Street;
+import gui_fields.GUI_Tax;
 import gui_main.GUI;
 import utilities.ChanceLoader;
 import utilities.FieldLoader;
@@ -91,6 +93,21 @@ public class Main {
 				GUI_Chance chanceField = new GUI_Chance();
 				chanceField.setDescription(title);
 				fields[i] = chanceField;
+				break;
+				
+			case INCOMETAX:
+			case EXTRATAX:				
+				// check wether it's a income or extra tax field,
+				// and insert subtext accordingly.
+				sub = tmp.getFieldType()==FieldType.INCOMETAX?"10% el. 4000":"Betal 2000";
+				
+				GUI_Tax taxField = new GUI_Tax();
+				taxField.setTitle(title);
+				taxField.setDescription(desc);
+				taxField.setBackGroundColor(Color.CYAN);
+				taxField.setSubText(sub);
+				
+				fields[i] = taxField;
 				break;
 
 			case LOT:
