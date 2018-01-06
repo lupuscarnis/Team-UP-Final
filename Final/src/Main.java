@@ -16,6 +16,7 @@ import entities.field.OwnableField;
 import gui_fields.GUI_Chance;
 import gui_fields.GUI_Field;
 import gui_fields.GUI_Player;
+import gui_fields.GUI_Shipping;
 import gui_fields.GUI_Start;
 import gui_fields.GUI_Street;
 import gui_fields.GUI_Tax;
@@ -110,7 +111,7 @@ public class Main {
 				fields[i] = taxField;
 				break;
 
-			case LOT:
+			case LOT://TODO: Change it!
 				desc = formatText(tmp.getTitle(), 10); // TODO: How do you center the text?
 				sub = "Pris: " + ((OwnableField) tmp).getPrice();
 				fgColor = getFgColor(((LotField) tmp).getColor()); // TODO: Rename method name: getLotFgColor
@@ -121,6 +122,15 @@ public class Main {
 			/*
 			 * case SHIPPING: break; case START: break; case VISITJAIL: break;
 			 */
+				
+			case SHIPPING:				
+				GUI_Shipping shipField = new GUI_Shipping();
+				shipField.setTitle(title);
+				shipField.setSubText("Pris: " + ((OwnableField)tmp).getPrice());
+				shipField.setDescription(desc.length()==0?tmp.getTitle():desc); // If no desc. insert title
+				
+				fields[i]=shipField;
+				break;
 			default:
 
 				fields[i] = new GUI_Start(title, sub, desc, Color.WHITE, Color.BLACK);
