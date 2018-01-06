@@ -31,7 +31,7 @@ SHIPPING;36;DSB;4000;2000;Halsskov/Knudshoved;500;1000;2000;4000;
 [BREWERIES]
 [Type/Number/Text1/Price/PawnPrice/rentOneOwned/rentTwoOwned]
 BREWERY;13;Tuborg;3000;1500;100;200;
-BREWERY;29;Coca Cola;3000;1500;100;200;
+BREWERY;29;Carlsberg;3000;1500;100;200;
 [REGULAR]
 [Type/Number/Text1/Text2]
 START;1;Start;Hver gang De passerer modtag kr. 4000;
