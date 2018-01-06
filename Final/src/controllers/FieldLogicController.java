@@ -28,7 +28,7 @@ public class FieldLogicController {
 			break;
 		case CHANCE:
 			ccc.drawChanceCard();
-			ccc.handleDraw();
+			ccc.handleDraw(currentPlayer);
 			// ingen grund til cast da den bare er en Field type
 			break;
 		case EXTRATAX:
