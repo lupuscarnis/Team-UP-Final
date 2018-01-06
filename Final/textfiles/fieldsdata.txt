@@ -35,9 +35,9 @@ BREWERY;29;Coca Cola;3000;1500;100;200;
 [REGULAR]
 [Type/Number/Text1/Text2]
 START;1;Start;Hver gang De passerer modtag kr. 4000;
-VISITJAIL;11;I fængsel;På besøg;
+VISITJAIL;11;Fængsel;På besøg;
 FREEPARKING;21;Parkering;Den Danske Bank;
-GOTOJAIL;31;De fængsles;;
+GOTOJAIL;31;De fængsles;Gå direkte i fængsel!;
 INCOMETAX;5;Indkomstskat;Betal indkomstskat - 10% eller kr. 4000;
 EXTRATAX;39;Ekstra skat;Ekstraordinær statsskat - betal kr. 2000;
 [CHANCE]
