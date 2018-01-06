@@ -65,22 +65,31 @@ public class Main {
 
 			Field tmp = gbc.getFieldByNumber(i + 1);
 
-			String title = "title";// String.format("<html><span style='font-size: 8px;'>%s</span></html>",
-									// tmp.getText1());
+			String title = title = formatText(tmp.getTitle(), 8);
 			String sub = "Sub";// tmp.getText2();
-			String desc = "Desc";// "her kommer en beskrivelse...";
+			String desc = tmp.getDesc();
+			Color fgColor = Color.BLACK;
+			Color bgColor = null;
 
 			switch (tmp.getFieldType()) {
 			/*
 			 * case BREWERY: break; case CHANCE: break; case EXTRATAX: break; case
 			 * FREEPARKING: break; case GOTOJAIL: break; case INCOMETAX: break;
 			 */
+
+			case START:
+				//TODO: How do you make title larger?
+				desc = tmp.getDesc(); // TODO: How do you center the text?
+				sub = "Modtag 4000";
+				bgColor = Color.red;
+
+				fields[i] = new GUI_Start(title, sub, desc, bgColor, fgColor);
+				break;
 			case LOT:
-				title = formatText(tmp.getText1(), 8);
-				desc = formatText(tmp.getText1(), 10); // TODO: How do you center the text?
+				desc = formatText(tmp.getTitle(), 10); // TODO: How do you center the text?
 				sub = "Pris: " + ((OwnableField) tmp).getPrice();
-				Color fgColor = getFgColor(((LotField) tmp).getColor());
-				Color bgColor = getBgColor(((LotField) tmp).getColor());				
+				fgColor = getFgColor(((LotField) tmp).getColor());
+				bgColor = getBgColor(((LotField) tmp).getColor());
 
 				fields[i] = new GUI_Street(title, sub, desc, "0", bgColor, fgColor);
 				break;
