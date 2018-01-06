@@ -5,10 +5,9 @@ package entities.enums;
  *
  */
 public enum FieldName {
-
-	Rådhuspladsen,
-	Fængslet,
-	Grønningen,
+	RÃ¥dhuspladsen,
+	FÃ¦ngslet,
+	GrÃ¸nningen,
 	Start,
 	FrederiksbergAlle
 }

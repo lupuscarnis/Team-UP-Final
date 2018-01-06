@@ -64,7 +64,7 @@ public class GUIController {
 		int index = 0;
 		for (Player p : players) {
 
-			gPlayers[index] = new GUI_Player(p.getName(), p.getBalance(), carList[index]);
+			gPlayers[index] = new GUI_Player(p.getName());
 
 			index++;
 		}
