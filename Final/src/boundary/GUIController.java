@@ -1,6 +1,7 @@
 package boundary;
 
 import java.awt.Color;
+import java.io.IOException;
 
 import controllers.PlayerController;
 import entities.Player;
@@ -16,12 +17,15 @@ import gui_main.GUI;
  */
 public class GUIController {
 
-//	private GUI g = new GUI();
 	private GUI gui = null;
+	//private GUI gui = null;
 	private GUI_Field[] guiFields = null;
 	private GUI_Player[] guiPlayers = null;
-	private GUI_Car[] carList = null;
+	private GUI_Car[] carList = null;	
 	
+	public GUIController() throws IOException {
+		 gui = new BoardGenerator().makeBoard();
+	}	
 	
 	/**
 	 * Added by Frederik on 06-01-2018 03:02:01
@@ -35,11 +39,11 @@ public class GUIController {
 
 	public void setupGUIBoard(Field[] fields) {
 	
-		guiFields = new GUI_Field[40];
+		this.guiFields = new GUI_Field[40];
 		
 		initializeFields(fields);
 		
-		gui = new GUI(guiFields);
+		this.gui = new GUI(this.guiFields);
 		
 	}
 
@@ -56,14 +60,14 @@ public class GUIController {
 				tmp.setSubText(brewery.getPrice()+" kr.");
 				tmp.setDescription(field.getDesc());
 				
-				guiFields[fieldNumber]=tmp;
+				this.guiFields[fieldNumber]=tmp;
 				break;
 			case CHANCE:
 				tmp = new GUI_Chance();
 				tmp.setSubText(field.getTitle());
 				tmp.setDescription(field.getDesc());
 
-				guiFields[fieldNumber]=tmp;
+				this.guiFields[fieldNumber]=tmp;
 				break;
 			case EXTRATAX:
 				tmp = new GUI_Tax();
@@ -71,7 +75,7 @@ public class GUIController {
 				tmp.setSubText(field.getTitle());
 				tmp.setDescription(field.getDesc());
 
-				guiFields[fieldNumber]=tmp;
+				this.guiFields[fieldNumber]=tmp;
 				break;
 			case FREEPARKING:
 				tmp = new GUI_Refuge();
@@ -80,7 +84,7 @@ public class GUIController {
 				tmp.setSubText("Helle");
 				tmp.setBackGroundColor(Color.white);
 
-				guiFields[fieldNumber]=tmp;
+				this.guiFields[fieldNumber]=tmp;
 				break;
 			case GOTOJAIL:
 				tmp = new GUI_Jail();
@@ -88,7 +92,7 @@ public class GUIController {
 				tmp.setSubText(field.getTitle());
 				tmp.setDescription(field.getDesc());
 				
-				guiFields[fieldNumber]=tmp;
+				this.guiFields[fieldNumber]=tmp;
 				break;
 			case INCOMETAX:
 				tmp = new GUI_Tax();
@@ -96,7 +100,7 @@ public class GUIController {
 				tmp.setSubText(field.getTitle());
 				tmp.setDescription(field.getDesc());
 
-				guiFields[fieldNumber]=tmp;
+				this.guiFields[fieldNumber]=tmp;
 				break;
 			case LOT:
 				tmp = new GUI_Street();
@@ -136,7 +140,7 @@ public class GUIController {
 				}
 				tmp.setBackGroundColor(color);
 				
-				guiFields[fieldNumber]=tmp;
+				this.guiFields[fieldNumber]=tmp;
 				break;
 			case SHIPPING:
 				tmp = new GUI_Shipping();
@@ -145,7 +149,7 @@ public class GUIController {
 				tmp.setSubText(shipping.getPrice()+" kr.");
 				tmp.setDescription(field.getDesc());
 				
-				guiFields[fieldNumber]=tmp;
+				this.guiFields[fieldNumber]=tmp;
 				
 				break;
 			case START:
@@ -155,7 +159,7 @@ public class GUIController {
 				tmp.setSubText("");
 				tmp.setBackGroundColor(Color.white);
 
-				guiFields[fieldNumber]=tmp;
+				this.guiFields[fieldNumber]=tmp;
 				break;
 			case VISITJAIL:
 				tmp = new GUI_Jail();
@@ -163,7 +167,7 @@ public class GUIController {
 				tmp.setSubText(field.getDesc());
 				tmp.setDescription(field.getDesc());
 				
-				guiFields[fieldNumber]=tmp;
+				this.guiFields[fieldNumber]=tmp;
 				break;
 			default:
 				break;
@@ -192,7 +196,7 @@ public class GUIController {
 			boolean invalidName=false;
 			do {
 				invalidName=false;
-				name = gui.getUserString("Navn på spiller " + (i + 1) + "?");
+				name = this.gui.getUserString("Navn på spiller " + (i + 1) + "?");
 				//checks for duplicate names
 				for(int a=i;a>0;a--) {
 					if(name.equals(players[a-1])) {
@@ -211,13 +215,13 @@ public class GUIController {
 	}
 
 	private void initializeCarList() {
-		carList = new GUI_Car[6];
-		carList[0] = new GUI_Car(Color.RED, Color.yellow, Type.RACECAR, Pattern.DOTTED);
-		carList[1] = new GUI_Car(Color.YELLOW, Color.yellow, Type.TRACTOR, Pattern.DOTTED);
-		carList[2] = new GUI_Car(Color.black, Color.yellow, Type.CAR, Pattern.DOTTED);
-		carList[3] = new GUI_Car(Color.green, Color.yellow, Type.UFO, Pattern.DOTTED);
-		carList[4] = new GUI_Car(Color.blue, Color.yellow, Type.RACECAR, Pattern.ZEBRA);
-		carList[5] = new GUI_Car(Color.cyan, Color.yellow, Type.TRACTOR, Pattern.ZEBRA);
+		this.carList = new GUI_Car[6];
+		this.carList[0] = new GUI_Car(Color.RED, Color.yellow, Type.RACECAR, Pattern.DOTTED);
+		this.carList[1] = new GUI_Car(Color.YELLOW, Color.yellow, Type.TRACTOR, Pattern.DOTTED);
+		this.carList[2] = new GUI_Car(Color.black, Color.yellow, Type.CAR, Pattern.DOTTED);
+		this.carList[3] = new GUI_Car(Color.green, Color.yellow, Type.UFO, Pattern.DOTTED);
+		this.carList[4] = new GUI_Car(Color.blue, Color.yellow, Type.RACECAR, Pattern.ZEBRA);
+		this.carList[5] = new GUI_Car(Color.cyan, Color.yellow, Type.TRACTOR, Pattern.ZEBRA);
 	}
 	
 	
@@ -227,7 +231,7 @@ public class GUIController {
 	 */
 	private void setupPlayers(Player[] players) {
 		// init. array of GUI_Players
-		guiPlayers = new GUI_Player[players.length];
+		this.guiPlayers = new GUI_Player[players.length];
 
 		// init. array of GUI_Cars
 		initializeCarList();
@@ -236,7 +240,7 @@ public class GUIController {
 		int index = 0;
 		for (Player p : players) {
 			//should use the same constant value for game start amount as argument instead of hardcoding
-			guiPlayers[index] = new GUI_Player(p.getName(), 30000, carList[index]);
+			this.guiPlayers[index] = new GUI_Player(p.getName(), 30000, this.carList[index]);
 
 			index++;
 		}
@@ -261,7 +265,7 @@ public class GUIController {
 	 */
 
 	private void addPlayerToBoard(GUI_Player player) {
-		gui.addPlayer(player);
+		this.gui.addPlayer(player);
 	}
 
 	private void moveCar(int fromField, int toField, GUI_Player player) {
@@ -276,7 +280,7 @@ public class GUIController {
 	 * @param player
 	 */
 	private void addCarToField(int fieldNo, GUI_Player player) {
-		gui.getFields()[fieldNo - 1].setCar(player, true);
+		this.gui.getFields()[fieldNo - 1].setCar(player, true);
 	}
 
 	/**
@@ -286,7 +290,7 @@ public class GUIController {
 	 * @param player
 	 */
 	private void removeCarFromField(int fieldNo, GUI_Player player) {
-		gui.getFields()[fieldNo - 1].setCar(player, false);
+		this.gui.getFields()[fieldNo - 1].setCar(player, false);
 	}
 
 	public void movePlayer(Player playerToMove, int toField) throws Exception {
@@ -300,7 +304,7 @@ public class GUIController {
 
 	private GUI_Player findPlayer(String playerNameToFind) throws Exception {
 
-		for (GUI_Player gPlayer : guiPlayers) {
+		for (GUI_Player gPlayer : this.guiPlayers) {
 
 			if (gPlayer.getName().equals(playerNameToFind))
 				return gPlayer;
