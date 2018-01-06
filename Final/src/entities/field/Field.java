@@ -6,17 +6,17 @@ public class Field {
 
 	private int fieldNumber;
 	private FieldType fieldType;
-	private String text1;
-	private String text2;
+	private String title;
+	private String desc;
 
-	public Field(FieldType fieldType, int fieldNo, String text1) {
-		this(fieldType, fieldNo, text1, "");
+	public Field(FieldType fieldType, int fieldNo, String title) {
+		this(fieldType, fieldNo, title, "");
 	}
 
-	public Field(FieldType fieldType, int fieldNo, String text1, String text2) {
+	public Field(FieldType fieldType, int fieldNo, String title, String desc) {
 		this.fieldNumber = fieldNo;
-		this.text1 = text1;
-		this.setText2(text2);
+		this.title = title;
+		this.desc=desc;
 		this.fieldType = fieldType;
 	}
 
@@ -28,20 +28,20 @@ public class Field {
 		return this.fieldNumber;
 	}
 
-	public String getText1() {
-		return text1;
+	public String getTitle() {
+		return title;
 	}
 
 	public String toString() {
 		return String.format("Type: %s\n" + "Feltnr: %s\n" + "Text1: %s\n" + "Text2: %s\n", getFieldType(),
-				getFieldNumber(), getText1(), getText2());
+				getFieldNumber(), getTitle(), getDesc());
 	}
 
-	public String getText2() {
-		return text2;
+	public String getDesc() {
+		return desc;
 	}
 
-	public void setText2(String text2) {
-		this.text2 = text2;
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 }

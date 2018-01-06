@@ -11,8 +11,8 @@ public class GameBoardController {
 		this.fieldArray = fields;
 	}
 
-	// Finde nærmeste færge (fra nuvær. pos)
-	// Find nærmeste rederi (fra nuvær. pos)
+	// Finde nï¿½rmeste fï¿½rge (fra nuvï¿½r. pos)
+	// Find nï¿½rmeste rederi (fra nuvï¿½r. pos)
 	public Field getNearestShipping(int currentPosition) {
 		// TODO Auto-generated method stub
 		return null;
@@ -23,20 +23,20 @@ public class GameBoardController {
 		switch (fieldToFind) {
 		case Start:
 			return getFieldByNumber(1);
-		case Fængslet:
+		case FÃ¦ngslet:
 			return getFieldByNumber(11);
 		case FrederiksbergAlle:
 			return getFieldByNumber(12);
-		case Grønningen:
+		case GrÃ¸nningen:
 			return getFieldByNumber(25);
-		case Rådhuspladsen:
+		case RÃ¥dhuspladsen:
 			return getFieldByNumber(40);
 		default:
 			throw new Exception("Feltet blev ikke fundet!");
 		}
 	}
 
-	// Finde "Ryk tre felter tilbage" (fra nuvær. pos)
+	// Finde "Ryk tre felter tilbage" (fra nuvï¿½r. pos)
 	public Field getFieldRelativeToPos(int currentPos, int numberOffields) {
 		// TODO Auto-generated method stub
 		return null;
