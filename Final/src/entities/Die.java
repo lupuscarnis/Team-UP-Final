@@ -27,7 +27,7 @@ public class Die {
 	public int roll()
 	{
 		
-		 value = ((int)Math.random()*maxValue)+minValue;
+		 value = (int)(Math.random()*maxValue)+minValue;
 		
 		return value;
 	}
