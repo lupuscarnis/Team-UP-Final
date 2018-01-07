@@ -36,4 +36,6 @@ public abstract class OwnableField extends Field {
 	public String toString() {
 		return super.toString() + String.format("Pawnprice: %s\n" + "Price: %s\n", getPawnPrice(), getPrice());
 	}
+	
+	
 }

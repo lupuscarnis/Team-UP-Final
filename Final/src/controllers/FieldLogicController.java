@@ -59,9 +59,10 @@ public class FieldLogicController {
 			gui.showMessage("you have landed on a  "+field.getFieldType()+" do you wish to purchase it?");
 			break;
 		case CHANCE:
+			gui.showMessage("you have landed on "+field.getFieldType()+" draw a card");
 			ccc.drawChanceCard();
 			ccc.handleDraw(currentPlayer);
-			gui.showMessage("you have landed on "+field.getFieldType()+" draw a card");
+			
 			// ingen grund til cast da den bare er en Field type
 			break;
 		case EXTRATAX:
@@ -70,12 +71,13 @@ public class FieldLogicController {
 			// ingen grund til cast da den bare er en Field type
 			break;
 		case FREEPARKING:
-			gui.showMessage("you have landed on "+field.getFieldType());
+			gui.showMessage("you have landed on "+field.getFieldType()+" nothing happens");
 			// ingen grund til cast da den bare er en Field type
 			break;
 		case GOTOJAIL:
 			gui.showMessage("you have landed on "+field.getFieldType());
 			guic.movePlayer(currentPlayer, 10);
+			currentPlayer.isInJail(true);
 			// er saa vidt jeg forstaar ikke muligt at implementere pt.
 			// ingen grund til cast da den bare er en Field type
 			break;
@@ -87,7 +89,6 @@ public class FieldLogicController {
 			break;
 		case LOT:
 			LotField lf = (LotField)field;
-			//mangler metode
 		//currentPlayer.getCurrentField().getPrice();
 			gui.showMessage("you have landed on "+field.getFieldType()+" do you wish to purchase it?");
 			break;
