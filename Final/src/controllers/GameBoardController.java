@@ -1,9 +1,13 @@
 package controllers;
 
+import entities.Player;
 import entities.enums.FieldName;
 import entities.field.Field;
+import entities.field.OwnableField;
 
 public class GameBoardController {
+
+	public static final int FIELD_COUNT = 40;
 
 	private Field[] fieldArray = null;
 
@@ -48,5 +52,81 @@ public class GameBoardController {
 
 	public Field[] getFields() {
 		return fieldArray;
+	}
+
+	/**
+	 * Added by Frederik on 07-01-2018 00:48:33
+	 * 
+	 * Gets all fields by current owner
+	 * 
+	 * NB: It's not optimized, but it can wait for ArrayList :)
+	 * 
+	 * @param currentPlayer
+	 * @return
+	 */
+	public OwnableField[] getFieldsByOwner(Player currentOwner) {
+
+		int count = 0;
+		for (Field field : fieldArray) {
+
+			if (field instanceof OwnableField) {
+				OwnableField of = (OwnableField) field;
+
+				if (of.getOwner() == currentOwner)
+					count++;
+			}
+		}
+
+		if (count > 0) {
+			OwnableField[] tmp = new OwnableField[count];
+
+			int index = 0;
+			for (Field field : fieldArray) {
+
+				if (field instanceof OwnableField) {
+					OwnableField of = (OwnableField) field;
+
+					if (of.getOwner() == currentOwner) {
+						tmp[index] = of;
+						index++;
+					}
+				}
+			}
+			return tmp;
+		}
+
+		return new OwnableField[0];
+	}
+
+	/**
+	 * Added by Frederik on 07-01-2018 01:11:42
+	 * 
+	 * I know it's not optimized, but since we can't use ArrayList...
+	 * 
+	 * @return All ownable fields
+	 */
+	public OwnableField[] getAllOwnableFields() {
+		int count = 0;
+		for (Field field : fieldArray) {
+
+			if (field instanceof OwnableField) {
+				OwnableField of = (OwnableField) field;
+
+				count++;
+			}
+		}
+
+		OwnableField[] tmp = new OwnableField[count];
+		int index = 0;
+		for (Field field : fieldArray) {
+
+			if (field instanceof OwnableField) {
+				OwnableField of = (OwnableField) field;
+
+				tmp[index] = of;
+				index++;
+			}
+		}
+		return tmp;
 	}
 }

@@ -3,19 +3,21 @@ package entities;
 import entities.field.Field;
 
 public class Player {
-	private Account _account = null;
-	private String _name = "";
-	private Field _currentField = null; // Current field player is on.
-	private Field _previousField = null; // Previous field player stood on.
-	private boolean _isInJail;
-	
-	
+	private Account account = null;
+	private String name = "";
+	private Field currentField = null; // Current field player is on.
+	private Field previousField = null; // Previous field player stood on.
+	private boolean isInJail;
+	private boolean hasJailCard = false;
+
+	public Player(String name, int startAmount) {
+		this(name, startAmount, null);
+	}
 
 	public Player(String name, int startAmount, Field currentField) {
-		_account = new Account(startAmount);
-		_name=name;
-		this._currentField=currentField;
-		
+		this.account = new Account(startAmount);
+		this.name = name;
+		this.currentField = currentField;
 	}
 
 	/**
@@ -27,10 +29,10 @@ public class Player {
 	public void setCurrentField(Field newField) {
 
 		// Indicates if user was on a field earlier or not.
-		if (_currentField != null)
-			_previousField = _currentField;
+		if (this.currentField != null)
+			this.previousField = this.currentField;
 
-		_currentField = newField;
+		this.currentField = newField;
 	}
 
 	/**
@@ -39,17 +41,17 @@ public class Player {
 	 * @return returns the field the player is standing on.
 	 */
 	public Field getCurrentField() {
-		return _currentField;
+		return this.currentField;
 	}
 
 	/**
 	 * @version 1.0
 	 * @author Fredrik Charles
 	 * @param Navnet
-	 *            på spiller
+	 *            pï¿½ spiller
 	 */
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	/**
@@ -58,7 +60,7 @@ public class Player {
 	 * @return returns player names.
 	 */
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	/**
@@ -67,8 +69,8 @@ public class Player {
 	 * @return Returns The players account balance.
 	 */
 	public int getBalance() {
-		
-		return _account.getBalance();
+
+		return this.account.getBalance();
 	}
 
 	/**
@@ -78,7 +80,7 @@ public class Player {
 	 * @return Deposit Money.
 	 */
 	public void deposit(int deposit) {
-		_account.deposit(deposit);
+		this.account.deposit(deposit);
 
 	}
 
@@ -89,7 +91,7 @@ public class Player {
 	 * @return Returns if the withdraw was successful or not.
 	 */
 	public boolean withdraw(int amount) {
-		boolean temp = _account.withdraw(amount);
+		boolean temp = account.withdraw(amount);
 		return temp;
 	}
 
@@ -100,39 +102,65 @@ public class Player {
 	 *            Sets the current balance to the amount given.
 	 */
 	public void setBalance(int balance) {
-		_account.setBalance(balance);
+		this.account.setBalance(balance);
 	}
 
 	public String toString() {
-		return "Navn: " + "Balance: " + _account.getBalance() + "Står på: " + _currentField;
+		return "Navn: " + "Balance: " + account.getBalance() + "StÃ¥r pÃ¥: " + currentField;
 	}
 
 	public Account getAccount() {
-		return this._account;
+		return this.account;
 	}
 
 	public Field getPreviousField() {
-		return _previousField;
+		return this.previousField;
 	}
 
 	public void isInJail(boolean isInJail) {
-		_isInJail = isInJail;
+		this.isInJail = isInJail;
 	}
 
 	public boolean isInJail() {
 
-		return _isInJail;
+		return this.isInJail;
 	}
-	
 
-	
-	//Opgøre sin formue så vi kan løse denne: "Deres kontante penge + skøder + bygninger ikke overstiger kr. 15000."
-		// og måske også Win condition?
-		public int getNetWorth() {return 0;}
-		
-		// Count no. of houses owned.
-		public int getHousesOwned() {return 0;}
-		
-		// Count no. of hotels owned.
-		public int getHotelsOwned() {return 0;}
+	// OpgÃ¸re sin formue sÃ¥ vi kan lÃ¦se denne: "Deres kontante penge + skÃ¸der +
+	// bygninger ikke overstiger kr. 15000."
+	// og mÃ¥ske ogsÃ¥ Win condition?
+	public int getNetWorth() {
+		return getBalance();
+	}
+
+	// Count no. of houses owned.
+	public int getHousesOwned() {
+		return 0;
+	}
+
+	// Count no. of hotels owned.
+	public int getHotelsOwned() {
+		return 0;
+	}
+
+	/**
+	 * Added by Frederik on 06-01-2018 21:55:29
+	 * 
+	 * Indicates whether player has GetOutOfJailForFreeCard or not.
+	 * 
+	 * @param hasCard
+	 */
+	public void setJailCard(boolean hasCard) {
+		this.hasJailCard = hasCard;
+	}
+	/**
+	 * Added by Frederik on 06-01-2018 22:02:44 
+	 * 
+	 * Returns GetOutOfJailCard status
+	 * 
+	 * @return
+	 */
+	public boolean getJailCard() {
+		return this.hasJailCard;
+	}
 }

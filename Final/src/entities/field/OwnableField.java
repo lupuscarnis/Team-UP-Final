@@ -1,5 +1,6 @@
 package entities.field;
 
+import entities.Player;
 import entities.enums.FieldType;
 /**
  * Added by Frederik on 05-01-2018 22:48:23 
@@ -9,6 +10,7 @@ public abstract class OwnableField extends Field {
 
 	private int price;
 	private int pawnPrice;
+	private Player owner = null;
 
 	public OwnableField(FieldType fieldType, int fieldNo, String text1, int price, int pawnPrice) {
 		super(fieldType, fieldNo, text1);
@@ -31,6 +33,14 @@ public abstract class OwnableField extends Field {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	public Player getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Player owner) {
+		this.owner = owner;
 	}
 
 	public String toString() {

@@ -10,12 +10,11 @@ import utilities.MyRandom;
 
 public class GameController {
 
-	FieldLoader fl = new FieldLoader();
-	GUIController gui = null;
-	private PlayerController pc = new PlayerController();
+	private FieldLogicController flc = null;
+	private GUIController gui = null;
+	private PlayerController pc = null;
+	private GameBoardController gbc = null;
 	// TODO: Move/share.
-	GameBoardController gbc = null;
-
 
 	// CONSTANTS
 	private static final int PLAYER_MIN = 3;
@@ -28,7 +27,6 @@ public class GameController {
 	private static final int MONEY_JAIL = 1000; // Amount to pay to leave jail
 	private static final int TAX_CASH_AMOUNT = 4000;
 	private static final double TAX_PERCENTAGE_AMOUNT = 0.1;
-	private static final int FIELD_COUNT = 40; // Move to GBC??
 
 	// ATTRIBUTES
 	private Player[] players = null;
@@ -36,36 +34,35 @@ public class GameController {
 	private Player startPlayer = null; // Who starts first
 	private Player currentPlayer = null; // The current players round
 
-
 	// FOR TESTING PURPOSES!
 
 	// Testing Gameover
-	
+
+	public GameController() throws IOException {
+		gui = new GUIController();
+		gbc = new GameBoardController(new FieldLoader().getFields());
+		flc = new FieldLogicController(gbc, gui);
+		pc = new PlayerController();
+	}
+
 	private boolean gameOver(Player[] players) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	// Testing player is in jail
-	
+
 	private boolean isJail(Player[] players) {
 		// TODO Auto-generated method stub
 		return false;
-	}	
+	}
 
 	// Testing player gets out of jail
-	
+
 	private boolean getOutJail(Player[] players) {
 		// TODO Auto-generated method stub
 		return false;
-	}	
-
-
-	public GameController() throws IOException {
-		gui = new GUIController();
-		gbc = new GameBoardController(fl.getFields());
-	}	
-
+	}
 
 	public void setupGame() throws Exception {
 
@@ -76,19 +73,10 @@ public class GameController {
 		players = pc.createNewPlayers(playerNames);
 
 		// now GUI can be setup with players
-		gui.setup(players);				
+		gui.setup(players);
 	}
 
-	/**
-	 * 
-	 * From CDIO3 @ Frederik
-	 * 
-	 * @throws Exception
-	 */
-
-
-
-	public void play() throws Exception{
+	public void play() throws Exception {
 
 		// setup
 		setupGame();
@@ -102,12 +90,11 @@ public class GameController {
 
 		// start game loop
 
-		while(!gameOver(players))
-		{
+		while (!gameOver(players)) {
 
 			// Checking which players starts first if turn == 1
 
-			if (turn == 1) {	
+			if (turn == 1) {
 
 				// Get first player from highest "roll"
 				currentPlayer = getStartPlayer(players);
@@ -115,46 +102,48 @@ public class GameController {
 			} else {
 
 				// find next player
-				currentPlayer = getNextPlayer(players);	
+				currentPlayer = getNextPlayer(players);
 
 			}
 
 			// Starting main round play through
-
 			System.out.println("-- Round: " + turn + " --");
 
-			if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player !isJail or (isJail and pays a fee to get out)
+			if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player !isJail or (isJail and pays a
+																				// fee to get out)
 
-				if (isJail(players) && getOutJail(players)) System.out.println("-- Player payed 1000kr to get out of jail --");
+				if (isJail(players) && getOutJail(players))
+					System.out.println("-- Player payed 1000kr to get out of jail --");
 
-				// Throw Die
+				// roll and move player
+				flc.rollAndMove(currentPlayer);
 
-				int faceValue = MyRandom.randInt(2, 12);
+				// resolve field
+				flc.resolveField(currentPlayer);
 
-				// get next field
+				// Check if player still has money or should be removed.
+				int playerCount = players.length;
+				BusinessLogicController blc = new BusinessLogicController(gui, gbc);
+				players = blc.evaluatePlayer(currentPlayer, players);
+				
+				// No players left = Game over
+				if(players.length==0)
+				{
+					System.out.println("Game over!!!!!!!");
+					//TODO: Beautify!!!!
+					break;
+				}
+				
+				//TODO: Needs to be handled properly!
+				if(players.length<playerCount)
+					lastPlayer=players[0];				
 
-				int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
-				Field nextField = this.getNextField(currentFieldNo, faceValue);
-
-				Thread.sleep(1000);
-
-				// Update current pos on player object (should be moved to a controller...)
-
-				currentPlayer.setCurrentField(nextField);
-
-				// Move player
-
-				gui.movePlayer(currentPlayer, nextField.getFieldNumber());			
-
-				// Evaluate Field
-
-
+				Thread.sleep(400);
 
 			} else { // Player isJail, doesn't pay the fee and must therefore wait until next turn
 
-				System.out.println("-- Player must skip this turn --");	
-
-			}			
+				System.out.println("-- Player must skip this turn --");
+			}
 
 			turn++;
 
@@ -170,25 +159,6 @@ public class GameController {
 
 	}
 
-	/**
-	 * Added by Frederik on 23-11-2017 17:50:40
-	 * 
-	 * Calculates and returns next field for player.
-	 * 
-	 * @param faceValue
-	 * @param currentFieldNumber
-	 * @return
-	 */
-	public Field getNextField(int currentFieldNumber, int faceValue) {
-
-		int nextFieldNo = faceValue + currentFieldNumber;
-
-		// Check for valid next field
-		if (nextFieldNo > FIELD_COUNT)
-			nextFieldNo += -FIELD_COUNT;
-
-		return gbc.getFieldByNumber(nextFieldNo);
-	}
 	/**
 	 * Added by Frederik on 23-11-2017 17:34:24
 	 * 
@@ -238,15 +208,14 @@ public class GameController {
 
 	public Player getStartPlayer(Player[] players) throws Exception {
 
-
 		int numPlayers = players.length;
 		int newHighest = 0;
 
-		for(int i=0; i<numPlayers; i++) {
+		for (int i = 0; i < numPlayers; i++) {
 
 			int resultRoll = MyRandom.randInt(1, 6);
 
-			if(resultRoll > newHighest) {
+			if (resultRoll > newHighest) {
 
 				newHighest = resultRoll;
 
@@ -256,9 +225,9 @@ public class GameController {
 
 			System.out.println(players[i].getName() + " Rolled " + resultRoll);
 
-		} 
+		}
 
-		if(startPlayer != null) {
+		if (startPlayer != null) {
 
 			System.out.println("-- " + startPlayer.getName() + " goes first! --");
 
@@ -267,6 +236,5 @@ public class GameController {
 
 		throw new Exception("No players were found!");
 	}
-
 
 }
