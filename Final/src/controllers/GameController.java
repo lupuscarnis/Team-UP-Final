@@ -119,7 +119,7 @@ public class GameController {
 				flc.rollAndMove(currentPlayer);
 
 				// resolve field
-				flc.resolveField(currentPlayer);
+				flc.resolveField(currentPlayer.getCurrentField());
 
 				// Check if player still has money or should be removed.
 				int playerCount = players.length;
