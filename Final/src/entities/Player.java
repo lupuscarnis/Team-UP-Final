@@ -106,7 +106,7 @@ public class Player {
 	}
 
 	public String toString() {
-		return "Navn: " + "Balance: " + account.getBalance() + "St�r p�: " + currentField;
+		return "Navn: " + "Balance: " + account.getBalance() + "Står på: " + currentField;
 	}
 
 	public Account getAccount() {
@@ -126,9 +126,9 @@ public class Player {
 		return this.isInJail;
 	}
 
-	// Opg�re sin formue s� vi kan l�se denne: "Deres kontante penge + sk�der +
+	// Opgøre sin formue så vi kan læse denne: "Deres kontante penge + skøder +
 	// bygninger ikke overstiger kr. 15000."
-	// og m�ske ogs� Win condition?
+	// og måske også Win condition?
 	public int getNetWorth() {
 		return getBalance();
 	}
