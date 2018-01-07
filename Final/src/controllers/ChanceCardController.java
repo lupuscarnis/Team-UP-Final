@@ -32,17 +32,17 @@ public class ChanceCardController {
 		// Draw: Get out of jail for free
 		if (card instanceof GetOutJailForFreeChanceCard) {
 
-<<<<<<< HEAD
+
 			// 31;I anledning af kongens fødselsdag benådes de herved for fængsel. Dette
 			// kort kan opbevares, indtil de får brug for det, eller de kan sælge det.
 			// 32;I anledning af kongens fødselsdag benådes de herved for fængsel. Dette
 			// kort kan opbevares, indtil de får brug for det, eller de kan sælge det.
-=======
+
 			// 31;I anledning af kongens fødselsdag benådes de herved for føngsel. Dette
 			// kort kan opbevares, indtil de før brug for det, eller de kan sælge det.
 			// 32;I anledning af kongens fødselsdag benådes de herved for føngsel. Dette
 			// kort kan opbevares, indtil de før brug for det, eller de kan sælge det.
->>>>>>> branch 'develop' of https://github.com/lupuscarnis/Team-UP-Final.git
+
 			switch (card.getId()) {
 
 			case 31:
@@ -89,11 +89,11 @@ public class ChanceCardController {
 			case 20:
 				break;
 
-<<<<<<< HEAD
+
 			// Ryk frem til Frederiksberg Allê. Hvis de passerer start, indkasser kr. 4000.
-=======
+
 			// Ryk frem til Frederiksberg Alle. Hvis de passerer start, indkasser kr. 4000.
->>>>>>> branch 'develop' of https://github.com/lupuscarnis/Team-UP-Final.git
+
 			case 29:
 				break;
 
