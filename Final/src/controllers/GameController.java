@@ -9,13 +9,12 @@ import utilities.FieldLoader;
 import utilities.MyRandom;
 
 public class GameController {
-	
+
 	private FieldLogicController flc = null;
-	private GUIController gui = null;	
-	private PlayerController pc = null;	
+	private GUIController gui = null;
+	private PlayerController pc = null;
 	private GameBoardController gbc = null;
 	// TODO: Move/share.
-	
 
 	// CONSTANTS
 	private static final int PLAYER_MIN = 3;
@@ -35,41 +34,35 @@ public class GameController {
 	private Player startPlayer = null; // Who starts first
 	private Player currentPlayer = null; // The current players round
 
-
 	// FOR TESTING PURPOSES!
 
 	// Testing Gameover
-	
+
 	public GameController() throws IOException {
 		gui = new GUIController();
 		gbc = new GameBoardController(new FieldLoader().getFields());
-		flc = new FieldLogicController(gbc,gui);
+		flc = new FieldLogicController(gbc, gui);
 		pc = new PlayerController();
-	}	
-	
-	
+	}
+
 	private boolean gameOver(Player[] players) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	// Testing player is in jail
-	
+
 	private boolean isJail(Player[] players) {
 		// TODO Auto-generated method stub
 		return false;
-	}	
+	}
 
 	// Testing player gets out of jail
-	
+
 	private boolean getOutJail(Player[] players) {
 		// TODO Auto-generated method stub
 		return false;
-	}	
-
-
-	
-
+	}
 
 	public void setupGame() throws Exception {
 
@@ -80,10 +73,10 @@ public class GameController {
 		players = pc.createNewPlayers(playerNames);
 
 		// now GUI can be setup with players
-		gui.setup(players);				
+		gui.setup(players);
 	}
 
-	public void play() throws Exception{
+	public void play() throws Exception {
 
 		// setup
 		setupGame();
@@ -97,12 +90,11 @@ public class GameController {
 
 		// start game loop
 
-		while(!gameOver(players))
-		{
+		while (!gameOver(players)) {
 
 			// Checking which players starts first if turn == 1
 
-			if (turn == 1) {	
+			if (turn == 1) {
 
 				// Get first player from highest "roll"
 				currentPlayer = getStartPlayer(players);
@@ -110,39 +102,48 @@ public class GameController {
 			} else {
 
 				// find next player
-				currentPlayer = getNextPlayer(players);	
+				currentPlayer = getNextPlayer(players);
 
 			}
 
 			// Starting main round play through
 			System.out.println("-- Round: " + turn + " --");
 
-			if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player !isJail or (isJail and pays a fee to get out)
+			if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player !isJail or (isJail and pays a
+																				// fee to get out)
 
-				if (isJail(players) && getOutJail(players)) System.out.println("-- Player payed 1000kr to get out of jail --");
+				if (isJail(players) && getOutJail(players))
+					System.out.println("-- Player payed 1000kr to get out of jail --");
 
-				
-				
-				
-				// roll and move player				
-				flc.rollAndMove(currentPlayer);				
-				
+				// roll and move player
+				flc.rollAndMove(currentPlayer);
+
 				// resolve field
 				flc.resolveField(currentPlayer);
 
-				Thread.sleep(1500);
+				// Check if player still has money or should be removed.
+				int playerCount = players.length;
+				BusinessLogicController blc = new BusinessLogicController(gui, gbc);
+				players = blc.evaluatePlayer(currentPlayer, players);
+				
+				// No players left = Game over
+				if(players.length==0)
+				{
+					System.out.println("Game over!!!!!!!");
+					//TODO: Beautify!!!!
+					break;
+				}
+				
+				//TODO: Needs to be handled properly!
+				if(players.length<playerCount)
+					lastPlayer=players[0];				
 
-						
-
-				// Evaluate Field
-
-
+				Thread.sleep(400);
 
 			} else { // Player isJail, doesn't pay the fee and must therefore wait until next turn
 
-				System.out.println("-- Player must skip this turn --");	
-
-			}			
+				System.out.println("-- Player must skip this turn --");
+			}
 
 			turn++;
 
@@ -207,15 +208,14 @@ public class GameController {
 
 	public Player getStartPlayer(Player[] players) throws Exception {
 
-
 		int numPlayers = players.length;
 		int newHighest = 0;
 
-		for(int i=0; i<numPlayers; i++) {
+		for (int i = 0; i < numPlayers; i++) {
 
 			int resultRoll = MyRandom.randInt(1, 6);
 
-			if(resultRoll > newHighest) {
+			if (resultRoll > newHighest) {
 
 				newHighest = resultRoll;
 
@@ -225,9 +225,9 @@ public class GameController {
 
 			System.out.println(players[i].getName() + " Rolled " + resultRoll);
 
-		} 
+		}
 
-		if(startPlayer != null) {
+		if (startPlayer != null) {
 
 			System.out.println("-- " + startPlayer.getName() + " goes first! --");
 
@@ -236,6 +236,5 @@ public class GameController {
 
 		throw new Exception("No players were found!");
 	}
-
 
 }

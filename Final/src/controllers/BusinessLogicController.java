@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.Iterator;
+
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.LotRentTier;
@@ -16,9 +18,11 @@ import entities.field.OwnableField;
 public class BusinessLogicController {
 
 	private GUIController gui;
+	private GameBoardController gbc;
 
-	public BusinessLogicController(GUIController gui) {
+	public BusinessLogicController(GUIController gui, GameBoardController gbc) {
 		this.gui =gui;
+		this.gbc = gbc;
 	}
 	
 	
@@ -35,7 +39,12 @@ public class BusinessLogicController {
 
 	// set owner of (ownable)field.
 	public void setOwner(OwnableField field, Player owner) {
-		// TODO: Implement
+
+		// set owner
+		field.setOwner(owner);
+		
+		// update gui
+		gui.removeLotOwner(field);
 	}
 
 	/**
@@ -100,5 +109,44 @@ public class BusinessLogicController {
 		
 		// update balances in gui
 		gui.updateBalance(new Player[] {currentPlayer, owner});
+	}
+
+
+	/**
+	 * Added by Frederik on 07-01-2018 00:05:28 
+	 * 
+	 * Check if player still has money left, else remove player from game
+	 * 
+	 * @param currentPlayer
+	 * @throws Exception 
+	 */
+	public Player[] evaluatePlayer(Player currentPlayer, Player[] allPlayers) throws Exception {		
+		
+		if(currentPlayer.getNetWorth()<=0) {
+			
+			Player[] tmp = new Player[allPlayers.length-1];
+			
+			int inner = 0;
+			// traverse player array and insert into new array			
+			for (int i = 0; i < allPlayers.length; i++) {
+				
+				if(allPlayers[i] !=currentPlayer) {
+					tmp[inner]=allPlayers[i];		
+					inner++;
+				}
+			}
+			
+			// remove all owned fields			
+			for (OwnableField ownedField : gbc.getFieldsByOwner(currentPlayer)) {
+				setOwner(ownedField, null);
+			}			
+		
+			// update gui and remove player 
+			gui.removePlayer(currentPlayer);
+			
+			return tmp;			
+		}
+		
+		return allPlayers;
 	}
 }

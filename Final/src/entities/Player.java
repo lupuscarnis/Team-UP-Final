@@ -130,7 +130,7 @@ public class Player {
 	// bygninger ikke overstiger kr. 15000."
 	// og m�ske ogs� Win condition?
 	public int getNetWorth() {
-		return 0;
+		return getBalance();
 	}
 
 	// Count no. of houses owned.

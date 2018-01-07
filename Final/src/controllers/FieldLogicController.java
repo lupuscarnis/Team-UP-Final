@@ -41,9 +41,9 @@ public class FieldLogicController {
 		case INCOMETAX:
 			// ingen grund til cast da den bare er en Field type
 			break;
-		case LOT:
+		case LOT:			
 			LotField lf = (LotField) currentField;
-			BusinessLogicController blc = new BusinessLogicController(gui);
+			BusinessLogicController blc = new BusinessLogicController(gui,gbc);
 
 			// no owner!
 			if (lf.getOwner() == null) {
