@@ -25,16 +25,6 @@ public class FieldLogicController {
 	private GUIController gui = null;
 	Player currentPlayer;
 	
-//	Field[] Fieldlist = Field[40];
-	
-	
-
-
-
-	// kan ikke finde en "currentplayer" i Game endnu, taenker at jeg kommer til at bruge den. 
-	//Game.getCurrentPlayer()
-	
-	
 	public FieldLogicController(GameBoardController gbc, GUIController gui) throws IOException {		
 		this.gbc = gbc;
 		this.gui = gui;
@@ -42,32 +32,6 @@ public class FieldLogicController {
 	}
 
 	
-//	public int getPrice(int fieldnumber){
-//	int price = 0;
-//	OwnableField theField = OwnableField(null, fieldnumber, null) ;
-//		return price;
-//		det her gik ikke, har brug for metode der giver mig prisen, med indputtet fieldnumber. kig p[ getfieldbynumber fra bpundary
-//	}
-	
-	
-	//
-	//{
-		//{
-		
-//		Field[] fieldlist = new Field[40];
-//		for (int i = 0; i < fieldlist.length; i++) 
-//		{
-//			Field tmp = gbc.getFieldByNumber(i + 1);
-//
-//			String title = tmp.getTitle();
-//			String text = tmp.getDesc();
-	//	}
-		
-//		switch(field.getFieldType())
-//		{
-
-	//public void resolveField(Player currentPlayer) throws Exception {
-		
 		public void resolveField(Player currentPlayer) throws Exception{
 		
 		Field currentField = currentPlayer.getCurrentField();		
