@@ -65,7 +65,7 @@ public class PlayerController {
 		{
 			
 			Field fb = new OwnableField();
-			int remainder  = (player.getCurrentField().getFieldNumber()
+			int remainder  = (player.getCurrentField().getFieldNumber()%39
 			Field temp = gbc.getFieldByNumber(remainder);
 			player.setCurrentField(temp);
 		}
