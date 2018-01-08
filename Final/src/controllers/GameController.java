@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import boundary.GUIController;
 import entities.Player;
+import entities.enums.UserOption;
 import entities.field.Field;
 import utilities.FieldLoader;
 import utilities.MyRandom;
@@ -16,7 +17,7 @@ public class GameController {
 	private PlayerController pc = null;
 	private GameBoardController gbc = null;
 	private GameLogicCtrl glc = null;;
-	
+
 	// TODO: Move/share.
 
 	// CONSTANTS
@@ -36,7 +37,6 @@ public class GameController {
 	private Player lastPlayer = null; // Who played last turn
 	private Player startPlayer = null; // Who starts first
 	private Player currentPlayer = null; // The current players round
-
 
 	// FOR TESTING PURPOSES!
 
@@ -84,13 +84,13 @@ public class GameController {
 
 		// indicates number of turns in current game
 		int turnCounter = 1;
-		
+
 		// indicates if first turn or not
-		boolean isFirstTurn = true;	
-		
+		boolean isFirstTurn = true;
+
 		// setup
 		setupGame();
-		
+
 		System.out.println("-------------------------");
 		System.out.println("-- The Game has Begun! --");
 		System.out.println("-------------------------");
@@ -100,16 +100,16 @@ public class GameController {
 
 			// Checking which players starts first if turn == 1
 			if (isFirstTurn) {
-				
+
 				// indicate that it's not first turn no more.
 				isFirstTurn = false;
 
 				// Get first player from highest "roll"
 				currentPlayer = getStartPlayer(players);
-				
+
 				// Vis start spil knap
 				gui.showPromt("Start spil");
-				
+
 			} else {
 
 				// find next player
@@ -117,11 +117,10 @@ public class GameController {
 			}
 
 			// present options for user
-			glc.showUserOptions(currentPlayer);
-			
-			
-			
-			
+			UserOption choice = glc.showUserOptions(currentPlayer);
+
+			System.out.println("Choice: " + choice);
+
 			// Starting main round play through
 			System.out.println("-- Round: " + turnCounter + " --");
 
@@ -141,18 +140,17 @@ public class GameController {
 				int playerCount = players.length;
 				BusinessLogicController blc = new BusinessLogicController(gui, gbc);
 				players = blc.evaluatePlayer(currentPlayer, players);
-				
+
 				// No players left = Game over
-				if(players.length==0)
-				{
+				if (players.length == 0) {
 					System.out.println("Game over!!!!!!!");
-					//TODO: Beautify!!!!
+					// TODO: Beautify!!!!
 					break;
 				}
-				
-				//TODO: Needs to be handled properly!
-				if(players.length<playerCount)
-					lastPlayer=players[0];				
+
+				// TODO: Needs to be handled properly!
+				if (players.length < playerCount)
+					lastPlayer = players[0];
 
 				Thread.sleep(400);
 
@@ -160,7 +158,7 @@ public class GameController {
 
 				System.out.println("-- Player must skip this turn --");
 			}
-			
+
 			turnCounter++;
 		}
 
