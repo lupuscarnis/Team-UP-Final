@@ -402,8 +402,10 @@ public class GUIController {
 		gui.getFields()[field.getFieldNumber() - 1].setSubText("Pris: " + field.getPrice());
 	}
 
-	public void showMessage(String string) {
-		// TODO Auto-generated method stub
-		
+	public void showMessage(String string) {		
+		gui.displayChanceCard(string);
+	}
+	public void showPromt(String string) {		
+		gui.showMessage(string);
 	}
 }

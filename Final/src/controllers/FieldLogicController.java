@@ -75,9 +75,7 @@ public class FieldLogicController {
 			currentPlayer.withdraw(4000);
 			// at implementere valget der bruger 10% maa vente lidt
 			// ingen grund til cast da den bare er en Field type
-			break;
-
-		
+			break;	
 
 		case LOT:			
 			LotField lf = (LotField) currentField;
