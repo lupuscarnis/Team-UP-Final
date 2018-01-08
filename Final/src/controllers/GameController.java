@@ -10,10 +10,13 @@ import utilities.MyRandom;
 
 public class GameController {
 
+	// controllers
 	private FieldLogicController flc = null;
 	private GUIController gui = null;
 	private PlayerController pc = null;
 	private GameBoardController gbc = null;
+	private GameLogicCtrl glc = null;;
+	
 	// TODO: Move/share.
 
 	// CONSTANTS
@@ -34,6 +37,7 @@ public class GameController {
 	private Player startPlayer = null; // Who starts first
 	private Player currentPlayer = null; // The current players round
 
+
 	// FOR TESTING PURPOSES!
 
 	// Testing Gameover
@@ -43,6 +47,7 @@ public class GameController {
 		gbc = new GameBoardController(new FieldLoader().getFields());
 		flc = new FieldLogicController(gbc, gui);
 		pc = new PlayerController();
+		glc = new GameLogicCtrl(gui);
 	}
 
 	private boolean gameOver(Player[] players) {
@@ -98,14 +103,22 @@ public class GameController {
 
 				// Get first player from highest "roll"
 				currentPlayer = getStartPlayer(players);
+				
+				// Vis start spil knap
+				gui.showPromt("Start spil");
 
 			} else {
 
 				// find next player
 				currentPlayer = getNextPlayer(players);
-
 			}
 
+			// present options for user
+			glc.showUserOptions(currentPlayer);
+			
+			
+			
+			
 			// Starting main round play through
 			System.out.println("-- Round: " + turn + " --");
 

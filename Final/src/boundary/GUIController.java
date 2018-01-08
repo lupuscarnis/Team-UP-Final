@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import controllers.PlayerController;
 import entities.Player;
+import entities.enums.UserSelection;
 import entities.field.*;
 import gui_fields.*;
 import gui_fields.GUI_Car.Pattern;
@@ -408,4 +409,37 @@ public class GUIController {
 	public void showPromt(String string) {		
 		gui.showMessage(string);
 	}
+
+	/**
+	 * Added by Frederik on 08-01-2018 14:18:05 
+	 * 
+	 * Can show buttons and return selection
+	 * 
+	 * @param label
+	 * @param options
+	 */
+	public UserSelection showOptions(String label, String[] options) {		
+		
+		
+		gui.getUserButtonPressed(label, options);
+		
+		return null;
+		
+		/*
+		switch(gui.getUserButtonPressed(label, options))
+		{
+		case "Start spil":
+			return UserSelection.StartGame;
+	
+		
+		case "Kast Terning":
+			return UserSelection.ThrowDice;
+
+		}
+		*/
+		
+		
+	}
+
+	
 }
