@@ -56,7 +56,6 @@ public class GameController {
 	}
 
 	// Testing player is in jail
-
 	private boolean isJail(Player[] players) {
 		// TODO Auto-generated method stub
 		return false;
@@ -83,30 +82,34 @@ public class GameController {
 
 	public void play() throws Exception {
 
+		// indicates number of turns in current game
+		int turnCounter = 1;
+		
+		// indicates if first turn or not
+		boolean isFirstTurn = true;	
+		
 		// setup
 		setupGame();
-
-		// Start round count
-		int turn = 1;
-
+		
 		System.out.println("-------------------------");
 		System.out.println("-- The Game has Begun! --");
 		System.out.println("-------------------------");
 
 		// start game loop
-
 		while (!gameOver(players)) {
 
 			// Checking which players starts first if turn == 1
-
-			if (turn == 1) {
+			if (isFirstTurn) {
+				
+				// indicate that it's not first turn no more.
+				isFirstTurn = false;
 
 				// Get first player from highest "roll"
 				currentPlayer = getStartPlayer(players);
 				
 				// Vis start spil knap
 				gui.showPromt("Start spil");
-
+				
 			} else {
 
 				// find next player
@@ -120,7 +123,7 @@ public class GameController {
 			
 			
 			// Starting main round play through
-			System.out.println("-- Round: " + turn + " --");
+			System.out.println("-- Round: " + turnCounter + " --");
 
 			if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player !isJail or (isJail and pays a
 																				// fee to get out)
@@ -157,9 +160,8 @@ public class GameController {
 
 				System.out.println("-- Player must skip this turn --");
 			}
-
-			turn++;
-
+			
+			turnCounter++;
 		}
 
 		// if is Player inJail?
