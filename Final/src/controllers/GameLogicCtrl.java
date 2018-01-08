@@ -9,9 +9,11 @@ import utilities.MyRandom;
 public class GameLogicCtrl {
 
 	private GUIController gui;
+	private FieldLogicController flc;
 
-	public GameLogicCtrl(GUIController gui) {
+	public GameLogicCtrl(GUIController gui, FieldLogicController flc) {
 		this.gui = gui;
+		this.flc=flc;
 	}
 
 	public UserOption showUserOptions(Player currentPlayer) throws Exception {
@@ -77,7 +79,7 @@ public class GameLogicCtrl {
 		int faceValue = MyRandom.randInt(2, 12);
 
 		// get next field		
-		Field nextField = this.getNextField(currentFieldNo, faceValue);
+		Field nextField = flc.getNextField(currentFieldNo, faceValue);
 		
 		// Update current pos on player object 
 		currentPlayer.setCurrentField(nextField);

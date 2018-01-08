@@ -47,7 +47,7 @@ public class GameController {
 		gbc = new GameBoardController(new FieldLoader().getFields());
 		flc = new FieldLogicController(gbc, gui);
 		pc = new PlayerController();
-		glc = new GameLogicCtrl(gui);
+		glc = new GameLogicCtrl(gui, flc);
 	}
 
 	private boolean gameOver(Player[] players) {
