@@ -1,18 +1,23 @@
 package controllers;
 
+import java.io.IOException;
+
 import entities.Player;
 import entities.enums.FieldName;
 import entities.field.Field;
 import entities.field.OwnableField;
+import utilities.FieldLoader;
 
 public class GameBoardController {
 
 	public static final int FIELD_COUNT = 40;
 
+	private static GameBoardController instance;
+
 	private Field[] fieldArray = null;
 
-	public GameBoardController(Field[] fields) {
-		this.fieldArray = fields;
+	private GameBoardController() throws IOException {
+		this.fieldArray = new FieldLoader().getFields();
 	}
 
 	// Finde n�rmeste f�rge (fra nuv�r. pos)
@@ -128,5 +133,12 @@ public class GameBoardController {
 			}
 		}
 		return tmp;
+	}
+
+	public static GameBoardController getInstance() throws IOException {
+		if (instance == null)
+			instance = new GameBoardController();
+
+		return instance;
 	}
 }

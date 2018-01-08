@@ -68,7 +68,7 @@ public class GameBoardCtrlTests {
 	@Test
 	public void testGetFieldsByOwner() throws IOException {
 
-		GameBoardController gbc = new GameBoardController(new FieldLoader().getFields());
+		GameBoardController gbc = GameBoardController.getInstance();
 		Player p = new Player("Henny", 0);
 		
 		// 0

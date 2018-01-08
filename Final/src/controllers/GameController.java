@@ -1,24 +1,22 @@
 package controllers;
 
 import java.io.IOException;
-
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.UserOption;
-import entities.field.Field;
-import utilities.FieldLoader;
 import utilities.MyRandom;
 
 public class GameController {
 
 	// controllers
-	private FieldLogicController flc = null;
-	private GUIController gui = null;
-	private PlayerController pc = null;
-	private GameBoardController gbc = null;
-	private GameLogicCtrl glc = null;;
+	private FieldLogicController flc = FieldLogicController.getInstance();
+	private PlayerController pc = PlayerController.getInstance();
+	private GameLogicCtrl glc = GameLogicCtrl.getInstance();	
+	private GUIController gui = GUIController.getInstance();
 
-	// TODO: Move/share.
+	//TODO: Remove
+		private BusinessLogicController blc = BusinessLogicController.getInstance();	
+
 
 	// CONSTANTS
 	private static final int PLAYER_MIN = 3;
@@ -41,13 +39,7 @@ public class GameController {
 	// FOR TESTING PURPOSES!
 
 	// Testing Gameover
-
 	public GameController() throws IOException {
-		gui = new GUIController();
-		gbc = new GameBoardController(new FieldLoader().getFields());
-		flc = new FieldLogicController(gbc, gui);
-		pc = new PlayerController();
-		glc = new GameLogicCtrl(gui, flc);
 	}
 
 	private boolean gameOver(Player[] players) {
@@ -138,7 +130,7 @@ public class GameController {
 
 				// Check if player still has money or should be removed.
 				int playerCount = players.length;
-				BusinessLogicController blc = new BusinessLogicController(gui, gbc);
+
 				players = blc.evaluatePlayer(currentPlayer, players);
 
 				// No players left = Game over
@@ -188,7 +180,7 @@ public class GameController {
 
 			return players[0];
 		}
-		
+
 		int indexMax = players.length - 1;
 		for (int i = 0; i < players.length; i++) {
 			Player player = players[i];

@@ -37,7 +37,7 @@ public class BoardGenerator {
 	public GUI makeBoard() throws IOException {
 
 		FieldLoader fl = new FieldLoader();
-		GameBoardController gbc = new GameBoardController(fl.getFields());
+		GameBoardController gbc = GameBoardController.getInstance();
 
 		GUI_Field[] fields = new GUI_Field[40];
 

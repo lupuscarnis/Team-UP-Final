@@ -1,19 +1,23 @@
 package controllers;
 
+import java.io.IOException;
+
 import entities.Player;
 import entities.chancecard.ChanceCard;
 import entities.chancecard.GetOutJailForFreeChanceCard;
 import entities.chancecard.MoveChanceCard;
 import entities.chancecard.PayChanceCard;
 import entities.chancecard.ReceiveChanceCard;
+import utilities.ChanceLoader;
 import utilities.MyRandom;
 
 public class ChanceCardController {
 
+	private static ChanceCardController instance;
 	private ChanceCard[] cardArray;
 
-	public ChanceCardController(ChanceCard[] cards) {
-		this.cardArray = cards;
+	private ChanceCardController() throws IOException {
+		this.cardArray = new ChanceLoader().getCards();
 	}
 
 	public ChanceCard drawChanceCard() {
@@ -21,7 +25,7 @@ public class ChanceCardController {
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
 
-		return cardArray[nextCard];		
+		return cardArray[nextCard];
 	}
 
 	public void handleDraw(Player player) throws Exception {
@@ -30,7 +34,6 @@ public class ChanceCardController {
 
 		// Draw: Get out of jail for free
 		if (card instanceof GetOutJailForFreeChanceCard) {
-
 
 			// 31;I anledning af kongens fødselsdag benådes de herved for fængsel. Dette
 			// kort kan opbevares, indtil de får brug for det, eller de kan sælge det.
@@ -88,7 +91,6 @@ public class ChanceCardController {
 			case 20:
 				break;
 
-
 			// Ryk frem til Frederiksberg Allê. Hvis de passerer start, indkasser kr. 4000.
 
 			// Ryk frem til Frederiksberg Alle. Hvis de passerer start, indkasser kr. 4000.
@@ -122,16 +124,15 @@ public class ChanceCardController {
 				break;
 
 			/*
-<<<<<<< HEAD
-			 * 10;De har måttet vedtage en parkeringsbøde. Betal kr. 200 i bøde.;200 15;De
-=======
-			 * 10;De har måttet vedtage en parkeringsbåde. Betal kr. 200 i både.;200 15;De
->>>>>>> branch 'develop' of https://github.com/lupuscarnis/Team-UP-Final.git
-			 * har modtaget Deres tandlægeregning. Betal kr. 2000.;2000 21;Betal kr. 3000
-			 * for reparation af Deres vogn.;3000 22;Betal kr. 3000 for reparation af Deres
-			 * vogn.;3000 23;Betal Deres bilforsikring kr. 1000.;1000 28;De har været en tur
-			 * i udlandet og har haft for mange cigaretter med hjem. Betal kr. 200;200 33;De
-			 * har kørt frem for fuld stop. Betal kr. 1000.;1000
+			 * <<<<<<< HEAD 10;De har måttet vedtage en parkeringsbøde. Betal kr. 200 i
+			 * bøde.;200 15;De ======= 10;De har måttet vedtage en parkeringsbåde. Betal kr.
+			 * 200 i både.;200 15;De >>>>>>> branch 'develop' of
+			 * https://github.com/lupuscarnis/Team-UP-Final.git har modtaget Deres
+			 * tandlægeregning. Betal kr. 2000.;2000 21;Betal kr. 3000 for reparation af
+			 * Deres vogn.;3000 22;Betal kr. 3000 for reparation af Deres vogn.;3000
+			 * 23;Betal Deres bilforsikring kr. 1000.;1000 28;De har været en tur i udlandet
+			 * og har haft for mange cigaretter med hjem. Betal kr. 200;200 33;De har kørt
+			 * frem for fuld stop. Betal kr. 1000.;1000
 			 */
 			case 10:
 			case 15:
@@ -192,5 +193,13 @@ public class ChanceCardController {
 			}
 			System.out.println("Receive card trukket");
 		}
+	}
+
+	public static ChanceCardController getInstance() throws IOException {
+
+		if (instance == null)
+			instance = new ChanceCardController();
+
+		return instance;
 	}
 }

@@ -21,9 +21,18 @@ public class GUIController {
 	private GUI_Field[] guiFields = null;
 	private GUI_Player[] guiPlayers = null;
 	private GUI_Car[] carList = null;
+	private static GUIController instance;
 
-	public GUIController() throws IOException {
+	private GUIController() throws IOException {
 		gui = new BoardGenerator().makeBoard();
+	}
+	
+	public static GUIController getInstance() throws IOException
+	{		
+		if(instance == null)
+			instance = new GUIController();
+		
+		return instance;		
 	}
 
 	/**
