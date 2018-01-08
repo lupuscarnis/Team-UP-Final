@@ -187,21 +187,20 @@ public class GameController {
 			lastPlayer = players[0];
 
 			return players[0];
-		} else {
+		}
+		
+		int indexMax = players.length - 1;
+		for (int i = 0; i < players.length; i++) {
+			Player player = players[i];
 
-			int indexMax = players.length - 1;
-			for (int i = 0; i < players.length; i++) {
-				Player player = players[i];
+			if (player.equals(lastPlayer)) {
 
-				if (player.equals(lastPlayer)) {
-
-					if (i < indexMax) {
-						lastPlayer = players[i + 1];
-						return players[i + 1];
-					} else {
-						lastPlayer = players[0];
-						return players[0];
-					}
+				if (i < indexMax) {
+					lastPlayer = players[i + 1];
+					return players[i + 1];
+				} else {
+					lastPlayer = players[0];
+					return players[0];
 				}
 			}
 		}
