@@ -11,10 +11,10 @@ public class GameController {
 	// controllers
 	private FieldLogicController flc = FieldLogicController.getInstance();
 	private PlayerController pc = PlayerController.getInstance();
-	private GameLogicCtrl glc = GameLogicCtrl.getInstance();	
+	private GameLogicCtrl glc = GameLogicCtrl.getInstance();
 	private GUIController gui = GUIController.getInstance();
 
-	//TODO: Remove
+	// TODO: Remove
 	private BusinessLogicController blc = BusinessLogicController.getInstance();
 
 	// CONSTANTS
@@ -32,7 +32,6 @@ public class GameController {
 	// ATTRIBUTES
 	private Player[] players = null;
 	private Player lastPlayer = null; // Who played last turn
-	private Player startPlayer = null; // Who starts first
 	private Player currentPlayer = null; // The current players round
 
 	// FOR TESTING PURPOSES!
@@ -53,7 +52,7 @@ public class GameController {
 	}
 
 	// Testing player gets out of jail
-	private boolean getOutJail(Player[] players) {		
+	private boolean getOutJail(Player[] players) {
 		return false;
 	}
 
@@ -94,7 +93,7 @@ public class GameController {
 				isFirstTurn = false;
 
 				// Get first player from highest "roll"
-				currentPlayer = getStartPlayer(players);
+				currentPlayer = glc.getStartPlayer(players);
 
 				// Vis start spil knap
 				gui.showPromt("Start spil");
@@ -102,13 +101,11 @@ public class GameController {
 			} else {
 
 				// find next player
-				currentPlayer = getNextPlayer(players);
+				currentPlayer = glc.getNextPlayer(players);
 			}
 
 			// present options for user
-			UserOption choice = glc.showUserOptions(currentPlayer);
-
-			System.out.println("Choice: " + choice);
+			UserOption choice = glc.showUserOptions(currentPlayer);		
 
 			// Starting main round play through
 			System.out.println("-- Round: " + turnCounter + " --");
@@ -150,92 +147,5 @@ public class GameController {
 
 			turnCounter++;
 		}
-
-		// if is Player inJail?
-
-		// else Throw Die
-
-		// MovePlayer
-
-		// Evaluate Field
-
 	}
-
-	/**
-	 * Added by Frederik on 23-11-2017 17:34:24
-	 * 
-	 * Gets the next player for the next turn.
-	 * 
-	 * @param players
-	 * @return
-	 * @throws Exception
-	 */
-	public Player getNextPlayer(Player[] players) throws Exception {
-
-		if (lastPlayer == null) {
-			lastPlayer = players[0];
-
-			return players[0];
-		}
-
-		int indexMax = players.length - 1;
-		for (int i = 0; i < players.length; i++) {
-			Player player = players[i];
-
-			if (player.equals(lastPlayer)) {
-
-				if (i < indexMax) {
-					lastPlayer = players[i + 1];
-					return players[i + 1];
-				} else {
-					lastPlayer = players[0];
-					return players[0];
-				}
-			}
-		}
-
-		throw new Exception("Player was not found!");
-	}
-
-	/**
-	 * Added by Kasper on 16-01-2017
-	 * 
-	 * Calculates and returns who starts first.
-	 * 
-	 * @param players
-	 * @return startPlayer
-	 * @throws Exception
-	 */
-
-	public Player getStartPlayer(Player[] players) throws Exception {
-
-		int numPlayers = players.length;
-		int newHighest = 0;
-
-		for (int i = 0; i < numPlayers; i++) {
-
-			int resultRoll = MyRandom.randInt(1, 6);
-
-			if (resultRoll > newHighest) {
-
-				newHighest = resultRoll;
-
-				startPlayer = players[i];
-
-			}
-
-			System.out.println(players[i].getName() + " Rolled " + resultRoll);
-
-		}
-
-		if (startPlayer != null) {
-
-			System.out.println("-- " + startPlayer.getName() + " goes first! --");
-
-			return startPlayer;
-		}
-
-		throw new Exception("No players were found!");
-	}
-
 }

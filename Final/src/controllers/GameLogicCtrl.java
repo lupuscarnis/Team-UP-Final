@@ -8,12 +8,19 @@ import entities.field.Field;
 import utilities.MyRandom;
 
 public class GameLogicCtrl {
-
+	private Player previousPlayer = null; // Who played last turn
+	private Player startPlayer = null; // Who starts first
 	private static GameLogicCtrl instance;
 	private GUIController gui = GUIController.getInstance();
 	private FieldLogicController flc = FieldLogicController.getInstance();
 
 	private GameLogicCtrl() throws IOException {
+	}
+
+	public static GameLogicCtrl getInstance() throws IOException {
+		if (instance == null)
+			instance = new GameLogicCtrl();
+		return instance;
 	}
 
 	public UserOption showUserOptions(Player currentPlayer) throws Exception {
@@ -89,9 +96,79 @@ public class GameLogicCtrl {
 		gui.movePlayer(currentPlayer);
 	}
 
-	public static GameLogicCtrl getInstance() throws IOException {
-		if (instance == null)
-			instance = new GameLogicCtrl();
-		return instance;
+	/**
+	 * Added by Frederik on 23-11-2017 17:34:24
+	 * 
+	 * Gets the next player for the next turn.
+	 * 
+	 * @param players
+	 * @return
+	 * @throws Exception
+	 */
+	public Player getNextPlayer(Player[] players) throws Exception {
+
+		if (previousPlayer == null) {
+			previousPlayer = players[0];
+
+			return players[0];
+		}
+
+		int indexMax = players.length - 1;
+		for (int i = 0; i < players.length; i++) {
+			Player player = players[i];
+
+			if (player.equals(previousPlayer)) {
+
+				if (i < indexMax) {
+					previousPlayer = players[i + 1];
+					return players[i + 1];
+				} else {
+					previousPlayer = players[0];
+					return players[0];
+				}
+			}
+		}
+
+		throw new Exception("Player was not found!");
+	}
+
+	/**
+	 * Added by Kasper on 16-01-2017
+	 * 
+	 * Calculates and returns who starts first.
+	 * 
+	 * @param players
+	 * @return startPlayer
+	 * @throws Exception
+	 */
+
+	public Player getStartPlayer(Player[] players) throws Exception {
+
+		int numPlayers = players.length;
+		int newHighest = 0;
+
+		for (int i = 0; i < numPlayers; i++) {
+
+			int resultRoll = MyRandom.randInt(1, 6);
+
+			if (resultRoll > newHighest) {
+
+				newHighest = resultRoll;
+
+				startPlayer = players[i];
+
+			}
+
+			System.out.println(players[i].getName() + " Rolled " + resultRoll);
+		}
+
+		if (startPlayer != null) {
+
+			System.out.println("-- " + startPlayer.getName() + " goes first! --");
+
+			return startPlayer;
+		}
+
+		throw new Exception("No players were found!");
 	}
 }
