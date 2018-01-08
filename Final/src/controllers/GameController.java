@@ -15,8 +15,7 @@ public class GameController {
 	private GUIController gui = GUIController.getInstance();
 
 	//TODO: Remove
-		private BusinessLogicController blc = BusinessLogicController.getInstance();	
-
+	private BusinessLogicController blc = BusinessLogicController.getInstance();
 
 	// CONSTANTS
 	private static final int PLAYER_MIN = 3;
@@ -54,9 +53,7 @@ public class GameController {
 	}
 
 	// Testing player gets out of jail
-
-	private boolean getOutJail(Player[] players) {
-		// TODO Auto-generated method stub
+	private boolean getOutJail(Player[] players) {		
 		return false;
 	}
 
@@ -117,8 +114,8 @@ public class GameController {
 			System.out.println("-- Round: " + turnCounter + " --");
 
 			if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player !isJail or (isJail and pays a
-																				// fee to get out)
 
+				// fee to get out)
 				if (isJail(players) && getOutJail(players))
 					System.out.println("-- Player payed 1000kr to get out of jail --");
 
