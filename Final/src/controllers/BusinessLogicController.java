@@ -1,9 +1,15 @@
 package controllers;
 
 import java.io.IOException;
+
+
 import boundary.GUIController;
 import entities.Player;
+import entities.enums.BreweriesOwned;
 import entities.enums.LotRentTier;
+import entities.enums.UserOption;
+import entities.field.BreweryField;
+import entities.field.Field;
 import entities.field.LotField;
 import entities.field.OwnableField;
 
@@ -59,24 +65,25 @@ public class BusinessLogicController {
 	/**
 	 * Added by Frederik on 06-01-2018 23:16:41
 	 * 
-	 * Handles player wants to buy lot
+	 * Handles player wants to buy lot. DOES NOT CHECK FOR SUFFICIENT FUNDS!!
+	 * MUST BE DONE BEFORE CALL TO METHOD!
 	 * 
 	 * @param player
 	 * @throws Exception
 	 */
 	public void buyLot(Player player) throws Exception {
-		LotField lf = (LotField) player.getCurrentField();
-
-		// TODO: check if player has money
+		OwnableField of = (OwnableField) player.getCurrentField();		
 
 		// withdraw money
-		player.withdraw(lf.getPrice());
+		player.withdraw(of.getPrice());
 
 		// set owner
-		lf.setOwner(player);
+		of.setOwner(player);
 
 		// update gui
-		gui.updateLotOwner(player.getName(), lf.getFieldNumber());
+		gui.updateBalance(player);
+		gui.updateLotOwner(player.getName(), of.getFieldNumber());
+		gui.showMessage("Du har nu købt grunden: " + of.getTitle());
 	}
 
 	/**
@@ -89,10 +96,37 @@ public class BusinessLogicController {
 	 */
 	public void payRent(Player currentPlayer) throws Exception {
 
-		// TODO: Must implent switch for all ownable field types, b/c diff. ways of
-		// paying rent.
+		OwnableField currentField = (OwnableField) currentPlayer.getCurrentField();
+		Player owner = currentField.getOwner();
 
-		LotField field = (LotField) currentPlayer.getCurrentField();
+		switch(currentField.getFieldType())
+		{
+		case BREWERY:
+			
+			String txt= String.format("Du er landet på et felt ejet af %s, og bliver nødt til at betale leje!", owner.getName());			
+			gui.showMessage(txt);
+			
+			//TODO: MANGLER EN TERNING OG HVOR SKAL MODIFIER KOMME FRA?
+			int terning = 6; // RANDOM TAL!!!
+			BreweryField bf = (BreweryField) currentField;
+			int rent = bf.getModifierFor(BreweriesOwned.ONE)*terning;
+			
+			gui.showOptions("Vælg", new UserOption[] {UserOption.PayRent});
+			
+			currentPlayer.withdraw(rent);			
+			break;
+		
+		case LOT:
+			break;
+		case SHIPPING:
+			break;
+		
+		default:
+			throw new Exception("Case not found!");		
+		}
+		
+/*
+		OwnableField field = (OwnableField) currentPlayer.getCurrentField();
 		Player owner = field.getOwner();
 
 		// TODO: Calc rent properly
@@ -102,7 +136,7 @@ public class BusinessLogicController {
 		currentPlayer.withdraw(rentToPay);
 
 		// give to owner
-		owner.deposit(rentToPay);
+		owner.deposit(rentToPay);*/
 
 		// update balances in gui
 		gui.updateBalance(new Player[] { currentPlayer, owner });
@@ -151,5 +185,22 @@ public class BusinessLogicController {
 			instance = new BusinessLogicController();
 
 		return instance;
+	}
+
+	
+	/**
+	 * Added by Frederik on 09-01-2018 00:17:56 
+	 * 
+	 * Check if user can afford lot
+	 * 
+	 * @param currentPlayer
+	 * @return
+	 */
+	public boolean userCanAfford(int currentPlayerBalance, OwnableField fieldToBuy) {
+		
+		if(currentPlayerBalance>=fieldToBuy.getPrice())
+			return true;		
+		
+		return false;
 	}
 }

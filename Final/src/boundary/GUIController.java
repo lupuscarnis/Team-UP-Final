@@ -341,6 +341,19 @@ public class GUIController {
 		gui.getFields()[fieldId - 1].setSubText("Ejer: " + name);
 	}
 
+	
+	
+/**
+ * Added by Frederik on 09-01-2018 00:49:47 
+ * 
+ * Updates the balance of the player
+ * 
+ * @param currentPlayer
+ * @throws Exception 
+ */
+	public void updateBalance(Player currentPlayer) throws Exception {
+		updateBalance(new Player[] {currentPlayer});		
+	}
 	/**
 	 * Added by Frederik on 06-01-2018 23:30:48
 	 * 
@@ -469,6 +482,15 @@ public class GUIController {
 
 		if (parseUserOption(UserOption.ThrowDice) == result)
 			return UserOption.ThrowDice;
+		
+		if (parseUserOption(UserOption.BuyLot) == result)
+			return UserOption.BuyLot;
+		
+		if (parseUserOption(UserOption.NoThanks) == result)
+			return UserOption.NoThanks;
+		
+		if (parseUserOption(UserOption.PayRent) == result)
+			return UserOption.PayRent;
 
 		throw new Exception("Translation not found!");
 	}
@@ -485,6 +507,14 @@ public class GUIController {
 	private String parseUserOption(UserOption option) throws Exception {
 
 		switch (option) {
+		
+		case PayRent:
+			return "Betal leje";
+		case NoThanks:
+			return "Nej tak";
+		case BuyLot:
+			return "Køb grund";
+		
 		case BuyHotel:
 			return "Køb hotel";
 
@@ -504,5 +534,6 @@ public class GUIController {
 			throw new Exception("Case not found!");
 		}
 	}
+
 
 }
