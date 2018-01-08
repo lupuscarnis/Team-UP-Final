@@ -3,6 +3,8 @@ package controllers;
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.UserOption;
+import entities.field.Field;
+import utilities.MyRandom;
 
 public class GameLogicCtrl {
 
@@ -57,5 +59,30 @@ public class GameLogicCtrl {
 		}
 
 		return gui.showOptions("Vælg:", tmp);
+	}
+	/**
+	 * Added by Frederik on 06-01-2018 23:49:04 
+	 * 
+	 * Rolls dice and moves player
+	 * 
+	 * @param currentPlayer
+	 * @throws Exception
+	 */
+	//TODO: Make use of cup when throwing dice!
+	public void rollAndMove(Player currentPlayer) throws Exception {
+		
+		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
+		
+		// Throw Die
+		int faceValue = MyRandom.randInt(2, 12);
+
+		// get next field		
+		Field nextField = this.getNextField(currentFieldNo, faceValue);
+		
+		// Update current pos on player object 
+		currentPlayer.setCurrentField(nextField);
+		
+		// update gui
+		gui.movePlayer(currentPlayer);		
 	}
 }

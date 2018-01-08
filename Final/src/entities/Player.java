@@ -9,6 +9,10 @@ public class Player {
 	private Field previousField = null; // Previous field player stood on.
 	private boolean isInJail;
 	private boolean hasJailCard = false;
+	/**
+	 * Indicates whether user has rolled or not.
+	 */
+	private boolean hasRolled = false;
 
 	public Player(String name, int startAmount) {
 		this(name, startAmount, null);
@@ -162,5 +166,13 @@ public class Player {
 	 */
 	public boolean getJailCard() {
 		return this.hasJailCard;
+	}
+
+	public boolean getHasRolled() {
+		return hasRolled;
+	}
+
+	public void setHasRolled(boolean hasRolled) {
+		this.hasRolled = hasRolled;
 	}
 }

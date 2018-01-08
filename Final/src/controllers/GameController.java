@@ -131,7 +131,7 @@ public class GameController {
 					System.out.println("-- Player payed 1000kr to get out of jail --");
 
 				// roll and move player
-				flc.rollAndMove(currentPlayer);
+				glc.rollAndMove(currentPlayer);
 
 				// resolve field
 				flc.resolveField(currentPlayer);
