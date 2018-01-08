@@ -104,9 +104,15 @@ public class GameController {
 				currentPlayer = glc.getNextPlayer(players);
 			}
 
+			boolean diceThrown = false;
+			
+			while(!diceThrown) {
 			// present options for user
 			UserOption choice = glc.showUserOptions(currentPlayer);		
-
+			// handles the choice of the user
+			diceThrown = handleChoice(choice);
+			}
+			
 			// Starting main round play through
 			System.out.println("-- Round: " + turnCounter + " --");
 
@@ -147,5 +153,26 @@ public class GameController {
 
 			turnCounter++;
 		}
+	}
+
+	private boolean handleChoice(UserOption choice) {
+		
+		switch(choice) {
+		case BuyHotel:
+			return false;
+		case BuyHouse:
+			return false;
+		case EndTurn:
+			System.out.println("Make a real choice");
+			return false;
+		case PawnLot:
+			return false;
+		case ThrowDice:
+			return true;
+		default:
+			return false;
+		
+		}
+		
 	}
 }
