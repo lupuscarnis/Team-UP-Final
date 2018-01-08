@@ -401,4 +401,9 @@ public class GUIController {
 	public void removeLotOwner(OwnableField field) {
 		gui.getFields()[field.getFieldNumber() - 1].setSubText("Pris: " + field.getPrice());
 	}
+
+	public void showMessage(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 }

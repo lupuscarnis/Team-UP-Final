@@ -21,8 +21,7 @@ public class ChanceCardController {
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
 
-		return cardArray[nextCard];
-		
+		return cardArray[nextCard];		
 	}
 
 	public void handleDraw(Player player) throws Exception {
