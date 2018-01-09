@@ -230,7 +230,7 @@ public class GUIController {
 	 * @return
 	 */
 	private String userDropDownSelection(String label, String[] dropDownOptions) {
-		return gui.getUserSelection("Vælg antal spillere", dropDownOptions);
+		return gui.getUserSelection(label, dropDownOptions);
 	}
 
 	private void initializeCarList() {
