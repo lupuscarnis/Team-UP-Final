@@ -6,6 +6,7 @@ import java.io.IOException;
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.BreweriesOwned;
+import entities.enums.FieldType;
 import entities.enums.LotRentTier;
 import entities.enums.UserOption;
 import entities.field.BreweryField;
@@ -74,6 +75,9 @@ public class BusinessLogicController {
 	public void buyLot(Player player) throws Exception {
 		OwnableField of = (OwnableField) player.getCurrentField();		
 
+		
+		if(of.getFieldType()==FieldType.BREWERY) {
+		
 		// withdraw money
 		player.withdraw(of.getPrice());
 
@@ -83,7 +87,7 @@ public class BusinessLogicController {
 		// update gui
 		gui.updateBalance(player);
 		gui.updateLotOwner(player.getName(), of.getFieldNumber());
-		gui.showMessage("Du har nu købt grunden: " + of.getTitle());
+		gui.showMessage("Du har nu købt grunden: " + of.getTitle());}
 	}
 
 	/**
@@ -102,17 +106,18 @@ public class BusinessLogicController {
 		switch(currentField.getFieldType())
 		{
 		case BREWERY:
+			//TODO: MANGLER EN TERNING
+			int faceValue = 12; // RANDOM TAL!!!			
+			BreweryField bf = (BreweryField) currentField;
+			int rent = bf.calculateRent(faceValue);
 			
-			String txt= String.format("Du er landet på et felt ejet af %s, og bliver nødt til at betale leje!", owner.getName());			
+			String txt= String.format("Du er landet på et felt ejet af %s, og bliver nødt til at betale leje på kr. %s!", owner.getName(), rent);			
 			gui.showMessage(txt);
 			
-			//TODO: MANGLER EN TERNING OG HVOR SKAL MODIFIER KOMME FRA?
-			int terning = 6; // RANDOM TAL!!!
-			BreweryField bf = (BreweryField) currentField;
-			int rent = bf.getModifierFor(BreweriesOwned.ONE)*terning;
-			
-			gui.showOptions("Vælg", new UserOption[] {UserOption.PayRent});
-			
+			// Show pay button
+			gui.showOptions("Vælg", new UserOption[] {UserOption.PayRent});		
+						
+			// withdraw money
 			currentPlayer.withdraw(rent);			
 			break;
 		

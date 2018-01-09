@@ -85,7 +85,7 @@ public class GameLogicCtrl {
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 
 		// Throw Die
-		int faceValue = MyRandom.randInt(2, 12);
+		int faceValue = 1;//MyRandom.randInt(2, 12);
 
 		// get next field
 		Field nextField = flc.getNextField(currentFieldNo, faceValue);

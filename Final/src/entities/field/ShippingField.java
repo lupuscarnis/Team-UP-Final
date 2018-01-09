@@ -1,5 +1,7 @@
 package entities.field;
 
+import java.io.IOException;
+
 import entities.enums.FieldType;
 import entities.enums.ShippingOwned;
 
@@ -35,5 +37,12 @@ public class ShippingField extends OwnableField {
 
 	public void setDesc(String text2) {
 		this.text2 = text2;
+	}
+
+	
+	@Override
+	public int calculateRent(int dieFaceValue) throws IOException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

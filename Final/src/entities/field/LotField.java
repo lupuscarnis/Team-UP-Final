@@ -1,5 +1,7 @@
 package entities.field;
 
+import java.io.IOException;
+
 import entities.enums.FieldType;
 import entities.enums.LotColor;
 import entities.enums.LotRentTier;
@@ -67,4 +69,12 @@ public class LotField extends OwnableField {
 		this.housePrice = housePrice;
 
 	}
+
+	@Override
+	public int calculateRent(int dieFaceValue) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
 }
