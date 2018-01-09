@@ -28,24 +28,22 @@ public class GameLogicCtrl {
 		int index = 0;
 		UserOption[] options = new UserOption[10]; // Hack: we don't know the size yet, so 10 is random!
 
-		// if not in jail - you can throw dice
-		if (!currentPlayer.isInJail()) {
+		// if not in jail - you can throw dice (actually you can always throw dice, if you're in jail you have extra options related to being in jail)
+		//if (!currentPlayer.isInJail()) {
 			options[index] = UserOption.ThrowDice;
 			index++;
-		}
+		//}
 
-		options[index] = UserOption.BuyHouse;
-		index++;
-
-		options[index] = UserOption.BuyHotel;
-		index++;
-
-		options[index] = UserOption.PawnLot;
-		index++;
-
-		options[index] = UserOption.EndTurn;
-		index++;
-
+			options[index] = UserOption.HandleBuildings;
+			index++;
+	
+			options[index] = UserOption.PawnLot;
+			index++;
+	
+			options[index] = UserOption.UnPawnLot;
+			index++;
+		//}
+		
 		// empty array of nulls
 		int elements = 0;
 		for (UserOption userOption : options) {
