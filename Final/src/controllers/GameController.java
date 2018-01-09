@@ -114,13 +114,33 @@ public class GameController {
 
 				if (isJail(players) && getOutJail(players))
 					System.out.println("-- Player payed 1000kr to get out of jail --");
-
+				//resetter antal rerolls denne tur
+				flc.cup1.setRerolls(0);
 				// roll and move player
 				flc.rollAndMove(currentPlayer);
-
+				//if 3 (or more) rerolls occure, player doesnt resolve field and goes to jail.
+				if(flc.cup1.getRerolls()>2){currentPlayer.isInJail(true); break;}
 				// resolve field
 				flc.resolveField(currentPlayer.getCurrentField());
-
+			if(flc.d1.getValue()==flc.d2.getValue())
+			{
+				// roll and move player
+				flc.rollAndMove(currentPlayer);
+				if(flc.cup1.getRerolls()>2){currentPlayer.isInJail(true); break;}
+				// resolve field
+				flc.resolveField(currentPlayer.getCurrentField());
+			}
+			if(flc.d1.getValue()==flc.d2.getValue())
+			{
+				// roll and move player
+				flc.rollAndMove(currentPlayer);
+				if(flc.cup1.getRerolls()>2){currentPlayer.isInJail(true); break;}
+				// resolve field
+				flc.resolveField(currentPlayer.getCurrentField());
+			}
+			if(flc.d1.getValue()==flc.d2.getValue())
+			{currentPlayer.isInJail(true);}
+			
 				// Check if player still has money or should be removed.
 				int playerCount = players.length;
 				BusinessLogicController blc = new BusinessLogicController(gui, gbc);

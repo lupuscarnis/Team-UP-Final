@@ -93,8 +93,8 @@ public class Game {
 
 		while (!gameOver(players)) { // Checking if the player is gameover
 
-			System.out.println("Round:" + turn);
 
+			System.out.println("Round:" + "turn");
 			// if is Player inJail?
 
 			if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player !isJail or isJail and pays a fee to get out
