@@ -42,10 +42,13 @@ public class BusinessLogicController {
 		if(field==null) {
 			
 			}
-		else if(!field.getPawned()) {
+//		else if(field.hasBuilding) {
+//			gui.showMessage("Grunden skal være ubebygget");
+//		}
+			else if(!field.getPawned()) {
 			field.setPawned(true);
 			currentPlayer.deposit(field.getPawnPrice());
-		}
+			}
 		
 		gui.updateBalance(currentPlayer);
 	}
