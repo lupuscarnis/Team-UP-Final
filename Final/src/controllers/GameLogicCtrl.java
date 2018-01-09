@@ -87,11 +87,12 @@ public class GameLogicCtrl {
 		 Cup cup = new Cup(currentPlayer);
 		// Throw Die
 		int faceValue = cup.rollDice();
-
+		//Checks if he passes start and gives him money	
+		checkPassedStart(currentPlayer, faceValue, true);
 		// get next field
 		Field nextField = flc.getNextField(currentFieldNo, faceValue);
 
-		// Update current pos on player object also adds money to player if he passes start
+		// Update current pos on player object 
 		currentPlayer.setCurrentField(nextField);
 		
 
@@ -100,14 +101,15 @@ public class GameLogicCtrl {
 	}
 	
 	// checks if the Player Move past start this turn and receives 4000
-	public boolean checkPassedStart(Player currentPlayer, Field nextField, int faceValue )
+	private void checkPassedStart(Player currentPlayer, int faceValue, boolean canReceive )
 	{
-		if((currentPlayer.getCurrentField().getFieldNumber() + faceValue > 40) && (nextField.getFieldNumber() > 0)){
+		if((currentPlayer.getCurrentField().getFieldNumber() + faceValue > 40)&& (canReceive == true)){
 		currentPlayer.deposit(4000);
-		return true;		
+		System.out.println("Du fik 4000 over start! hurray!");
 		}
-		else {
-		return false;
+		else
+		{
+			System.out.println("Du fik ikke 4000 over start. Cuss reason");
 		}
 		
 		
