@@ -32,12 +32,17 @@ public class BusinessLogicController {
 	// Pawn lot
 	public void pawnLot(Player currentPlayer) {
 		
-		chooseLot(currentPlayer);
-		// TODO: Implement method
+		OwnableField field = chooseLot(currentPlayer);
+		
+		if(!field.getPawned()) {
+			field.setPawned(true);
+			currentPlayer.deposit(field.getPawnPrice());
+		}
+		
 	}
 
 	private OwnableField chooseLot(Player currentPlayer) {
-		// TODO Auto-generated method stub
+		// set to 2 for testing purposes
 		int fieldNo = 2;
 		return (OwnableField) gbc.getFieldByNumber(fieldNo);
 	}
