@@ -121,7 +121,8 @@ public class GameController {
 				if(currentPlayer.getPreviousField().getFieldNumber()>currentPlayer.getCurrentField().getFieldNumber())
 				{currentPlayer.deposit(4000);}
 				//if 3 (or more) rerolls occure, player doesnt resolve field and goes to jail.
-				if(flc.cup1.getRerolls()>2){currentPlayer.isInJail(true); break;}
+				if(flc.cup1.getRerolls()>2){currentPlayer.isInJail(true);
+				currentPlayer.setCurrentField(gbc.getFieldByNumber(11)); break;}
 				// resolve field
 				flc.resolveField(currentPlayer.getCurrentField());
 			if(flc.d1.getValue()==flc.d2.getValue())
@@ -130,7 +131,8 @@ public class GameController {
 				flc.rollAndMove(currentPlayer);
 				if(currentPlayer.getPreviousField().getFieldNumber()>currentPlayer.getCurrentField().getFieldNumber())
 				{currentPlayer.deposit(4000);}
-				if(flc.cup1.getRerolls()>2){currentPlayer.isInJail(true); break;}
+				if(flc.cup1.getRerolls()>2){currentPlayer.isInJail(true);
+				currentPlayer.setCurrentField(gbc.getFieldByNumber(11)); break;}
 				// resolve field
 				flc.resolveField(currentPlayer.getCurrentField());
 			}
@@ -140,12 +142,15 @@ public class GameController {
 				flc.rollAndMove(currentPlayer);
 				if(currentPlayer.getPreviousField().getFieldNumber()>currentPlayer.getCurrentField().getFieldNumber())
 				{currentPlayer.deposit(4000);}
-				if(flc.cup1.getRerolls()>2){currentPlayer.isInJail(true); break;}
+				if(flc.cup1.getRerolls()>2){currentPlayer.isInJail(true); 
+				currentPlayer.setCurrentField(gbc.getFieldByNumber(11)); break;
+				}
 				// resolve field
 				flc.resolveField(currentPlayer.getCurrentField());
 			}
 			if(flc.d1.getValue()==flc.d2.getValue())
-			{currentPlayer.isInJail(true);}
+			{currentPlayer.isInJail(true);
+			currentPlayer.setCurrentField(gbc.getFieldByNumber(11));}
 			
 				// Check if player still has money or should be removed.
 				int playerCount = players.length;
