@@ -10,7 +10,9 @@ public class GameController {
 
 	// controllers
 	private BusinessLogicController blc = BusinessLogicController.getInstance();
+	private ChanceCardController ccc = ChanceCardController.getInstance();
 	private FieldLogicController flc = FieldLogicController.getInstance();
+	private GameBoardController gbc = GameBoardController.getInstance();
 	private PlayerController pc = PlayerController.getInstance();
 	private GameLogicCtrl glc = GameLogicCtrl.getInstance();
 	private GUIController gui = GUIController.getInstance();
@@ -106,7 +108,7 @@ public class GameController {
 			
 			while(!diceThrown) {
 			// present options for user
-			UserOption choice = glc.showUserOptions(currentPlayer);		
+			UserOption choice = glc.showUserOptionsStart(currentPlayer);		
 			// handles the choice of the user
 			diceThrown = handleChoice(choice, currentPlayer);
 			}
@@ -204,6 +206,7 @@ public class GameController {
 		switch(choice) {
 		
 		case HandleBuildings:
+			blc.handleBuildings(currentPlayer);
 			return false;
 		case PawnLot:
 			blc.pawnLot(currentPlayer);

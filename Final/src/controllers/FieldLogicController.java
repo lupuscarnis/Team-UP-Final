@@ -14,10 +14,6 @@ import utilities.FieldLoader;
 public class FieldLogicController {
 
 	private static FieldLogicController instance;
-	private BusinessLogicController blc = BusinessLogicController.getInstance();
-	private ChanceCardController ccc = ChanceCardController.getInstance();
-	private controllers.GameBoardController gbc = GameBoardController.getInstance();
-	private GUIController gui = GUIController.getInstance();
 
 	private FieldLogicController() throws IOException {
 	}
@@ -32,51 +28,51 @@ public class FieldLogicController {
 			BreweryField bf = (BreweryField) currentField;
 
 			// If no owner and user has the money he can buy
-			if (bf.getOwner() == null && blc.userCanAfford(currentPlayer.getBalance(), bf)) {
+			if (bf.getOwner() == null && BusinessLogicController.getInstance().userCanAfford(currentPlayer.getBalance(), bf)) {
 				// ask if user wants to buy
-				gui.showMessage(
+				GUIController.getInstance().showMessage(
 						"you have landed on a  " + currentField.getFieldType() + " do you wish to purchase it?");
-				UserOption choice = gui.showOptions("Vælg:",
+				UserOption choice = GUIController.getInstance().showOptions("Vælg:",
 						new UserOption[] { UserOption.BuyLot, UserOption.NoThanks });
 
 				// user opted to buy lot
 				if (choice == UserOption.BuyLot)
-					blc.buyLot(currentPlayer);		
+					BusinessLogicController.getInstance().buyLot(currentPlayer);		
 			}
 			// field has owner and player must pay rent 
 			// if owner != current player
 			else
-				blc.payRent(currentPlayer);	
+				BusinessLogicController.getInstance().payRent(currentPlayer);	
 
 			break;
 		case CHANCE:
-			gui.showMessage("you have landed on " + currentField.getFieldType() + " draw a card");
-			ccc.drawChanceCard();
-			ccc.handleDraw(currentPlayer);
+			GUIController.getInstance().showMessage("you have landed on " + currentField.getFieldType() + " draw a card");
+			ChanceCardController.getInstance().drawChanceCard();
+			ChanceCardController.getInstance().handleDraw(currentPlayer);
 
 			// ingen grund til cast da den bare er en Field type
 			break;
 		case EXTRATAX:
-			gui.showMessage("you have landed on " + currentField.getFieldType());
+			GUIController.getInstance().showMessage("you have landed on " + currentField.getFieldType());
 			currentPlayer.withdraw(2000);
 			break;
 		case FREEPARKING:
-			gui.showMessage("you have landed on " + currentField.getFieldType() + " nothing happens");
+			GUIController.getInstance().showMessage("you have landed on " + currentField.getFieldType() + " nothing happens");
 			break;
 		case GOTOJAIL:
-			gui.showMessage("you have landed on " + currentField.getFieldType());
+			GUIController.getInstance().showMessage("you have landed on " + currentField.getFieldType());
 
-			Field jail = this.gbc.getFieldByName(FieldName.Fængslet);
+			Field jail = GameBoardController.getInstance().getFieldByName(FieldName.Fængslet);
 
 			currentPlayer.setCurrentField(jail);
 
-			gui.movePlayer(currentPlayer);
+			GUIController.getInstance().movePlayer(currentPlayer);
 
 			currentPlayer.isInJail(true);
 
 			break;
 		case INCOMETAX:
-			gui.showMessage("you have landed on " + currentField.getFieldType());
+			GUIController.getInstance().showMessage("you have landed on " + currentField.getFieldType());
 			currentPlayer.withdraw(4000);
 			// at implementere valget der bruger 10% maa vente lidt
 			break;
@@ -91,21 +87,21 @@ public class FieldLogicController {
 			LotField lf = (LotField) currentField;
 
 			// no owner!
-			if (lf.getOwner() == null && blc.userCanAfford(currentPlayer.getBalance(), lf)) {
+			if (lf.getOwner() == null && BusinessLogicController.getInstance().userCanAfford(currentPlayer.getBalance(), lf)) {
 
-				gui.showMessage(
+				GUIController.getInstance().showMessage(
 						"you have landed on a  " + currentField.getFieldType() + " do you wish to purchase it?");
-				UserOption choice = gui.showOptions("Vælg:",
+				UserOption choice = GUIController.getInstance().showOptions("Vælg:",
 						new UserOption[] { UserOption.BuyLot, UserOption.NoThanks });
 
 				// user opted to buy lot
 				if (choice == UserOption.BuyLot)
-					blc.buyLot(currentPlayer);	
+					BusinessLogicController.getInstance().buyLot(currentPlayer);	
 
 			}
 			// pay rent
 			else
-				blc.payRent(currentPlayer);
+				BusinessLogicController.getInstance().payRent(currentPlayer);
 
 			break;
 			
@@ -120,31 +116,31 @@ public class FieldLogicController {
 			ShippingField sf = (ShippingField) currentField;
 			
 			// no owner!
-			if (sf.getOwner() == null && blc.userCanAfford(currentPlayer.getBalance(), sf)) {
+			if (sf.getOwner() == null && BusinessLogicController.getInstance().userCanAfford(currentPlayer.getBalance(), sf)) {
 
-				gui.showMessage(
+				GUIController.getInstance().showMessage(
 						"you have landed on a  " + currentField.getFieldType() + " do you wish to purchase it?");
-				UserOption choice = gui.showOptions("Vælg:",
+				UserOption choice = GUIController.getInstance().showOptions("Vælg:",
 						new UserOption[] { UserOption.BuyLot, UserOption.NoThanks });
 
 				// user opted to buy lot
 				if (choice == UserOption.BuyLot)
-					blc.buyLot(currentPlayer);	
+					BusinessLogicController.getInstance().buyLot(currentPlayer);	
 
 			}
 			// pay rent
 			else
-				blc.payRent(currentPlayer);
+				BusinessLogicController.getInstance().payRent(currentPlayer);
 
 			break;
 
 		case START:
-			gui.showMessage("you have landed on " + currentField.getFieldType() + " you gain 4000 kr.");
+			GUIController.getInstance().showMessage("you have landed on " + currentField.getFieldType() + " you gain 4000 kr.");
 			currentPlayer.deposit(4000);
 			// ingen grund til cast da den bare er en Field type
 			break;
 		case VISITJAIL:
-			gui.showMessage(
+			GUIController.getInstance().showMessage(
 					"you have landed on " + currentField.getFieldType() + " you are here on a visit, nothing happens.");
 			// ingen grund til cast da den bare er en Field type
 			break;
@@ -162,16 +158,17 @@ public class FieldLogicController {
 	 * @param faceValue
 	 * @param currentFieldNumber
 	 * @return
+	 * @throws IOException 
 	 */
-	public Field getNextField(int currentFieldNumber, int faceValue) {
+	public Field getNextField(int currentFieldNumber, int faceValue) throws IOException {
 
 		int nextFieldNo = faceValue + currentFieldNumber;
 
 		// Check for valid next field
-		if (nextFieldNo > gbc.FIELD_COUNT)
-			nextFieldNo += -gbc.FIELD_COUNT;
+		if (nextFieldNo > GameBoardController.getInstance().FIELD_COUNT)
+			nextFieldNo += -GameBoardController.getInstance().FIELD_COUNT;
 
-		return gbc.getFieldByNumber(nextFieldNo);
+		return GameBoardController.getInstance().getFieldByNumber(nextFieldNo);
 	}
 
 	public static FieldLogicController getInstance() throws IOException {

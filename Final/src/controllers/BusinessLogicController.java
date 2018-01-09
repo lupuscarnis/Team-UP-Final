@@ -23,8 +23,6 @@ import entities.field.OwnableField;
 public class BusinessLogicController {
 
 	private static BusinessLogicController instance;
-	private GUIController gui = GUIController.getInstance();
-	private GameBoardController gbc = GameBoardController.getInstance();
 
 	private BusinessLogicController() throws IOException {		
 	}
@@ -50,7 +48,7 @@ public class BusinessLogicController {
 			currentPlayer.deposit(field.getPawnPrice());
 			}
 		
-		gui.updateBalance(currentPlayer);
+		GUIController.getInstance().updateBalance(currentPlayer);
 	}
 	
 	// UnPawn lot
@@ -70,14 +68,14 @@ public class BusinessLogicController {
 				currentPlayer.withdraw(unPawnPrice);
 			}
 		
-			gui.updateBalance(currentPlayer);
+			GUIController.getInstance().updateBalance(currentPlayer);
 		}
 //	Returns a player owned field, chosen by the player from a drop down menu.
 		
-	private OwnableField chooseLot(Player currentPlayer) {
+	private OwnableField chooseLot(Player currentPlayer) throws IOException {
 		
 		
-		OwnableField[] ownedFields = gbc.getFieldsByOwner(currentPlayer);
+		OwnableField[] ownedFields = GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
 		if(ownedFields.length==0) {
 			return (OwnableField) null;
 		}
@@ -86,7 +84,7 @@ public class BusinessLogicController {
 			lotNames[i] = ownedFields[i].getTitle();
 		}
 		
-		String fieldName = gui.userDropDownSelection("Vælg grund ", lotNames);
+		String fieldName = GUIController.getInstance().userDropDownSelection("Vælg grund ", lotNames);
 		int fieldNumber=0;
 		
 		for(int i=0;i<ownedFields.length; i++) {
@@ -95,17 +93,17 @@ public class BusinessLogicController {
 			}
 		}
 		//kind of hacked solution, needs direct method to get from title
-		return (OwnableField) gbc.getFieldByNumber(fieldNumber);
+		return (OwnableField) GameBoardController.getInstance().getFieldByNumber(fieldNumber);
 	}
 
 	// set owner of (ownable)field.
-	public void setOwner(OwnableField field, Player owner) {
+	public void setOwner(OwnableField field, Player owner) throws IOException {
 
 		// set owner
 		field.setOwner(owner);
 
 		// update gui
-		gui.removeLotOwner(field);
+		GUIController.getInstance().removeLotOwner(field);
 	}
 
 	/**
@@ -139,9 +137,9 @@ public class BusinessLogicController {
 		of.setOwner(player);
 
 		// update gui
-		gui.updateBalance(player);
-		gui.updateLotOwner(player.getName(), of.getFieldNumber());
-		gui.showMessage("Du har nu købt grunden: " + of.getTitle());
+		GUIController.getInstance().updateBalance(player);
+		GUIController.getInstance().updateLotOwner(player.getName(), of.getFieldNumber());
+		GUIController.getInstance().showMessage("Du har nu købt grunden: " + of.getTitle());
 	}
 
 	/**
@@ -162,14 +160,14 @@ public class BusinessLogicController {
 		case BREWERY:
 			
 			String txt= String.format("Du er landet på et felt ejet af %s, og bliver nødt til at betale leje!", owner.getName());			
-			gui.showMessage(txt);
+			GUIController.getInstance().showMessage(txt);
 			
 			//TODO: MANGLER EN TERNING OG HVOR SKAL MODIFIER KOMME FRA?
 			int terning = 6; // RANDOM TAL!!!
 			BreweryField bf = (BreweryField) currentField;
 			int rent = bf.getModifierFor(BreweriesOwned.ONE)*terning;
 			
-			gui.showOptions("Vælg", new UserOption[] {UserOption.PayRent});
+			GUIController.getInstance().showOptions("Vælg", new UserOption[] {UserOption.PayRent});
 			
 			currentPlayer.withdraw(rent);			
 			break;
@@ -197,7 +195,7 @@ public class BusinessLogicController {
 		owner.deposit(rentToPay);*/
 
 		// update balances in gui
-		gui.updateBalance(new Player[] { currentPlayer, owner });
+		GUIController.getInstance().updateBalance(new Player[] { currentPlayer, owner });
 	}
 
 	/**
@@ -225,12 +223,12 @@ public class BusinessLogicController {
 			}
 
 			// remove all owned fields
-			for (OwnableField ownedField : gbc.getFieldsByOwner(currentPlayer)) {
+			for (OwnableField ownedField : GameBoardController.getInstance().getFieldsByOwner(currentPlayer)) {
 				setOwner(ownedField, null);
 			}
 
 			// update gui and remove player
-			gui.removePlayer(currentPlayer);
+			GUIController.getInstance().removePlayer(currentPlayer);
 
 			return tmp;
 		}
@@ -260,5 +258,11 @@ public class BusinessLogicController {
 			return true;		
 		
 		return false;
+	}
+
+	public void handleBuildings(Player currentPlayer) throws Exception {
+		
+		
+		
 	}
 }

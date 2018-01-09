@@ -11,8 +11,6 @@ public class GameLogicCtrl {
 	private Player previousPlayer = null; // Who played last turn
 	private Player startPlayer = null; // Who starts first
 	private static GameLogicCtrl instance;
-	private GUIController gui = GUIController.getInstance();
-	private FieldLogicController flc = FieldLogicController.getInstance();
 
 	private GameLogicCtrl() throws IOException {
 	}
@@ -23,7 +21,59 @@ public class GameLogicCtrl {
 		return instance;
 	}
 
-	public UserOption showUserOptions(Player currentPlayer) throws Exception {
+	public UserOption showUserOptionsBuildings(Player currentPlayer) throws Exception {
+
+		int index = 0;
+		UserOption[] options = new UserOption[10]; // Hack: we don't know the size yet, so 10 is random!
+
+		if (!currentPlayer.isInJail() && !currentPlayer.isDoneThrowing()) {
+			options[index] = UserOption.ThrowDice;
+			index++;
+		//}
+
+			options[index] = UserOption.HandleBuildings;
+			index++;
+	
+			options[index] = UserOption.PawnLot;
+			index++;
+	
+			options[index] = UserOption.UnPawnLot;
+			index++;
+		//}
+		
+		}
+
+		if(currentPlayer.isDoneThrowing()) {
+				options[index] = UserOption.EndTurn;
+				index++;
+		}
+
+		// empty array of nulls
+		int elements = 0;
+		for (UserOption userOption : options) {
+
+			if (userOption != null)
+				elements++;
+		}
+
+		// create new array with correct size
+		UserOption[] tmp = new UserOption[elements];
+
+		// insert into array
+		index = 0;
+		for (UserOption option : options) {
+
+			if (option != null) {
+				tmp[index] = option;
+				index++;
+			}
+		}
+
+		return GUIController.getInstance().showOptions("Vælg:", tmp);
+	}
+
+	
+	public UserOption showUserOptionsStart(Player currentPlayer) throws Exception {
 
 		int index = 0;
 		UserOption[] options = new UserOption[10]; // Hack: we don't know the size yet, so 10 is random!
@@ -83,7 +133,7 @@ public class GameLogicCtrl {
 			}
 		}
 
-		return gui.showOptions("Vælg:", tmp);
+		return GUIController.getInstance().showOptions("Vælg:", tmp);
 	}
 
 	/**
@@ -103,13 +153,13 @@ public class GameLogicCtrl {
 		int faceValue = MyRandom.randInt(2, 12);
 
 		// get next field
-		Field nextField = flc.getNextField(currentFieldNo, faceValue);
+		Field nextField = FieldLogicController.getInstance().getNextField(currentFieldNo, faceValue);
 
 		// Update current pos on player object
 		currentPlayer.setCurrentField(nextField);
 
 		// update gui
-		gui.movePlayer(currentPlayer);
+		GUIController.getInstance().movePlayer(currentPlayer);
 	}
 
 	/**

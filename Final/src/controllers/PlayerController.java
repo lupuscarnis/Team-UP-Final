@@ -17,14 +17,13 @@ public class PlayerController {
 		// instead have a field number to place they are standing in the field array and
 		// let the other controller handle
 		// what happends there.
-		GameBoardController gbc = GameBoardController.getInstance();
-
+		
 		Player[] tmp = new Player[playerNames.length];
 
 		int index = 0;
 		for (String name : playerNames) {
 
-			Field start = gbc.getFieldByName(FieldName.Start);
+			Field start = GameBoardController.getInstance().getFieldByName(FieldName.Start);
 
 			tmp[index] = new Player(name, 30000, start); // HACK: 30000: Where should the money come from?
 
