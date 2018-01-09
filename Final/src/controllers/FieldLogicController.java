@@ -77,8 +77,12 @@ public class FieldLogicController {
 			break;
 		case INCOMETAX:
 			gui.showMessage("you have landed on " + currentField.getFieldType());
-			currentPlayer.withdraw(4000);
+			
 			// at implementere valget der bruger 10% maa vente lidt
+			
+			
+			gui.showOptions("Hvordan vil du betal din skat: ", UserOptions.  )
+				
 			break;
 
 		case LOT:

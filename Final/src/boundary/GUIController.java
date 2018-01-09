@@ -491,7 +491,13 @@ public class GUIController {
 		
 		if (parseUserOption(UserOption.PayRent) == result)
 			return UserOption.PayRent;
-
+		 
+		if (parseUserOption(UserOption.IncomeTaxPay4000) == result)
+			return UserOption.IncomeTaxPay4000;
+		
+	    if (parseUserOption(UserOption.IncomeTaxPayTenPercent) == result)
+	    	return UserOption.IncomeTaxPayTenPercent;
+	       
 		throw new Exception("Translation not found!");
 	}
 
