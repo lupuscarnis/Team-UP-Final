@@ -181,7 +181,7 @@ public class FieldLogicController {
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 		
 		// Throw Die
-		int faceValue = cup1.getRerolls();
+		int faceValue = cup1.rollDice();
 
 		// get next field		
 		Field nextField = this.getNextField(currentFieldNo, faceValue);
