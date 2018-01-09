@@ -5,6 +5,7 @@ import java.io.IOException;
 import entities.Player;
 import entities.enums.FieldName;
 import entities.field.Field;
+import entities.field.LotField;
 import entities.field.OwnableField;
 import utilities.FieldLoader;
 
@@ -101,6 +102,40 @@ public class GameBoardController {
 		}
 
 		return new OwnableField[0];
+	}
+	
+	public LotField[] getLotFieldsByOwner(Player currentOwner) {
+
+		int count = 0;
+		for (Field field : fieldArray) {
+
+			if (field instanceof LotField) {
+				LotField of = (LotField) field;
+
+				if (of.getOwner() == currentOwner)
+					count++;
+			}
+		}
+
+		if (count > 0) {
+			LotField[] tmp = new LotField[count];
+
+			int index = 0;
+			for (Field field : fieldArray) {
+
+				if (field instanceof LotField) {
+					LotField of = (LotField) field;
+
+					if (of.getOwner() == currentOwner) {
+						tmp[index] = of;
+						index++;
+					}
+				}
+			}
+			return tmp;
+		}
+
+		return new LotField[0];
 	}
 
 	/**

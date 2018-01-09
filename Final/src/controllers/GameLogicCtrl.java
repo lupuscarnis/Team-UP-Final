@@ -26,22 +26,22 @@ public class GameLogicCtrl {
 		int index = 0;
 		UserOption[] options = new UserOption[10]; // Hack: we don't know the size yet, so 10 is random!
 
-		if (!currentPlayer.isInJail() && !currentPlayer.isDoneThrowing()) {
-			options[index] = UserOption.ThrowDice;
+		
+			options[index] = UserOption.BuyHouse;
 			index++;
 		//}
 
-			options[index] = UserOption.HandleBuildings;
+			options[index] = UserOption.SellHouse;
 			index++;
 	
-			options[index] = UserOption.PawnLot;
+			options[index] = UserOption.BuyHotel;
 			index++;
 	
-			options[index] = UserOption.UnPawnLot;
+			options[index] = UserOption.SellHotel;
 			index++;
 		//}
 		
-		}
+		
 
 		if(currentPlayer.isDoneThrowing()) {
 				options[index] = UserOption.EndTurn;
