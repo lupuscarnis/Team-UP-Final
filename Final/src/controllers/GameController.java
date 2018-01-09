@@ -166,6 +166,7 @@ public class GameController {
 			blc.pawnLot(currentPlayer);
 			return false;
 		case UnPawnLot:
+			blc.unPawnLot(currentPlayer);
 			return false;
 		case ThrowDice:
 			return true;

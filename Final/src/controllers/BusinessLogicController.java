@@ -40,6 +40,19 @@ public class BusinessLogicController {
 		}
 		
 	}
+	
+	// UnPawn lot
+		public void unPawnLot(Player currentPlayer) {
+			
+			OwnableField field = chooseLot(currentPlayer);
+			
+			if(field.getPawned()) {
+				field.setPawned(false);
+				//TODO 10% rounded up to nearest 100 extra cost to unpawn
+				currentPlayer.withdraw(field.getPawnPrice());
+			}
+			
+		}
 
 	private OwnableField chooseLot(Player currentPlayer) {
 		// set to 2 for testing purposes
