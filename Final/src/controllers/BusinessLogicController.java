@@ -20,6 +20,7 @@ import utilities.Messager;
  * Class intended to hold logic reg. business transactions etc.
  *
  */
+// 
 // TODO: Implement class
 public class BusinessLogicController {
 
@@ -104,7 +105,7 @@ public class BusinessLogicController {
 		Player payer = currentPlayer;
 
 		// tell user he must pay rent
-		Messager.showMustPayRent(payer.getName(), rent);
+		Messager.showMustPayRent(payee.getName(), rent);
 
 		// withdraw from payer
 		// TODO: What happens if user cant afford?
