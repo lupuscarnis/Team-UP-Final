@@ -9,20 +9,17 @@ import utilities.MyRandom;
 public class GameController {
 
 	// controllers
+	private BusinessLogicController blc = BusinessLogicController.getInstance();
 	private FieldLogicController flc = FieldLogicController.getInstance();
 	private PlayerController pc = PlayerController.getInstance();
 	private GameLogicCtrl glc = GameLogicCtrl.getInstance();
 	private GUIController gui = GUIController.getInstance();
-
-	// TODO: Remove
-	private BusinessLogicController blc = BusinessLogicController.getInstance();
-
+	
 	// CONSTANTS
 	private static final int PLAYER_MIN = 3;
 	private static final int PLAYER_MAX = 6;
 
 	// Maybe move these to bank
-
 	private static final int MONEY_START_AMOUNT = 30000; // Amount for each player at game start
 	private static final int MONEY_START = 4000; // Amount when passing START
 	private static final int MONEY_JAIL = 1000; // Amount to pay to leave jail
@@ -37,8 +34,7 @@ public class GameController {
 	// FOR TESTING PURPOSES!
 
 	// Testing Gameover
-	public GameController() throws IOException {
-	}
+	public GameController() throws IOException {}
 
 	private boolean gameOver(Player[] players) {
 		// TODO Auto-generated method stub
@@ -96,13 +92,15 @@ public class GameController {
 				currentPlayer = glc.getStartPlayer(players);
 
 				// Vis start spil knap
-				gui.showPromt("Start spil");
+				//gui.showPromt("Start spil");
 
 			} else {
-
+				System.out.println("qqq");
 				// find next player
 				currentPlayer = glc.getNextPlayer(players);
 			}
+			
+			gui.showPromt("Det er "+currentPlayer.getName() + "s tur!");
 
 			boolean diceThrown = false;
 			
@@ -112,8 +110,56 @@ public class GameController {
 			// handles the choice of the user
 			diceThrown = handleChoice(choice, currentPlayer);
 			}
-			
+						
+//			while(true)
+//			{				
+//				UserOption userChoice = glc.showUserOptions(currentPlayer);				
+//				
+//				switch(userChoice)
+//				{
+//				
+//				case StartOfTurn:
+//					break;
+//				
+//				case BuyHotel:
+//					break;
+//				case BuyHouse:
+//					break;
+//				
+//				case PawnLot:
+//					break;
+//				case ThrowDice:
+//					
+//					//TODO: Roll streak?
+//					currentPlayer.setDoneThrowing(true);
+//					
+//					// roll and move player
+//					glc.rollAndMove(currentPlayer);
+//															
+//					// handle possible field actions
+//					flc.handleFieldAction(currentPlayer);
+//					
+//					
+//					break;
+//				case EndTurn:
+//					currentPlayer.setDoneThrowing(false);
+//					break;
+//				default:
+//					throw new Exception("Case not found!");
+//				}
+//				
+//				
+//				//userChoice = glc.showUserOptions(currentPlayer);
+//				
+//				
+//				if(userChoice==UserOption.EndTurn)
+//					break;
+//				
+//			
+//			}
+		
 			// Starting main round play through
+			/*
 			System.out.println("-- Round: " + turnCounter + " --");
 
 			if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player !isJail or (isJail and pays a
@@ -122,15 +168,12 @@ public class GameController {
 				if (isJail(players) && getOutJail(players))
 					System.out.println("-- Player payed 1000kr to get out of jail --");
 
-				// roll and move player
-				glc.rollAndMove(currentPlayer);
-
-				// resolve field
-				flc.resolveField(currentPlayer);
+				
 
 				// Check if player still has money or should be removed.
 				int playerCount = players.length;
-
+*/
+			/*
 				players = blc.evaluatePlayer(currentPlayer, players);
 
 				// No players left = Game over
@@ -143,20 +186,20 @@ public class GameController {
 				// TODO: Needs to be handled properly!
 				if (players.length < playerCount)
 					lastPlayer = players[0];
+*/
+				//Thread.sleep(400);
 
-				Thread.sleep(400);
-
-			} else { // Player isJail, doesn't pay the fee and must therefore wait until next turn
-
-				System.out.println("-- Player must skip this turn --");
-			}
+//			} else { // Player isJail, doesn't pay the fee and must therefore wait until next turn
+//
+//				System.out.println("-- Player must skip this turn --");
+//			}
 
 			turnCounter++;
 		}
 	}
 	
 	// needs to include all possible values of choice (needs adjustment for prisonoptions)
-	private boolean handleChoice(UserOption choice, Player currentPlayer) {
+	private boolean handleChoice(UserOption choice, Player currentPlayer) throws Exception {
 		
 		switch(choice) {
 		
@@ -169,6 +212,11 @@ public class GameController {
 			blc.unPawnLot(currentPlayer);
 			return false;
 		case ThrowDice:
+			// roll and move player
+			glc.rollAndMove(currentPlayer);
+													
+			// handle possible field actions
+			flc.handleFieldAction(currentPlayer);
 			return true;
 		default:
 			return false;

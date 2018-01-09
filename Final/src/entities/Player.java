@@ -9,6 +9,7 @@ public class Player {
 	private Field previousField = null; // Previous field player stood on.
 	private boolean isInJail;
 	private boolean hasJailCard = false;
+	private boolean doneThrowing = false; // Indicates that user is done throwing this turn 
 	/**
 	 * Indicates whether user has rolled or not.
 	 */
@@ -94,9 +95,8 @@ public class Player {
 	 * @param Amount
 	 * @return Returns if the withdraw was successful or not.
 	 */
-	public boolean withdraw(int amount) {
-		boolean temp = account.withdraw(amount);
-		return temp;
+	public boolean withdraw(int amount) {		
+		return account.withdraw(amount);
 	}
 
 	/**
@@ -166,13 +166,13 @@ public class Player {
 	 */
 	public boolean getJailCard() {
 		return this.hasJailCard;
+	}	
+
+	public boolean isDoneThrowing() {
+		return doneThrowing;
 	}
 
-	public boolean getHasRolled() {
-		return hasRolled;
-	}
-
-	public void setHasRolled(boolean hasRolled) {
-		this.hasRolled = hasRolled;
+	public void setDoneThrowing(boolean doneThrowing) {
+		this.doneThrowing = doneThrowing;
 	}
 }

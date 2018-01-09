@@ -30,6 +30,8 @@ public class GameLogicCtrl {
 
 		// if not in jail - you can throw dice (actually you can always throw dice, if you're in jail you have extra options related to being in jail)
 		//if (!currentPlayer.isInJail()) {
+		// if not in jail - you can throw dice
+		if (!currentPlayer.isInJail() && !currentPlayer.isDoneThrowing()) {
 			options[index] = UserOption.ThrowDice;
 			index++;
 		//}
@@ -44,6 +46,22 @@ public class GameLogicCtrl {
 			index++;
 		//}
 		
+		}
+/*
+		options[index] = UserOption.BuyHouse;
+		index++;
+
+		options[index] = UserOption.BuyHotel;
+		index++;
+
+		options[index] = UserOption.PawnLot;
+		index++;*/
+
+		if(currentPlayer.isDoneThrowing()) {
+				options[index] = UserOption.EndTurn;
+				index++;
+		}
+
 		// empty array of nulls
 		int elements = 0;
 		for (UserOption userOption : options) {
@@ -154,7 +172,6 @@ public class GameLogicCtrl {
 				newHighest = resultRoll;
 
 				startPlayer = players[i];
-
 			}
 
 			System.out.println(players[i].getName() + " Rolled " + resultRoll);
@@ -164,9 +181,17 @@ public class GameLogicCtrl {
 
 			System.out.println("-- " + startPlayer.getName() + " goes first! --");
 
+			previousPlayer = startPlayer;
+			
 			return startPlayer;
-		}
-
+		}		
+		
 		throw new Exception("No players were found!");
+	}
+
+	public void handleUserChoice(Player currentPlayer, UserOption userChoice) {
+		
+		
+		
 	}
 }

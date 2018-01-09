@@ -3,6 +3,8 @@ package controllers;
 import java.io.IOException;
 import boundary.GUIController;
 import entities.Player;
+import entities.enums.FieldName;
+import entities.enums.UserOption;
 import entities.field.BreweryField;
 import entities.field.Field;
 import entities.field.LotField;
@@ -20,18 +22,31 @@ public class FieldLogicController {
 	private FieldLogicController() throws IOException {
 	}
 
-	public void resolveField(Player currentPlayer) throws Exception {
+	public void handleFieldAction(Player currentPlayer) throws Exception {
 
 		Field currentField = currentPlayer.getCurrentField();
 
 		switch (currentField.getFieldType()) {
 
 		case BREWERY:
-
 			BreweryField bf = (BreweryField) currentField;
-			gui.showMessage("you have landed on a  " + currentField.getFieldType() + " do you wish to purchase it?");
 
-			bf = (BreweryField) currentField;
+			// If no owner and user has the money he can buy
+			if (bf.getOwner() == null && blc.userCanAfford(currentPlayer.getBalance(), bf)) {
+				// ask if user wants to buy
+				gui.showMessage(
+						"you have landed on a  " + currentField.getFieldType() + " do you wish to purchase it?");
+				UserOption choice = gui.showOptions("Vælg:",
+						new UserOption[] { UserOption.BuyLot, UserOption.NoThanks });
+
+				// user opted to buy lot
+				if (choice == UserOption.BuyLot)
+					blc.buyLot(currentPlayer);		
+			}
+			// field has owner and player must pay rent 
+			// if owner != current player
+			else
+				blc.payRent(currentPlayer);	
 
 			break;
 		case CHANCE:
@@ -44,32 +59,31 @@ public class FieldLogicController {
 		case EXTRATAX:
 			gui.showMessage("you have landed on " + currentField.getFieldType());
 			currentPlayer.withdraw(2000);
-			// ingen grund til cast da den bare er en Field type
 			break;
 		case FREEPARKING:
 			gui.showMessage("you have landed on " + currentField.getFieldType() + " nothing happens");
-			// ingen grund til cast da den bare er en Field type
 			break;
 		case GOTOJAIL:
 			gui.showMessage("you have landed on " + currentField.getFieldType());
-			currentPlayer.setCurrentField(currentField);
+
+			Field jail = this.gbc.getFieldByName(FieldName.Fængslet);
+
+			currentPlayer.setCurrentField(jail);
+
 			gui.movePlayer(currentPlayer);
+
 			currentPlayer.isInJail(true);
-			// er saa vidt jeg forstaar ikke muligt at implementere pt.
-			// ingen grund til cast da den bare er en Field type
+
 			break;
 		case INCOMETAX:
 			gui.showMessage("you have landed on " + currentField.getFieldType());
 			currentPlayer.withdraw(4000);
 			// at implementere valget der bruger 10% maa vente lidt
-			// ingen grund til cast da den bare er en Field type
 			break;
 
 		case LOT:
 			LotField lf = (LotField) currentField;
 
-			// gui.showMessage("you have landed on "+currentField.getFieldType()+" do you
-			// wish to purchase it?");
 			// no owner!
 			if (lf.getOwner() == null) {
 				// 1. TODO: ask if player wants to buy

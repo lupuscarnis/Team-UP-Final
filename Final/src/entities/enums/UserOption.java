@@ -14,5 +14,10 @@ public enum UserOption {
 	BuyHouse, 
 	SellHouse,
 	//InvalidOption!! :)
-	EndTurn
+	EndTurn, 
+	StartOfTurn, 
+	BuyLot, 
+	NoThanks, 
+	PayRent
+
 }
