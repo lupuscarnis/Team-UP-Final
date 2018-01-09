@@ -43,7 +43,7 @@ public class BusinessLogicController {
 			
 			}
 //		else if(field.hasBuilding) {
-//			gui.showMessage("Grunden skal være ubebygget");
+//			gui.showMessage("For at kunne pantsætte skal grunden være ubebygget");
 //		}
 			else if(!field.getPawned()) {
 			field.setPawned(true);
