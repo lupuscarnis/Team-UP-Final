@@ -78,16 +78,11 @@ public class FieldLogicController {
 			}
 			break;
 		case GOTOJAIL:
-			gui.showMessage("you have landed on " + currentField.getFieldType());
-
-			Field jail = this.gbc.getFieldByName(FieldName.Fængslet);
-
-			currentPlayer.setCurrentField(jail);
-
-			gui.movePlayer(currentPlayer);
-
-			currentPlayer.isInJail(true);
-
+			// Show message to player
+			Messager.showMustGoToJail(currentPlayer);
+			
+			// handle logic reg. going to jail
+			GameLogicCtrl.getInstance().handleGoToJail(currentPlayer);						
 			break;
 		case INCOMETAX:
 			// Tell user he must pay income tax and get choice (10% or 4000)
@@ -100,7 +95,6 @@ public class FieldLogicController {
 		default:
 			throw new Exception("Case not found!");
 		}
-
 	}
 
 	/**

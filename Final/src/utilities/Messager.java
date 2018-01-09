@@ -6,6 +6,7 @@ import boundary.GUIController;
 import entities.Player;
 import entities.enums.FieldType;
 import entities.enums.UserOption;
+import entities.field.Field;
 import entities.field.OwnableField;
 
 // TODO: GUI skal ikke kaldes via GUIController.getInstance()
@@ -60,5 +61,17 @@ public class Messager {
 		
 		
 		GUIController.getInstance().updateBalance(payer);
+	}
+
+
+	public static void showMustGoToJail(Player currentPlayer) throws Exception {
+		
+		Field field = currentPlayer.getCurrentField();
+		
+		GUIController.getInstance().showMessage("you have landed on " + field.getTitle());
+		
+		GUIController.getInstance().showPromt("Du flyttes i fængsel!");
+		
+		GUIController.getInstance().movePlayer(currentPlayer);
 	}
 }

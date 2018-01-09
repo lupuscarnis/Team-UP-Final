@@ -13,7 +13,7 @@ public class GameController {
 	private PlayerController pc = PlayerController.getInstance();
 	private GameLogicCtrl glc = GameLogicCtrl.getInstance();
 	private GUIController gui = GUIController.getInstance();
-	
+
 	// CONSTANTS
 	private static final int PLAYER_MIN = 3;
 	private static final int PLAYER_MAX = 6;
@@ -33,7 +33,8 @@ public class GameController {
 	// FOR TESTING PURPOSES!
 
 	// Testing Gameover
-	public GameController() throws IOException {}
+	public GameController() throws IOException {
+	}
 
 	private boolean gameOver(Player[] players) {
 		// TODO Auto-generated method stub
@@ -91,91 +92,79 @@ public class GameController {
 				currentPlayer = glc.getStartPlayer(players);
 
 				// Vis start spil knap
-				//gui.showPromt("Start spil");
+				// gui.showPromt("Start spil");
 
-			} else {				
+			} else {
 				// find next player
 				currentPlayer = glc.getNextPlayer(players);
 			}
-			
-			gui.showPromt("Det er "+currentPlayer.getName() + "s tur!");
+
+			gui.showPromt("Det er " + currentPlayer.getName() + "s tur!");
 
 			// present options for user
 			// End when EndTurn is selected
-			
-			while(true)
-			{				
-				UserOption userChoice = glc.showUserOptions(currentPlayer);				
-				
-				switch(userChoice)
-				{
-				
-				case StartOfTurn:
-					break;				
+			UserOption userChoice = null;
+			do {
+				userChoice = glc.showUserOptions(currentPlayer);
+
+				switch (userChoice) {
+
 				case BuyHotel:
 					break;
 				case BuyHouse:
-					break;				
+					break;
 				case PawnLot:
 					break;
 				case ThrowDice:
-					
-					//TODO: Roll streak?
+					// TODO: Roll streak?
 					currentPlayer.setDoneThrowing(true);
-					
+
 					// roll and move player
 					glc.rollAndMove(currentPlayer);
-															
+
 					// handle possible field actions
-					flc.handleFieldAction(currentPlayer);				
+					flc.handleFieldAction(currentPlayer);
 					break;
 				case EndTurn:
 					currentPlayer.setDoneThrowing(false);
 					break;
 				default:
 					throw new Exception("Case not found!");
-				}				
-				//userChoice = glc.showUserOptions(currentPlayer);				
-				
-				if(userChoice==UserOption.EndTurn)
-					break;			
-			}	
+				}
+
+			} while (userChoice != UserOption.EndTurn);
 
 			// Starting main round play through
 			/*
-			System.out.println("-- Round: " + turnCounter + " --");
-
-			if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player !isJail or (isJail and pays a
-
-				// fee to get out)
-				if (isJail(players) && getOutJail(players))
-					System.out.println("-- Player payed 1000kr to get out of jail --");
-
-				
-
-				// Check if player still has money or should be removed.
-				int playerCount = players.length;
-*/
+			 * System.out.println("-- Round: " + turnCounter + " --");
+			 * 
+			 * if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player
+			 * !isJail or (isJail and pays a
+			 * 
+			 * // fee to get out) if (isJail(players) && getOutJail(players))
+			 * System.out.println("-- Player payed 1000kr to get out of jail --");
+			 * 
+			 * 
+			 * 
+			 * // Check if player still has money or should be removed. int playerCount =
+			 * players.length;
+			 */
 			/*
-				players = blc.evaluatePlayer(currentPlayer, players);
+			 * players = blc.evaluatePlayer(currentPlayer, players);
+			 * 
+			 * // No players left = Game over if (players.length == 0) {
+			 * System.out.println("Game over!!!!!!!"); // TODO: Beautify!!!! break; }
+			 * 
+			 * // TODO: Needs to be handled properly! if (players.length < playerCount)
+			 * lastPlayer = players[0];
+			 */
+			// Thread.sleep(400);
 
-				// No players left = Game over
-				if (players.length == 0) {
-					System.out.println("Game over!!!!!!!");
-					// TODO: Beautify!!!!
-					break;
-				}
-
-				// TODO: Needs to be handled properly!
-				if (players.length < playerCount)
-					lastPlayer = players[0];
-*/
-				//Thread.sleep(400);
-
-//			} else { // Player isJail, doesn't pay the fee and must therefore wait until next turn
-//
-//				System.out.println("-- Player must skip this turn --");
-//			}
+			// } else { // Player isJail, doesn't pay the fee and must therefore wait until
+			// next turn
+			//
+			// System.out.println("-- Player must skip this turn --");
+			// }
 
 			turnCounter++;
 		}

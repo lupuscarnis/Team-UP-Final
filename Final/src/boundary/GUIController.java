@@ -26,13 +26,12 @@ public class GUIController {
 	private GUIController() throws IOException {
 		gui = new BoardGenerator().makeBoard();
 	}
-	
-	public static GUIController getInstance() throws IOException
-	{		
-		if(instance == null)
+
+	public static GUIController getInstance() throws IOException {
+		if (instance == null)
 			instance = new GUIController();
-		
-		return instance;		
+
+		return instance;
 	}
 
 	/**
@@ -341,19 +340,18 @@ public class GUIController {
 		gui.getFields()[fieldId - 1].setSubText("Ejer: " + name);
 	}
 
-	
-	
-/**
- * Added by Frederik on 09-01-2018 00:49:47 
- * 
- * Updates the balance of the player
- * 
- * @param currentPlayer
- * @throws Exception 
- */
+	/**
+	 * Added by Frederik on 09-01-2018 00:49:47
+	 * 
+	 * Updates the balance of the player
+	 * 
+	 * @param currentPlayer
+	 * @throws Exception
+	 */
 	public void updateBalance(Player currentPlayer) throws Exception {
-		updateBalance(new Player[] {currentPlayer});		
+		updateBalance(new Player[] { currentPlayer });
 	}
+
 	/**
 	 * Added by Frederik on 06-01-2018 23:30:48
 	 * 
@@ -477,15 +475,15 @@ public class GUIController {
 		if (parseUserOption(UserOption.PawnLot) == result)
 			return UserOption.PawnLot;
 		if (parseUserOption(UserOption.ThrowDice) == result)
-			return UserOption.ThrowDice;		
+			return UserOption.ThrowDice;
 		if (parseUserOption(UserOption.BuyField) == result)
-			return UserOption.BuyField;		
+			return UserOption.BuyField;
 		if (parseUserOption(UserOption.NoThanks) == result)
-			return UserOption.NoThanks;		
+			return UserOption.NoThanks;
 		if (parseUserOption(UserOption.PayRent) == result)
-			return UserOption.PayRent;		
+			return UserOption.PayRent;
 		if (parseUserOption(UserOption.IncomeTaxPay4000) == result)
-			return UserOption.IncomeTaxPay4000;		
+			return UserOption.IncomeTaxPay4000;
 		if (parseUserOption(UserOption.IncomeTaxPayTenPercent) == result)
 			return UserOption.IncomeTaxPayTenPercent;
 		throw new Exception("Translation not found!");
@@ -501,13 +499,13 @@ public class GUIController {
 	 * @throws Exception
 	 */
 	private String parseUserOption(UserOption option) throws Exception {
-		switch (option) {		
+		switch (option) {
 		case PayRent:
 			return "Betal leje";
 		case NoThanks:
 			return "Nej tak";
 		case BuyField:
-			return "Køb grund";		
+			return "Køb grund";
 		case BuyHotel:
 			return "Køb hotel";
 		case BuyHouse:
@@ -517,13 +515,17 @@ public class GUIController {
 		case PawnLot:
 			return "Pantsæt hus";
 		case ThrowDice:
-			return "Kast terning";			
+			return "Kast terning";
 		case IncomeTaxPay4000:
-			return "Betal 4000";			
+			return "Betal 4000";
 		case IncomeTaxPayTenPercent:
 			return "Betal 10%";
 		default:
 			throw new Exception("Case not found!");
 		}
+	}
+
+	public void updatePlayerPosition(String playerName, int fromField, int toField) throws Exception {		
+		moveCar(fromField, toField, findPlayer(playerName));
 	}
 }
