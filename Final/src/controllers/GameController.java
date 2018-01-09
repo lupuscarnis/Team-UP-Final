@@ -118,6 +118,8 @@ public class GameController {
 				flc.cup1.setRerolls(0);
 				// roll and move player
 				flc.rollAndMove(currentPlayer);
+				if(currentPlayer.getPreviousField().getFieldNumber()>currentPlayer.getCurrentField().getFieldNumber())
+				{currentPlayer.deposit(4000);}
 				//if 3 (or more) rerolls occure, player doesnt resolve field and goes to jail.
 				if(flc.cup1.getRerolls()>2){currentPlayer.isInJail(true); break;}
 				// resolve field
@@ -126,6 +128,8 @@ public class GameController {
 			{
 				// roll and move player
 				flc.rollAndMove(currentPlayer);
+				if(currentPlayer.getPreviousField().getFieldNumber()>currentPlayer.getCurrentField().getFieldNumber())
+				{currentPlayer.deposit(4000);}
 				if(flc.cup1.getRerolls()>2){currentPlayer.isInJail(true); break;}
 				// resolve field
 				flc.resolveField(currentPlayer.getCurrentField());
@@ -134,6 +138,8 @@ public class GameController {
 			{
 				// roll and move player
 				flc.rollAndMove(currentPlayer);
+				if(currentPlayer.getPreviousField().getFieldNumber()>currentPlayer.getCurrentField().getFieldNumber())
+				{currentPlayer.deposit(4000);}
 				if(flc.cup1.getRerolls()>2){currentPlayer.isInJail(true); break;}
 				// resolve field
 				flc.resolveField(currentPlayer.getCurrentField());
