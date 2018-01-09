@@ -229,7 +229,7 @@ public class GUIController {
 	/**
 	 * @return
 	 */
-	private String userDropDownSelection(String label, String[] dropDownOptions) {
+	public String userDropDownSelection(String label, String[] dropDownOptions) {
 		return gui.getUserSelection(label, dropDownOptions);
 	}
 

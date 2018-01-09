@@ -36,7 +36,7 @@ public class BusinessLogicController {
 	}
 
 	// Pawn lot
-	public void pawnLot(Player currentPlayer) {
+	public void pawnLot(Player currentPlayer) throws Exception {
 		
 		OwnableField field = chooseLot(currentPlayer);
 		
@@ -45,10 +45,11 @@ public class BusinessLogicController {
 			currentPlayer.deposit(field.getPawnPrice());
 		}
 		
+		gui.updateBalance(currentPlayer);
 	}
 	
 	// UnPawn lot
-		public void unPawnLot(Player currentPlayer) {
+		public void unPawnLot(Player currentPlayer) throws Exception {
 			
 			OwnableField field = chooseLot(currentPlayer);
 			
@@ -57,13 +58,29 @@ public class BusinessLogicController {
 				//TODO 10% rounded up to nearest 100 extra cost to unpawn
 				currentPlayer.withdraw(field.getPawnPrice());
 			}
-			
+		
+			gui.updateBalance(currentPlayer);
 		}
-
+//	Returns a player owned field, chosen by the player from a drop down menu.
+		
 	private OwnableField chooseLot(Player currentPlayer) {
-		// set to 2 for testing purposes
-		int fieldNo = 2;
-		return (OwnableField) gbc.getFieldByNumber(fieldNo);
+		
+		OwnableField[] ownedFields = gbc.getFieldsByOwner(currentPlayer);
+		String[] lotNames = new String[ownedFields.length];
+		for(int i=0;i<ownedFields.length;i++) {
+			lotNames[i] = ownedFields[i].getTitle();
+		}
+		
+		String fieldName = gui.userDropDownSelection("Vælg grund ", lotNames);
+		int fieldNumber=0;
+		
+		for(int i=0;i<ownedFields.length; i++) {
+			if(ownedFields[i].getTitle().equals(fieldName)) {
+				fieldNumber = ownedFields[i].getFieldNumber();
+			}
+		}
+		//kind of hacked solution, needs direct method to get from title
+		return (OwnableField) gbc.getFieldByNumber(fieldNumber);
 	}
 
 	// set owner of (ownable)field.
