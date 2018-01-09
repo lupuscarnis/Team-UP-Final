@@ -60,8 +60,8 @@ public class BusinessLogicController {
 			else if(field.getPawned()) {
 				field.setPawned(false);
 				//TODO 10% rounded up to nearest 100 extra cost to unpawn
-				int unPawnPrice = field.getPawnPrice()+(field.getPawnPrice()/100)*10;
-				if(field.getPawnPrice()%100!=0) {
+				int unPawnPrice = field.getPawnPrice()+(field.getPawnPrice()/1000)*100;
+				if(field.getPawnPrice()%1000!=0) {
 					unPawnPrice+=100;
 				}
 				currentPlayer.withdraw(unPawnPrice);
