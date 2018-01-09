@@ -81,10 +81,22 @@ public class FieldLogicController {
 			// at implementere valget der bruger 10% maa vente lidt
 			
 			
-			gui.showOptions("Hvordan vil du betal din skat: ", UserOptions.  )
-				
+		UserOption userChoice = gui.showOptions("Hvordan vil du betal din skat: ", new UserOption[] {UserOption.IncomeTaxPay4000, UserOption.IncomeTaxPayTenPercent});
+				switch(userChoice) {
+		case IncomeTaxPay4000:
+		{
+					
+			currentPlayer.withdraw(4000);
+		
 			break;
-
+		}
+		case IncomeTaxPayTenPercent:
+		{
+			//TODO: Create a player constant that summs up his value
+			
+			break;
+		}
+				}
 		case LOT:
 			LotField lf = (LotField) currentField;
 
