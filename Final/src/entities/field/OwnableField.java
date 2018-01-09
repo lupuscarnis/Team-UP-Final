@@ -11,6 +11,7 @@ public abstract class OwnableField extends Field {
 	private int price;
 	private int pawnPrice;
 	private Player owner = null;
+	private boolean pawned = false;
 
 	public OwnableField(FieldType fieldType, int fieldNo, String text1, int price, int pawnPrice) {
 		super(fieldType, fieldNo, text1);
@@ -41,6 +42,14 @@ public abstract class OwnableField extends Field {
 
 	public void setOwner(Player owner) {
 		this.owner = owner;
+	}
+	
+	public void setPawned(Boolean pawn) {
+		this.pawned = pawn;
+	}
+	
+	public boolean getPawned() {
+		return this.pawned;
 	}
 
 	public String toString() {
