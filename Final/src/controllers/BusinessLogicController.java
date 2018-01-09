@@ -31,7 +31,15 @@ public class BusinessLogicController {
 
 	// Pawn lot
 	public void pawnLot(Player currentPlayer) {
+		
+		chooseLot(currentPlayer);
 		// TODO: Implement method
+	}
+
+	private OwnableField chooseLot(Player currentPlayer) {
+		// TODO Auto-generated method stub
+		int fieldNo = 2;
+		return (OwnableField) gbc.getFieldByNumber(fieldNo);
 	}
 
 	// set owner of (ownable)field.
