@@ -107,16 +107,6 @@ public class GameLogicCtrl {
 		currentPlayer.deposit(4000);
 		System.out.println("Du fik 4000 over start! hurray!");
 		}
-		else
-		{
-			System.out.println("Du fik ikke 4000 over start. Cuss reason");
-		}
-		
-		
-		
-		
-		
-		
 		
 	}
 

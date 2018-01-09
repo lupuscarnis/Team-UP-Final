@@ -36,8 +36,7 @@ public class FieldLogicController {
 				// ask if user wants to buy
 				gui.showMessage(
 						"you have landed on a  " + currentField.getFieldType() + " do you wish to purchase it?");
-				UserOption choice = gui.showOptions("Vælg:",
-						new UserOption[] { UserOption.BuyLot, UserOption.NoThanks });
+				UserOption choice = gui.showOptions("Vælg:", new UserOption[] { UserOption.BuyLot, UserOption.NoThanks });
 
 				// user opted to buy lot
 				if (choice == UserOption.BuyLot)
@@ -76,16 +75,17 @@ public class FieldLogicController {
 
 			break;
 		case INCOMETAX:
+		
+			
 			gui.showMessage("you have landed on " + currentField.getFieldType());
 			
-			// at implementere valget der bruger 10% maa vente lidt
-			
+		
 			
 		UserOption userChoice = gui.showOptions("Hvordan vil du betal din skat: ", new UserOption[] {UserOption.IncomeTaxPay4000, UserOption.IncomeTaxPayTenPercent});
-				switch(userChoice) {
+		switch(userChoice) {
+		
 		case IncomeTaxPay4000:
 		{
-					
 			currentPlayer.withdraw(4000);
 		
 			break;
@@ -96,7 +96,10 @@ public class FieldLogicController {
 			
 			break;
 		}
-				}
+	default:
+					break;
+		}
+		
 		case LOT:
 			LotField lf = (LotField) currentField;
 
