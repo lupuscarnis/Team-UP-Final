@@ -81,29 +81,63 @@ public class FieldLogicController {
 			// at implementere valget der bruger 10% maa vente lidt
 			break;
 
+			/**
+			 * Added by Kasper on 1/9-2018
+			 * 
+			 * Handles Lot field (buy/pay rent) 
+			 */
+			
 		case LOT:
 			LotField lf = (LotField) currentField;
 
 			// no owner!
-			if (lf.getOwner() == null) {
-				// 1. TODO: ask if player wants to buy
+			if (lf.getOwner() == null && blc.userCanAfford(currentPlayer.getBalance(), lf)) {
 
-				// 2. if yes - set owner
-				blc.buyLot(currentPlayer);
+				gui.showMessage(
+						"you have landed on a  " + currentField.getFieldType() + " do you wish to purchase it?");
+				UserOption choice = gui.showOptions("Vælg:",
+						new UserOption[] { UserOption.BuyLot, UserOption.NoThanks });
+
+				// user opted to buy lot
+				if (choice == UserOption.BuyLot)
+					blc.buyLot(currentPlayer);	
+
 			}
 			// pay rent
 			else
 				blc.payRent(currentPlayer);
 
 			break;
+			
+			/**
+			 * Added by Kasper on 1/9-2018
+			 * 
+			 * Handles Shipping field (buy/pay rent) 
+			 */
+			
 		case SHIPPING:
 
 			ShippingField sf = (ShippingField) currentField;
-			gui.showMessage("you have landed on " + currentField.getFieldType() + " do you wish to purchase it?");
+			
+			// no owner!
+			if (sf.getOwner() == null && blc.userCanAfford(currentPlayer.getBalance(), sf)) {
 
-			sf = (ShippingField) currentField;
+				gui.showMessage(
+						"you have landed on a  " + currentField.getFieldType() + " do you wish to purchase it?");
+				UserOption choice = gui.showOptions("Vælg:",
+						new UserOption[] { UserOption.BuyLot, UserOption.NoThanks });
+
+				// user opted to buy lot
+				if (choice == UserOption.BuyLot)
+					blc.buyLot(currentPlayer);	
+
+			}
+			// pay rent
+			else
+				blc.payRent(currentPlayer);
 
 			break;
+
 		case START:
 			gui.showMessage("you have landed on " + currentField.getFieldType() + " you gain 4000 kr.");
 			currentPlayer.deposit(4000);
