@@ -39,8 +39,10 @@ public class BusinessLogicController {
 	public void pawnLot(Player currentPlayer) throws Exception {
 		
 		OwnableField field = chooseLot(currentPlayer);
-		
-		if(!field.getPawned()) {
+		if(field==null) {
+			
+			}
+		else if(!field.getPawned()) {
 			field.setPawned(true);
 			currentPlayer.deposit(field.getPawnPrice());
 		}
@@ -52,11 +54,17 @@ public class BusinessLogicController {
 		public void unPawnLot(Player currentPlayer) throws Exception {
 			
 			OwnableField field = chooseLot(currentPlayer);
-			
-			if(field.getPawned()) {
+			if(field==null) {
+				
+			}
+			else if(field.getPawned()) {
 				field.setPawned(false);
 				//TODO 10% rounded up to nearest 100 extra cost to unpawn
-				currentPlayer.withdraw(field.getPawnPrice());
+				int unPawnPrice = field.getPawnPrice()+(field.getPawnPrice()/100)*10;
+				if(field.getPawnPrice()%100!=0) {
+					unPawnPrice+=100;
+				}
+				currentPlayer.withdraw(unPawnPrice);
 			}
 		
 			gui.updateBalance(currentPlayer);
@@ -65,7 +73,11 @@ public class BusinessLogicController {
 		
 	private OwnableField chooseLot(Player currentPlayer) {
 		
+		
 		OwnableField[] ownedFields = gbc.getFieldsByOwner(currentPlayer);
+		if(ownedFields.length==0) {
+			return (OwnableField) null;
+		}
 		String[] lotNames = new String[ownedFields.length];
 		for(int i=0;i<ownedFields.length;i++) {
 			lotNames[i] = ownedFields[i].getTitle();
