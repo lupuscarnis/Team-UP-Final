@@ -94,8 +94,7 @@ public class GameController {
 				// Vis start spil knap
 				//gui.showPromt("Start spil");
 
-			} else {
-				System.out.println("qqq");
+			} else {				
 				// find next player
 				currentPlayer = glc.getNextPlayer(players);
 			}
@@ -113,13 +112,11 @@ public class GameController {
 				{
 				
 				case StartOfTurn:
-					break;
-				
+					break;				
 				case BuyHotel:
 					break;
 				case BuyHouse:
-					break;
-				
+					break;				
 				case PawnLot:
 					break;
 				case ThrowDice:
@@ -131,8 +128,7 @@ public class GameController {
 					glc.rollAndMove(currentPlayer);
 															
 					// handle possible field actions
-					flc.handleFieldAction(currentPlayer);
-					
+					flc.handleFieldAction(currentPlayer);				
 					
 					break;
 				case EndTurn:
@@ -140,18 +136,12 @@ public class GameController {
 					break;
 				default:
 					throw new Exception("Case not found!");
-				}
-				
-				
-				//userChoice = glc.showUserOptions(currentPlayer);
-				
+				}				
+				//userChoice = glc.showUserOptions(currentPlayer);				
 				
 				if(userChoice==UserOption.EndTurn)
-					break;
-				
-			
-			}
-			
+					break;			
+			}	
 
 			// Starting main round play through
 			/*

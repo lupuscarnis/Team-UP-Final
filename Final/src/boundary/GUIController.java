@@ -470,34 +470,24 @@ public class GUIController {
 
 		if (parseUserOption(UserOption.BuyHotel) == result)
 			return UserOption.BuyHotel;
-
 		if (parseUserOption(UserOption.BuyHouse) == result)
 			return UserOption.BuyHouse;
-
 		if (parseUserOption(UserOption.EndTurn) == result)
 			return UserOption.EndTurn;
-
 		if (parseUserOption(UserOption.PawnLot) == result)
 			return UserOption.PawnLot;
-
 		if (parseUserOption(UserOption.ThrowDice) == result)
-			return UserOption.ThrowDice;
-		
+			return UserOption.ThrowDice;		
 		if (parseUserOption(UserOption.BuyField) == result)
-			return UserOption.BuyField;
-		
+			return UserOption.BuyField;		
 		if (parseUserOption(UserOption.NoThanks) == result)
-			return UserOption.NoThanks;
-		
+			return UserOption.NoThanks;		
 		if (parseUserOption(UserOption.PayRent) == result)
-			return UserOption.PayRent;
-		
+			return UserOption.PayRent;		
 		if (parseUserOption(UserOption.IncomeTaxPay4000) == result)
-			return UserOption.IncomeTaxPay4000;
-		
+			return UserOption.IncomeTaxPay4000;		
 		if (parseUserOption(UserOption.IncomeTaxPayTenPercent) == result)
 			return UserOption.IncomeTaxPayTenPercent;
-
 		throw new Exception("Translation not found!");
 	}
 
@@ -511,41 +501,29 @@ public class GUIController {
 	 * @throws Exception
 	 */
 	private String parseUserOption(UserOption option) throws Exception {
-
-		switch (option) {
-		
+		switch (option) {		
 		case PayRent:
 			return "Betal leje";
 		case NoThanks:
 			return "Nej tak";
 		case BuyField:
-			return "Køb grund";
-		
+			return "Køb grund";		
 		case BuyHotel:
 			return "Køb hotel";
-
 		case BuyHouse:
 			return "Køb hus";
-
 		case EndTurn:
 			return "Afslut tur";
-
 		case PawnLot:
 			return "Pantsæt hus";
-
 		case ThrowDice:
-			return "Kast terning";
-			
+			return "Kast terning";			
 		case IncomeTaxPay4000:
-			return "Betal 4000";
-			
+			return "Betal 4000";			
 		case IncomeTaxPayTenPercent:
 			return "Betal 10%";
-
 		default:
 			throw new Exception("Case not found!");
 		}
 	}
-
-
 }

@@ -26,7 +26,6 @@ public class Messager {
 	}
 
 	public static void showLotBoughtMessage(OwnableField of) throws IOException, Exception {
-
 		Player player = of.getOwner();
 
 		GUIController.getInstance().updateBalance(player);

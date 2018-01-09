@@ -75,7 +75,6 @@ public class LotField extends OwnableField {
 
 	public void setHousePrice(int housePrice) {
 		this.housePrice = housePrice;
-
 	}
 
 	@Override
