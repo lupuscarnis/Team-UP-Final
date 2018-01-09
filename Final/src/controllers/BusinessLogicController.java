@@ -6,6 +6,7 @@ import java.io.IOException;
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.BreweriesOwned;
+import entities.enums.FieldType;
 import entities.enums.LotRentTier;
 import entities.enums.UserOption;
 import entities.field.BreweryField;
@@ -40,17 +41,29 @@ public class BusinessLogicController {
 		if(field==null) {
 			
 			}
-//		else if(field.hasBuilding) {
-//			gui.showMessage("For at kunne pantsætte skal grunden være ubebygget");
-//		}
+		else if(hasBuildings(field)) {
+			GUIController.getInstance().showMessage("For at kunne pantsætte skal grunden være ubebygget");
+		}
 			else if(!field.getPawned()) {
 			field.setPawned(true);
 			currentPlayer.deposit(field.getPawnPrice());
+			GUIController.getInstance().updateBalance(currentPlayer);
 			}
 		
-		GUIController.getInstance().updateBalance(currentPlayer);
+		
 	}
 	
+	private boolean hasBuildings(OwnableField field) {
+		if(field.getFieldType().equals(FieldType.LOT)) {
+			LotField lotField = (LotField) field;
+			if(lotField.getHouseCount()>0 | lotField.getHotelCount()>0) {
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+
 	// UnPawn lot
 		public void unPawnLot(Player currentPlayer) throws Exception {
 			
@@ -266,16 +279,16 @@ public class BusinessLogicController {
 		
 		switch(choice) {
 		case BuyHotel:
-//			buyHotel(currentPlayer);
+			buyHotel(currentPlayer);
 			break;
 		case BuyHouse:
 			buyHouse(currentPlayer);
 			break;
 		case SellHotel:
-//			sellHotel(currentPlayer);
+			sellHotel(currentPlayer);
 			break;
 		case SellHouse:
-//			sellHouse(currentPlayer);
+			sellHouse(currentPlayer);
 			break;
 		default:
 			break;
@@ -284,48 +297,86 @@ public class BusinessLogicController {
 		
 	}
 
+	private void buyHotel(Player currentPlayer) throws Exception {
+		LotField field = chooseLotField(currentPlayer);
+		if(field==null | field.getHouseCount()<4) {
+			
+		}
+		else {
+			field.changeHotelCount(1);
+			field.setHouseCount(0);
+			int hotelCost = field.getBuildingCost()*5;
+			currentPlayer.withdraw(hotelCost);
+			GUIController.getInstance().updateBalance(currentPlayer);
+			}
+	}
+	
+	private void sellHotel(Player currentPlayer) throws Exception {
+		LotField field = chooseLotField(currentPlayer);
+		if(field==null) {
+			
+		}
+		else {
+			field.changeHotelCount(-1);
+			int hotelValue = (field.getBuildingCost()*5)/2;
+			currentPlayer.deposit(hotelValue);
+			GUIController.getInstance().updateBalance(currentPlayer);
+			}
+	}
+
 	private void buyHouse(Player currentPlayer) throws Exception {
 		
 		LotField field = chooseLotField(currentPlayer);
 		if(field==null) {
 			
 		}
-		else if(true) {
-			field.setRentTier();
-			//TODO 10% rounded up to nearest 100 extra cost to unpawn
-			int unPawnPrice = field.getPawnPrice()+(field.getPawnPrice()/1000)*100;
-			if(field.getPawnPrice()%1000!=0) {
-				unPawnPrice+=100;
+		else if(field.changeHouseCount(1)) {
+			
+			int houseCost = field.getBuildingCost();
+			currentPlayer.withdraw(houseCost);
+			GUIController.getInstance().updateBalance(currentPlayer);
 			}
-			currentPlayer.withdraw(unPawnPrice);
-		}
-	
-		GUIController.getInstance().updateBalance(currentPlayer);
-		
+			
 	}
-
-	private LotField chooseLotField(Player currentPlayer) {
+	
+	private void sellHouse(Player currentPlayer) throws Exception {
 		
-		LotField[] lotFields = GameBoardController.getInstance().getLotFieldsByOwner(currentPlayer);
-		if(ownedFields.length==0) {
-			return (OwnableField) null;
+		LotField field = chooseLotField(currentPlayer);
+		if(field==null) {
+			
 		}
-		String[] lotNames = new String[ownedFields.length];
-		for(int i=0;i<ownedFields.length;i++) {
-			lotNames[i] = ownedFields[i].getTitle();
+		else if(field.changeHouseCount(-1)) {
+			
+			int houseValue = field.getBuildingCost()/2;
+			currentPlayer.deposit(houseValue);
+			GUIController.getInstance().updateBalance(currentPlayer);
+			}
+			
+	}
+	
+	
+
+	private LotField chooseLotField(Player currentPlayer) throws IOException {
+		
+		LotField[] ownedLotFields = GameBoardController.getInstance().getLotFieldsByOwner(currentPlayer);
+		if(ownedLotFields.length==0) {
+			return (LotField) null;
+		}
+		String[] lotNames = new String[ownedLotFields.length];
+		for(int i=0;i<ownedLotFields.length;i++) {
+			lotNames[i] = ownedLotFields[i].getTitle();
 		}
 		
 		String fieldName = GUIController.getInstance().userDropDownSelection("Vælg grund ", lotNames);
 		int fieldNumber=0;
 		
-		for(int i=0;i<ownedFields.length; i++) {
-			if(ownedFields[i].getTitle().equals(fieldName)) {
-				fieldNumber = ownedFields[i].getFieldNumber();
+		for(int i=0;i<ownedLotFields.length; i++) {
+			if(ownedLotFields[i].getTitle().equals(fieldName)) {
+				fieldNumber = ownedLotFields[i].getFieldNumber();
 			}
 		}
 		//kind of hacked solution, needs direct method to get from title
-		return (OwnableField) GameBoardController.getInstance().getFieldByNumber(fieldNumber);
-		return null;
+		return (LotField) GameBoardController.getInstance().getFieldByNumber(fieldNumber);
 	}
 
 }

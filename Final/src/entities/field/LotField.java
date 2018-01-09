@@ -67,4 +67,35 @@ public class LotField extends OwnableField {
 		this.housePrice = housePrice;
 
 	}
+
+	public boolean changeHouseCount(int change) {
+		if(houseCount+change>=0 && houseCount+change<5) {
+			houseCount += change;
+			return true;
+		}
+		return false;
+		// TODO Auto-generated method stub
+		
+	}
+
+	public int getHouseCount() {
+		return houseCount;
+	}
+	
+	public int getHotelCount() {
+		return hotelCount;
+	}
+
+	public void setHouseCount(int i) {
+		houseCount = i;		
+	}
+
+	public boolean changeHotelCount(int change) {
+		if(houseCount+change>=0 && houseCount+change<2) {
+			hotelCount += change;
+			return true;
+		}
+		return false;
+		
+	}
 }
