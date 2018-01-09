@@ -3,18 +3,15 @@ package controllers;
 
 
 import boundary.GUIController;
-
+import entities.Cup;
+import entities.Die;
 import entities.Player;
 import entities.field.BreweryField;
 import entities.field.Field;
 import entities.field.LotField;
-import entities.field.OwnableField;
 import entities.field.ShippingField;
-
 import gui_main.GUI;
 import utilities.FieldLoader;
-import boundary.GUIController;
-
 import utilities.MyRandom;
 
 
@@ -26,6 +23,9 @@ public class FieldLogicController {
 	private boundary.GUIController guic;
 	private GUI gui = null;
 	Player currentPlayer;
+	Die d1 = new Die(1,6);
+	Die d2 = new Die(1,6);
+	Cup cup1 = new Cup(0, 0, d1, d2);
 	
 //	Field[] Fieldlist = Field[40];
 	
@@ -181,7 +181,7 @@ public class FieldLogicController {
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 		
 		// Throw Die
-		int faceValue = MyRandom.randInt(2, 12);
+		int faceValue = cup1.getRerolls();
 
 		// get next field		
 		Field nextField = this.getNextField(currentFieldNo, faceValue);

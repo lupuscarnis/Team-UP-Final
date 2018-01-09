@@ -127,7 +127,7 @@ public class GameController {
 				players = blc.evaluatePlayer(currentPlayer, players);
 				
 				// No players left = Game over
-				if(players.length==0)
+				if(players.length==1)
 				{
 					System.out.println("Game over!!!!!!!");
 					//TODO: Beautify!!!!
