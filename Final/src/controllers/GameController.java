@@ -4,7 +4,6 @@ import java.io.IOException;
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.UserOption;
-import utilities.MyRandom;
 
 public class GameController {
 
@@ -129,7 +128,6 @@ public class GameController {
 															
 					// handle possible field actions
 					flc.handleFieldAction(currentPlayer);				
-					
 					break;
 				case EndTurn:
 					currentPlayer.setDoneThrowing(false);
