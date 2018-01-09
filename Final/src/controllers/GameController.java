@@ -110,7 +110,7 @@ public class GameController {
 			// present options for user
 			UserOption choice = glc.showUserOptions(currentPlayer);		
 			// handles the choice of the user
-			diceThrown = handleChoice(choice);
+			diceThrown = handleChoice(choice, currentPlayer);
 			}
 			
 			// Starting main round play through
@@ -154,18 +154,18 @@ public class GameController {
 			turnCounter++;
 		}
 	}
-
-	private boolean handleChoice(UserOption choice) {
+	
+	// needs to include all possible values of choice (needs adjustment for prisonoptions)
+	private boolean handleChoice(UserOption choice, Player currentPlayer) {
 		
 		switch(choice) {
-		case BuyHotel:
-			return false;
-		case BuyHouse:
-			return false;
-		case EndTurn:
-			System.out.println("Make a real choice");
+		
+		case HandleBuildings:
 			return false;
 		case PawnLot:
+			blc.pawnLot(currentPlayer);
+			return false;
+		case UnPawnLot:
 			return false;
 		case ThrowDice:
 			return true;

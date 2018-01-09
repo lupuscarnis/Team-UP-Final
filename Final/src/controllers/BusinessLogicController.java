@@ -30,7 +30,7 @@ public class BusinessLogicController {
 	}
 
 	// Pawn lot
-	public void pawnLot(OwnableField field) {
+	public void pawnLot(Player currentPlayer) {
 		// TODO: Implement method
 	}
 
