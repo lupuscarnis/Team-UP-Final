@@ -491,6 +491,12 @@ public class GUIController {
 		
 		if (parseUserOption(UserOption.PayRent) == result)
 			return UserOption.PayRent;
+		
+		if (parseUserOption(UserOption.IncomeTaxPay4000) == result)
+			return UserOption.IncomeTaxPay4000;
+		
+		if (parseUserOption(UserOption.IncomeTaxPayTenPercent) == result)
+			return UserOption.IncomeTaxPayTenPercent;
 
 		throw new Exception("Translation not found!");
 	}
@@ -529,6 +535,12 @@ public class GUIController {
 
 		case ThrowDice:
 			return "Kast terning";
+			
+		case IncomeTaxPay4000:
+			return "Betal 4000";
+			
+		case IncomeTaxPayTenPercent:
+			return "Betal 10%";
 
 		default:
 			throw new Exception("Case not found!");

@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.IOException;
 
-
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.BreweriesOwned;
@@ -13,6 +12,7 @@ import entities.field.BreweryField;
 import entities.field.Field;
 import entities.field.LotField;
 import entities.field.OwnableField;
+import utilities.Messager;
 
 /**
  * Added by Frederik on 06-01-2018 20:38:39
@@ -27,7 +27,7 @@ public class BusinessLogicController {
 	private GUIController gui = GUIController.getInstance();
 	private GameBoardController gbc = GameBoardController.getInstance();
 
-	private BusinessLogicController() throws IOException {		
+	private BusinessLogicController() throws IOException {
 	}
 
 	// Calculate rent for field
@@ -66,18 +66,16 @@ public class BusinessLogicController {
 	/**
 	 * Added by Frederik on 06-01-2018 23:16:41
 	 * 
-	 * Handles player wants to buy lot. DOES NOT CHECK FOR SUFFICIENT FUNDS!!
-	 * MUST BE DONE BEFORE CALL TO METHOD!
+	 * Handles player wants to buy lot. DOES NOT CHECK FOR SUFFICIENT FUNDS!! MUST
+	 * BE DONE BEFORE CALL TO METHOD!
 	 * 
 	 * @param player
 	 * @throws Exception
 	 */
 	public void buyLot(Player player) throws Exception {
-		OwnableField of = (OwnableField) player.getCurrentField();		
 
-		
-		if(of.getFieldType()==FieldType.BREWERY) {
-		
+		OwnableField of = (OwnableField) player.getCurrentField();
+
 		// withdraw money
 		player.withdraw(of.getPrice());
 
@@ -85,9 +83,7 @@ public class BusinessLogicController {
 		of.setOwner(player);
 
 		// update gui
-		gui.updateBalance(player);
-		gui.updateLotOwner(player.getName(), of.getFieldNumber());
-		gui.showMessage("Du har nu købt grunden: " + of.getTitle());}
+		Messager.showLotBoughtMessage(of);
 	}
 
 	/**
@@ -100,51 +96,25 @@ public class BusinessLogicController {
 	 */
 	public void payRent(Player currentPlayer) throws Exception {
 
+		// TODO: MANGLER EN TERNING
 		OwnableField currentField = (OwnableField) currentPlayer.getCurrentField();
-		Player owner = currentField.getOwner();
+		int faceValue = 12; // RANDOM TAL!!!
+		int rent = currentField.calculateRent(faceValue);
+		Player payee = currentField.getOwner();
+		Player payer = currentPlayer;
 
-		switch(currentField.getFieldType())
-		{
-		case BREWERY:
-			//TODO: MANGLER EN TERNING
-			int faceValue = 12; // RANDOM TAL!!!			
-			BreweryField bf = (BreweryField) currentField;
-			int rent = bf.calculateRent(faceValue);
-			
-			String txt= String.format("Du er landet på et felt ejet af %s, og bliver nødt til at betale leje på kr. %s!", owner.getName(), rent);			
-			gui.showMessage(txt);
-			
-			// Show pay button
-			gui.showOptions("Vælg", new UserOption[] {UserOption.PayRent});		
-						
-			// withdraw money
-			currentPlayer.withdraw(rent);			
-			break;
-		
-		case LOT:
-			break;
-		case SHIPPING:
-			break;
-		
-		default:
-			throw new Exception("Case not found!");		
-		}
-		
-/*
-		OwnableField field = (OwnableField) currentPlayer.getCurrentField();
-		Player owner = field.getOwner();
+		// tell user he must pay rent
+		Messager.showMustPayRent(payer.getName(), rent);
 
-		// TODO: Calc rent properly
-		int rentToPay = field.getRentFor(LotRentTier.TwoHouses);
+		// withdraw from payer
+		// TODO: What happens if user cant afford?
+		payer.withdraw(rent);
 
-		// withdraw from current player.
-		currentPlayer.withdraw(rentToPay);
-
-		// give to owner
-		owner.deposit(rentToPay);*/
+		// deposit to payee
+		payee.deposit(rent);
 
 		// update balances in gui
-		gui.updateBalance(new Player[] { currentPlayer, owner });
+		gui.updateBalance(new Player[] { payer, payee });
 	}
 
 	/**
@@ -192,9 +162,8 @@ public class BusinessLogicController {
 		return instance;
 	}
 
-	
 	/**
-	 * Added by Frederik on 09-01-2018 00:17:56 
+	 * Added by Frederik on 09-01-2018 00:17:56
 	 * 
 	 * Check if user can afford lot
 	 * 
@@ -202,10 +171,25 @@ public class BusinessLogicController {
 	 * @return
 	 */
 	public boolean userCanAfford(int currentPlayerBalance, OwnableField fieldToBuy) {
-		
-		if(currentPlayerBalance>=fieldToBuy.getPrice())
-			return true;		
-		
+
+		if (currentPlayerBalance >= fieldToBuy.getPrice())
+			return true;
+
 		return false;
+	}
+
+	public void payIncomeTax(Player currentPlayer, UserOption choice) throws Exception {
+		
+		
+		int sumToCollect = 0;
+		
+		if(choice==UserOption.IncomeTaxPay4000)		
+			sumToCollect=4000;		
+		else		
+			sumToCollect = (int) Math.floor(currentPlayer.getBalance()*0.1);
+		
+		currentPlayer.withdraw(sumToCollect);
+		
+		Messager.showYouPaidIncomeTax(currentPlayer, sumToCollect);		
 	}
 }

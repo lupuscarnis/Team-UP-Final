@@ -10,6 +10,7 @@ import entities.field.Field;
 import entities.field.LotField;
 import entities.field.ShippingField;
 import utilities.FieldLoader;
+import utilities.Messager;
 
 public class FieldLogicController {
 
@@ -24,8 +25,9 @@ public class FieldLogicController {
 
 	public void handleFieldAction(Player currentPlayer) throws Exception {
 
-		Field currentField = currentPlayer.getCurrentField();
-
+		Field currentField = currentPlayer.getCurrentField();		
+		UserOption choice = null;
+		
 		switch (currentField.getFieldType()) {
 
 		case BREWERY:
@@ -36,17 +38,17 @@ public class FieldLogicController {
 				// ask if user wants to buy
 				gui.showMessage(
 						"you have landed on a  " + currentField.getFieldType() + " do you wish to purchase it?");
-				UserOption choice = gui.showOptions("Vælg:",
+				choice = gui.showOptions("Vælg:",
 						new UserOption[] { UserOption.BuyLot, UserOption.NoThanks });
 
 				// user opted to buy lot
 				if (choice == UserOption.BuyLot)
-					blc.buyLot(currentPlayer);		
+					blc.buyLot(currentPlayer);
 			}
-			// field has owner and player must pay rent 
+			// field has owner and player must pay rent
 			// if owner != current player
 			else
-				blc.payRent(currentPlayer);	
+				blc.payRent(currentPlayer);
 
 			break;
 		case CHANCE:
@@ -57,8 +59,11 @@ public class FieldLogicController {
 			// ingen grund til cast da den bare er en Field type
 			break;
 		case EXTRATAX:
-			gui.showMessage("you have landed on " + currentField.getFieldType());
-			currentPlayer.withdraw(2000);
+			
+			
+			
+			// pay tax
+			//blc.payIncomeTax(currentPlayer, choice);		
 			break;
 		case FREEPARKING:
 			gui.showMessage("you have landed on " + currentField.getFieldType() + " nothing happens");
@@ -76,8 +81,15 @@ public class FieldLogicController {
 
 			break;
 		case INCOMETAX:
-			gui.showMessage("you have landed on " + currentField.getFieldType());
-			currentPlayer.withdraw(4000);
+			
+			// Tell user he must pay income tax and get choice (10% or 4000)
+			choice = Messager.showMustPayIncomeTax(currentField.getFieldType());
+			
+			// pay tax
+			blc.payIncomeTax(currentPlayer, choice);
+			
+			//gui.showMessage("you have landed on " + currentField.getFieldType());
+			//currentPlayer.withdraw(4000);
 			// at implementere valget der bruger 10% maa vente lidt
 			break;
 
@@ -89,7 +101,7 @@ public class FieldLogicController {
 				// 1. TODO: ask if player wants to buy
 
 				// 2. if yes - set owner
-				blc.buyLot(currentPlayer);
+				//blc.buyLot(currentPlayer);
 			}
 			// pay rent
 			else
@@ -99,9 +111,21 @@ public class FieldLogicController {
 		case SHIPPING:
 
 			ShippingField sf = (ShippingField) currentField;
-			gui.showMessage("you have landed on " + currentField.getFieldType() + " do you wish to purchase it?");
 
-			sf = (ShippingField) currentField;
+			Messager.showWantToBuyMessage(currentField.getFieldType());
+
+			// if not owned player can buy
+			if (sf.getOwner() == null) {
+				choice = Messager
+						.presentOptions(new UserOption[] { UserOption.BuyLot, UserOption.NoThanks });
+
+				// TODO: Check for enough money!
+				if (choice == UserOption.BuyLot)
+					blc.buyLot(currentPlayer);
+			}
+			// owned = pay rent if player != owner
+			else
+				blc.payRent(currentPlayer);
 
 			break;
 		case START:
