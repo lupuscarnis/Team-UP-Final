@@ -194,11 +194,13 @@ public class GUIController {
 	public String[] getNewPlayerNames() {
 
 		// For testing - DONT REMOVE JUST COMMENT OUT :)
-		if (1 == 1)
-			return new String[] { "Huga", "Hanne", "Balder" };
+//		if (1 == 1)
+//			return new String[] { "Huga", "Hanne", "Balder" };
 
 		// get number of players
-		String noOfPlayers = gui.getUserSelection("Vælg antal spillere", "3", "4", "5", "6");
+		
+		String[] choicesPlayerCount = {"3", "4", "5", "6"};
+		String noOfPlayers = userDropDownSelection("Vælg antal spillere", choicesPlayerCount);
 		String[] players = new String[Integer.parseInt(noOfPlayers)];
 
 		// get names of players
@@ -222,6 +224,13 @@ public class GUIController {
 			players[i] = name;
 		}
 		return players;
+	}
+
+	/**
+	 * @return
+	 */
+	private String userDropDownSelection(String label, String[] dropDownOptions) {
+		return gui.getUserSelection("Vælg antal spillere", dropDownOptions);
 	}
 
 	private void initializeCarList() {
