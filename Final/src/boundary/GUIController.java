@@ -455,17 +455,26 @@ public class GUIController {
 	 */
 	private UserOption parseFromStringToUserOption(String result) throws Exception {
 
+		if (parseUserOption(UserOption.HandleBuildings) == result)
+			return UserOption.HandleBuildings;
+		
 		if (parseUserOption(UserOption.BuyHotel) == result)
 			return UserOption.BuyHotel;
+		
+		if (parseUserOption(UserOption.SellHotel) == result)
+			return UserOption.SellHotel;
 
 		if (parseUserOption(UserOption.BuyHouse) == result)
 			return UserOption.BuyHouse;
 
-		if (parseUserOption(UserOption.EndTurn) == result)
-			return UserOption.EndTurn;
-
+		if (parseUserOption(UserOption.SellHouse) == result)
+			return UserOption.SellHouse;
+		
 		if (parseUserOption(UserOption.PawnLot) == result)
 			return UserOption.PawnLot;
+		
+		if (parseUserOption(UserOption.UnPawnLot) == result)
+			return UserOption.UnPawnLot;
 
 		if (parseUserOption(UserOption.ThrowDice) == result)
 			return UserOption.ThrowDice;
@@ -485,18 +494,28 @@ public class GUIController {
 	private String parseUserOption(UserOption option) throws Exception {
 
 		switch (option) {
+		
+		case HandleBuildings:
+			return "Administrer bygninger";
+		
 		case BuyHotel:
 			return "Køb hotel";
 
+		case SellHotel:
+			return "Sælg hotel";
+			
 		case BuyHouse:
 			return "Køb hus";
-
-		case EndTurn:
-			return "Afslut tur";
+			
+		case SellHouse:
+			return "Sælg hotel";
 
 		case PawnLot:
-			return "Pantsæt hus";
+			return "Pantsæt grund";
 
+		case UnPawnLot:
+			return "Frigiv pantsat grund";	
+			
 		case ThrowDice:
 			return "Kast terning";
 
