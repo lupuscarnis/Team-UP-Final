@@ -8,7 +8,7 @@ import utilities.MyRandom;
 
 public class GameController {
 
-	// controllers
+	// initializing controllers
 	private BusinessLogicController blc = BusinessLogicController.getInstance();
 	private ChanceCardController ccc = ChanceCardController.getInstance();
 	private FieldLogicController flc = FieldLogicController.getInstance();
