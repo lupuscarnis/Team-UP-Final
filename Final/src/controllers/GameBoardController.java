@@ -4,7 +4,10 @@ import java.io.IOException;
 
 import entities.Player;
 import entities.enums.FieldName;
+import entities.enums.FieldType;
+import entities.enums.LotColor;
 import entities.field.Field;
+import entities.field.LotField;
 import entities.field.OwnableField;
 import utilities.FieldLoader;
 
@@ -18,6 +21,13 @@ public class GameBoardController {
 
 	private GameBoardController() throws IOException {
 		this.fieldArray = new FieldLoader().getFields();
+	}
+
+	public static GameBoardController getInstance() throws IOException {
+		if (instance == null)
+			instance = new GameBoardController();
+
+		return instance;
 	}
 
 	// Finde n�rmeste f�rge (fra nuv�r. pos)
@@ -135,10 +145,72 @@ public class GameBoardController {
 		return tmp;
 	}
 
-	public static GameBoardController getInstance() throws IOException {
-		if (instance == null)
-			instance = new GameBoardController();
+	// Returns all lot fields
+	public LotField[] getAllLotFields() {
 
-		return instance;
+		LotField[] tmp = new LotField[22];
+
+		int index = 0;
+		for (Field field : this.getAllOwnableFields()) {
+
+			if (field instanceof LotField) {
+				tmp[index] = (LotField) field;
+				index++;
+			}
+		}
+
+		return tmp;
+	}
+
+	// Count breweries owned by player
+	public int countBreweriesOwned(Player owner) {
+
+		int count = 0;
+		for (OwnableField field : this.getAllOwnableFields()) {
+
+			if (FieldType.BREWERY == field.getFieldType()) {
+
+				// check if it's owned
+				if (field.getOwner() != null && field.getOwner() == owner)
+					count++;
+			}
+		}
+
+		return count;
+	}
+
+	// Count shipping owned by player
+	public int countShippingOwned(Player owner) {
+
+		int count = 0;
+		for (OwnableField field : this.getAllOwnableFields()) {
+
+			if (FieldType.SHIPPING == field.getFieldType()) {
+
+				// check if it's owned
+				if (field.getOwner() != null && field.getOwner() == owner)
+					count++;
+			}
+		}
+
+		return count;
+	}
+
+	// count lot fields owned in same color
+	public int countLotsOwnedByColor(LotColor lotColor, Player owner) {
+
+		int count = 0;
+		for (LotField field : this.getAllLotFields()) {
+
+			// check that lot field is corret color and has a owner
+			if (field.getColor() == lotColor && field.getOwner() != null) {
+
+				// check that owner == player
+				if (field.getOwner() == owner)
+					count++;
+			}
+		}
+
+		return count;
 	}
 }
