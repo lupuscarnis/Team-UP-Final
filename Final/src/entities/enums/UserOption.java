@@ -7,7 +7,7 @@ public enum UserOption {
 	BuyHouse, 
 	EndTurn, 
 	StartOfTurn, 
-	BuyLot, 
+	BuyField, 
 	NoThanks, 
 	PayRent,	
 	IncomeTaxPayTenPercent, 

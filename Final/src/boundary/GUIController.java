@@ -483,8 +483,8 @@ public class GUIController {
 		if (parseUserOption(UserOption.ThrowDice) == result)
 			return UserOption.ThrowDice;
 		
-		if (parseUserOption(UserOption.BuyLot) == result)
-			return UserOption.BuyLot;
+		if (parseUserOption(UserOption.BuyField) == result)
+			return UserOption.BuyField;
 		
 		if (parseUserOption(UserOption.NoThanks) == result)
 			return UserOption.NoThanks;
@@ -518,7 +518,7 @@ public class GUIController {
 			return "Betal leje";
 		case NoThanks:
 			return "Nej tak";
-		case BuyLot:
+		case BuyField:
 			return "Køb grund";
 		
 		case BuyHotel:

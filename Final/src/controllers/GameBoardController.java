@@ -213,4 +213,24 @@ public class GameBoardController {
 
 		return count;
 	}
+
+	/**
+	 * Added by Frederik on 09-01-2018 14:48:35
+	 * 
+	 * Counts total lots in color group: eg. all lots with the (LotColor)color blue.
+	 * 
+	 * @param blue
+	 * @return
+	 */
+	public int countLotsInColorGroup(LotColor lotColor) {
+
+		int count = 0;
+		for (LotField field : this.getAllLotFields()) {
+
+			// check that lot field is correct color
+			if (field.getColor() == lotColor)
+				count++;
+		}
+		return count;
+	}
 }

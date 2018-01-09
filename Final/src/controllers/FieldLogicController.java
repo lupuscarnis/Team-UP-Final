@@ -4,6 +4,7 @@ import java.io.IOException;
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.FieldName;
+import entities.enums.FieldType;
 import entities.enums.UserOption;
 import entities.field.BreweryField;
 import entities.field.Field;
@@ -30,11 +31,11 @@ public class FieldLogicController {
 		UserOption choice = null;
 
 		switch (currentField.getFieldType()) {
-		
+
 		case LOT:
 		case SHIPPING:
 		case BREWERY:
-			OwnableField of = (OwnableField) currentField;			
+			OwnableField of = (OwnableField) currentField;
 
 			// no owner!
 			if (of.getOwner() == null) {
@@ -42,23 +43,14 @@ public class FieldLogicController {
 				// TODO: What if player don't have the money?
 				choice = Messager.showWantToBuyMessage(of.getTitle());
 
-				switch (choice) {
-				case BuyLot:
+				// user opted to buy field
+				if (choice == UserOption.BuyField)
 					blc.buyLot(currentPlayer);
-					break;
-				case NoThanks:
-					break;
-				}
 			}
 			// pay rent
 			else
 				blc.payRent(currentPlayer);
 
-			break;
-		case START:
-			gui.showMessage("you have landed on " + currentField.getFieldType() + " you gain 4000 kr.");
-			currentPlayer.deposit(4000);
-			// ingen grund til cast da den bare er en Field type
 			break;
 		case VISITJAIL:
 			gui.showMessage(
@@ -69,16 +61,21 @@ public class FieldLogicController {
 			gui.showMessage("you have landed on " + currentField.getFieldType() + " draw a card");
 			ccc.drawChanceCard();
 			ccc.handleDraw(currentPlayer);
-
-			// ingen grund til cast da den bare er en Field type
 			break;
 		case EXTRATAX:
-
-			// pay tax
-			// blc.payIncomeTax(currentPlayer, choice);
 			break;
+		case START:
 		case FREEPARKING:
-			gui.showMessage("you have landed on " + currentField.getFieldType() + " nothing happens");
+
+			// landed on START
+			if (currentField.getFieldType() == FieldType.START) {
+				gui.showMessage("you have landed on " + currentField.getFieldType() + " you gain 4000 kr.");
+				currentPlayer.deposit(4000);
+			} 
+			// landed on FREE PARKTIN
+			else {
+				gui.showMessage("you have landed on " + currentField.getFieldType() + " nothing happens");
+			}
 			break;
 		case GOTOJAIL:
 			gui.showMessage("you have landed on " + currentField.getFieldType());

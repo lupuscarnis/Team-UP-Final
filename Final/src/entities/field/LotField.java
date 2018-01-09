@@ -2,6 +2,7 @@ package entities.field;
 
 import java.io.IOException;
 
+import controllers.GameBoardController;
 import entities.enums.FieldType;
 import entities.enums.LotColor;
 import entities.enums.LotRentTier;
@@ -52,8 +53,15 @@ public class LotField extends OwnableField {
 				getRentFor(LotRentTier.FourHouses), getRentFor(LotRentTier.Hotel));
 	}
 
+	/**
+	 * Added by Frederik on 09-01-2018 14:35:38
+	 * 
+	 * Returns rent for x houses or hotel.
+	 * 
+	 * @param rentTier
+	 * @return
+	 */
 	public int getRentFor(LotRentTier rentTier) {
-
 		return this.rentTierList[rentTier.ordinal()];
 	}
 
@@ -71,10 +79,19 @@ public class LotField extends OwnableField {
 	}
 
 	@Override
-	public int calculateRent(int dieFaceValue) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public int calculateRent(int dieFaceValue) throws IOException {
 
-	
+		// count how many fields (LotFields) owned in same color
+		int lotsOwnedInColorGroup = GameBoardController.getInstance().countLotsOwnedByColor(this.getColor(),
+				this.getOwner());
+
+		// count total lots in color group
+		int lotsInColorGroupTotal = GameBoardController.getInstance().countLotsInColorGroup(this.getColor());
+
+		// are all owned in color group?
+		boolean allOwned = (lotsOwnedInColorGroup == lotsInColorGroupTotal) ? true : false;
+
+		// calc rent
+		return (allOwned) ? this.getRentFor(LotRentTier.Lot) * 2 : this.getRentFor(LotRentTier.Lot);
+	}
 }
