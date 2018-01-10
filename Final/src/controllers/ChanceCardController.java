@@ -92,12 +92,14 @@ public class ChanceCardController {
 
 			// Ryk frem til Grønningen. Hvis De passerer start, indkasser da kr. 4000.
 			case 19:
-				//{player
-				break;
+				{player.setCurrentField(gbc.getFieldByNumber(25));
+				Messager.showMoveChanceCard(player, player.getCurrentField());
+				break;}
 
 			// Ryk frem til start.
 			case 20:
-				break;
+			{
+				break;}
 
 			// Ryk frem til Frederiksberg Allê. Hvis de passerer start, indkasser kr. 4000.
 
