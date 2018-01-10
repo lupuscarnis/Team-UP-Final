@@ -96,13 +96,13 @@ public class BusinessLogicController {
 
 		// TODO: MANGLER EN TERNING
 		OwnableField currentField = (OwnableField) currentPlayer.getCurrentField();
-		
+		int faceValue = 0;
 		if(currentPlayer.getCurrentField().getFieldNumber()>=currentPlayer.getPreviousField().getFieldNumber()){
-		int faceValue = currentPlayer.getPreviousField().getFieldNumber()-currentPlayer.getCurrentField().getFieldNumber();
+		faceValue = currentPlayer.getPreviousField().getFieldNumber()-currentPlayer.getCurrentField().getFieldNumber();
 		}
-		else
+		else{faceValue=40-currentPlayer.getPreviousField().getFieldNumber()+currentPlayer.getCurrentField().getFieldNumber();}
 		
-		int faceValue =0 ; // RANDOM TAL!!!
+//		
 		int rent = currentField.calculateRent(faceValue);
 		Player payee = currentField.getOwner();
 		Player payer = currentPlayer;
