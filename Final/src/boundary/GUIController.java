@@ -551,7 +551,12 @@ public class GUIController {
 		gui.getUserSelection(string, strings);
 		
 	}
-	
+	/**
+	 * @author Nicolai
+	 * @param count
+	 * @param fieldNumber
+	 * sets the number of houses
+	 */
 	public void updateHouseCount(int count,int fieldNumber )
 	{
 		
@@ -560,6 +565,12 @@ public class GUIController {
 		housePlacer.setHouses(count);
 		
 	}
+	/**
+	 * @author Nicolai
+	 * @param hasHotel
+	 * @param fieldNumber'
+	 * Sets A hotel or takes it off.
+	 */
 	public void setHotel(boolean hasHotel, int fieldNumber) {
 			
 		GUI_Street housePlacer = new GUI_Street();
