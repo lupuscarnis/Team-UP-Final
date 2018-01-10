@@ -4,7 +4,18 @@ import java.io.IOException;
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.UserOption;
-import utilities.MyRandom;
+
+//TODO: MANGLER:
+// - Terninger
+// - Penge når du passerer start
+// - Chancekort
+// - Slå dig ud af fængslet
+// - bygninger på grunde
+// - pantsætning
+
+
+
+
 
 public class GameController {
 
@@ -14,7 +25,7 @@ public class GameController {
 	private PlayerController pc = PlayerController.getInstance();
 	private GameLogicCtrl glc = GameLogicCtrl.getInstance();
 	private GUIController gui = GUIController.getInstance();
-	
+
 	// CONSTANTS
 	private static final int PLAYER_MIN = 3;
 	private static final int PLAYER_MAX = 6;
@@ -34,7 +45,8 @@ public class GameController {
 	// FOR TESTING PURPOSES!
 
 	// Testing Gameover
-	public GameController() throws IOException {}
+	public GameController() throws IOException {
+	}
 
 	private boolean gameOver(Player[] players) {
 		// TODO Auto-generated method stub
@@ -94,6 +106,10 @@ public class GameController {
 				currentPlayer = glc.getStartPlayer(players);
 
 				// Vis start spil knap
+<<<<<<< HEAD
+				// gui.showPromt("Start spil");
+
+=======
 				//gui.showPromt("Start spil");
 			if(glc.d1.getValue()==glc.d2.getValue()){
 					currentPlayer = currentPlayer;
@@ -102,17 +118,25 @@ public class GameController {
 			//stopper currentplayer for at blive til next player.		
 			}
 				
+>>>>>>> refs/remotes/origin/2.-iteration
 			} else {
-				System.out.println("qqq");
 				// find next player
 				currentPlayer = glc.getNextPlayer(players);
 				rerolls = 0;
 			}
-			
-			gui.showPromt("Det er "+currentPlayer.getName() + "s tur!");
+
+			gui.showPromt("Det er " + currentPlayer.getName() + "s tur!");
 
 			// present options for user
 			// End when EndTurn is selected
+<<<<<<< HEAD
+			UserOption userChoice = null;
+			do {
+				userChoice = glc.showUserOptions(currentPlayer);
+
+				switch (userChoice) {
+
+=======
 			if (rerolls == 3)
 			{
 				currentPlayer.isInJail(true);
@@ -131,25 +155,26 @@ public class GameController {
 				case StartOfTurn:
 					break;
 				
+>>>>>>> refs/remotes/origin/2.-iteration
 				case BuyHotel:
 					break;
 				case BuyHouse:
 					break;
-				
 				case PawnLot:
 					break;
 				case ThrowDice:
-					
-					//TODO: Roll streak?
+					// TODO: Roll streak?
 					currentPlayer.setDoneThrowing(true);
-					
+
 					// roll and move player
 					glc.rollAndMove(currentPlayer);
+<<<<<<< HEAD
+
+=======
 														
+>>>>>>> refs/remotes/origin/2.-iteration
 					// handle possible field actions
 					flc.handleFieldAction(currentPlayer);
-					
-					
 					break;
 				case EndTurn:
 					currentPlayer.setDoneThrowing(false);
@@ -157,6 +182,10 @@ public class GameController {
 				default:
 					throw new Exception("Case not found!");
 				}
+<<<<<<< HEAD
+
+			} while (userChoice != UserOption.EndTurn);
+=======
 				
 				
 				//userChoice = glc.showUserOptions(currentPlayer);
@@ -169,45 +198,45 @@ public class GameController {
 			}
 			}
 			else{System.out.println("player is in jail");
+<<<<<<< HEAD
 			}
 
 					
+=======
+>>>>>>> refs/remotes/origin/2.-iteration
+>>>>>>> branch '2.-iteration' of https://github.com/lupuscarnis/Team-UP-Final.git
 
 			// Starting main round play through
 			/*
-			System.out.println("-- Round: " + turnCounter + " --");
-
-			if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player !isJail or (isJail and pays a
-
-				// fee to get out)
-				if (isJail(players) && getOutJail(players))
-					System.out.println("-- Player payed 1000kr to get out of jail --");
-
-				
-
-				// Check if player still has money or should be removed.
-				int playerCount = players.length;
-*/
+			 * System.out.println("-- Round: " + turnCounter + " --");
+			 * 
+			 * if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player
+			 * !isJail or (isJail and pays a
+			 * 
+			 * // fee to get out) if (isJail(players) && getOutJail(players))
+			 * System.out.println("-- Player payed 1000kr to get out of jail --");
+			 * 
+			 * 
+			 * 
+			 * // Check if player still has money or should be removed. int playerCount =
+			 * players.length;
+			 */
 			/*
-				players = blc.evaluatePlayer(currentPlayer, players);
+			 * players = blc.evaluatePlayer(currentPlayer, players);
+			 * 
+			 * // No players left = Game over if (players.length == 0) {
+			 * System.out.println("Game over!!!!!!!"); // TODO: Beautify!!!! break; }
+			 * 
+			 * // TODO: Needs to be handled properly! if (players.length < playerCount)
+			 * lastPlayer = players[0];
+			 */
+			// Thread.sleep(400);
 
-				// No players left = Game over
-				if (players.length == 0) {
-					System.out.println("Game over!!!!!!!");
-					// TODO: Beautify!!!!
-					break;
-				}
-
-				// TODO: Needs to be handled properly!
-				if (players.length < playerCount)
-					lastPlayer = players[0];
-*/
-				//Thread.sleep(400);
-
-//			} else { // Player isJail, doesn't pay the fee and must therefore wait until next turn
-//
-//				System.out.println("-- Player must skip this turn --");
-//			}
+			// } else { // Player isJail, doesn't pay the fee and must therefore wait until
+			// next turn
+			//
+			// System.out.println("-- Player must skip this turn --");
+			// }
 
 			turnCounter++;
 		}

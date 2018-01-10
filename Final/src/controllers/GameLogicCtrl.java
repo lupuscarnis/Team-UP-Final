@@ -5,6 +5,7 @@ import boundary.GUIController;
 import entities.Cup;
 import entities.Die;
 import entities.Player;
+import entities.enums.FieldName;
 import entities.enums.UserOption;
 import entities.field.Field;
 import utilities.MyRandom;
@@ -31,27 +32,43 @@ public class GameLogicCtrl {
 	public UserOption showUserOptions(Player currentPlayer) throws Exception {
 
 		int index = 0;
-		UserOption[] options = new UserOption[10]; // Hack: we don't know the size yet, so 10 is random!
-
-		// if not in jail - you can throw dice
-		if (!currentPlayer.isInJail() && !currentPlayer.isDoneThrowing()) {
+		UserOption[] options = new UserOption[10]; // Hack: we don't know the size yet, so 10 is random!		
+				
+		if(currentPlayer.isDoneThrowing())
+		{
+			options[index] = UserOption.EndTurn;
+			index++;
+		}
+		else
+		{
 			options[index] = UserOption.ThrowDice;
 			index++;
 		}
-/*
-		options[index] = UserOption.BuyHouse;
-		index++;
+		
+		
+//		if (currentPlayer.isDoneThrowing()) {
+			
+//		}
+		
+		// if not in jail - you can throw dice
+		// TODO: Check for roll streak
+//		else if (!currentPlayer.isInJail()) {
+//			options[index] = UserOption.ThrowDice;
+//			index++;
+//		}
+		
+		
+		
+		
+		/*
+		 * options[index] = UserOption.BuyHouse; index++;
+		 * 
+		 * options[index] = UserOption.BuyHotel; index++;
+		 * 
+		 * options[index] = UserOption.PawnLot; index++;
+		 */
 
-		options[index] = UserOption.BuyHotel;
-		index++;
-
-		options[index] = UserOption.PawnLot;
-		index++;*/
-
-		if(currentPlayer.isDoneThrowing()) {
-				options[index] = UserOption.EndTurn;
-				index++;
-		}
+		
 		// empty array of nulls
 		int elements = 0;
 		for (UserOption userOption : options) {
@@ -73,7 +90,7 @@ public class GameLogicCtrl {
 			}
 		}
 
-		return gui.showOptions("Vælg:", tmp);
+		return this.gui.showOptions("Vælg:", tmp);
 	}
 
 	/**
@@ -185,16 +202,23 @@ public class GameLogicCtrl {
 			System.out.println("-- " + startPlayer.getName() + " goes first! --");
 
 			previousPlayer = startPlayer;
-			
+
 			return startPlayer;
-		}		
-		
+		}
+
 		throw new Exception("No players were found!");
 	}
 
-	public void handleUserChoice(Player currentPlayer, UserOption userChoice) {
-		
-		
-		
+	public void handleGoToJail(Player currentPlayer) throws IOException, Exception {
+
+		Field jail = GameBoardController.getInstance().getFieldByName(FieldName.Fængslet);
+		int fromField = currentPlayer.getCurrentField().getFieldNumber();
+
+		// put player in jail
+		currentPlayer.isInJail(true);
+		currentPlayer.setCurrentField(jail);
+
+		// update gui
+		GUIController.getInstance().updatePlayerPosition(currentPlayer.getName(), fromField, jail.getFieldNumber());
 	}
 }

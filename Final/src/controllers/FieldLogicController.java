@@ -4,12 +4,15 @@ import java.io.IOException;
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.FieldName;
+import entities.enums.FieldType;
 import entities.enums.UserOption;
 import entities.field.BreweryField;
 import entities.field.Field;
 import entities.field.LotField;
+import entities.field.OwnableField;
 import entities.field.ShippingField;
 import utilities.FieldLoader;
+import utilities.Messager;
 
 public class FieldLogicController {
 
@@ -25,188 +28,75 @@ public class FieldLogicController {
 	public void handleFieldAction(Player currentPlayer) throws Exception {
 
 		Field currentField = currentPlayer.getCurrentField();
+		UserOption choice = null;
 
 		switch (currentField.getFieldType()) {
 
+		case LOT:
+		case SHIPPING:
 		case BREWERY:
-			BreweryField bf = (BreweryField) currentField;
-
-			// If no owner and user has the money he can buy
-			if (bf.getOwner() == null && blc.userCanAfford(currentPlayer.getBalance(), bf)) {
-				// ask if user wants to buy
-				gui.showMessage(
-						"you have landed on a  " + currentField.getFieldType() + " do you wish to purchase it?");
-				UserOption choice = gui.showOptions("Vælg:",
-						new UserOption[] { UserOption.BuyLot, UserOption.NoThanks });
-
-				// user opted to buy lot
-				if (choice == UserOption.BuyLot)
-					blc.buyLot(currentPlayer);
-			}
-			// field has owner and player must pay rent
-			// if owner != current player
-			else
-				blc.payRent(currentPlayer);
-
-			break;
-		case CHANCE:
-			gui.showMessage("you have landed on " + currentField.getFieldType() + " draw a card");
-			ccc.drawChanceCard();
-			ccc.handleDraw(currentPlayer);
-
-			// ingen grund til cast da den bare er en Field type
-			break;
-		case EXTRATAX:
-			gui.showMessage("you have landed on " + currentField.getFieldType());
-			currentPlayer.withdraw(2000);
-			break;
-		case FREEPARKING:
-			gui.showMessage("you have landed on " + currentField.getFieldType() + " nothing happens");
-			break;
-		case GOTOJAIL:
-			gui.showMessage("you have landed on " + currentField.getFieldType());
-
-			Field jail = this.gbc.getFieldByName(FieldName.Fængslet);
-
-			currentPlayer.setCurrentField(jail);
-
-			gui.movePlayer(currentPlayer);
-
-			currentPlayer.isInJail(true);
-
-			break;
-		case INCOMETAX: {
-			gui.showMessage("you have landed on " + currentField.getFieldType());
-
-			UserOption userChoice = gui.showOptions("Hvordan vil du betal din skat: ",
-					new UserOption[] { UserOption.IncomeTaxPay4000, UserOption.IncomeTaxPayTenPercent });
-			switch (userChoice) {
-
-			case IncomeTaxPay4000: {
-				currentPlayer.withdraw(4000);
-
-				break;
-			}
-			case IncomeTaxPayTenPercent: {
-				// TODO: Create a player constant that summs up his value
-
-				break;
-			}
-			}
-		}
-
-		case LOT: {
-			LotField lf = (LotField) currentField;
+			OwnableField of = (OwnableField) currentField;
 
 			// no owner!
-			if (lf.getOwner() == null && blc.userCanAfford(currentPlayer.getBalance(), lf)) {
+			if (of.getOwner() == null) {
 
-				gui.showMessage(
-						"you have landed on a  " + currentField.getFieldType() + " do you wish to purchase it?");
-				UserOption choice = gui.showOptions("Vælg:",
-						new UserOption[] { UserOption.BuyLot, UserOption.NoThanks });
+				// TODO: What if player don't have the money?
+				choice = Messager.showWantToBuyMessage(of.getTitle());
 
-				// user opted to buy lot
-				if (choice == UserOption.BuyLot)
+				// user opted to buy field
+				if (choice == UserOption.BuyField)
 					blc.buyLot(currentPlayer);
-				System.out.println(currentPlayer.getName() + " Bought " + currentField.getFieldType() + "/"
-						+ currentField.getFieldNumber());
-
-				// Ask player if he/she wants to build a house (checks for owner, playerBalance
-				// and number of houses on lot)
-
-			} else if ((lf.getOwner() == currentPlayer) && blc.userCanAffordHouse(currentPlayer.getBalance(), lf)
-					&& lf.getHouseCount() < 4) {
-
-				gui.showMessage("you have landed on a  " + currentField.getFieldType()
-						+ " which you already own. Do you wish to build a house on it?");
-				UserOption choice = gui.showOptions("Vælg:",
-						new UserOption[] { UserOption.BuyHouse, UserOption.NoThanks });
-
-				// user opted to build a house
-				if (choice == UserOption.BuyHouse)
-
-					// Update number of houses on the lot
-					lf.setHouseCount(lf.getHouseCount() + 1);
-
-				blc.buildHouse(currentPlayer);
-				System.out.println(currentPlayer.getName() + " bought a house on " + currentField.getFieldType() + "/"
-						+ currentField.getFieldNumber() + " the lot now has " + lf.getHouseCount() + " house(s) on it");
-
-				// Ask player if he/she wants to build a hotel (checks for owner, playerBalance
-				// and number of houses on lot)
-
-			} else if ((lf.getOwner() == currentPlayer) && blc.userCanAffordHotel(currentPlayer.getBalance(), lf)
-					&& lf.getHouseCount() == 4 && lf.getHotelCount() != 1) {
-
-				gui.showMessage("you have landed on a  " + currentField.getFieldType()
-						+ " which you already own. The lot already has 4 houses on it. Do you wish to build a hotel?");
-				UserOption choice = gui.showOptions("Vælg:",
-						new UserOption[] { UserOption.BuyHotel, UserOption.NoThanks });
-
-				// user opted to build a house
-				if (choice == UserOption.BuyHotel)
-
-					// Update number of hotels on the lot
-					lf.setHotelCount(lf.getHotelCount() + 1);
-
-				blc.buildHotel(currentPlayer);
-				System.out.println(currentPlayer.getName() + " bought a hotel on " + currentField.getFieldType() + "/"
-						+ currentField.getFieldNumber() + " the lot now has " + lf.getHotelCount() + " hotel on it");
-
-			}
-			// pay rent
-
-			else
-				blc.payRent(currentPlayer);
-
-			break;
-		}
-		/**
-		 * Added by Kasper on 1/9-2018
-		 * 
-		 * Handles Shipping field (buy/pay rent)
-		 */
-
-		case SHIPPING: {
-			ShippingField sf = (ShippingField) currentField;
-			gui.showMessage("you have landed on " + currentField.getFieldType() + " do you wish to purchase it?");
-
-			// no owner!
-			if (sf.getOwner() == null && blc.userCanAfford(currentPlayer.getBalance(), sf)) {
-
-				gui.showMessage(
-						"you have landed on a  " + currentField.getFieldType() + " do you wish to purchase it?");
-				UserOption choice = gui.showOptions("Vælg:",
-						new UserOption[] { UserOption.BuyLot, UserOption.NoThanks });
-
-				// user opted to buy lot
-				if (choice == UserOption.BuyLot)
-					blc.buyLot(currentPlayer);
-				System.out.println(currentPlayer.getName() + " Bought " + currentField.getFieldType() + "/"
-						+ currentField.getFieldNumber());
-
 			}
 			// pay rent
 			else
 				blc.payRent(currentPlayer);
 
-			break;
-		}
-		case START:
-			gui.showMessage("you have landed on " + currentField.getFieldType() + " you gain 4000 kr.");
-			currentPlayer.deposit(4000);
-			// ingen grund til cast da den bare er en Field type
 			break;
 		case VISITJAIL:
 			gui.showMessage(
 					"you have landed on " + currentField.getFieldType() + " you are here on a visit, nothing happens.");
 			// ingen grund til cast da den bare er en Field type
 			break;
+		case CHANCE:
+			gui.showMessage("you have landed on " + currentField.getFieldType() + " draw a card");
+			ccc.drawChanceCard();
+			ccc.handleDraw(currentPlayer);
+			break;
+		case EXTRATAX:
+			break;
+		case START:
+		case FREEPARKING:
+
+			// landed on START
+			if (currentField.getFieldType() == FieldType.START) {
+				
+				//TODO: Move out to BLC and pay START money even if you dont land on start!!
+				gui.showMessage("you have landed on " + currentField.getFieldType() + " you gain 4000 kr.");
+				currentPlayer.deposit(4000);
+			} 
+			// landed on FREE PARKTIN
+			else {
+				gui.showMessage("you have landed on " + currentField.getFieldType() + " nothing happens");
+			}
+			break;
+		case GOTOJAIL:
+			// Show message to player
+			Messager.showMustGoToJail(currentPlayer);
+			
+			// handle logic reg. going to jail
+			GameLogicCtrl.getInstance().handleGoToJail(currentPlayer);						
+			break;
+		case INCOMETAX:
+			// Tell user he must pay income tax and get choice (10% or 4000)
+			choice = Messager.showMustPayIncomeTax(currentField.getFieldType());
+
+			// pay tax
+			blc.payIncomeTax(currentPlayer, choice);
+			break;
+
 		default:
 			throw new Exception("Case not found!");
 		}
-
 	}
 
 	/**
