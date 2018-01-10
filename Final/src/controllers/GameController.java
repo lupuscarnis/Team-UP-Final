@@ -129,10 +129,10 @@ public class GameController {
 					
 					// roll and move player
 					glc.rollAndMove(currentPlayer);
-															
+														
 					// handle possible field actions
 					flc.handleFieldAction(currentPlayer);
-					
+					if(glc
 					
 					break;
 				case EndTurn:

@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import boundary.GUIController;
 import entities.Cup;
+import entities.Die;
 import entities.Player;
 import entities.enums.UserOption;
 import entities.field.Field;
@@ -84,7 +85,10 @@ public class GameLogicCtrl {
 	public void rollAndMove(Player currentPlayer) throws Exception {
 
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
-		 Cup cup = new Cup(currentPlayer);
+		
+		Die d1 = new Die(1, 6);
+		Die d2 = new Die(1, 6);
+		Cup cup = new Cup(0,0,d1,d2);
 		// Throw Die
 		int faceValue = cup.rollDice();
 		//Checks if he passes start and gives him money	
