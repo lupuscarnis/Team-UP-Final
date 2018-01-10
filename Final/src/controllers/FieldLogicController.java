@@ -188,6 +188,8 @@ public class FieldLogicController {
 		
 		// Update current pos on player object 
 		currentPlayer.setCurrentField(nextField);
+//		if(currentPlayer.getPreviousField().getFieldNumber()>currentPlayer.getPreviousField().getFieldNumber())
+//		{currentPlayer.deposit(4000);}
 		
 		// update gui
 		guic.movePlayer(currentPlayer);		
