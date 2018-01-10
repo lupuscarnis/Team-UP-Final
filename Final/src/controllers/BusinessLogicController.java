@@ -105,11 +105,16 @@ public class BusinessLogicController {
 			
 			String txt= String.format("Du er landet på et felt ejet af %s, og bliver nødt til at betale leje!", owner.getName());			
 			gui.showMessage(txt);
-			
+			int fieldsMoved = 0;
 			//TODO: MANGLER EN TERNING OG HVOR SKAL MODIFIER KOMME FRA?
-			int terning = 6; // RANDOM TAL!!!
+			if(currentPlayer.getPreviousField().getFieldNumber()<currentPlayer.getCurrentField().getFieldNumber())
+			{
+				fieldsMoved =currentPlayer.getCurrentField().getFieldNumber()- currentPlayer.getPreviousField().getFieldNumber();
+			}
+			else{fieldsMoved =40-currentPlayer.getPreviousField().getFieldNumber()+currentPlayer.getCurrentField().getFieldNumber(); }
+			 // RANDOM TAL!!!
 			BreweryField bf = (BreweryField) currentField;
-			int rent = bf.getModifierFor(BreweriesOwned.ONE)*terning;
+			int rent = bf.getModifierFor(BreweriesOwned.ONE)*fieldsMoved;
 			
 			gui.showOptions("Vælg", new UserOption[] {UserOption.PayRent});
 			

@@ -169,6 +169,9 @@ public class GameController {
 			}
 			}
 			else{System.out.println("player is in jail");
+			}
+
+					
 
 			// Starting main round play through
 			/*
