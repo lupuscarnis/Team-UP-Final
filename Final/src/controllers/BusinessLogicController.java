@@ -96,14 +96,17 @@ public class BusinessLogicController {
 
 		// TODO: MANGLER EN TERNING
 		OwnableField currentField = (OwnableField) currentPlayer.getCurrentField();
-		//finds how far player moved, without using the dice.
+		// finds how far player moved, without using the dice.
 		int faceValue = 0;
-		if(currentPlayer.getCurrentField().getFieldNumber()>=currentPlayer.getPreviousField().getFieldNumber()){
-		faceValue = currentPlayer.getPreviousField().getFieldNumber()-currentPlayer.getCurrentField().getFieldNumber();
+		if (currentPlayer.getCurrentField().getFieldNumber() >= currentPlayer.getPreviousField().getFieldNumber()) {
+			faceValue = currentPlayer.getPreviousField().getFieldNumber()
+					- currentPlayer.getCurrentField().getFieldNumber();
+		} else {
+			faceValue = 40 - currentPlayer.getPreviousField().getFieldNumber()
+					+ currentPlayer.getCurrentField().getFieldNumber();
 		}
-		else{faceValue=40-currentPlayer.getPreviousField().getFieldNumber()+currentPlayer.getCurrentField().getFieldNumber();}
-		
-//		
+
+		//
 		int rent = currentField.calculateRent(faceValue);
 		Player payee = currentField.getOwner();
 		Player payer = currentPlayer;
@@ -291,9 +294,27 @@ public class BusinessLogicController {
 		return false;
 	}
 
-	public boolean canPawn(Player currentPlayer) {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	public boolean canPawn(Player currentPlayer) throws IOException {
 
+		OwnableField[] fieldsOwned = GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
+
+		// nothing owned so can't pawn
+		if (fieldsOwned.length == 0)
+			return false;
+
+		// har LotFields UDEN grunde
+		for (OwnableField field : fieldsOwned) {
+
+			if (field instanceof LotField) {
+				LotField lf = (LotField) field;
+
+				int buildingCount = lf.getHotelCount() + lf.getHouseCount();
+
+				if (buildingCount == 0 && !lf.isPawned())
+					return true;
+			}
+		}
+
+		return false;
+	}
 }

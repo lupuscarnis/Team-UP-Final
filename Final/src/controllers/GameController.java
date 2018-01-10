@@ -12,6 +12,8 @@ import entities.enums.UserOption;
 // - pantsætning
 // - Ret stavning i Chancedata.txt
 // - Get net worth
+// - Player lose
+// - Player won
 
 public class GameController {
 
