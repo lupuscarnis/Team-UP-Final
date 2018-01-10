@@ -95,4 +95,6 @@ public class Messager {
 		GUIController.getInstance().updatePlayerPosition(currentPlayer.getName(), currentPlayer.getPreviousField().getFieldNumber(), currentPlayer.getCurrentField().getFieldNumber());
 		GUIController.getInstance().showMessage(currentPlayer+" er blevet flyttet til "+currentPlayer.getCurrentField());
 	}
+	
+	
 }

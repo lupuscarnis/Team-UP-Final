@@ -17,6 +17,7 @@ public class ChanceCardController {
 	private static ChanceCardController instance;
 	private ChanceCard[] cardArray;
 	GameBoardController gbc =GameBoardController.getInstance();
+	FieldLogicController flc = FieldLogicController.getInstance();
 	
 
 	private ChanceCardController() throws IOException {
@@ -76,7 +77,9 @@ public class ChanceCardController {
 			case 3:
 			{player.setCurrentField(gbc.getFieldByNumber(40));
 			Messager.showMoveChanceCard(player, player.getCurrentField());
-				break;}
+			flc.handleFieldAction(player);
+			
+			break;}
 
 			// Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start,
 			// indkasserer de ikke kr. 4000.
@@ -95,6 +98,7 @@ public class ChanceCardController {
 			Messager.showMoveChanceCard(player, player.getCurrentField());
 			
 			}
+			flc.handleFieldAction(player);
 				break;}
 
 			// Ryk frem til Grønningen. Hvis De passerer start, indkasser da kr. 4000.
@@ -104,7 +108,7 @@ public class ChanceCardController {
 				if(player.getCurrentField().getFieldNumber()<player.getPreviousField().getFieldNumber())
 				{player.deposit(4000);
 				Messager.showPassedStart(player);}
-				
+				flc.handleFieldAction(player);
 				break;}
 
 			// Ryk frem til start.
