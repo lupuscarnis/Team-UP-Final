@@ -124,10 +124,11 @@ public class GameLogicCtrl {
 	}
 	
 	// checks if the Player Move past start this turn and receives 4000
-	private void checkPassedStart(Player currentPlayer, int faceValue, boolean canReceive )
+	private void checkPassedStart(Player currentPlayer, int faceValue, boolean canReceive ) throws Exception
 	{
 		if((currentPlayer.getCurrentField().getFieldNumber() + faceValue > 40)&& (canReceive == true)){
 		currentPlayer.deposit(4000);
+		Messager.showPassedStart(currentPlayer);
 		System.out.println("Du fik 4000 over start! hurray!");
 		}
 		
