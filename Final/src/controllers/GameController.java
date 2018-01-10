@@ -82,7 +82,7 @@ public class GameController {
 		// indicates number of turns in current game
 		int turnCounter = 1;
 		int turn = 1;
-		// indicates if first turn or not
+		// indicates if first turn or not. Seems silly to have both :P
 		boolean isFirstTurn = true;
 
 		// setup
