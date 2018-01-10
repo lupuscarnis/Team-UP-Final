@@ -47,6 +47,7 @@ public class Messager {
 				name, rent);
 		GUIController.getInstance().showMessage(txt);
 
+		//TODO: Skal laves om!!
 		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);;
 		
 		// Show pay button
@@ -105,6 +106,14 @@ public class Messager {
 	}	
 	public static void showMessage(String tekst) throws IOException{
 		GUIController.getInstance().showMessage(tekst);
+	}
+
+
+	public static String getSelectionResult(String[] tmp, String playerName) throws IOException {
+
+		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);;
+		
+		return GUIController.getInstance().getSelection(CHOOSE, tmp);	
 	}
 
 	

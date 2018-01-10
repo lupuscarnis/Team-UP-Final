@@ -148,26 +148,25 @@ public class BusinessLogicController {
 	 * @throws Exception
 	 */
 
-	
 	public int playerNetWorth(Player currentPlayer) throws IOException {
 		int netWorth;
 		int playerBalance = currentPlayer.getBalance();
-		int playerFieldWorth=0;
-		
+		int playerFieldWorth = 0;
+
 		OwnableField[] fieldsOwned = GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
-		for(OwnableField field : fieldsOwned) {
-			if(field instanceof LotField) {
+		for (OwnableField field : fieldsOwned) {
+			if (field instanceof LotField) {
 				LotField lotField = (LotField) field;
-				playerFieldWorth+=lotField.getPrice()+(lotField.getHouseCount()+5*lotField.getHotelCount())*lotField.getBuildingCost();
+				playerFieldWorth += lotField.getPrice()
+						+ (lotField.getHouseCount() + 5 * lotField.getHotelCount()) * lotField.getBuildingCost();
 			}
 		}
-		
-		netWorth = playerBalance+playerFieldWorth;
+
+		netWorth = playerBalance + playerFieldWorth;
 		return netWorth;
-		
+
 	}
-	
-	
+
 	public void buildHouse(Player player) throws Exception {
 		LotField lf = (LotField) player.getCurrentField();
 
@@ -315,6 +314,70 @@ public class BusinessLogicController {
 		return false;
 	}
 
+	public OwnableField[] getPawnableFields(Player owner) throws IOException {
+		OwnableField[] fieldsOwned = GameBoardController.getInstance().getFieldsByOwner(owner);
+
+		// if no fields are found return empty array.
+		if (fieldsOwned.length == 0)
+			return new OwnableField[0];
+
+		// har LotFields UDEN grunde
+		int index = 0;
+		OwnableField[] fields = new OwnableField[40]; // given high number by design, as to avoid out of bounds
+														// exception.
+
+		for (OwnableField field : fieldsOwned) {
+
+			// if lot field then make sure no buildings are on it
+			if (field instanceof LotField) {
+				LotField lf = (LotField) field;
+
+				int buildingCount = lf.getHotelCount() + lf.getHouseCount();
+
+				if (buildingCount == 0 && !lf.isPawned()) {
+					fields[index] = field;
+					index++;
+				}
+			}
+			// if shipping/brewery then make sure it's now pawned.
+			else {
+				if (!field.isPawned()) {
+					fields[index] = field;
+					index++;
+				}
+			}
+		}
+
+		// count no of pawnable fields found
+		int count = 0;
+		for (OwnableField item : fields) {
+
+			if (item != null)
+				count++;
+		}
+
+		// copy to array of correct length
+		index = 0;
+		OwnableField[] tmp = new OwnableField[count];
+		for (OwnableField ownableField : fields) {
+			if(fields[index]!=null) {
+			tmp[index] = fields[index];
+			index++;}
+		}
+
+		return tmp;
+	}
+
+	/**
+	 * Indicates if a player can pawn any lots or not.
+	 * 
+	 * 
+	 * Added by Frederik on 10-01-2018 19:19:19
+	 * 
+	 * @param currentPlayer
+	 * @return
+	 * @throws IOException
+	 */
 	public boolean canPawn(Player currentPlayer) throws IOException {
 
 		OwnableField[] fieldsOwned = GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
@@ -337,5 +400,25 @@ public class BusinessLogicController {
 		}
 
 		return false;
+	}
+
+	public void pawnLot(String result) throws Exception {
+		
+		boolean found = false;
+		OwnableField[] fieldsOwned = GameBoardController.getInstance().getAllOwnableFields();
+				
+		for (OwnableField field : fieldsOwned) {
+			
+			if(field.getTitle().equals(result))
+			{
+				field.setPawned(true);
+				found = true;
+				
+				GUIController.getInstance().updatePawnStatus(field.getFieldNumber());
+			}
+		}
+		
+		if(!found)
+			throw new Exception("Field never found!");
 	}
 }

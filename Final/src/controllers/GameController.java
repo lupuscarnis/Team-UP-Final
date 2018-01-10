@@ -4,6 +4,8 @@ import java.io.IOException;
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.UserOption;
+import entities.field.OwnableField;
+import utilities.Messager;
 
 //TODO: MANGLER:
 // - Chancekort
@@ -141,7 +143,29 @@ public class GameController {
 			case PawnLot:
 				
 				// show pawnable lots
-				gui.getSelection("Vælg", new String[]{"Rødovrevej", "Hvidvorevej"});
+				OwnableField[] fields = BusinessLogicController.getInstance().getPawnableFields(currentPlayer);
+				
+				String[] tmp = new String[fields.length+1];
+				
+				tmp[0]="- Annuller!";
+				
+				int index = 1;
+				for (OwnableField string : fields) {
+					tmp[index]=string.getTitle();
+					index++;
+				}
+				
+				String result = Messager.getSelectionResult(tmp, currentPlayer.getName());
+				
+				
+				if(!result.equals("- Annuller!"))
+				{
+					
+					BusinessLogicController.getInstance().pawnLot(result);
+					
+					
+				}
+				
 				
 				// pawn selected lot
 				

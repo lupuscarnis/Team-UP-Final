@@ -130,7 +130,7 @@ public class GameLogicCtrl {
 		
 		// Throw Die
 		int faceValue = cup.rollDice();
-		gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
+		//gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
 		//Checks if he passes start and gives him money	
 		checkPassedStart(currentPlayer, faceValue, true);
 		// get next field
