@@ -259,6 +259,9 @@ public class ChanceCardController {
 				
 			// 26;Det er deres fødselsdag. Modtag af hver medspiller kr. 200.;
 			case 26:
+				GameController
+				player.deposit(200*GameController.pc.);
+				
 				break;
 			default:
 				throw new Exception("Case not found!");
