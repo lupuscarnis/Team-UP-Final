@@ -88,7 +88,13 @@ public class ChanceCardController {
 			// indkasserer de ikke kr. 4000.
 			case 4:
 			case 5:
-				break;
+			{player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(11));
+			Messager.showMoveChanceCard(player, player.getCurrentField());
+			// vi maa lige finde ud af det med faengslet, nu er der to muligheder for hvordan han rigtigt "is in jail"
+			FieldLogicController.getInstance().handleFieldAction(player);
+			player.isInJail(true);
+			break;}
+				
 
 			// Ryk tre felter tilbage.
 
