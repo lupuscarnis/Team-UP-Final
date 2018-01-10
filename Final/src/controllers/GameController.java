@@ -118,7 +118,7 @@ public class GameController {
 			} else { // find next player
 				currentPlayer = glc.getNextPlayer(players);
 			}
-		}
+		
 		/*
 		 * } rerolls = 0; }
 		 */
@@ -156,5 +156,6 @@ public class GameController {
 			}
 
 		} while (userChoice != UserOption.EndTurn);	
+		}
 	}
 }
