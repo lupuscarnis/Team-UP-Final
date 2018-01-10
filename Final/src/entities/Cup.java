@@ -9,9 +9,7 @@ public class Cup {
 	private Die d2 = new Die(6, 1);
 // rough sketch of cup might need more work depending on what it has to do 
 	
-//	public Cup(Player player) {
-//
-//	}
+
 	public Cup(int traversedSpace, int rerolls, Die d1, Die d2) {
 		super();
 		this.traversedSpace = traversedSpace;
@@ -21,9 +19,30 @@ public class Cup {
 	}
 	
 	
-	public int rollDice() {
+	public Die getD1() {
+		return d1;
+	}
 
-		if (d1.roll() == d2.roll()) {
+
+	public void setD1(Die d1) {
+		this.d1 = d1;
+	}
+
+
+	public Die getD2() {
+		return d2;
+	}
+
+
+	public void setD2(Die d2) {
+		this.d2 = d2;
+	}
+
+
+	public int rollDice() {
+		d1.roll();
+		d2.roll();
+		if (d1.getValue()==d2.getValue()) {
 
 			rerolls++;
 			traversedSpace += d1.getValue() + d2.getValue();

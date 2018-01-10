@@ -17,8 +17,8 @@ public class GameLogicCtrl {
 	private static GameLogicCtrl instance;
 	private GUIController gui = GUIController.getInstance();
 	private FieldLogicController flc = FieldLogicController.getInstance();
-	Die d1 = new Die(1, 6);
-	Die d2 = new Die(1, 6);
+	Die d1 = new Die(6, 1);
+	Die d2 = new Die(6, 1);
 	Cup cup = new Cup(0,0,d1,d2);
 	
 	private GameLogicCtrl() throws IOException {
@@ -109,7 +109,8 @@ public class GameLogicCtrl {
 		
 		
 		// Throw Die
-		int faceValue = 1;//cup.rollDice();
+		int faceValue = cup.rollDice();
+		gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
 		//Checks if he passes start and gives him money	
 		checkPassedStart(currentPlayer, faceValue, true);
 		// get next field

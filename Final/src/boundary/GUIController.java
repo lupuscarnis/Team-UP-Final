@@ -495,8 +495,27 @@ public class GUIController {
 	 * 
 	 * @param option
 	 * @return
+	 * @throws InterruptedException 
 	 * @throws Exception
 	 */
+	public void showDice(int value1, int value2) throws InterruptedException
+	{
+		int minValue=1,maxValue=6;
+		int rollDecreaser1 = 6;
+		int rollDecreaser2 = 6;
+		for(int i=0; i<=6;i++)
+		{
+			rollDecreaser2 -= 1;
+			rollDecreaser1 -= 1;
+		gui.setDice(((int)(Math.random()*maxValue)+minValue), rollDecreaser1, ((int)(Math.random()*maxValue)+minValue), rollDecreaser2);
+		Thread.sleep(300);
+		}
+		gui.setDice(value1, 3, value2, 3);
+		
+					
+	}
+	
+	
 	private String parseUserOption(UserOption option) throws Exception {
 		switch (option) {
 		case PayRent:
@@ -527,4 +546,6 @@ public class GUIController {
 	public void updatePlayerPosition(String playerName, int fromField, int toField) throws Exception {		
 		moveCar(fromField, toField, findPlayer(playerName));
 	}
+	
+	
 }
