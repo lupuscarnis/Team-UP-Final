@@ -240,6 +240,8 @@ public class ChanceCardController {
 			case 27:
 				ReceiveChanceCard rc = (ReceiveChanceCard) card;
 				rc.getAmount();
+				player.deposit(rc.getAmount());
+				Messager.showReceiveChanceCard(player, rc.getAmount());
 				
 				// er de ting der kommer nu en lav prioritet
 				break;
