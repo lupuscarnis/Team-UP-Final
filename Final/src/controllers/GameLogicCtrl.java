@@ -127,13 +127,7 @@ public class GameLogicCtrl {
 
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 		
-		
-		// Throw Die
-<<<<<<< HEAD
-		int faceValue = 39;//cup.rollDice();
-=======
 		int faceValue = cup.rollDice();
->>>>>>> branch '2.-iteration' of https://github.com/lupuscarnis/CDIO-Final.git
 		//Checks if he passes start and gives him money	
 		checkPassedStart(currentPlayer, faceValue, true);
 		// get next field
