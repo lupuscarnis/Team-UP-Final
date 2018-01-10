@@ -68,6 +68,8 @@ public class GameController {
 
 		// indicates number of turns in current game
 		int turnCounter = 1;
+		// indicates number of rerolls made by player
+		int rerolls = 0;
 
 		// indicates if first turn or not
 		boolean isFirstTurn = true;
@@ -93,11 +95,18 @@ public class GameController {
 
 				// Vis start spil knap
 				//gui.showPromt("Start spil");
-
+			if(glc.d1.getValue()==glc.d2.getValue()){
+					currentPlayer = currentPlayer;
+			 rerolls++;
+			 
+			//stopper currentplayer for at blive til next player.		
+			}
+				
 			} else {
 				System.out.println("qqq");
 				// find next player
 				currentPlayer = glc.getNextPlayer(players);
+				rerolls = 0;
 			}
 			
 			gui.showPromt("Det er "+currentPlayer.getName() + "s tur!");
@@ -132,9 +141,7 @@ public class GameController {
 														
 					// handle possible field actions
 					flc.handleFieldAction(currentPlayer);
-					if(glc.d1.getValue()==glc.d2.getValue()){
-						
-					}
+					
 					
 					break;
 				case EndTurn:
