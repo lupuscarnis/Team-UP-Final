@@ -115,7 +115,7 @@ public class GameBoardController {
 	}
 	
 	
-	public OwnableField[] getLotFieldsByOwner(Player currentOwner) {
+	public LotField[] getLotFieldsByOwner(Player currentOwner) {
 
 		int count = 0;
 		for (Field field : fieldArray) {
@@ -134,7 +134,7 @@ public class GameBoardController {
 			int index = 0;
 			for (Field field : fieldArray) {
 
-				if (field instanceof OwnableField) {
+				if (field instanceof LotField) {
 					LotField of = (LotField) field;
 
 					if (of.getOwner() == currentOwner) {
