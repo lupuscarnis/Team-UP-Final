@@ -97,18 +97,17 @@ public class BusinessLogicController {
 		// TODO: MANGLER EN TERNING
 		int faceValue = 10; // Random value - must come from dice!
 		OwnableField currentField = (OwnableField) currentPlayer.getCurrentField();
-		
+
 		// finds how far player moved, without using the dice.
 		/*
-		
-		if (currentPlayer.getCurrentField().getFieldNumber() >= currentPlayer.getPreviousField().getFieldNumber()) {
-			faceValue = currentPlayer.getPreviousField().getFieldNumber()
-					- currentPlayer.getCurrentField().getFieldNumber();
-		} else {
-			faceValue = 40 - currentPlayer.getPreviousField().getFieldNumber()
-					+ currentPlayer.getCurrentField().getFieldNumber();
-		}
-*/
+		 * 
+		 * if (currentPlayer.getCurrentField().getFieldNumber() >=
+		 * currentPlayer.getPreviousField().getFieldNumber()) { faceValue =
+		 * currentPlayer.getPreviousField().getFieldNumber() -
+		 * currentPlayer.getCurrentField().getFieldNumber(); } else { faceValue = 40 -
+		 * currentPlayer.getPreviousField().getFieldNumber() +
+		 * currentPlayer.getCurrentField().getFieldNumber(); }
+		 */
 		//
 		int rent = currentField.calculateRent(faceValue);
 		Player payee = currentField.getOwner();
@@ -373,7 +372,7 @@ public class BusinessLogicController {
 	}
 
 	/**
-	 * Indicates if a player can pawn any lots or not.	 * 
+	 * Indicates if a player can pawn any lots or not. *
 	 * 
 	 * Added by Frederik on 10-01-2018 19:19:19
 	 * 
@@ -385,18 +384,18 @@ public class BusinessLogicController {
 		return this.getPawnableFields(currentPlayer).length > 0;
 	}
 
-	public void pawnLot(String result) throws Exception {
+	public void pawnLot(String result, Player owner) throws Exception {
 
 		boolean found = false;
-		OwnableField[] fieldsOwned = GameBoardController.getInstance().getAllOwnableFields();
+		OwnableField[] fieldsOwned = GameBoardController.getInstance().getFieldsByOwner(owner);
 
 		for (OwnableField field : fieldsOwned) {
 
 			if (field.getTitle().equals(result)) {
-				
+
 				// indicate field is pawned
-				field.setPawned(true);				
-				
+				field.setPawned(true);
+
 				// pay player money for pawning
 				field.getOwner().deposit(field.getPawnPrice());
 
@@ -406,7 +405,7 @@ public class BusinessLogicController {
 
 				// confirm in gui
 				Messager.showFieldPawned(field.getTitle());
-				
+
 				found = true;
 			}
 		}

@@ -29,9 +29,10 @@ public abstract class OwnableField extends Field {
 	 * 
 	 * @return
 	 * @throws IOException 
+	 * @throws Exception 
 	 */
 	//TODO: Think about what to b/c not all methods needs a die
-	public abstract int calculateRent(int dieFaceValue) throws IOException;
+	public abstract int calculateRent(int dieFaceValue) throws IOException, Exception;
 
 	public int getPawnPrice() {
 		return pawnPrice;

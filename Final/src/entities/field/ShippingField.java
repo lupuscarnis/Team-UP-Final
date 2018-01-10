@@ -2,6 +2,8 @@ package entities.field;
 
 import java.io.IOException;
 
+import controllers.GameBoardController;
+import entities.enums.BreweriesOwned;
 import entities.enums.FieldType;
 import entities.enums.ShippingOwned;
 
@@ -39,10 +41,30 @@ public class ShippingField extends OwnableField {
 		this.text2 = text2;
 	}
 
-	
 	@Override
-	public int calculateRent(int dieFaceValue) throws IOException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int calculateRent(int dieFaceValue) throws Exception {
+
+		int fieldsOwned = GameBoardController.getInstance().getShippingFieldsOwned(this.getOwner());
+
+		ShippingOwned owned = null;
+
+		switch (fieldsOwned) {
+		case 1:
+			owned = ShippingOwned.One;
+			break;
+		case 2:
+			owned = ShippingOwned.Two;
+			break;
+		case 3:
+			owned = ShippingOwned.Three;
+			break;
+		case 4:
+			owned = ShippingOwned.Four;
+			break;
+		default:
+			throw new Exception("Case not found!");
+		}
+
+		return this.getRentFor(owned);
 	}
 }

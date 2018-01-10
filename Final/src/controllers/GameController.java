@@ -95,10 +95,10 @@ public class GameController {
 
 		// start game loop
 		while (!gameOver(players)) {
-			
+
 			// increment turn counter
 			turnCounter++;
-			
+
 			// Checking which players starts first if turn == 1
 			if (isFirstTurn) {
 
@@ -122,76 +122,69 @@ public class GameController {
 			} else { // find next player
 				currentPlayer = glc.getNextPlayer(players);
 			}
-		
-		/*
-		 * } rerolls = 0; }
-		 */
-		gui.showPromt("Det er " + currentPlayer.getName() + "s tur!");
 
-		// present options for user
-		// End when EndTurn is selected
-		UserOption userChoice = null;
-		do {
-			userChoice = glc.showUserOptions(currentPlayer);
+			/*
+			 * } rerolls = 0; }
+			 */
+			gui.showPromt("Det er " + currentPlayer.getName() + "s tur!");
 
-			switch (userChoice) {
+			// present options for user
+			// End when EndTurn is selected
+			UserOption userChoice = null;
+			do {
+				userChoice = glc.showUserOptions(currentPlayer);
 
-			case BuyHotel:
-				break;
-			case BuyHouse:
-				break;
-			case PawnLot:
-				
-				// show pawnable lots
-				OwnableField[] fields = BusinessLogicController.getInstance().getPawnableFields(currentPlayer);
-				
-				String[] tmp = new String[fields.length+1];
-				
-				tmp[0]="- Annuller!";
-				
-				int index = 1;
-				for (OwnableField string : fields) {
-					tmp[index]=string.getTitle();
-					index++;
+				switch (userChoice) {
+
+				case BuyHotel:
+					break;
+				case BuyHouse:
+					break;
+				case PawnLot:
+
+					// show pawnable lots
+					OwnableField[] fields = BusinessLogicController.getInstance().getPawnableFields(currentPlayer);
+
+					String[] tmp = new String[fields.length + 1];
+
+					tmp[0] = "- Annuller!";
+
+					int index = 1;
+					for (OwnableField string : fields) {
+						tmp[index] = string.getTitle();
+						index++;
+					}
+
+					String result = Messager.getSelectionResult(tmp, currentPlayer.getName());
+
+					// pawn selected lot
+					if (!result.equals("- Annuller!"))
+						BusinessLogicController.getInstance().pawnLot(result, currentPlayer);
+
+					break;
+				case ThrowDice:
+					// TODO: Roll streak?
+					currentPlayer.setDoneThrowing(true);
+
+					// roll and move player
+					glc.rollAndMove(currentPlayer);
+
+					// handle possible field actions
+					flc.handleFieldAction(currentPlayer);
+					break;
+				case EndTurn:
+					currentPlayer.setDoneThrowing(false);
+					break;
+				default:
+					throw new Exception("Case not found!");
 				}
-				
-				String result = Messager.getSelectionResult(tmp, currentPlayer.getName());
-				
-				// pawn selected lot
-				if(!result.equals("- Annuller!"))
-				{					
-					BusinessLogicController.getInstance().pawnLot(result);
-				}
-				
-				
-				
-				
-				
-							
-				
-				break;
-			case ThrowDice:
-				// TODO: Roll streak?
-				currentPlayer.setDoneThrowing(true);
 
-				// roll and move player
-				glc.rollAndMove(currentPlayer);
-
-				// handle possible field actions
-				flc.handleFieldAction(currentPlayer);
-				break;
-			case EndTurn:
-				currentPlayer.setDoneThrowing(false);
-				break;
-			default:
-				throw new Exception("Case not found!");
-			}
-
-		} while (userChoice != UserOption.EndTurn);	
+			} while (userChoice != UserOption.EndTurn);
 		}
 	}
-	public Player[] getPlayers(){
+
+	public Player[] getPlayers() {
 		return players;
-		
+
 	}
 }

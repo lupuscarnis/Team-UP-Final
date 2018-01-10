@@ -113,8 +113,7 @@ public class GameBoardController {
 
 		return new OwnableField[0];
 	}
-	
-	
+
 	public LotField[] getLotFieldsByOwner(Player currentOwner) {
 
 		int count = 0;
@@ -265,6 +264,18 @@ public class GameBoardController {
 
 			// check that lot field is correct color
 			if (field.getColor() == lotColor)
+				count++;
+		}
+		return count;
+	}
+
+	// Return number of shipping fields owned by player
+	public int getShippingFieldsOwned(Player owner) {
+
+		int count = 0;
+		for (Field field : this.getFieldsByOwner(owner)) {
+
+			if (field.getFieldType() == FieldType.SHIPPING)
 				count++;
 		}
 		return count;
