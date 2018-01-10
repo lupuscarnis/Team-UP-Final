@@ -80,6 +80,8 @@ public class GameController {
 
 		// indicates number of turns in current game
 		int turnCounter = 1;
+		// indicates number of rerolls made by player
+		int rerolls = 0;
 
 		// indicates if first turn or not
 		boolean isFirstTurn = true;
@@ -104,23 +106,56 @@ public class GameController {
 				currentPlayer = glc.getStartPlayer(players);
 
 				// Vis start spil knap
+<<<<<<< HEAD
 				// gui.showPromt("Start spil");
 
+=======
+				//gui.showPromt("Start spil");
+			if(glc.d1.getValue()==glc.d2.getValue()){
+					currentPlayer = currentPlayer;
+			 rerolls++;
+			 
+			//stopper currentplayer for at blive til next player.		
+			}
+				
+>>>>>>> refs/remotes/origin/2.-iteration
 			} else {
 				// find next player
 				currentPlayer = glc.getNextPlayer(players);
+				rerolls = 0;
 			}
 
 			gui.showPromt("Det er " + currentPlayer.getName() + "s tur!");
 
 			// present options for user
 			// End when EndTurn is selected
+<<<<<<< HEAD
 			UserOption userChoice = null;
 			do {
 				userChoice = glc.showUserOptions(currentPlayer);
 
 				switch (userChoice) {
 
+=======
+			if (rerolls == 3)
+			{
+				currentPlayer.isInJail(true);
+			}
+			if(currentPlayer.isInJail()==false)
+			{
+			while(true)
+				
+				
+			{				
+				UserOption userChoice = glc.showUserOptions(currentPlayer);				
+				
+				switch(userChoice)
+				{
+				
+				case StartOfTurn:
+					break;
+				
+>>>>>>> refs/remotes/origin/2.-iteration
 				case BuyHotel:
 					break;
 				case BuyHouse:
@@ -133,7 +168,11 @@ public class GameController {
 
 					// roll and move player
 					glc.rollAndMove(currentPlayer);
+<<<<<<< HEAD
 
+=======
+														
+>>>>>>> refs/remotes/origin/2.-iteration
 					// handle possible field actions
 					flc.handleFieldAction(currentPlayer);
 					break;
@@ -143,8 +182,23 @@ public class GameController {
 				default:
 					throw new Exception("Case not found!");
 				}
+<<<<<<< HEAD
 
 			} while (userChoice != UserOption.EndTurn);
+=======
+				
+				
+				//userChoice = glc.showUserOptions(currentPlayer);
+				
+				
+				if(userChoice==UserOption.EndTurn)
+					break;
+				
+			
+			}
+			}
+			else{System.out.println("player is in jail");
+>>>>>>> refs/remotes/origin/2.-iteration
 
 			// Starting main round play through
 			/*
@@ -180,5 +234,6 @@ public class GameController {
 
 			turnCounter++;
 		}
+	}
 	}
 }

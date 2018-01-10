@@ -9,10 +9,18 @@ public class Cup {
 	private Die d2 = new Die(6, 1);
 // rough sketch of cup might need more work depending on what it has to do 
 	
-	public Cup(Player player) {
-
+//	public Cup(Player player) {
+//
+//	}
+	public Cup(int traversedSpace, int rerolls, Die d1, Die d2) {
+		super();
+		this.traversedSpace = traversedSpace;
+		this.rerolls = rerolls;
+		this.d1 = d1;
+		this.d2 = d2;
 	}
-
+	
+	
 	public int rollDice() {
 
 		if (d1.roll() == d2.roll()) {
@@ -27,6 +35,8 @@ public class Cup {
 		}
 
 	}
+
+	
 
 	public int getTraversedSpace() {
 		return traversedSpace;
