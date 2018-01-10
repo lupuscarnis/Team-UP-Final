@@ -3,15 +3,10 @@ package controllers;
 import java.io.IOException;
 import boundary.GUIController;
 import entities.Player;
-import entities.enums.FieldName;
 import entities.enums.FieldType;
 import entities.enums.UserOption;
-import entities.field.BreweryField;
 import entities.field.Field;
-import entities.field.LotField;
 import entities.field.OwnableField;
-import entities.field.ShippingField;
-import utilities.FieldLoader;
 import utilities.Messager;
 
 public class FieldLogicController {
