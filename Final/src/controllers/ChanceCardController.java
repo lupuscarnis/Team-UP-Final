@@ -86,12 +86,15 @@ public class ChanceCardController {
 
 			// Ryk tre felter tilbage.
 			case 12:{
-//			if(player.getCurrentField().getFieldNumber()=1){player.setCurrentField(gbc.getFieldByNumber(38);}
-//			else if(player.getCurrentField().getFieldNumber()=1){player.setCurrentField(gbc.getFieldByNumber(38)}
-//			{player.setCurrentField(gbc.getFieldByNumber( player.getCurrentField().getFieldNumber()-3));
-//			Messager.showMoveChanceCard(player, player.getCurrentField());
-//			
-//			}
+			if(player.getCurrentField().getFieldNumber()==3){player.setCurrentField(gbc.getFieldByNumber(40));
+			Messager.showMoveChanceCard(player, player.getCurrentField());}
+			
+			else
+				//(player.getCurrentField().getFieldNumber()==1){player.setCurrentField(gbc.getFieldByNumber(38));}
+			{player.setCurrentField(gbc.getFieldByNumber( player.getCurrentField().getFieldNumber()-3));
+			Messager.showMoveChanceCard(player, player.getCurrentField());
+			
+			}
 				break;}
 
 			// Ryk frem til Grønningen. Hvis De passerer start, indkasser da kr. 4000.
