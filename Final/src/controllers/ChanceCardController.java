@@ -250,9 +250,11 @@ public class ChanceCardController {
 			// skøder + bygninger ikke overstiger kr. 15000.;
 			case 25:
 				if(player.getNetWorth()<=15000)
-				{player.deposit(40000);}
-				Messager.showReceiveChanceCard(player,40000);
-				else{}
+				{player.deposit(40000);
+				Messager.showReceiveChanceCard(player,40000);}
+				else
+				{Messager.showMessage("du er aaaaalt for rig til at gælde som værdigt trængende. Du får intet");}
+				
 				break;
 				
 			// 26;Det er deres fødselsdag. Modtag af hver medspiller kr. 200.;
