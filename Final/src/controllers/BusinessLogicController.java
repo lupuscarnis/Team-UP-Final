@@ -380,25 +380,10 @@ public class BusinessLogicController {
 	 */
 	public boolean canPawn(Player currentPlayer) throws IOException {
 
-		OwnableField[] fieldsOwned = GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
-
-		// nothing owned so can't pawn
-		if (fieldsOwned.length == 0)
-			return false;
-
-		// har LotFields UDEN grunde
-		for (OwnableField field : fieldsOwned) {
-
-			if (field instanceof LotField) {
-				LotField lf = (LotField) field;
-
-				int buildingCount = lf.getHotelCount() + lf.getHouseCount();
-
-				if (buildingCount == 0 && !lf.isPawned())
-					return true;
-			}
+		if(getPawnableFields(currentPlayer).length!=0) {
+			return true;
 		}
-
+		
 		return false;
 	}
 
@@ -412,9 +397,12 @@ public class BusinessLogicController {
 			if(field.getTitle().equals(result))
 			{
 				field.setPawned(true);
+				Player owner = field.getOwner();
+				owner.deposit(field.getPawnPrice());
 				found = true;
 				
 				GUIController.getInstance().updatePawnStatus(field.getFieldNumber());
+				GUIController.getInstance().updateBalance(owner);
 			}
 		}
 		
