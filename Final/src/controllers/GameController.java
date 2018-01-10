@@ -157,19 +157,17 @@ public class GameController {
 				
 				String result = Messager.getSelectionResult(tmp, currentPlayer.getName());
 				
-				
+				// pawn selected lot
 				if(!result.equals("- Annuller!"))
-				{
-					
+				{					
 					BusinessLogicController.getInstance().pawnLot(result);
-					
-					
 				}
 				
 				
-				// pawn selected lot
 				
-				// confirm in gui				
+				
+				
+							
 				
 				break;
 			case ThrowDice:

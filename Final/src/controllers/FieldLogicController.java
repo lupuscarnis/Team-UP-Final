@@ -43,9 +43,12 @@ public class FieldLogicController {
 					blc.buyLot(currentPlayer);
 			}
 			// pay rent
-			else
-				blc.payRent(currentPlayer);
-
+			else {
+				if (!of.isPawned())
+					blc.payRent(currentPlayer);
+				else
+					gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
+			}
 			break;
 		case VISITJAIL:
 			gui.showMessage(
@@ -64,11 +67,11 @@ public class FieldLogicController {
 
 			// landed on START
 			if (currentField.getFieldType() == FieldType.START) {
-				
-				//TODO: Move out to BLC and pay START money even if you dont land on start!!
+
+				// TODO: Move out to BLC and pay START money even if you dont land on start!!
 				gui.showMessage("you have landed on " + currentField.getFieldType() + " you gain 4000 kr.");
 				currentPlayer.deposit(4000);
-			} 
+			}
 			// landed on FREE PARKTIN
 			else {
 				gui.showMessage("you have landed on " + currentField.getFieldType() + " nothing happens");
@@ -77,13 +80,13 @@ public class FieldLogicController {
 		case GOTOJAIL:
 			// Show message to player
 			Messager.showMustGoToJail(currentPlayer);
-			
+
 			// handle logic reg. going to jail
-			GameLogicCtrl.getInstance().handleGoToJail(currentPlayer);						
+			GameLogicCtrl.getInstance().handleGoToJail(currentPlayer);
 			break;
 		case INCOMETAX:
 			// Tell user he must pay income tax and get choice (10% or 4000)
-			choice = Messager.showMustPayIncomeTax(currentField.getFieldType(),currentPlayer.getName());
+			choice = Messager.showMustPayIncomeTax(currentField.getFieldType(), currentPlayer.getName());
 
 			// pay tax
 			blc.payIncomeTax(currentPlayer, choice);

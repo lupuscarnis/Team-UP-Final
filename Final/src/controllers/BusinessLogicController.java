@@ -95,9 +95,12 @@ public class BusinessLogicController {
 	public void payRent(Player currentPlayer) throws Exception {
 
 		// TODO: MANGLER EN TERNING
+		int faceValue = 10; // Random value - must come from dice!
 		OwnableField currentField = (OwnableField) currentPlayer.getCurrentField();
+		
 		// finds how far player moved, without using the dice.
-		int faceValue = 0;
+		/*
+		
 		if (currentPlayer.getCurrentField().getFieldNumber() >= currentPlayer.getPreviousField().getFieldNumber()) {
 			faceValue = currentPlayer.getPreviousField().getFieldNumber()
 					- currentPlayer.getCurrentField().getFieldNumber();
@@ -105,7 +108,7 @@ public class BusinessLogicController {
 			faceValue = 40 - currentPlayer.getPreviousField().getFieldNumber()
 					+ currentPlayer.getCurrentField().getFieldNumber();
 		}
-
+*/
 		//
 		int rent = currentField.calculateRent(faceValue);
 		Player payee = currentField.getOwner();
@@ -360,17 +363,17 @@ public class BusinessLogicController {
 		index = 0;
 		OwnableField[] tmp = new OwnableField[count];
 		for (OwnableField ownableField : fields) {
-			if(fields[index]!=null) {
-			tmp[index] = fields[index];
-			index++;}
+			if (fields[index] != null) {
+				tmp[index] = fields[index];
+				index++;
+			}
 		}
 
 		return tmp;
 	}
 
 	/**
-	 * Indicates if a player can pawn any lots or not.
-	 * 
+	 * Indicates if a player can pawn any lots or not.	 * 
 	 * 
 	 * Added by Frederik on 10-01-2018 19:19:19
 	 * 
@@ -379,46 +382,36 @@ public class BusinessLogicController {
 	 * @throws IOException
 	 */
 	public boolean canPawn(Player currentPlayer) throws IOException {
-
-		OwnableField[] fieldsOwned = GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
-
-		// nothing owned so can't pawn
-		if (fieldsOwned.length == 0)
-			return false;
-
-		// har LotFields UDEN grunde
-		for (OwnableField field : fieldsOwned) {
-
-			if (field instanceof LotField) {
-				LotField lf = (LotField) field;
-
-				int buildingCount = lf.getHotelCount() + lf.getHouseCount();
-
-				if (buildingCount == 0 && !lf.isPawned())
-					return true;
-			}
-		}
-
-		return false;
+		return this.getPawnableFields(currentPlayer).length > 0;
 	}
 
 	public void pawnLot(String result) throws Exception {
-		
+
 		boolean found = false;
 		OwnableField[] fieldsOwned = GameBoardController.getInstance().getAllOwnableFields();
-				
+
 		for (OwnableField field : fieldsOwned) {
-			
-			if(field.getTitle().equals(result))
-			{
-				field.setPawned(true);
-				found = true;
+
+			if (field.getTitle().equals(result)) {
 				
+				// indicate field is pawned
+				field.setPawned(true);				
+				
+				// pay player money for pawning
+				field.getOwner().deposit(field.getPawnPrice());
+
+				// update gui (is pawned and balance
 				GUIController.getInstance().updatePawnStatus(field.getFieldNumber());
+				GUIController.getInstance().updateBalance(field.getOwner());
+
+				// confirm in gui
+				Messager.showFieldPawned(field.getTitle());
+				
+				found = true;
 			}
 		}
-		
-		if(!found)
+
+		if (!found)
 			throw new Exception("Field never found!");
 	}
 }

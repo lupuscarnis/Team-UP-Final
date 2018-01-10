@@ -19,8 +19,8 @@ public class GameLogicCtrl {
 	private FieldLogicController flc = FieldLogicController.getInstance();
 	Die d1 = new Die(6, 1);
 	Die d2 = new Die(6, 1);
-	Cup cup = new Cup(0,0,d1,d2);
-	
+	Cup cup = new Cup(0, 0, d1, d2);
+
 	private GameLogicCtrl() throws IOException {
 	}
 
@@ -33,54 +33,44 @@ public class GameLogicCtrl {
 	public UserOption showUserOptions(Player currentPlayer) throws Exception {
 
 		int index = 0;
-		UserOption[] options = new UserOption[10]; // Hack: we don't know the size yet, so 10 is random!		
-				
+		UserOption[] options = new UserOption[10]; // Hack: we don't know the size yet, so 10 is random!
+
 		// can pawn
-		if(BusinessLogicController.getInstance().canPawn(currentPlayer))
-		{
+		if (BusinessLogicController.getInstance().canPawn(currentPlayer)) {
 			options[index] = UserOption.PawnLot;
 			index++;
 		}
-		
+
 		// can sell houses
-		if(false)
-		{
+		if (false) {
 			options[index] = UserOption.BuyHouse;
 			index++;
 		}
 		// can sell hotel
-		if(false)
-		{
+		if (false) {
 			options[index] = UserOption.BuyHotel;
 			index++;
 		}
-		
-		if(currentPlayer.isDoneThrowing())
-		{
+
+		if (currentPlayer.isDoneThrowing()) {
 			options[index] = UserOption.EndTurn;
 			index++;
-		}
-		else
-		{
+		} else {
 			options[index] = UserOption.ThrowDice;
 			index++;
 		}
-		
-		
-//		if (currentPlayer.isDoneThrowing()) {
-			
-//		}
-		
+
+		// if (currentPlayer.isDoneThrowing()) {
+
+		// }
+
 		// if not in jail - you can throw dice
 		// TODO: Check for roll streak
-//		else if (!currentPlayer.isInJail()) {
-//			options[index] = UserOption.ThrowDice;
-//			index++;
-//		}
-		
-		
-		
-		
+		// else if (!currentPlayer.isInJail()) {
+		// options[index] = UserOption.ThrowDice;
+		// index++;
+		// }
+
 		/*
 		 * options[index] = UserOption.BuyHouse; index++;
 		 * 
@@ -89,7 +79,6 @@ public class GameLogicCtrl {
 		 * options[index] = UserOption.PawnLot; index++;
 		 */
 
-		
 		// empty array of nulls
 		int elements = 0;
 		for (UserOption userOption : options) {
@@ -126,33 +115,29 @@ public class GameLogicCtrl {
 	public void rollAndMove(Player currentPlayer) throws Exception {
 
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
-		
-		
+
 		// Throw Die
-		int faceValue = cup.rollDice();
-		//gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
-		//Checks if he passes start and gives him money	
+		int faceValue = 5;//cup.rollDice();
+		// gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
+		// Checks if he passes start and gives him money
 		checkPassedStart(currentPlayer, faceValue, true);
 		// get next field
 		Field nextField = flc.getNextField(currentFieldNo, faceValue);
 
-		// Update current pos on player object 
+		// Update current pos on player object
 		currentPlayer.setCurrentField(nextField);
-		
 
 		// Update gui
 		gui.movePlayer(currentPlayer);
 	}
-	
+
 	// checks if the Player Move past start this turn and receives 4000
-	private void checkPassedStart(Player currentPlayer, int faceValue, boolean canReceive ) throws Exception
-	{
-		if((currentPlayer.getCurrentField().getFieldNumber() + faceValue > 40)&& (canReceive == true)){
-		currentPlayer.deposit(4000);
-		Messager.showPassedStart(currentPlayer);
-		System.out.println("Du fik 4000 over start! hurray!");
+	private void checkPassedStart(Player currentPlayer, int faceValue, boolean canReceive) throws Exception {
+		if ((currentPlayer.getCurrentField().getFieldNumber() + faceValue > 40) && (canReceive == true)) {
+			currentPlayer.deposit(4000);
+			Messager.showPassedStart(currentPlayer);
+			System.out.println("Du fik 4000 over start! hurray!");
 		}
-		
 	}
 
 	/**
