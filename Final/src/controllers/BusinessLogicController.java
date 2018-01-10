@@ -96,6 +96,7 @@ public class BusinessLogicController {
 
 		// TODO: MANGLER EN TERNING
 		OwnableField currentField = (OwnableField) currentPlayer.getCurrentField();
+		//finds how far player moved, without using the dice.
 		int faceValue = 0;
 		if(currentPlayer.getCurrentField().getFieldNumber()>=currentPlayer.getPreviousField().getFieldNumber()){
 		faceValue = currentPlayer.getPreviousField().getFieldNumber()-currentPlayer.getCurrentField().getFieldNumber();
