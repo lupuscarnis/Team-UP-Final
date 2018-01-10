@@ -99,5 +99,8 @@ public class Messager {
 		GUIController.getInstance().updateBalance(currentPlayer);
 		GUIController.getInstance().showMessage(currentPlayer+" har måttet betale "+moneyLost);
 	}
-	
+	public static void showReceiveChanceCard(Player currentPlayer, int moneyReceived) throws Exception{
+		GUIController.getInstance().updateBalance(currentPlayer);
+		GUIController.getInstance().showMessage(currentPlayer+" har fået "+moneyReceived);
+	}	
 }

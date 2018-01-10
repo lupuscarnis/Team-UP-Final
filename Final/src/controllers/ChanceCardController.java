@@ -203,6 +203,7 @@ public class ChanceCardController {
 			case 33:
 				PayChanceCard pc = (PayChanceCard) card;
 				pc.getAmount();
+				player.withdraw(pc.getAmount());
 				Messager.showPayChanceCard(player, pc.getAmount());
 				break;
 
@@ -239,6 +240,7 @@ public class ChanceCardController {
 			case 27:
 				ReceiveChanceCard rc = (ReceiveChanceCard) card;
 				rc.getAmount();
+				
 				// er de ting der kommer nu en lav prioritet
 				break;
 			// 25;De modtager Matador-legatet for værdig trængende, stort kr. 40000. Ved
