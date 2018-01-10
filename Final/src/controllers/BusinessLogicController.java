@@ -99,12 +99,12 @@ public class BusinessLogicController {
 		Player payee = currentField.getOwner();
 		Player payer = currentPlayer;
 
-<<<<<<< HEAD
+
 		switch(currentField.getFieldType())
 		{
 		case BREWERY:
-			
-			String txt= String.format("Du er landet på et felt ejet af %s, og bliver nødt til at betale leje!", owner.getName());			
+			// nogen havde det her inde i teksten. Det virker ikkeowner.getName()
+			String txt= String.format("Du er landet på et felt ejet af %s, og bliver nødt til at betale leje!" );			
 			gui.showMessage(txt);
 			int fieldsMoved = 0;
 			//TODO: MANGLER EN TERNING OG HVOR SKAL MODIFIER KOMME FRA?

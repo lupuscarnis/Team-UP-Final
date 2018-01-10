@@ -182,10 +182,10 @@ public class GameController {
 				default:
 					throw new Exception("Case not found!");
 				}
-<<<<<<< HEAD
+
 
 			} while (userChoice != UserOption.EndTurn);
-=======
+
 				
 				
 				//userChoice = glc.showUserOptions(currentPlayer);
