@@ -95,6 +95,9 @@ public class Messager {
 		GUIController.getInstance().updatePlayerPosition(currentPlayer.getName(), currentPlayer.getPreviousField().getFieldNumber(), currentPlayer.getCurrentField().getFieldNumber());
 		GUIController.getInstance().showMessage(currentPlayer+" er blevet flyttet til "+currentPlayer.getCurrentField());
 	}
-	
+	public static void showPayChanceCard(Player currentPlayer, int moneyLost) throws Exception{
+		GUIController.getInstance().updateBalance(currentPlayer);
+		GUIController.getInstance().showMessage(currentPlayer+" har måttet betale "+moneyLost);
+	}
 	
 }
