@@ -166,4 +166,8 @@ public class GameController {
 		} while (userChoice != UserOption.EndTurn);	
 		}
 	}
+	public Player[] getPlayers(){
+		return players;
+		
+	}
 }
