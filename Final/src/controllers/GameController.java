@@ -132,7 +132,9 @@ public class GameController {
 														
 					// handle possible field actions
 					flc.handleFieldAction(currentPlayer);
-					if(glc
+					if(glc.d1.getValue()==glc.d2.getValue()){
+						
+					}
 					
 					break;
 				case EndTurn:
