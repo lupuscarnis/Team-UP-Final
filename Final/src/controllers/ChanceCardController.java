@@ -20,7 +20,8 @@ public class ChanceCardController {
 	private static ChanceCardController instance;
 	private ChanceCard[] cardArray;
 	GameBoardController gbc = GameBoardController.getInstance();
-
+	FieldLogicController flc = FieldLogicController.getInstance();
+	
 	private ChanceCardController() throws IOException {
 		this.cardArray = new ChanceLoader().getCards();
 	}
@@ -110,14 +111,18 @@ public class ChanceCardController {
 			case 19:
 				// {player
 				break;
-				{player.setCurrentField(gbc.getFieldByNumber(25));
+				
+					/*
+					player.setCurrentField(gbc.getFieldByNumber(25));
 				Messager.showMoveChanceCard(player, player.getCurrentField());
 				if(player.getCurrentField().getFieldNumber()<player.getPreviousField().getFieldNumber())
 				{player.deposit(4000);
 				Messager.showPassedStart(player);}
 				flc.handleFieldAction(player);
-				break;}
-
+				break;
+				
+				*/
+			
 			// Ryk frem til start.
 			case 20:
 			{player.setCurrentField(gbc.getFieldByNumber(1));
