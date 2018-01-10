@@ -167,12 +167,11 @@ public class GameController {
 
 			// userChoice = glc.showUserOptions(currentPlayer);
 
-			//
-			// if(userChoice==UserOption.EndTurn)
-			// break;
-			//
+			if (userChoice == UserOption.EndTurn)
+				break;
 
 		}
+
 		// else{System.out.println("player is in jail");
 
 		turnCounter++;

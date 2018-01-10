@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import boundary.GUIController;
 import entities.Player;
+import entities.enums.BreweriesOwned;
 import entities.enums.UserOption;
+import entities.field.BreweryField;
 import entities.field.LotField;
 import entities.field.OwnableField;
 import utilities.Messager;
@@ -15,7 +17,7 @@ import utilities.Messager;
  * Class intended to hold logic reg. business transactions etc.
  *
  */
-// 
+//
 // TODO: Implement class
 public class BusinessLogicController {
 
@@ -99,69 +101,99 @@ public class BusinessLogicController {
 		Player payee = currentField.getOwner();
 		Player payer = currentPlayer;
 
-		// tell user he must pay rent
-		Messager.showMustPayRent(payee.getName(), rent);
+		switch (currentField.getFieldType()) {
+		case BREWERY:
+			// nogen havde det her inde i teksten. Det virker ikkeowner.getName()
+			String txt = String.format("Du er landet på et felt ejet af %s, og bliver nødt til at betale leje!");
+			gui.showMessage(txt);
+			int fieldsMoved = 0;
+			// TODO: MANGLER EN TERNING OG HVOR SKAL MODIFIER KOMME FRA?
+			if (currentPlayer.getPreviousField().getFieldNumber() < currentPlayer.getCurrentField().getFieldNumber()) {
+				fieldsMoved = currentPlayer.getCurrentField().getFieldNumber()
+						- currentPlayer.getPreviousField().getFieldNumber();
+			} else {
+				fieldsMoved = 40 - currentPlayer.getPreviousField().getFieldNumber()
+						+ currentPlayer.getCurrentField().getFieldNumber();
+			}
+			// RANDOM TAL!!!
+			BreweryField bf = (BreweryField) currentField;
+			rent = bf.getModifierFor(BreweriesOwned.ONE) * fieldsMoved;
 
-		// withdraw from payer
-		// TODO: What happens if user cant afford?
-		payer.withdraw(rent);
+			gui.showOptions("Vælg", new UserOption[] { UserOption.PayRent });
 
-		// deposit to payee
-		payee.deposit(rent);
+			currentPlayer.withdraw(rent);
+			break;
 
-		// update balances in gui
-		gui.updateBalance(new Player[] { payer, payee });
+		case LOT:
+			break;
+		case SHIPPING:
+			break;
+
+		default:
+			throw new Exception("Case not found!");
+		}
 	}
 
-	/**
-	 * Added by Kasper on 09-01-2018 23:16:41
+	/*
+	 * OwnableField field = (OwnableField) currentPlayer.getCurrentField(); Player
+	 * owner = field.getOwner(); ======= // tell user he must pay rent
+	 * Messager.showMustPayRent(payee.getName(), rent); >>>>>>> branch
+	 * '2.-iteration' of https://github.com/lupuscarnis/Team-UP-Final.git
+	 * 
+	 * // withdraw from payer // TODO: What happens if user cant afford?
+	 * payer.withdraw(rent);
+	 * 
+	 * // deposit to payee payee.deposit(rent);
+	 * 
+	 * // update balances in gui gui.updateBalance(new Player[] { payer, payee }); }
+	 * 
+	 * /** Added by Kasper on 09-01-2018 23:16:41
 	 * 
 	 * Handles player wants to build a house. DOES NOT CHECK FOR SUFFICIENT FUNDS!!
 	 * MUST BE DONE BEFORE CALL TO METHOD!
 	 * 
 	 * @param player
+	 * 
 	 * @throws Exception
 	 */
 	public void buildHouse(Player player) throws Exception {
-		LotField lf = (LotField) player.getCurrentField();		
+		LotField lf = (LotField) player.getCurrentField();
 
 		// withdraw money (Price of one house)
 		player.withdraw(lf.getBuildingCost());
 
-		//update number of houses on lot
-		
-		
-		
+		// update number of houses on lot
+
 		// update gui
 		gui.updateBalance(player);
-//		gui.updateLotOwner(player.getName(), of.getFieldNumber());
+		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
 		gui.showMessage("Du har nu bygget et hotel på grunden: " + lf.getTitle());
 	}
-	
+
 	/**
 	 * Added by Kasper on 09-01-2018 23:16:41
 	 * 
-	 * Handles player wants to build a house. DOES NOT CHECK FOR SUFFICIENT FUNDS OR IF THE LOT HAS 4 HOUSES AS REQUIRED!!
-	 * MUST BE DONE BEFORE CALL TO METHOD!
+	 * Handles player wants to build a house. DOES NOT CHECK FOR SUFFICIENT FUNDS OR
+	 * IF THE LOT HAS 4 HOUSES AS REQUIRED!! MUST BE DONE BEFORE CALL TO METHOD!
 	 * 
 	 * @param player
 	 * @throws Exception
 	 */
 	public void buildHotel(Player player) throws Exception {
-		LotField lf = (LotField) player.getCurrentField();		
+		LotField lf = (LotField) player.getCurrentField();
 
 		// withdraw money (5 times the cost of a house)
-		player.withdraw(lf.getPrice()*5);
+		player.withdraw(lf.getPrice() * 5);
 
 		// set owner
 		lf.setOwner(player);
 
 		// update gui
 		gui.updateBalance(player);
-//		gui.updateLotOwner(player.getName(), of.getFieldNumber());
+		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
 		gui.showMessage("Du har nu bygget et hotel på grunden: " + lf.getTitle());
 	}
-	
+
 	/**
 	 * Added by Frederik on 07-01-2018 00:05:28
 	 * 
@@ -224,49 +256,50 @@ public class BusinessLogicController {
 	}
 
 	public void payIncomeTax(Player currentPlayer, UserOption choice) throws Exception {
-		
-		
+
 		int sumToCollect = 0;
-		
-		if(choice==UserOption.IncomeTaxPay4000)		
-			sumToCollect=4000;		
-		else		
-			sumToCollect = (int) Math.floor(currentPlayer.getBalance()*0.1);
-		
+
+		if (choice == UserOption.IncomeTaxPay4000)
+			sumToCollect = 4000;
+		else
+			sumToCollect = (int) Math.floor(currentPlayer.getBalance() * 0.1);
+
 		currentPlayer.withdraw(sumToCollect);
-		
-		Messager.showYouPaidIncomeTax(currentPlayer, sumToCollect);		
+
+		Messager.showYouPaidIncomeTax(currentPlayer, sumToCollect);
 	}
-	
+
 	/**
-	 * Added by Kasper on 09-01-2018 00:17:56 
+	 * Added by Kasper on 09-01-2018 00:17:56
 	 * 
-	 * Check if user can afford to build a house 
+	 * Check if user can afford to build a house
 	 * 
-	 * @param currentPlayer LotField
+	 * @param currentPlayer
+	 *            LotField
 	 * @return
 	 */
 	public boolean userCanAffordHouse(int currentPlayerBalance, LotField fieldToBuy) {
-		
-		if(currentPlayerBalance>=fieldToBuy.getBuildingCost())
-			return true;		
-		
+
+		if (currentPlayerBalance >= fieldToBuy.getBuildingCost())
+			return true;
+
 		return false;
 	}
-	
+
 	/**
-	 * Added by Kasper on 09-01-2018 00:17:56 
+	 * Added by Kasper on 09-01-2018 00:17:56
 	 * 
-	 * Check if user can afford to build a hotel (price getBuildingCost * 5) 
+	 * Check if user can afford to build a hotel (price getBuildingCost * 5)
 	 * 
-	 * @param currentPlayer LotField
+	 * @param currentPlayer
+	 *            LotField
 	 * @return
 	 */
 	public boolean userCanAffordHotel(int currentPlayerBalance, LotField fieldToBuy) {
-		
-		if(currentPlayerBalance>=fieldToBuy.getBuildingCost()*5)
-			return true;		
-		
+
+		if (currentPlayerBalance >= fieldToBuy.getBuildingCost() * 5)
+			return true;
+
 		return false;
 	}
 
