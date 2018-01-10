@@ -147,6 +147,27 @@ public class BusinessLogicController {
 	 * 
 	 * @throws Exception
 	 */
+
+	
+	public int playerNetWorth(Player currentPlayer) throws IOException {
+		int netWorth;
+		int playerBalance = currentPlayer.getBalance();
+		int playerFieldWorth=0;
+		
+		OwnableField[] fieldsOwned = GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
+		for(OwnableField field : fieldsOwned) {
+			if(field instanceof LotField) {
+				LotField lotField = (LotField) field;
+				playerFieldWorth+=lotField.getPrice()+(lotField.getHouseCount()+5*lotField.getHotelCount())*lotField.getBuildingCost();
+			}
+		}
+		
+		netWorth = playerBalance+playerFieldWorth;
+		return netWorth;
+		
+	}
+	
+	
 	public void buildHouse(Player player) throws Exception {
 		LotField lf = (LotField) player.getCurrentField();
 
