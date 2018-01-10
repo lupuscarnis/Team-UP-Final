@@ -11,6 +11,7 @@ import entities.enums.UserOption;
 // - Slå dig ud af fængslet
 // - bygninger på grunde
 // - pantsætning
+// - Ret stavning i Chancedata.txt
 
 public class GameController {
 

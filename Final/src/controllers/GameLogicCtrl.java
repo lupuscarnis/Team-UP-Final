@@ -127,7 +127,7 @@ public class GameLogicCtrl {
 
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 		
-		int faceValue = cup.rollDice();
+		int faceValue = 2;//cup.rollDice();
 		//Checks if he passes start and gives him money	
 		checkPassedStart(currentPlayer, faceValue, true);
 		// get next field

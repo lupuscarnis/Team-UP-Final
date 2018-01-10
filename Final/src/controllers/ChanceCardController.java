@@ -2,12 +2,15 @@ package controllers;
 
 import java.io.IOException;
 
+import boundary.GUIController;
 import entities.Player;
 import entities.chancecard.ChanceCard;
 import entities.chancecard.GetOutJailForFreeChanceCard;
 import entities.chancecard.MoveChanceCard;
 import entities.chancecard.PayChanceCard;
 import entities.chancecard.ReceiveChanceCard;
+import entities.enums.FieldName;
+import entities.field.Field;
 import utilities.ChanceLoader;
 import utilities.Messager;
 import utilities.MyRandom;
@@ -16,8 +19,7 @@ public class ChanceCardController {
 
 	private static ChanceCardController instance;
 	private ChanceCard[] cardArray;
-	GameBoardController gbc =GameBoardController.getInstance();
-	
+	GameBoardController gbc = GameBoardController.getInstance();
 
 	private ChanceCardController() throws IOException {
 		this.cardArray = new ChanceLoader().getCards();
@@ -28,7 +30,7 @@ public class ChanceCardController {
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
 
-		return cardArray[nextCard];
+		return cardArray[28];
 	}
 
 	public void handleDraw(Player player) throws Exception {
@@ -63,20 +65,23 @@ public class ChanceCardController {
 		// Draw: Move
 		else if (card instanceof MoveChanceCard) {
 
+			Field moveTofield = null;
+
 			switch (card.getId()) {
 			// 1;Ryk brikken frem til det nærmeste rederi og betal to gange den leje han
 			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.
 			// 2;Ryk brikken frem til det nærmeste rederi og betal to gange den leje han
 			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.
-			case 1:	
+			case 1:
 			case 2:
 				break;
 
 			// Tag ind på rådhuspladsen
-			case 3:
-			{player.setCurrentField(gbc.getFieldByNumber(40));
-			Messager.showMoveChanceCard(player, player.getCurrentField());
-				break;}
+			case 3: {
+				player.setCurrentField(gbc.getFieldByNumber(40));
+				Messager.showMoveChanceCard(player, player.getCurrentField());
+				break;
+			}
 
 			// Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start,
 			// indkasserer de ikke kr. 4000.
@@ -85,14 +90,15 @@ public class ChanceCardController {
 				break;
 
 			// Ryk tre felter tilbage.
-			case 12:
-			{player.setCurrentField(gbc.getFieldByNumber( player.getCurrentField().getFieldNumber()-3));
-			Messager.showMoveChanceCard(player, player.getCurrentField());
-				break;}
+			case 12: {
+				player.setCurrentField(gbc.getFieldByNumber(player.getCurrentField().getFieldNumber() - 3));
+				Messager.showMoveChanceCard(player, player.getCurrentField());
+				break;
+			}
 
 			// Ryk frem til Grønningen. Hvis De passerer start, indkasser da kr. 4000.
 			case 19:
-				//{player
+				// {player
 				break;
 
 			// Ryk frem til start.
@@ -100,10 +106,28 @@ public class ChanceCardController {
 				break;
 
 			// Ryk frem til Frederiksberg Allê. Hvis de passerer start, indkasser kr. 4000.
-
 			// Ryk frem til Frederiksberg Alle. Hvis de passerer start, indkasser kr. 4000.
-
 			case 29:
+				// find fields
+				moveTofield = gbc.getFieldByName(FieldName.FrederiksbergAlle);
+				Field fromField = player.getCurrentField();
+				
+				
+				
+				GUIController.getInstance().showMessage(card.getText());
+				
+				GUIController.getInstance().showPromt(String.format("(%s):", player.getName()));
+				
+				
+				
+				
+
+				// update player field
+				player.setCurrentField(moveTofield);
+
+				// update gui
+				GUIController.getInstance().updatePlayerPosition(player.getName(), fromField.getFieldNumber(),
+						moveTofield.getFieldNumber());
 				break;
 
 			// Tag med den nærmeste færge - ryk brikken frem, og hvis du passerer start
