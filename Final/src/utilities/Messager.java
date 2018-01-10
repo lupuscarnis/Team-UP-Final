@@ -103,4 +103,8 @@ public class Messager {
 		GUIController.getInstance().updateBalance(currentPlayer);
 		GUIController.getInstance().showMessage(currentPlayer+" har fået "+moneyReceived);
 	}	
+	public static void showMessage(String tekst) throws IOException{
+		GUIController.getInstance().showMessage(tekst);
+	}
+	
 }

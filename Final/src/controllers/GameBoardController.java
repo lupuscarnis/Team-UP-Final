@@ -113,6 +113,41 @@ public class GameBoardController {
 
 		return new OwnableField[0];
 	}
+	
+	
+	public OwnableField[] getLotFieldsByOwner(Player currentOwner) {
+
+		int count = 0;
+		for (Field field : fieldArray) {
+
+			if (field instanceof LotField) {
+				LotField of = (LotField) field;
+
+				if (of.getOwner() == currentOwner)
+					count++;
+			}
+		}
+
+		if (count > 0) {
+			LotField[] tmp = new LotField[count];
+
+			int index = 0;
+			for (Field field : fieldArray) {
+
+				if (field instanceof OwnableField) {
+					LotField of = (LotField) field;
+
+					if (of.getOwner() == currentOwner) {
+						tmp[index] = of;
+						index++;
+					}
+				}
+			}
+			return tmp;
+		}
+
+		return new LotField[0];
+	}
 
 	/**
 	 * Added by Frederik on 07-01-2018 01:11:42

@@ -144,6 +144,15 @@ public class BusinessLogicController {
 	 * 
 	 * @throws Exception
 	 */
+
+	
+	public int playerNetWorth(Player currentPlayer) {
+		
+		return 0;
+		
+	}
+	
+	
 	public void buildHouse(Player player) throws Exception {
 		LotField lf = (LotField) player.getCurrentField();
 
