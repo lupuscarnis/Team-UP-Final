@@ -203,6 +203,7 @@ public class ChanceCardController {
 			case 33:
 				PayChanceCard pc = (PayChanceCard) card;
 				pc.getAmount();
+				Messager.showPayChanceCard(player, pc.getAmount());
 				break;
 
 			default:
