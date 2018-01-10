@@ -86,7 +86,7 @@ public class Messager {
 	public static void  showPassedStart(Player currentPlayer) throws Exception
 	{
 		GUIController.getInstance().updateBalance(currentPlayer);		
-	
+		GUIController.getInstance().showMessage("Du har fået 4000 over start, congratulations");
 	
 	}
 }
