@@ -88,21 +88,22 @@ public class PlayerController {
 	 * 
 	 * 
 	 * 
+	 *
+	 *public int getAssetValue(Player player) { int combinedValue;
+	 *
+	 *
+	 * Find value of proporties combinedValue = combinedValue; // Number of
+	 *hotels combinedValue = combinedValue + (player.getHotelsOwned()*hotelPrice);
 	 * 
-	 * public int getAssetValue(Player player) { int combinedValue;
-	 * 
-	 * 
-	 * // Find value of proporties combinedValue = combinedValue; // Number of
-	 * hotels combinedValue = combinedValue + (player.getHotelsOwned()*hotelPrice);
-	 * 
-	 * // Number of houses combinedValue =
+	 * Number of houses combinedValue =
 	 * combinedValue+(player.getHousesOwned()*housePrice);
-	 * 
-	 * // Balance in account combinedValue = combinedValue+(player.getBalance());
+	 *
+	 * Balance in account combinedValue = combinedValue+(player.getBalance());
 	 * 
 	 * 
 	 * return combinedValue;
 	 * 
+	 *
 	 * 
 	 * 
 	 * }
