@@ -92,7 +92,7 @@ public class ChanceCardController {
 
 			// Ryk frem til Grønningen. Hvis De passerer start, indkasser da kr. 4000.
 			case 19:
-				//player
+				//{player
 				break;
 
 			// Ryk frem til start.
