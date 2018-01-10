@@ -36,7 +36,7 @@ public class GameLogicCtrl {
 		UserOption[] options = new UserOption[10]; // Hack: we don't know the size yet, so 10 is random!		
 				
 		// can pawn
-		if(BusinessLogicController.getInstance().canPawn())
+		if(BusinessLogicController.getInstance().canPawn(currentPlayer))
 		{
 			options[index] = UserOption.PawnLot;
 			index++;

@@ -6,12 +6,12 @@ import entities.Player;
 import entities.enums.UserOption;
 
 //TODO: MANGLER:
-// - Terninger
 // - Chancekort
 // - Slå dig ud af fængslet
 // - bygninger på grunde
 // - pantsætning
 // - Ret stavning i Chancedata.txt
+// - Get net worth
 
 public class GameController {
 

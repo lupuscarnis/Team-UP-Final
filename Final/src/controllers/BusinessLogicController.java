@@ -291,7 +291,7 @@ public class BusinessLogicController {
 		return false;
 	}
 
-	public boolean canPawn() {
+	public boolean canPawn(Player currentPlayer) {
 		// TODO Auto-generated method stub
 		return true;
 	}
