@@ -113,8 +113,15 @@ public class GameController {
 
 			// present options for user
 			// End when EndTurn is selected
-			
+			if (rerolls == 3)
+			{
+				currentPlayer.isInJail(true);
+			}
+			if(currentPlayer.isInJail()==false)
+			{
 			while(true)
+				
+				
 			{				
 				UserOption userChoice = glc.showUserOptions(currentPlayer);				
 				
@@ -160,7 +167,8 @@ public class GameController {
 				
 			
 			}
-			
+			}
+			else{System.out.println("player is in jail");
 
 			// Starting main round play through
 			/*
