@@ -508,9 +508,7 @@ public class GUIController {
 		gui.setDice(((int)(Math.random()*maxValue)+minValue), rollDecreaser1, ((int)(Math.random()*maxValue)+minValue), rollDecreaser2);
 		Thread.sleep(300);
 		}
-		gui.setDice(value1, 3, value2, 3);
-		
-					
+		gui.setDice(value1, 3, value2, 3);					
 	}
 	
 	
@@ -529,7 +527,7 @@ public class GUIController {
 		case EndTurn:
 			return "Afslut tur";
 		case PawnLot:
-			return "Pantsæt hus";
+			return "Pantsæt grund";
 		case ThrowDice:
 			return "Kast terning";
 		case IncomeTaxPay4000:
