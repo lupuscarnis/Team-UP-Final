@@ -21,6 +21,8 @@ public class Die {
 		this.maxValue = maxValue;
 		this.minValue = minValue;
 		
+				
+		
 	}
 	
 	
