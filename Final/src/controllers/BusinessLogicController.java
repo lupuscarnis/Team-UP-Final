@@ -108,7 +108,7 @@ public class BusinessLogicController {
 		Player payer = currentPlayer;
 
 		// tell user he must pay rent
-		Messager.showMustPayRent(payee.getName(), rent);
+		Messager.showMustPayRent(payee.getName(), rent, currentPlayer.getName());
 
 		// withdraw from payer
 		// TODO: What happens if user cant afford?

@@ -13,15 +13,20 @@ import entities.field.OwnableField;
 // TODO: All text must be in EITHER danish or english!!
 public class Messager {
 
-	private final static String CHOOSE = "Vælg:";
-
-	public static UserOption presentOptions(UserOption[] options) throws Exception {
+	//private static 
+	public static UserOption presentOptions(UserOption[] options, String playerName) throws Exception {
+		
+		
+		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);;
+		
 		return GUIController.getInstance().showOptions(CHOOSE, options);
 	}
 
 	
-	public static UserOption showWantToBuyMessage(String title) throws Exception {
+	public static UserOption showWantToBuyMessage(String title, String playerName) throws Exception {
 		GUIController.getInstance().showMessage("you have landed on \"" + title + "\" do you wish to purchase it?");
+		
+		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);;
 		
 		return GUIController.getInstance().showOptions(CHOOSE, new UserOption[] { UserOption.BuyField, UserOption.NoThanks });
 	}
@@ -34,22 +39,26 @@ public class Messager {
 		GUIController.getInstance().showMessage("Du har nu købt grunden: " + of.getTitle());
 	}
 
-	public static void showMustPayRent(String name, int rent) throws Exception {
+	public static void showMustPayRent(String name, int rent, String playerName) throws Exception {
 
 		// show message
 		String txt = String.format("Du er landet på et felt ejet af %s, og bliver nødt til at betale leje på kr. %s!",
 				name, rent);
 		GUIController.getInstance().showMessage(txt);
 
+		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);;
+		
 		// Show pay button
 		GUIController.getInstance().showOptions(CHOOSE, new UserOption[] { UserOption.PayRent });
 	}
 
-	public static UserOption showMustPayIncomeTax(FieldType fieldType) throws IOException, Exception {
+	public static UserOption showMustPayIncomeTax(FieldType fieldType, String playerName) throws IOException, Exception {
 
 		// show message
 		GUIController.getInstance().showMessage("you have landed on " + fieldType);
 
+		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);;
+		
 		// get choice from player
 		return GUIController.getInstance().showOptions(CHOOSE,
 				new UserOption[] { UserOption.IncomeTaxPayTenPercent, UserOption.IncomeTaxPay4000 });
