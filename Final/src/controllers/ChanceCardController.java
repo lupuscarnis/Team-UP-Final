@@ -19,8 +19,6 @@ public class ChanceCardController {
 
 	private static ChanceCardController instance;
 	private ChanceCard[] cardArray;
-	GameBoardController gbc = GameBoardController.getInstance();
-	FieldLogicController flc = FieldLogicController.getInstance();
 	
 	private ChanceCardController() throws IOException {
 		this.cardArray = new ChanceLoader().getCards();
@@ -80,9 +78,9 @@ public class ChanceCardController {
 			// Tag ind på rådhuspladsen
 	
 			case 3:
-			{player.setCurrentField(gbc.getFieldByNumber(40));
+			{player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
 			Messager.showMoveChanceCard(player, player.getCurrentField());
-			flc.handleFieldAction(player);
+			FieldLogicController.getInstance().handleFieldAction(player);
 			
 			break;}
 
@@ -95,16 +93,16 @@ public class ChanceCardController {
 			// Ryk tre felter tilbage.
 
 			case 12:{
-			if(player.getCurrentField().getFieldNumber()==3){player.setCurrentField(gbc.getFieldByNumber(40));
+			if(player.getCurrentField().getFieldNumber()==3){player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
 			Messager.showMoveChanceCard(player, player.getCurrentField());}
 			
 			else
 				//(player.getCurrentField().getFieldNumber()==1){player.setCurrentField(gbc.getFieldByNumber(38));}
-			{player.setCurrentField(gbc.getFieldByNumber( player.getCurrentField().getFieldNumber()-3));
+			{player.setCurrentField(GameBoardController.getInstance().getFieldByNumber( player.getCurrentField().getFieldNumber()-3));
 			Messager.showMoveChanceCard(player, player.getCurrentField());
 			
 			}
-			flc.handleFieldAction(player);
+			FieldLogicController.getInstance().handleFieldAction(player);
 				break;}
 
 			// Ryk frem til Grønningen. Hvis De passerer start, indkasser da kr. 4000.
@@ -125,7 +123,7 @@ public class ChanceCardController {
 			
 			// Ryk frem til start.
 			case 20:
-			{player.setCurrentField(gbc.getFieldByNumber(1));
+			{player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(1));
 			Messager.showMoveChanceCard(player, player.getCurrentField());
 				break;}
 
@@ -133,7 +131,7 @@ public class ChanceCardController {
 			// Ryk frem til Frederiksberg Alle. Hvis de passerer start, indkasser kr. 4000.
 			case 29:
 				// find fields
-				moveTofield = gbc.getFieldByName(FieldName.FrederiksbergAlle);
+				moveTofield = GameBoardController.getInstance().getFieldByName(FieldName.FrederiksbergAlle);
 				Field fromField = player.getCurrentField();
 				
 				
