@@ -69,6 +69,8 @@ public class FieldLogicController {
 
 			// landed on START
 			if (currentField.getFieldType() == FieldType.START) {
+				
+				//TODO: Move out to BLC and pay START money even if you dont land on start!!
 				gui.showMessage("you have landed on " + currentField.getFieldType() + " you gain 4000 kr.");
 				currentPlayer.deposit(4000);
 			} 

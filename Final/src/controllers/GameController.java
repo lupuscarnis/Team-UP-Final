@@ -5,6 +5,18 @@ import boundary.GUIController;
 import entities.Player;
 import entities.enums.UserOption;
 
+//TODO: MANGLER:
+// - Terninger
+// - Penge når du passerer start
+// - Chancekort
+// - Slå dig ud af fængslet
+// - bygninger på grunde
+// - pantsætning
+
+
+
+
+
 public class GameController {
 
 	// controllers
