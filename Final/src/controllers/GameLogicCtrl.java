@@ -109,7 +109,7 @@ public class GameLogicCtrl {
 		
 		
 		// Throw Die
-		int faceValue = 1;//cup.rollDice();
+		int faceValue = cup.rollDice();
 		//Checks if he passes start and gives him money	
 		checkPassedStart(currentPlayer, faceValue, true);
 		// get next field

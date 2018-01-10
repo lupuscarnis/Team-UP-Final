@@ -15,6 +15,7 @@ public class ChanceCardController {
 
 	private static ChanceCardController instance;
 	private ChanceCard[] cardArray;
+	GameBoardController gbc =GameBoardController.getInstance();
 
 	private ChanceCardController() throws IOException {
 		this.cardArray = new ChanceLoader().getCards();
@@ -65,12 +66,14 @@ public class ChanceCardController {
 			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.
 			// 2;Ryk brikken frem til det nærmeste rederi og betal to gange den leje han
 			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.
-			case 1:
+			case 1:	
 			case 2:
 				break;
 
 			// Tag ind på rådhuspladsen
 			case 3:
+			{player.setCurrentField(gbc.getFieldByNumber(40));}
+			
 				break;
 
 			// Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start,
