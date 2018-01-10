@@ -495,7 +495,6 @@ public class GUIController {
 	 * 
 	 * @param option
 	 * @return
-	 * @throws InterruptedException 
 	 * @throws Exception
 	 */
 	public void showDice(int value1, int value2) throws InterruptedException
@@ -548,4 +547,9 @@ public class GUIController {
 	}
 	
 	
+
+	public void getSelection(String string, String[] strings) {
+		gui.getUserSelection(string, strings);
+		
+	}
 }

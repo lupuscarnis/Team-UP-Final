@@ -3,6 +3,7 @@ package utilities;
 import java.io.IOException;
 
 import boundary.GUIController;
+import controllers.ChanceCardController;
 import entities.Player;
 import entities.enums.FieldType;
 import entities.enums.UserOption;
@@ -89,4 +90,14 @@ public class Messager {
 		GUIController.getInstance().showMessage("Du har fået 4000 over start, congratulations");
 	
 	}
+	
+	public static void showMoveChanceCard(Player currentPlayer, Field newField) throws Exception{
+		GUIController.getInstance().updatePlayerPosition(currentPlayer.getName(), currentPlayer.getPreviousField().getFieldNumber(), currentPlayer.getCurrentField().getFieldNumber());
+		GUIController.getInstance().showMessage(currentPlayer+" er blevet flyttet til "+currentPlayer.getCurrentField());
+	}
+	public static void showPayChanceCard(Player currentPlayer, int moneyLost) throws Exception{
+		GUIController.getInstance().updateBalance(currentPlayer);
+		GUIController.getInstance().showMessage(currentPlayer+" har måttet betale "+moneyLost);
+	}
+	
 }

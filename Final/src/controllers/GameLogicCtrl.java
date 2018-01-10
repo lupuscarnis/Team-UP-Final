@@ -35,6 +35,26 @@ public class GameLogicCtrl {
 		int index = 0;
 		UserOption[] options = new UserOption[10]; // Hack: we don't know the size yet, so 10 is random!		
 				
+		// can pawn
+		if(BusinessLogicController.getInstance().canPawn())
+		{
+			options[index] = UserOption.PawnLot;
+			index++;
+		}
+		
+		// can sell houses
+		if(false)
+		{
+			options[index] = UserOption.BuyHouse;
+			index++;
+		}
+		// can sell hotel
+		if(false)
+		{
+			options[index] = UserOption.BuyHotel;
+			index++;
+		}
+		
 		if(currentPlayer.isDoneThrowing())
 		{
 			options[index] = UserOption.EndTurn;

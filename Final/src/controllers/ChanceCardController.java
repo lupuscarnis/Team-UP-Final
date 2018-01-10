@@ -2,20 +2,24 @@ package controllers;
 
 import java.io.IOException;
 
+import boundary.GUIController;
 import entities.Player;
 import entities.chancecard.ChanceCard;
 import entities.chancecard.GetOutJailForFreeChanceCard;
 import entities.chancecard.MoveChanceCard;
 import entities.chancecard.PayChanceCard;
 import entities.chancecard.ReceiveChanceCard;
+import entities.enums.FieldName;
+import entities.field.Field;
 import utilities.ChanceLoader;
+import utilities.Messager;
 import utilities.MyRandom;
 
 public class ChanceCardController {
 
 	private static ChanceCardController instance;
 	private ChanceCard[] cardArray;
-
+	
 	private ChanceCardController() throws IOException {
 		this.cardArray = new ChanceLoader().getCards();
 	}
@@ -25,7 +29,7 @@ public class ChanceCardController {
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
 
-		return cardArray[nextCard];
+		return cardArray[28];
 	}
 
 	public void handleDraw(Player player) throws Exception {
@@ -60,6 +64,8 @@ public class ChanceCardController {
 		// Draw: Move
 		else if (card instanceof MoveChanceCard) {
 
+			Field moveTofield = null;
+
 			switch (card.getId()) {
 			// 1;Ryk brikken frem til det nærmeste rederi og betal to gange den leje han
 			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.
@@ -70,8 +76,13 @@ public class ChanceCardController {
 				break;
 
 			// Tag ind på rådhuspladsen
+	
 			case 3:
-				break;
+			{player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
+			Messager.showMoveChanceCard(player, player.getCurrentField());
+			FieldLogicController.getInstance().handleFieldAction(player);
+			
+			break;}
 
 			// Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start,
 			// indkasserer de ikke kr. 4000.
@@ -80,22 +91,65 @@ public class ChanceCardController {
 				break;
 
 			// Ryk tre felter tilbage.
-			case 12:
-				break;
+
+			case 12:{
+			if(player.getCurrentField().getFieldNumber()==3){player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
+			Messager.showMoveChanceCard(player, player.getCurrentField());}
+			
+			else
+				//(player.getCurrentField().getFieldNumber()==1){player.setCurrentField(gbc.getFieldByNumber(38));}
+			{player.setCurrentField(GameBoardController.getInstance().getFieldByNumber( player.getCurrentField().getFieldNumber()-3));
+			Messager.showMoveChanceCard(player, player.getCurrentField());
+			
+			}
+			FieldLogicController.getInstance().handleFieldAction(player);
+				break;}
 
 			// Ryk frem til Grønningen. Hvis De passerer start, indkasser da kr. 4000.
 			case 19:
+				// {player
 				break;
-
+				
+					/*
+					player.setCurrentField(gbc.getFieldByNumber(25));
+				Messager.showMoveChanceCard(player, player.getCurrentField());
+				if(player.getCurrentField().getFieldNumber()<player.getPreviousField().getFieldNumber())
+				{player.deposit(4000);
+				Messager.showPassedStart(player);}
+				flc.handleFieldAction(player);
+				break;
+				
+				*/
+			
 			// Ryk frem til start.
 			case 20:
-				break;
+			{player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(1));
+			Messager.showMoveChanceCard(player, player.getCurrentField());
+				break;}
 
 			// Ryk frem til Frederiksberg Allê. Hvis de passerer start, indkasser kr. 4000.
-
 			// Ryk frem til Frederiksberg Alle. Hvis de passerer start, indkasser kr. 4000.
-
 			case 29:
+				// find fields
+				moveTofield = GameBoardController.getInstance().getFieldByName(FieldName.FrederiksbergAlle);
+				Field fromField = player.getCurrentField();
+				
+				
+				
+				GUIController.getInstance().showMessage(card.getText());
+				
+				GUIController.getInstance().showPromt(String.format("(%s):", player.getName()));
+				
+				
+				
+				
+
+				// update player field
+				player.setCurrentField(moveTofield);
+
+				// update gui
+				GUIController.getInstance().updatePlayerPosition(player.getName(), fromField.getFieldNumber(),
+						moveTofield.getFieldNumber());
 				break;
 
 			// Tag med den nærmeste færge - ryk brikken frem, og hvis du passerer start
