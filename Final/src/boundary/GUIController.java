@@ -535,7 +535,10 @@ public class GUIController {
 
 		case ThrowDice:
 			return "Kast terning";
-
+		case IncomeTaxPayTenPercent:
+		return	"Betal 10%";
+		case	IncomeTaxPay4000:
+			return "Betal 4000";
 		default:
 			throw new Exception("Case not found!");
 		}
