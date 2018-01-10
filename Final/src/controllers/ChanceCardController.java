@@ -261,8 +261,41 @@ public class ChanceCardController {
 			// 26;Det er deres fødselsdag. Modtag af hver medspiller kr. 200.;
 			case 26:
 				//nu faar spilleren den rigtige maengde penge, saa skal de andre bare lige miste dem :)
-				player.deposit(200*GC.getNumberOfPlayers());
-				Messager.showReceiveChanceCard(player,200*GC.getNumberOfPlayers());
+				//Players[]= GC.getPlayers();
+				
+				player.deposit(200*GC.getPlayers().length);
+				
+				Messager.showReceiveChanceCard(player,200*GC.getPlayers().length);
+				for (int i = 0; i < GC.getPlayers().length; i++) {
+					 GC.getPlayers()[i].withdraw(200);
+					Messager.showPayChanceCard(GC.getPlayers()[i], 200); }
+				
+				
+//				for(){
+//					
+//				}
+//				
+//				
+//				for (Player player : GC.getPlayers()) {
+//					player.withdraw(amount);
+//				}
+				
+				
+				
+					
+					
+				
+//						invalidName = false;
+//						name = this.gui.getUserString("Navn på spiller " + (i + 1) + "?");
+//						// checks for duplicate names
+//						for (int a = i; a > 0; a--) {
+//							if (name.equals(players[a - 1])) {
+//								invalidName = true;
+//							}
+//						}
+//						// checks if name is empty
+//						if (name.length() < 1) {
+//							invalidName = true;
 				
 				break;
 			default:
