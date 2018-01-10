@@ -260,8 +260,8 @@ public class ChanceCardController {
 				
 			// 26;Det er deres fødselsdag. Modtag af hver medspiller kr. 200.;
 			case 26:
-				GameController.Players.
-				//player.deposit(200*GC.getNumberOfPlayers(GC.));
+				//nu faar spilleren den rigtige maengde penge, saa skal de andre bare lige miste dem :)
+				player.deposit(200*GC.getNumberOfPlayers());
 				
 				break;
 			default:
