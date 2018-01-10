@@ -19,6 +19,7 @@ public class ChanceCardController {
 
 	private static ChanceCardController instance;
 	private ChanceCard[] cardArray;
+	private GameController GC = new GameController();
 	
 	private ChanceCardController() throws IOException {
 		this.cardArray = new ChanceLoader().getCards();
@@ -259,8 +260,8 @@ public class ChanceCardController {
 				
 			// 26;Det er deres fødselsdag. Modtag af hver medspiller kr. 200.;
 			case 26:
-				GameController
-				player.deposit(200*GameController.pc.);
+				GameController.Players.
+				//player.deposit(200*GC.getNumberOfPlayers(GC.));
 				
 				break;
 			default:
