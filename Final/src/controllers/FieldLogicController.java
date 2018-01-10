@@ -36,7 +36,7 @@ public class FieldLogicController {
 			if (of.getOwner() == null) {
 
 				// TODO: What if player don't have the money?
-				choice = Messager.showWantToBuyMessage(of.getTitle());
+				choice = Messager.showWantToBuyMessage(of.getTitle(), currentPlayer.getName());
 
 				// user opted to buy field
 				if (choice == UserOption.BuyField)
@@ -83,7 +83,7 @@ public class FieldLogicController {
 			break;
 		case INCOMETAX:
 			// Tell user he must pay income tax and get choice (10% or 4000)
-			choice = Messager.showMustPayIncomeTax(currentField.getFieldType());
+			choice = Messager.showMustPayIncomeTax(currentField.getFieldType(),currentPlayer.getName());
 
 			// pay tax
 			blc.payIncomeTax(currentPlayer, choice);

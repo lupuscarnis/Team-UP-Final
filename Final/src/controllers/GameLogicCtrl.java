@@ -8,6 +8,7 @@ import entities.Player;
 import entities.enums.FieldName;
 import entities.enums.UserOption;
 import entities.field.Field;
+import utilities.Messager;
 import utilities.MyRandom;
 
 public class GameLogicCtrl {
@@ -90,7 +91,7 @@ public class GameLogicCtrl {
 			}
 		}
 
-		return this.gui.showOptions("Vælg:", tmp);
+		return Messager.presentOptions(tmp, currentPlayer.getName());
 	}
 
 	/**
