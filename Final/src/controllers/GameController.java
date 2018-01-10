@@ -75,7 +75,7 @@ public class GameController {
 	public void play() throws Exception {
 
 		// indicates number of turns in current game
-		int turnCounter = 1;
+		int turnCounter = 0;
 		// indicates number of rerolls made by player
 		int rerolls = 0;
 
@@ -91,7 +91,10 @@ public class GameController {
 
 		// start game loop
 		while (!gameOver(players)) {
-
+			
+			// increment turn counter
+			turnCounter++;
+			
 			// Checking which players starts first if turn == 1
 			if (isFirstTurn) {
 
@@ -112,52 +115,46 @@ public class GameController {
 				 */
 
 				// stopper currentplayer for at blive til next player.
+			} else { // find next player
+				currentPlayer = glc.getNextPlayer(players);
 			}
-			/*
-			 * } else { // find next player currentPlayer = glc.getNextPlayer(players);
-			 * rerolls = 0; }
-			 */
-			gui.showPromt("Det er " + currentPlayer.getName() + "s tur!");
-
-			// present options for user
-			// End when EndTurn is selected
-			UserOption userChoice = null;
-			do {
-
-				userChoice = glc.showUserOptions(currentPlayer);
-
-				switch (userChoice) {
-
-				case BuyHotel:
-					break;
-				case BuyHouse:
-					break;
-				case PawnLot:
-					break;
-				case ThrowDice:
-					// TODO: Roll streak?
-					currentPlayer.setDoneThrowing(true);
-
-					// roll and move player
-					glc.rollAndMove(currentPlayer);
-
-					// handle possible field actions
-					flc.handleFieldAction(currentPlayer);
-					break;
-				case EndTurn:
-					currentPlayer.setDoneThrowing(false);
-					break;
-				default:
-					throw new Exception("Case not found!");
-				}
-
-			} while (userChoice != UserOption.EndTurn);
-
 		}
+		/*
+		 * } rerolls = 0; }
+		 */
+		gui.showPromt("Det er " + currentPlayer.getName() + "s tur!");
 
-		// else{System.out.println("player is in jail");
+		// present options for user
+		// End when EndTurn is selected
+		UserOption userChoice = null;
+		do {
+			userChoice = glc.showUserOptions(currentPlayer);
 
-		turnCounter++;
-		// }
+			switch (userChoice) {
+
+			case BuyHotel:
+				break;
+			case BuyHouse:
+				break;
+			case PawnLot:
+				break;
+			case ThrowDice:
+				// TODO: Roll streak?
+				currentPlayer.setDoneThrowing(true);
+
+				// roll and move player
+				glc.rollAndMove(currentPlayer);
+
+				// handle possible field actions
+				flc.handleFieldAction(currentPlayer);
+				break;
+			case EndTurn:
+				currentPlayer.setDoneThrowing(false);
+				break;
+			default:
+				throw new Exception("Case not found!");
+			}
+
+		} while (userChoice != UserOption.EndTurn);	
 	}
 }
