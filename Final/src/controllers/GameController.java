@@ -121,21 +121,9 @@ public class GameController {
 
 			// present options for user
 			// End when EndTurn is selected
-
 			UserOption userChoice = null;
 			do {
-				// userChoice = glc.showUserOptions(currentPlayer);
 
-				// switch (userChoice) {
-				/*
-				 * 
-				 * if (rerolls == 3) { currentPlayer.isInJail(true); }
-				 * if(currentPlayer.isInJail()==false) {
-				 */
-				// while(true)
-				//
-				//
-				// {
 				userChoice = glc.showUserOptions(currentPlayer);
 
 				switch (userChoice) {
@@ -164,11 +152,6 @@ public class GameController {
 				}
 
 			} while (userChoice != UserOption.EndTurn);
-
-			// userChoice = glc.showUserOptions(currentPlayer);
-
-			if (userChoice == UserOption.EndTurn)
-				break;
 
 		}
 
