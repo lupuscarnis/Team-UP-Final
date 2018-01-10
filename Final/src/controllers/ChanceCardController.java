@@ -9,6 +9,7 @@ import entities.chancecard.MoveChanceCard;
 import entities.chancecard.PayChanceCard;
 import entities.chancecard.ReceiveChanceCard;
 import utilities.ChanceLoader;
+import utilities.Messager;
 import utilities.MyRandom;
 
 public class ChanceCardController {
@@ -16,6 +17,7 @@ public class ChanceCardController {
 	private static ChanceCardController instance;
 	private ChanceCard[] cardArray;
 	GameBoardController gbc =GameBoardController.getInstance();
+	
 
 	private ChanceCardController() throws IOException {
 		this.cardArray = new ChanceLoader().getCards();
@@ -72,9 +74,9 @@ public class ChanceCardController {
 
 			// Tag ind på rådhuspladsen
 			case 3:
-			{player.setCurrentField(gbc.getFieldByNumber(40));}
-			
-				break;
+			{player.setCurrentField(gbc.getFieldByNumber(40));
+			Messager.showMoveChanceCard(player, player.getCurrentField());
+				break;}
 
 			// Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start,
 			// indkasserer de ikke kr. 4000.
@@ -84,10 +86,13 @@ public class ChanceCardController {
 
 			// Ryk tre felter tilbage.
 			case 12:
-				break;
+			{player.setCurrentField(gbc.getFieldByNumber( player.getCurrentField().getFieldNumber()-3));
+			Messager.showMoveChanceCard(player, player.getCurrentField());
+				break;}
 
 			// Ryk frem til Grønningen. Hvis De passerer start, indkasser da kr. 4000.
 			case 19:
+				
 				break;
 
 			// Ryk frem til start.
