@@ -252,7 +252,9 @@ public class ChanceCardController {
 				if(player.getNetWorth()<=15000)
 				{player.deposit(40000);}
 				Messager.showReceiveChanceCard(player,40000);
+				else{}
 				break;
+				
 			// 26;Det er deres fødselsdag. Modtag af hver medspiller kr. 200.;
 			case 26:
 				break;
