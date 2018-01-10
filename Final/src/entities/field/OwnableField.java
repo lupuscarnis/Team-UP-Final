@@ -13,6 +13,7 @@ public abstract class OwnableField extends Field {
 	private int price;
 	private int pawnPrice;
 	private Player owner = null;
+	private boolean isPawned = false; // Is field pawned or not.
 
 	public OwnableField(FieldType fieldType, int fieldNo, String text1, int price, int pawnPrice) {
 		super(fieldType, fieldNo, text1);
@@ -58,6 +59,14 @@ public abstract class OwnableField extends Field {
 
 	public String toString() {
 		return super.toString() + String.format("Pawnprice: %s\n" + "Price: %s\n", getPawnPrice(), getPrice());
+	}
+
+	public boolean isPawned() {
+		return isPawned;
+	}
+
+	public void setPawned(boolean isPawned) {
+		this.isPawned = isPawned;
 	}
 	
 	
