@@ -2,9 +2,8 @@ package boundary;
 
 import java.awt.Color;
 import java.io.IOException;
-
-import controllers.PlayerController;
 import entities.Player;
+import entities.enums.UserOption;
 import entities.field.*;
 import gui_fields.*;
 import gui_fields.GUI_Car.Pattern;
@@ -22,9 +21,17 @@ public class GUIController {
 	private GUI_Field[] guiFields = null;
 	private GUI_Player[] guiPlayers = null;
 	private GUI_Car[] carList = null;
+	private static GUIController instance;
 
-	public GUIController() throws IOException {
+	private GUIController() throws IOException {
 		gui = new BoardGenerator().makeBoard();
+	}
+
+	public static GUIController getInstance() throws IOException {
+		if (instance == null)
+			instance = new GUIController();
+
+		return instance;
 	}
 
 	/**
@@ -334,6 +341,18 @@ public class GUIController {
 	}
 
 	/**
+	 * Added by Frederik on 09-01-2018 00:49:47
+	 * 
+	 * Updates the balance of the player
+	 * 
+	 * @param currentPlayer
+	 * @throws Exception
+	 */
+	public void updateBalance(Player currentPlayer) throws Exception {
+		updateBalance(new Player[] { currentPlayer });
+	}
+
+	/**
 	 * Added by Frederik on 06-01-2018 23:30:48
 	 * 
 	 * Updates the balance of the names in the array
@@ -400,5 +419,113 @@ public class GUIController {
 	 */
 	public void removeLotOwner(OwnableField field) {
 		gui.getFields()[field.getFieldNumber() - 1].setSubText("Pris: " + field.getPrice());
+	}
+
+	public void showMessage(String string) {
+		gui.displayChanceCard(string);
+	}
+
+	public void showPromt(String string) {
+		gui.showMessage(string);
+	}
+
+	/**
+	 * Added by Frederik on 08-01-2018 14:18:05
+	 * 
+	 * Can show buttons and return selection
+	 * 
+	 * @param label
+	 * @param options
+	 * @throws Exception
+	 */
+	public UserOption showOptions(String label, UserOption[] userOptions) throws Exception {
+
+		String[] options = new String[userOptions.length];
+
+		int index = 0;
+		for (UserOption option : userOptions) {
+
+			options[index] = parseUserOption(option);
+
+			index++;
+		}
+
+		String result = gui.getUserButtonPressed(label, options);
+
+		return parseFromStringToUserOption(result);
+	}
+
+	/**
+	 * Added by Frederik on 08-01-2018 17:18:14
+	 * 
+	 * Parses user selection (string) to UserOption
+	 * 
+	 * @param result
+	 * @return
+	 * @throws Exception
+	 */
+	private UserOption parseFromStringToUserOption(String result) throws Exception {
+
+		if (parseUserOption(UserOption.BuyHotel) == result)
+			return UserOption.BuyHotel;
+		if (parseUserOption(UserOption.BuyHouse) == result)
+			return UserOption.BuyHouse;
+		if (parseUserOption(UserOption.EndTurn) == result)
+			return UserOption.EndTurn;
+		if (parseUserOption(UserOption.PawnLot) == result)
+			return UserOption.PawnLot;
+		if (parseUserOption(UserOption.ThrowDice) == result)
+			return UserOption.ThrowDice;
+		if (parseUserOption(UserOption.BuyField) == result)
+			return UserOption.BuyField;
+		if (parseUserOption(UserOption.NoThanks) == result)
+			return UserOption.NoThanks;
+		if (parseUserOption(UserOption.PayRent) == result)
+			return UserOption.PayRent;
+		if (parseUserOption(UserOption.IncomeTaxPay4000) == result)
+			return UserOption.IncomeTaxPay4000;
+		if (parseUserOption(UserOption.IncomeTaxPayTenPercent) == result)
+			return UserOption.IncomeTaxPayTenPercent;
+		throw new Exception("Translation not found!");
+	}
+
+	/**
+	 * Added by Frederik on 08-01-2018 17:06:36
+	 * 
+	 * Converts from UserOption to text that can be displayed to the user.
+	 * 
+	 * @param option
+	 * @return
+	 * @throws Exception
+	 */
+	private String parseUserOption(UserOption option) throws Exception {
+		switch (option) {
+		case PayRent:
+			return "Betal leje";
+		case NoThanks:
+			return "Nej tak";
+		case BuyField:
+			return "Køb grund";
+		case BuyHotel:
+			return "Køb hotel";
+		case BuyHouse:
+			return "Køb hus";
+		case EndTurn:
+			return "Afslut tur";
+		case PawnLot:
+			return "Pantsæt hus";
+		case ThrowDice:
+			return "Kast terning";
+		case IncomeTaxPay4000:
+			return "Betal 4000";
+		case IncomeTaxPayTenPercent:
+			return "Betal 10%";
+		default:
+			throw new Exception("Case not found!");
+		}
+	}
+
+	public void updatePlayerPosition(String playerName, int fromField, int toField) throws Exception {		
+		moveCar(fromField, toField, findPlayer(playerName));
 	}
 }
