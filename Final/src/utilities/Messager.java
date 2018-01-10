@@ -106,5 +106,8 @@ public class Messager {
 	public static void showMessage(String tekst) throws IOException{
 		GUIController.getInstance().showMessage(tekst);
 	}
+
+	
+
 }
 

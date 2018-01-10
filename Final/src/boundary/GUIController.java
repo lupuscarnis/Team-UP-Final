@@ -9,7 +9,6 @@ import gui_fields.*;
 import gui_fields.GUI_Car.Pattern;
 import gui_fields.GUI_Car.Type;
 import gui_main.GUI;
-
 /**
  * Added by Frederik on 06-01-2018 03:02:05
  *
@@ -552,4 +551,21 @@ public class GUIController {
 		gui.getUserSelection(string, strings);
 		
 	}
+	
+	public void updateHouseCount(int count,int fieldNumber )
+	{
+		
+		GUI_Street housePlacer = new GUI_Street();
+		housePlacer = (GUI_Street)guiFields[fieldNumber];  
+		housePlacer.setHouses(count);
+		
+	}
+	public void setHotel(boolean hasHotel, int fieldNumber) {
+			
+		GUI_Street housePlacer = new GUI_Street();
+		housePlacer = (GUI_Street)guiFields[fieldNumber];  
+		housePlacer.setHotel(hasHotel);
+			
+		}
+	
 }
