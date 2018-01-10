@@ -88,7 +88,13 @@ public class ChanceCardController {
 			// indkasserer de ikke kr. 4000.
 			case 4:
 			case 5:
-				break;
+			{player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(11));
+			Messager.showMoveChanceCard(player, player.getCurrentField());
+			// vi maa lige finde ud af det med faengslet, nu er der to muligheder for hvordan han rigtigt "is in jail"
+			FieldLogicController.getInstance().handleFieldAction(player);
+			player.isInJail(true);
+			break;}
+				
 
 			// Ryk tre felter tilbage.
 
@@ -197,6 +203,8 @@ public class ChanceCardController {
 			case 33:
 				PayChanceCard pc = (PayChanceCard) card;
 				pc.getAmount();
+				player.withdraw(pc.getAmount());
+				Messager.showPayChanceCard(player, pc.getAmount());
 				break;
 
 			default:
@@ -232,6 +240,9 @@ public class ChanceCardController {
 			case 27:
 				ReceiveChanceCard rc = (ReceiveChanceCard) card;
 				rc.getAmount();
+				player.deposit(rc.getAmount());
+				Messager.showReceiveChanceCard(player, rc.getAmount());
+				
 				// er de ting der kommer nu en lav prioritet
 				break;
 			// 25;De modtager Matador-legatet for værdig trængende, stort kr. 40000. Ved

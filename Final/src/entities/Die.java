@@ -2,8 +2,8 @@ package entities;
 import java.math.*;
 
 public class Die {
-	private int maxValue;
-	private int minValue;
+	private int maxValue = 6;
+	private int minValue = 1;
 	private int value;
 	
 	
@@ -12,8 +12,8 @@ public class Die {
 	
 	/**
 	 * @author Nicolai Barnett
-	 * @param maxValue the max number the die can roll
-	 * @param minValue the minimum number the die can roll
+	 * @param maxValue the max number the die can roll default is 6
+	 * @param minValue the minimum number the die can roll default is 1
 	 */
 	public Die(int maxValue, int minValue)
 	{
@@ -29,7 +29,7 @@ public class Die {
 	public int roll()
 	{
 		
-		 value = (int)(Math.random()*maxValue)+minValue;
+		 value = ((int)(Math.random()*maxValue)+minValue);
 		
 		return value;
 	}
