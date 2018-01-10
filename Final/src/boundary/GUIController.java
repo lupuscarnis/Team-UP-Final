@@ -351,7 +351,6 @@ public class GUIController {
 	public void updateBalance(Player currentPlayer) throws Exception {
 		updateBalance(new Player[] { currentPlayer });
 	}
-
 	/**
 	 * Added by Frederik on 06-01-2018 23:30:48
 	 * 

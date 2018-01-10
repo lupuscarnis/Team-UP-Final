@@ -93,4 +93,58 @@ public class LotField extends OwnableField {
 		// calc rent
 		return (allOwned) ? this.getRentFor(LotRentTier.Lot) * 2 : this.getRentFor(LotRentTier.Lot);
 	}
+	
+	/**
+	 * Added by Kasper on 1/9-2018
+	 * 
+	 * Handles setting number of houses on lot 
+	 *  
+	 */
+	
+	public void setHouseCount(int numHouses) {
+		
+		this.houseCount = houseCount+1;
+
+	}
+	
+	/**
+	 * Added by Kasper on 1/9-2018
+	 * 
+	 * Handles getting number of houses on lot 
+	 *  
+	 * @Return houseCount
+	 */
+	
+	public int getHouseCount() {
+		
+		return houseCount;
+
+	}
+	
+	/**
+	 * Added by Kasper on 1/9-2018
+	 * 
+	 * Handles setting number of hotels on lot 
+	 *  
+	 */
+	
+	public void setHotelCount(int numHotel) {
+		
+		this.hotelCount = hotelCount+1;
+
+	}
+	
+	/**
+	 * Added by Kasper on 1/9-2018
+	 * 
+	 * Handles getting number of hotels on lot 
+	 *  
+	 * @Return hotelCount
+	 */
+	
+	public int getHotelCount() {
+		
+		return hotelCount;
+
+	}
 }
