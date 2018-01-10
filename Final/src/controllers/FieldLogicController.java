@@ -41,12 +41,12 @@ public class FieldLogicController {
 
 				// user opted to buy lot
 				if (choice == UserOption.BuyLot)
-					blc.buyLot(currentPlayer);		
+					blc.buyLot(currentPlayer);
 			}
-			// field has owner and player must pay rent 
+			// field has owner and player must pay rent
 			// if owner != current player
 			else
-				blc.payRent(currentPlayer);	
+				blc.payRent(currentPlayer);
 
 			break;
 		case CHANCE:
@@ -75,19 +75,27 @@ public class FieldLogicController {
 			currentPlayer.isInJail(true);
 
 			break;
-		case INCOMETAX:
+		case INCOMETAX: {
 			gui.showMessage("you have landed on " + currentField.getFieldType());
-			currentPlayer.withdraw(4000);
-			// at implementere valget der bruger 10% maa vente lidt
-			break;
 
-			/**
-			 * Added by Kasper on 1/9-2018
-			 * 
-			 * Handles Lot field (buy/pay rent) 
-			 */
+			UserOption userChoice = gui.showOptions("Hvordan vil du betal din skat: ",
+					new UserOption[] { UserOption.IncomeTaxPay4000, UserOption.IncomeTaxPayTenPercent });
+			switch (userChoice) {
 
-		case LOT:
+			case IncomeTaxPay4000: {
+				currentPlayer.withdraw(4000);
+
+				break;
+			}
+			case IncomeTaxPayTenPercent: {
+				// TODO: Create a player constant that summs up his value
+
+				break;
+			}
+			}
+		}
+
+		case LOT: {
 			LotField lf = (LotField) currentField;
 
 			// no owner!
@@ -100,47 +108,52 @@ public class FieldLogicController {
 
 				// user opted to buy lot
 				if (choice == UserOption.BuyLot)
-					blc.buyLot(currentPlayer);	
-				System.out.println(currentPlayer.getName() + " Bought "+currentField.getFieldType()+"/"+currentField.getFieldNumber());
-				
-				
-			// Ask player if he/she wants to build a house	(checks for owner, playerBalance and number of houses on lot)
-				
-			} else if ((lf.getOwner() == currentPlayer) && blc.userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4) {
-				
-				gui.showMessage(
-						"you have landed on a  " + currentField.getFieldType() + " which you already own. Do you wish to build a house on it?");
+					blc.buyLot(currentPlayer);
+				System.out.println(currentPlayer.getName() + " Bought " + currentField.getFieldType() + "/"
+						+ currentField.getFieldNumber());
+
+				// Ask player if he/she wants to build a house (checks for owner, playerBalance
+				// and number of houses on lot)
+
+			} else if ((lf.getOwner() == currentPlayer) && blc.userCanAffordHouse(currentPlayer.getBalance(), lf)
+					&& lf.getHouseCount() < 4) {
+
+				gui.showMessage("you have landed on a  " + currentField.getFieldType()
+						+ " which you already own. Do you wish to build a house on it?");
 				UserOption choice = gui.showOptions("Vælg:",
 						new UserOption[] { UserOption.BuyHouse, UserOption.NoThanks });
-				
+
 				// user opted to build a house
 				if (choice == UserOption.BuyHouse)
-					
-					//Update number of houses on the lot
-					lf.setHouseCount(lf.getHouseCount()+1);
-					
-					blc.buildHouse(currentPlayer);	
-				System.out.println(currentPlayer.getName() + " bought a house on "+currentField.getFieldType()+"/"+currentField.getFieldNumber()+" the lot now has " + lf.getHouseCount() + " house(s) on it");
-				
-				
-			// Ask player if he/she wants to build a hotel	(checks for owner, playerBalance and number of houses on lot)	
-				
-			} else if ((lf.getOwner() == currentPlayer) && blc.userCanAffordHotel(currentPlayer.getBalance(), lf) && lf.getHouseCount() == 4 && lf.getHotelCount() != 1) {
-				
-				gui.showMessage(
-						"you have landed on a  " + currentField.getFieldType() + " which you already own. The lot already has 4 houses on it. Do you wish to build a hotel?");
+
+					// Update number of houses on the lot
+					lf.setHouseCount(lf.getHouseCount() + 1);
+
+				blc.buildHouse(currentPlayer);
+				System.out.println(currentPlayer.getName() + " bought a house on " + currentField.getFieldType() + "/"
+						+ currentField.getFieldNumber() + " the lot now has " + lf.getHouseCount() + " house(s) on it");
+
+				// Ask player if he/she wants to build a hotel (checks for owner, playerBalance
+				// and number of houses on lot)
+
+			} else if ((lf.getOwner() == currentPlayer) && blc.userCanAffordHotel(currentPlayer.getBalance(), lf)
+					&& lf.getHouseCount() == 4 && lf.getHotelCount() != 1) {
+
+				gui.showMessage("you have landed on a  " + currentField.getFieldType()
+						+ " which you already own. The lot already has 4 houses on it. Do you wish to build a hotel?");
 				UserOption choice = gui.showOptions("Vælg:",
 						new UserOption[] { UserOption.BuyHotel, UserOption.NoThanks });
-				
+
 				// user opted to build a house
 				if (choice == UserOption.BuyHotel)
-					
-					//Update number of hotels on the lot
-					lf.setHotelCount(lf.getHotelCount()+1);
-					
-					blc.buildHotel(currentPlayer);	
-				System.out.println(currentPlayer.getName() + " bought a hotel on "+currentField.getFieldType()+"/"+currentField.getFieldNumber()+" the lot now has " + lf.getHotelCount() + " hotel on it");
-						
+
+					// Update number of hotels on the lot
+					lf.setHotelCount(lf.getHotelCount() + 1);
+
+				blc.buildHotel(currentPlayer);
+				System.out.println(currentPlayer.getName() + " bought a hotel on " + currentField.getFieldType() + "/"
+						+ currentField.getFieldNumber() + " the lot now has " + lf.getHotelCount() + " hotel on it");
+
 			}
 			// pay rent
 
@@ -148,16 +161,16 @@ public class FieldLogicController {
 				blc.payRent(currentPlayer);
 
 			break;
+		}
+		/**
+		 * Added by Kasper on 1/9-2018
+		 * 
+		 * Handles Shipping field (buy/pay rent)
+		 */
 
-			/**
-			 * Added by Kasper on 1/9-2018
-			 * 
-			 * Handles Shipping field (buy/pay rent) 
-			 */
-
-		case SHIPPING:
-
+		case SHIPPING: {
 			ShippingField sf = (ShippingField) currentField;
+			gui.showMessage("you have landed on " + currentField.getFieldType() + " do you wish to purchase it?");
 
 			// no owner!
 			if (sf.getOwner() == null && blc.userCanAfford(currentPlayer.getBalance(), sf)) {
@@ -169,8 +182,9 @@ public class FieldLogicController {
 
 				// user opted to buy lot
 				if (choice == UserOption.BuyLot)
-					blc.buyLot(currentPlayer);	
-				System.out.println(currentPlayer.getName() + " Bought "+currentField.getFieldType()+"/"+currentField.getFieldNumber());
+					blc.buyLot(currentPlayer);
+				System.out.println(currentPlayer.getName() + " Bought " + currentField.getFieldType() + "/"
+						+ currentField.getFieldNumber());
 
 			}
 			// pay rent
@@ -178,7 +192,7 @@ public class FieldLogicController {
 				blc.payRent(currentPlayer);
 
 			break;
-
+		}
 		case START:
 			gui.showMessage("you have landed on " + currentField.getFieldType() + " you gain 4000 kr.");
 			currentPlayer.deposit(4000);

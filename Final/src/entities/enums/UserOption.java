@@ -8,5 +8,6 @@ public enum UserOption {
 	PawnLot, 
 	BuyHotel, 
 	BuyHouse, 
-	EndTurn, StartOfTurn, BuyLot, NoThanks, PayRent
+	EndTurn, StartOfTurn, BuyLot, NoThanks, PayRent,
+	IncomeTaxPay4000,IncomeTaxPayTenPercent,
 }
