@@ -60,48 +60,24 @@ public class PlayerController {
 		return instance;
 	}
 
-	// moves the player to the new location if it hits start it will go back around
-	/*
-	 * public void movePlayer(Player player, int diceSum) throws IOException {
-	 * GameBoardController gbc = new GameBoardController(new
-	 * FieldLoader().getFields()); if(player.getCurrentField().getFieldNumber() +
-	 * diceSum >= 39 ) {
+
+	 /* 
+	 *
+	 *public int getAssetValue(Player player) { int combinedValue;
+	 *
+	 *
+	 * Find value of proporties combinedValue = combinedValue; // Number of
+	 *hotels combinedValue = combinedValue + (player.getHotelsOwned()*hotelPrice);
 	 * 
-	 * Field fb = new OwnableField(); int remainder =
-	 * (player.getCurrentField().getFieldNumber()%39 Field temp =
-	 * gbc.getFieldByNumber(remainder); player.setCurrentField(temp); } else {
-	 * 
-	 * 
-	 * int newFieldValue = player.getCurrentField().getFieldNumber() + diceSum;
-	 * Field temp = gbc.getFieldByNumber(newFieldValue);
-	 * player.setCurrentField(temp);
-	 * 
-	 * 
-	 * }
-	 * 
-	 * 
-	 * }
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * public int getAssetValue(Player player) { int combinedValue;
-	 * 
-	 * 
-	 * // Find value of proporties combinedValue = combinedValue; // Number of
-	 * hotels combinedValue = combinedValue + (player.getHotelsOwned()*hotelPrice);
-	 * 
-	 * // Number of houses combinedValue =
+	 * Number of houses combinedValue =
 	 * combinedValue+(player.getHousesOwned()*housePrice);
-	 * 
-	 * // Balance in account combinedValue = combinedValue+(player.getBalance());
+	 *
+	 * Balance in account combinedValue = combinedValue+(player.getBalance());
 	 * 
 	 * 
 	 * return combinedValue;
 	 * 
+	 *
 	 * 
 	 * 
 	 * }

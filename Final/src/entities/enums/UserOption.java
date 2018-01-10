@@ -18,6 +18,8 @@ public enum UserOption {
 	StartOfTurn, 
 	BuyLot, 
 	NoThanks, 
-	PayRent
+	PayRent,
+	IncomeTaxPay4000,
+	IncomeTaxPayTenPercent,
 
 }

@@ -199,6 +199,55 @@ public class BusinessLogicController {
 	}
 
 	/**
+	 * Added by Kasper on 09-01-2018 23:16:41
+	 * 
+	 * Handles player wants to build a house. DOES NOT CHECK FOR SUFFICIENT FUNDS!!
+	 * MUST BE DONE BEFORE CALL TO METHOD!
+	 * 
+	 * @param player
+	 * @throws Exception
+	 */
+	public void buildHouse(Player player) throws Exception {
+		LotField lf = (LotField) player.getCurrentField();		
+
+		// withdraw money (Price of one house)
+		player.withdraw(lf.getBuildingCost());
+
+		//update number of houses on lot
+		
+		
+		
+		// update gui
+		GUIController.getInstance().updateBalance(player);
+//		gui.updateLotOwner(player.getName(), of.getFieldNumber());
+		GUIController.getInstance().showMessage("Du har nu bygget et hotel på grunden: " + lf.getTitle());
+	}
+	
+	/**
+	 * Added by Kasper on 09-01-2018 23:16:41
+	 * 
+	 * Handles player wants to build a house. DOES NOT CHECK FOR SUFFICIENT FUNDS OR IF THE LOT HAS 4 HOUSES AS REQUIRED!!
+	 * MUST BE DONE BEFORE CALL TO METHOD!
+	 * 
+	 * @param player
+	 * @throws Exception
+	 */
+	public void buildHotel(Player player) throws Exception {
+		LotField lf = (LotField) player.getCurrentField();		
+
+		// withdraw money (5 times the cost of a house)
+		player.withdraw(lf.getPrice()*5);
+
+		// set owner
+		lf.setOwner(player);
+
+		// update gui
+		GUIController.getInstance().updateBalance(player);
+//		gui.updateLotOwner(player.getName(), of.getFieldNumber());
+		GUIController.getInstance().showMessage("Du har nu bygget et hotel på grunden: " + lf.getTitle());
+	}
+	
+	/**
 	 * Added by Frederik on 07-01-2018 00:05:28
 	 * 
 	 * Check if player still has money left, else remove player from game
@@ -265,4 +314,38 @@ public class BusinessLogicController {
 		
 		
 	}
+
+	
+	/**
+	 * Added by Kasper on 09-01-2018 00:17:56 
+	 * 
+	 * Check if user can afford to build a house 
+	 * 
+	 * @param currentPlayer LotField
+	 * @return
+	 */
+	public boolean userCanAffordHouse(int currentPlayerBalance, LotField fieldToBuy) {
+		
+		if(currentPlayerBalance>=fieldToBuy.getBuildingCost())
+			return true;		
+		
+		return false;
+	}
+	
+	/**
+	 * Added by Kasper on 09-01-2018 00:17:56 
+	 * 
+	 * Check if user can afford to build a hotel (price getBuildingCost * 5) 
+	 * 
+	 * @param currentPlayer LotField
+	 * @return
+	 */
+	public boolean userCanAffordHotel(int currentPlayerBalance, LotField fieldToBuy) {
+		
+		if(currentPlayerBalance>=fieldToBuy.getBuildingCost()*5)
+			return true;		
+		
+		return false;
+	}
+
 }

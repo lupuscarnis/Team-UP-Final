@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import boundary.GUIController;
+import entities.Cup;
 import entities.Player;
 import entities.enums.UserOption;
 import entities.field.Field;
@@ -11,7 +12,7 @@ public class GameLogicCtrl {
 	private Player previousPlayer = null; // Who played last turn
 	private Player startPlayer = null; // Who starts first
 	private static GameLogicCtrl instance;
-
+	
 	private GameLogicCtrl() throws IOException {
 	}
 
@@ -144,22 +145,35 @@ public class GameLogicCtrl {
 	 * @param currentPlayer
 	 * @throws Exception
 	 */
-	// TODO: Make use of cup when throwing dice!
+	// TODO: M
 	public void rollAndMove(Player currentPlayer) throws Exception {
 
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
-
+		 Cup cup = new Cup(currentPlayer);
 		// Throw Die
-		int faceValue = MyRandom.randInt(2, 12);
-
+		int faceValue = cup.rollDice();
+		//Checks if he passes start and gives him money	
+		checkPassedStart(currentPlayer, faceValue, true);
 		// get next field
 		Field nextField = FieldLogicController.getInstance().getNextField(currentFieldNo, faceValue);
 
-		// Update current pos on player object
+		// Update current pos on player object 
 		currentPlayer.setCurrentField(nextField);
-
+		
 		// update gui
 		GUIController.getInstance().movePlayer(currentPlayer);
+		// Update gui
+		GUIController.getInstance().movePlayer(currentPlayer);
+	}
+	
+	// checks if the Player Move past start this turn and receives 4000
+	private void checkPassedStart(Player currentPlayer, int faceValue, boolean canReceive )
+	{
+		if((currentPlayer.getCurrentField().getFieldNumber() + faceValue > 40)&& (canReceive == true)){
+		currentPlayer.deposit(4000);
+		System.out.println("Du fik 4000 over start! hurray!");
+		}
+		
 	}
 
 	/**

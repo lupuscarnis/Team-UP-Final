@@ -45,147 +45,6 @@ public class GUIController {
 		setupPlayers(players);
 	}
 
-	public void setupGUIBoard(Field[] fields) {
-
-		this.guiFields = new GUI_Field[40];
-
-		initializeFields(fields);
-
-		this.gui = new GUI(this.guiFields);
-
-	}
-
-	private void initializeFields(Field[] fields) {
-
-		int fieldNumber = 0;
-		for (Field field : fields) {
-
-			switch (field.getFieldType()) {
-			case BREWERY:
-				GUI_Field tmp = new GUI_Brewery();
-				BreweryField brewery = (BreweryField) field;
-				tmp.setTitle(field.getTitle());
-				tmp.setSubText(brewery.getPrice() + " kr.");
-				tmp.setDescription(field.getDesc());
-
-				this.guiFields[fieldNumber] = tmp;
-				break;
-			case CHANCE:
-				tmp = new GUI_Chance();
-				tmp.setSubText(field.getTitle());
-				tmp.setDescription(field.getDesc());
-
-				this.guiFields[fieldNumber] = tmp;
-				break;
-			case EXTRATAX:
-				tmp = new GUI_Tax();
-				tmp.setTitle(field.getDesc());
-				tmp.setSubText(field.getTitle());
-				tmp.setDescription(field.getDesc());
-
-				this.guiFields[fieldNumber] = tmp;
-				break;
-			case FREEPARKING:
-				tmp = new GUI_Refuge();
-				tmp.setTitle(field.getTitle());
-				tmp.setDescription(field.getDesc());
-				tmp.setSubText("Helle");
-				tmp.setBackGroundColor(Color.white);
-
-				this.guiFields[fieldNumber] = tmp;
-				break;
-			case GOTOJAIL:
-				tmp = new GUI_Jail();
-				tmp.setTitle(field.getTitle());
-				tmp.setSubText(field.getTitle());
-				tmp.setDescription(field.getDesc());
-
-				this.guiFields[fieldNumber] = tmp;
-				break;
-			case INCOMETAX:
-				tmp = new GUI_Tax();
-				tmp.setTitle(field.getDesc());
-				tmp.setSubText(field.getTitle());
-				tmp.setDescription(field.getDesc());
-
-				this.guiFields[fieldNumber] = tmp;
-				break;
-			case LOT:
-				tmp = new GUI_Street();
-				LotField lot = (LotField) field;
-				tmp.setTitle(field.getTitle());
-				tmp.setSubText(lot.getPrice() + " kr.");
-				tmp.setDescription(field.getDesc());
-
-				Color color = Color.black;
-				switch (lot.getColor()) {
-				case BLUE:
-					color = Color.blue;
-					break;
-				case GRAY:
-					color = Color.gray;
-					break;
-				case GREEN:
-					color = Color.green;
-					break;
-				case PINK:
-					color = Color.pink;
-					break;
-				case PURPLE:
-					color = Color.magenta;
-					break;
-				case RED:
-					color = Color.red;
-					break;
-				case WHITE:
-					color = Color.white;
-					break;
-				case YELLOW:
-					color = Color.yellow;
-					break;
-				default:
-					break;
-				}
-				tmp.setBackGroundColor(color);
-
-				this.guiFields[fieldNumber] = tmp;
-				break;
-			case SHIPPING:
-				tmp = new GUI_Shipping();
-				ShippingField shipping = (ShippingField) field;
-				tmp.setTitle(field.getTitle());
-				tmp.setSubText(shipping.getPrice() + " kr.");
-				tmp.setDescription(field.getDesc());
-
-				this.guiFields[fieldNumber] = tmp;
-
-				break;
-			case START:
-				tmp = new GUI_Start();
-				tmp.setTitle(field.getTitle());
-				tmp.setDescription(field.getDesc());
-				tmp.setSubText("");
-				tmp.setBackGroundColor(Color.white);
-
-				this.guiFields[fieldNumber] = tmp;
-				break;
-			case VISITJAIL:
-				tmp = new GUI_Jail();
-				tmp.setTitle(field.getTitle());
-				tmp.setSubText(field.getDesc());
-				tmp.setDescription(field.getDesc());
-
-				this.guiFields[fieldNumber] = tmp;
-				break;
-			default:
-				break;
-
-			}
-			fieldNumber++;
-		}
-
-	}
-
 	/**
 	 * Added by Frederik on 06-01-2018 03:18:12
 	 * 
@@ -509,7 +368,13 @@ public class GUIController {
 		
 		if (parseUserOption(UserOption.PayRent) == result)
 			return UserOption.PayRent;
-
+		 
+		if (parseUserOption(UserOption.IncomeTaxPay4000) == result)
+			return UserOption.IncomeTaxPay4000;
+	
+	    if (parseUserOption(UserOption.IncomeTaxPayTenPercent) == result)
+	    	return UserOption.IncomeTaxPayTenPercent;
+	    
 		throw new Exception("Translation not found!");
 	}
 
@@ -554,7 +419,10 @@ public class GUIController {
 			
 		case ThrowDice:
 			return "Kast terning";
-
+		case IncomeTaxPayTenPercent:
+		return	"Betal 10%";
+		case	IncomeTaxPay4000:
+			return "Betal 4000";
 		default:
 			throw new Exception("Case not found!");
 		}
