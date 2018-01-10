@@ -19,7 +19,8 @@ public class ChanceCardController {
 
 	private static ChanceCardController instance;
 	private ChanceCard[] cardArray;
-	private GameController GC = new GameController();
+	//er noedvendig for at at foedselsdagskortet virker, men laver stackoverflow
+	//private GameController GC = new GameController();
 	
 	private ChanceCardController() throws IOException {
 		this.cardArray = new ChanceLoader().getCards();
@@ -74,6 +75,7 @@ public class ChanceCardController {
 			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.
 			case 1:
 			case 2:
+				
 				break;
 
 			// Tag ind på rådhuspladsen
@@ -263,40 +265,22 @@ public class ChanceCardController {
 				//nu faar spilleren den rigtige maengde penge, saa skal de andre bare lige miste dem :)
 				//Players[]= GC.getPlayers();
 				
-				player.deposit(200*GC.getPlayers().length);
-				
-				Messager.showReceiveChanceCard(player,200*GC.getPlayers().length);
-				for (int i = 0; i < GC.getPlayers().length; i++) {
-					 GC.getPlayers()[i].withdraw(200);
-					Messager.showPayChanceCard(GC.getPlayers()[i], 200); }
-				
-				
-//				for(){
-//					
-//				}
+				//kan komme ind igen naar man faar adgang til player arrayet fra gamecontroller
+//				player.deposit(200*GC.getPlayers().length);
 //				
-//				
-//				for (Player player : GC.getPlayers()) {
-//					player.withdraw(amount);
-//				}
+//				Messager.showReceiveChanceCard(player,200*GC.getPlayers().length);
+//				for (int i = 0; i < GC.getPlayers().length; i++) {
+//					 GC.getPlayers()[i].withdraw(200);
+//					Messager.showPayChanceCard(GC.getPlayers()[i], 200); }
 				
+				
+//				
 				
 				
 					
 					
 				
-//						invalidName = false;
-//						name = this.gui.getUserString("Navn på spiller " + (i + 1) + "?");
-//						// checks for duplicate names
-//						for (int a = i; a > 0; a--) {
-//							if (name.equals(players[a - 1])) {
-//								invalidName = true;
-//							}
-//						}
-//						// checks if name is empty
-//						if (name.length() < 1) {
-//							invalidName = true;
-				
+//						
 				break;
 			default:
 				throw new Exception("Case not found!");
