@@ -291,4 +291,9 @@ public class BusinessLogicController {
 		return false;
 	}
 
+	public boolean canPawn() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }

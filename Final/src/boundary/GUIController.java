@@ -30,7 +30,7 @@ public class GUIController {
 	public static GUIController getInstance() throws IOException {
 		if (instance == null)
 			instance = new GUIController();
-
+			
 		return instance;
 	}
 
@@ -526,5 +526,10 @@ public class GUIController {
 
 	public void updatePlayerPosition(String playerName, int fromField, int toField) throws Exception {		
 		moveCar(fromField, toField, findPlayer(playerName));
+	}
+
+	public void getSelection(String string, String[] strings) {
+		gui.getUserSelection(string, strings);
+		
 	}
 }

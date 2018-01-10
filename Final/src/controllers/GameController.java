@@ -7,7 +7,6 @@ import entities.enums.UserOption;
 
 //TODO: MANGLER:
 // - Terninger
-// - Penge når du passerer start
 // - Chancekort
 // - Slå dig ud af fængslet
 // - bygninger på grunde
@@ -137,6 +136,14 @@ public class GameController {
 			case BuyHouse:
 				break;
 			case PawnLot:
+				
+				// show pawnable lots
+				gui.getSelection("Vælg", new String[]{"Rødovrevej", "Hvidvorevej"});
+				
+				// pawn selected lot
+				
+				// confirm in gui				
+				
 				break;
 			case ThrowDice:
 				// TODO: Roll streak?

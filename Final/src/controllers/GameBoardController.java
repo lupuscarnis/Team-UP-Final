@@ -37,6 +37,7 @@ public class GameBoardController {
 		return null;
 	};
 
+	// TODO: Skal hedder "getFieldByTitle"
 	public Field getFieldByName(FieldName fieldToFind) throws Exception {
 
 		switch (fieldToFind) {
