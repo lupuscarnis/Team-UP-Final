@@ -101,37 +101,18 @@ public class BusinessLogicController {
 		Player payee = currentField.getOwner();
 		Player payer = currentPlayer;
 
-		switch (currentField.getFieldType()) {
-		case BREWERY:
-			// nogen havde det her inde i teksten. Det virker ikkeowner.getName()
-			String txt = String.format("Du er landet på et felt ejet af %s, og bliver nødt til at betale leje!");
-			gui.showMessage(txt);
-			int fieldsMoved = 0;
-			// TODO: MANGLER EN TERNING OG HVOR SKAL MODIFIER KOMME FRA?
-			if (currentPlayer.getPreviousField().getFieldNumber() < currentPlayer.getCurrentField().getFieldNumber()) {
-				fieldsMoved = currentPlayer.getCurrentField().getFieldNumber()
-						- currentPlayer.getPreviousField().getFieldNumber();
-			} else {
-				fieldsMoved = 40 - currentPlayer.getPreviousField().getFieldNumber()
-						+ currentPlayer.getCurrentField().getFieldNumber();
-			}
-			// RANDOM TAL!!!
-			BreweryField bf = (BreweryField) currentField;
-			rent = bf.getModifierFor(BreweriesOwned.ONE) * fieldsMoved;
+		// tell user he must pay rent
+		Messager.showMustPayRent(payee.getName(), rent);
 
-			gui.showOptions("Vælg", new UserOption[] { UserOption.PayRent });
+		// withdraw from payer
+		// TODO: What happens if user cant afford?
+		payer.withdraw(rent);
 
-			currentPlayer.withdraw(rent);
-			break;
+		// deposit to payee
+		payee.deposit(rent);
 
-		case LOT:
-			break;
-		case SHIPPING:
-			break;
-
-		default:
-			throw new Exception("Case not found!");
-		}
+		// update balances in gui
+		gui.updateBalance(new Player[] { payer, payee });
 	}
 
 	/*
