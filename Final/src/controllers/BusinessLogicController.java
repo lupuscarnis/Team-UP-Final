@@ -4,13 +4,7 @@ import java.io.IOException;
 
 import boundary.GUIController;
 import entities.Player;
-import entities.enums.BreweriesOwned;
-import entities.enums.FieldType;
-import entities.enums.LotRentTier;
 import entities.enums.UserOption;
-import entities.field.BreweryField;
-import entities.field.Field;
-import entities.field.LotField;
 import entities.field.OwnableField;
 import utilities.Messager;
 
