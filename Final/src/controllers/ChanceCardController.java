@@ -85,20 +85,29 @@ public class ChanceCardController {
 				break;
 
 			// Ryk tre felter tilbage.
-			case 12:
-			{player.setCurrentField(gbc.getFieldByNumber( player.getCurrentField().getFieldNumber()-3));
-			Messager.showMoveChanceCard(player, player.getCurrentField());
+			case 12:{
+//			if(player.getCurrentField().getFieldNumber()=1){player.setCurrentField(gbc.getFieldByNumber(38);}
+//			else if(player.getCurrentField().getFieldNumber()=1){player.setCurrentField(gbc.getFieldByNumber(38)}
+//			{player.setCurrentField(gbc.getFieldByNumber( player.getCurrentField().getFieldNumber()-3));
+//			Messager.showMoveChanceCard(player, player.getCurrentField());
+//			
+//			}
 				break;}
 
 			// Ryk frem til Grønningen. Hvis De passerer start, indkasser da kr. 4000.
 			case 19:
 				{player.setCurrentField(gbc.getFieldByNumber(25));
 				Messager.showMoveChanceCard(player, player.getCurrentField());
+				if(player.getCurrentField().getFieldNumber()<player.getPreviousField().getFieldNumber())
+				{player.deposit(4000);
+				Messager.showPassedStart(player);}
+				
 				break;}
 
 			// Ryk frem til start.
 			case 20:
-			{
+			{player.setCurrentField(gbc.getFieldByNumber(1));
+			Messager.showMoveChanceCard(player, player.getCurrentField());
 				break;}
 
 			// Ryk frem til Frederiksberg Allê. Hvis de passerer start, indkasser kr. 4000.
