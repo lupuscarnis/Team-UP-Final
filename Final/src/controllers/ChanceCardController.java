@@ -262,6 +262,7 @@ public class ChanceCardController {
 			case 26:
 				//nu faar spilleren den rigtige maengde penge, saa skal de andre bare lige miste dem :)
 				player.deposit(200*GC.getNumberOfPlayers());
+				Messager.showReceiveChanceCard(player,200*GC.getNumberOfPlayers());
 				
 				break;
 			default:

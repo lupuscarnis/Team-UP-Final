@@ -166,8 +166,8 @@ public class GameController {
 		} while (userChoice != UserOption.EndTurn);	
 		}
 	}
-	public int getNumberOfPlayers(){
-		return players.length;
+	public Player[] getPlayers(){
+		return players;
 		
 	}
 }
