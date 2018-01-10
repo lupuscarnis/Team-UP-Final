@@ -13,10 +13,6 @@ import entities.enums.UserOption;
 // - bygninger på grunde
 // - pantsætning
 
-
-
-
-
 public class GameController {
 
 	// controllers
@@ -106,56 +102,44 @@ public class GameController {
 				currentPlayer = glc.getStartPlayer(players);
 
 				// Vis start spil knap
-<<<<<<< HEAD
+
 				// gui.showPromt("Start spil");
 
-=======
-				//gui.showPromt("Start spil");
-			if(glc.d1.getValue()==glc.d2.getValue()){
-					currentPlayer = currentPlayer;
-			 rerolls++;
-			 
-			//stopper currentplayer for at blive til next player.		
-			}
-				
->>>>>>> refs/remotes/origin/2.-iteration
-			} else {
-				// find next player
-				currentPlayer = glc.getNextPlayer(players);
-				rerolls = 0;
-			}
+				// gui.showPromt("Start spil");
+				/*
+				 * if(glc.d1.getValue()==glc.d2.getValue()){ currentPlayer = currentPlayer;
+				 * rerolls++;
+				 */
 
+				// stopper currentplayer for at blive til next player.
+			}
+			/*
+			 * } else { // find next player currentPlayer = glc.getNextPlayer(players);
+			 * rerolls = 0; }
+			 */
 			gui.showPromt("Det er " + currentPlayer.getName() + "s tur!");
 
 			// present options for user
 			// End when EndTurn is selected
-<<<<<<< HEAD
+
 			UserOption userChoice = null;
 			do {
+				// userChoice = glc.showUserOptions(currentPlayer);
+
+				// switch (userChoice) {
+				/*
+				 * 
+				 * if (rerolls == 3) { currentPlayer.isInJail(true); }
+				 * if(currentPlayer.isInJail()==false) {
+				 */
+				// while(true)
+				//
+				//
+				// {
 				userChoice = glc.showUserOptions(currentPlayer);
 
 				switch (userChoice) {
 
-=======
-			if (rerolls == 3)
-			{
-				currentPlayer.isInJail(true);
-			}
-			if(currentPlayer.isInJail()==false)
-			{
-			while(true)
-				
-				
-			{				
-				UserOption userChoice = glc.showUserOptions(currentPlayer);				
-				
-				switch(userChoice)
-				{
-				
-				case StartOfTurn:
-					break;
-				
->>>>>>> refs/remotes/origin/2.-iteration
 				case BuyHotel:
 					break;
 				case BuyHouse:
@@ -168,11 +152,7 @@ public class GameController {
 
 					// roll and move player
 					glc.rollAndMove(currentPlayer);
-<<<<<<< HEAD
 
-=======
-														
->>>>>>> refs/remotes/origin/2.-iteration
 					// handle possible field actions
 					flc.handleFieldAction(currentPlayer);
 					break;
@@ -182,58 +162,20 @@ public class GameController {
 				default:
 					throw new Exception("Case not found!");
 				}
-<<<<<<< HEAD
 
 			} while (userChoice != UserOption.EndTurn);
-=======
-				
-				
-				//userChoice = glc.showUserOptions(currentPlayer);
-				
-				
-				if(userChoice==UserOption.EndTurn)
-					break;
-				
-			
-			}
-			}
-			else{System.out.println("player is in jail");
->>>>>>> refs/remotes/origin/2.-iteration
 
-			// Starting main round play through
-			/*
-			 * System.out.println("-- Round: " + turnCounter + " --");
-			 * 
-			 * if (!isJail(players) || isJail(players) && getOutJail(players)) { // Player
-			 * !isJail or (isJail and pays a
-			 * 
-			 * // fee to get out) if (isJail(players) && getOutJail(players))
-			 * System.out.println("-- Player payed 1000kr to get out of jail --");
-			 * 
-			 * 
-			 * 
-			 * // Check if player still has money or should be removed. int playerCount =
-			 * players.length;
-			 */
-			/*
-			 * players = blc.evaluatePlayer(currentPlayer, players);
-			 * 
-			 * // No players left = Game over if (players.length == 0) {
-			 * System.out.println("Game over!!!!!!!"); // TODO: Beautify!!!! break; }
-			 * 
-			 * // TODO: Needs to be handled properly! if (players.length < playerCount)
-			 * lastPlayer = players[0];
-			 */
-			// Thread.sleep(400);
+			// userChoice = glc.showUserOptions(currentPlayer);
 
-			// } else { // Player isJail, doesn't pay the fee and must therefore wait until
-			// next turn
 			//
-			// System.out.println("-- Player must skip this turn --");
-			// }
+			// if(userChoice==UserOption.EndTurn)
+			// break;
+			//
 
-			turnCounter++;
 		}
-	}
+		// else{System.out.println("player is in jail");
+
+		turnCounter++;
+		// }
 	}
 }
