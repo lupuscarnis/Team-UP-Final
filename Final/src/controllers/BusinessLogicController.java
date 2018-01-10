@@ -381,7 +381,16 @@ public class BusinessLogicController {
 	 * @throws IOException
 	 */
 	public boolean canPawn(Player currentPlayer) throws IOException {
+<<<<<<< HEAD
 		return this.getPawnableFields(currentPlayer).length > 0;
+=======
+
+		if(getPawnableFields(currentPlayer).length!=0) {
+			return true;
+		}
+		
+		return false;
+>>>>>>> branch '2.-iteration' of https://github.com/lupuscarnis/CDIO-Final.git
 	}
 
 	public void pawnLot(String result, Player owner) throws Exception {
@@ -395,18 +404,29 @@ public class BusinessLogicController {
 
 				// indicate field is pawned
 				field.setPawned(true);
+<<<<<<< HEAD
 
 				// pay player money for pawning
 				field.getOwner().deposit(field.getPawnPrice());
 
 				// update gui (is pawned and balance
+=======
+				Player owner = field.getOwner();
+				owner.deposit(field.getPawnPrice());
+				found = true;
+				
+>>>>>>> branch '2.-iteration' of https://github.com/lupuscarnis/CDIO-Final.git
 				GUIController.getInstance().updatePawnStatus(field.getFieldNumber());
+<<<<<<< HEAD
 				GUIController.getInstance().updateBalance(field.getOwner());
 
 				// confirm in gui
 				Messager.showFieldPawned(field.getTitle());
 
 				found = true;
+=======
+				GUIController.getInstance().updateBalance(owner);
+>>>>>>> branch '2.-iteration' of https://github.com/lupuscarnis/CDIO-Final.git
 			}
 		}
 
