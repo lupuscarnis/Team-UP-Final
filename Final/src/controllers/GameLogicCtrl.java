@@ -40,6 +40,9 @@ public class GameLogicCtrl {
 			options[index] = UserOption.PawnLot;
 			index++;
 		}
+		if(BusinessLogicController.getInstance().canPawn(currentPlayer))
+			options[index] = UserOption.Unpawn;
+		index++;
 
 		// can sell houses
 		if (false) {

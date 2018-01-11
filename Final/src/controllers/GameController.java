@@ -200,8 +200,10 @@ public class GameController {
 					currentPlayer.setDoneThrowing(false);
 					break;
 				case Unpawn:
-				{
+				
 					OwnableField[] pawnedList = BusinessLogicController.getInstance().getPawnedFields(currentPlayer);
+					
+					
 					String[] pawnedNameList = new String[pawnedList.length + 1];
 					
 					pawnedNameList[0] = "Annuller!";
@@ -221,10 +223,9 @@ public class GameController {
 					// unpawn selected lot
 					if (!answer.equals("Annuller!"))
 						BusinessLogicController.getInstance().unpawn(answer, currentPlayer);
-				
-						
+					
 					break;
-				}
+				
 				
 				default:
 					throw new Exception("Case not found!");

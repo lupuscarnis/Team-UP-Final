@@ -370,19 +370,28 @@ public class BusinessLogicController {
 
 		return tmp;
 	}
-
+/**
+ * @author Nicolai
+ * @param currentPlayer
+ * @return Returns an List Of Fields thats pawned or returns null if no fields are pawned
+ * @throws Exception
+ */
 	public OwnableField[] getPawnedFields(Player currentPlayer) throws Exception
 {
-	
+	//Get the fields owned by our player
 	OwnableField[] ownedFields= GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
+	//Creates temporary storage
 	OwnableField[] tmp = new OwnableField[40];
+	//Creates Variables
 	int index = 0;
 	int count = 0;
+	int index2 = 0;
+	//runs all owned fields trough checking if pawned adding them to tmp
 	for(OwnableField fields : ownedFields) 
 	{
 		
 		//count of Pawnedfields
-		
+		//uses Count to create a semi Dynamic array
 		if(fields.isPawned() == true)
 		{
 			
@@ -395,22 +404,25 @@ public class BusinessLogicController {
 			index++;
 			}
 	}
-		
+	
+	
+	//Creates a New OwnedFields to the right value of pawned fields while clearing all null posts 
 		OwnableField[] cleanVersion = new OwnableField[count];
 		//clear all null posts
-		int index2 = 0;
-		for(OwnableField nullpost : tmp)
+
+		
+		for(OwnableField pawnedFields : tmp)
 		{	
-			if(tmp != null)
+			
+			if(pawnedFields != null)
 			{
-				
-			cleanVersion[index2] = nullpost;
+			cleanVersion[index2] = pawnedFields;
 			index2++;
 			}
 			
 		}
-		
 		return cleanVersion;	
+			
 	}
 
 	/**
