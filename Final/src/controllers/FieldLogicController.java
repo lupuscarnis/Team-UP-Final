@@ -20,7 +20,7 @@ public class FieldLogicController {
 	private FieldLogicController() throws IOException {
 	}
 
-	public void handleFieldAction(Player currentPlayer) throws Exception {
+	public void handleFieldAction(Player currentPlayer, Player[] allPlayers) throws Exception {
 
 		Field currentField = currentPlayer.getCurrentField();
 		UserOption choice = null;
@@ -42,10 +42,17 @@ public class FieldLogicController {
 				if (choice == UserOption.BuyField)
 					{blc.buyLot(currentPlayer);}
 				
-		/*else if(choice == UserOption.NoThanks)
-				{blc.auction(currentPlayer.getCurrentField(), players);
-				blc.buyLot(currentPlayer);
-				*/
+		else if(choice == UserOption.NoThanks)
+				{Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
+				
+					if(highestBidder==null ){Messager.showMessage("ingen gad at købte " +currentPlayer.getCurrentField());}
+				
+					else{
+				blc.buyLot(highestBidder);
+					}
+				
+				
+				}
 				
 			} 
 			else if (of.getOwner() == currentPlayer) {
@@ -73,9 +80,7 @@ public class FieldLogicController {
 			// ingen grund til cast da den bare er en Field type
 			break;
 		case CHANCE:
-			gui.showMessage("you have landed on " + currentField.getFieldType() + " draw a card");
-			ccc.drawChanceCard();
-			ccc.handleDraw(currentPlayer);
+			ccc.handleDraw(currentPlayer, allPlayers);			
 			break;
 		case EXTRATAX:
 			break;

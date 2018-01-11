@@ -18,45 +18,47 @@ import utilities.MyRandom;
 public class ChanceCardController {
 
 	private static ChanceCardController instance;
-	private ChanceCard[] cardArray;
-	//er noedvendig for at at foedselsdagskortet virker, men laver stackoverflow
-	//private GameController GC = new GameController();
-	
+	private ChanceCard[] cardArray = null; // holds all cards from chancedata.txt
+	private GUIController gui = GUIController.getInstance();
+	private GameBoardController gbc = GameBoardController.getInstance();
+
 	private ChanceCardController() throws IOException {
 		this.cardArray = new ChanceLoader().getCards();
 	}
 
-	public ChanceCard drawChanceCard() {
+	// Draws random card from card array
+	private ChanceCard drawNextCard() {
 		int minIndex = 0;
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
 
-		return cardArray[28];
+		return cardArray[0];
 	}
 
-	public void handleDraw(Player player) throws Exception {
+	// Handles the logic regarding all chance cards
+	public void handleDraw(Player player, Player[] allPlayers) throws Exception {
 		// Draw card
-		ChanceCard card = this.drawChanceCard();
+		ChanceCard card = drawNextCard();
 
 		// Draw: Get out of jail for free
 		if (card instanceof GetOutJailForFreeChanceCard) {
 
-			// 31;I anledning af kongens fødselsdag benådes de herved for fængsel. Dette
-			// kort kan opbevares, indtil de får brug for det, eller de kan sælge det.
-			// 32;I anledning af kongens fødselsdag benådes de herved for fængsel. Dette
-			// kort kan opbevares, indtil de får brug for det, eller de kan sælge det.
-
-			switch (card.getId()) {
-
+			// 31+32; I anledning af kongens fødselsdag benådes de herved for fængsel. Dette
+			// kort kan opbevares, indtil de får brug for det, eller de kan sælge det.			
+			switch (card.getId()) {		
+			
 			case 31:
 			case 32:
+				// update logic
+				player.setJailCard(true);
+				
+				// update gui
+				informPlayer(card.getText());				
 				break;
 
 			default:
 				throw new Exception("Case not found!");
 			}
-
-			System.out.println("Get out card trukket");
 		}
 		// Draw: Move
 		else if (card instanceof MoveChanceCard) {
@@ -64,96 +66,104 @@ public class ChanceCardController {
 			Field moveTofield = null;
 
 			switch (card.getId()) {
-			// 1;Ryk brikken frem til det nærmeste rederi og betal to gange den leje han
-			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.
-			// 2;Ryk brikken frem til det nærmeste rederi og betal to gange den leje han
-			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.
+			// 1+2;Ryk brikken frem til det nærmeste rederi og betal to gange den leje han
+			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.			
 			case 1:
 			case 2:
+				// find nearest shipping
+				moveTofield = gbc.getNearestShipping(player.getCurrentField().getFieldNumber());
 				
+				// update gui				
+				gui.showMessage(card.getText());
+				gui.showPromt("");
+				gui.updatePlayerPosition(player.getName(), player.getCurrentField().getFieldNumber(), moveTofield.getFieldNumber());
+				
+				// move player
+				player.setCurrentField(moveTofield);
+				
+				// evalute landed on field
+				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
 				break;
-
-			// Tag ind på rådhuspladsen
-	
-			case 3:
-			{player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
-			Messager.showMoveChanceCard(player, player.getCurrentField());
-			FieldLogicController.getInstance().handleFieldAction(player);
-			
-			break;}
+				
+			// 3:Tag ind på rådhuspladsen
+			case 3: {
+				player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
+				Messager.showMoveChanceCard(player, player.getCurrentField());
+				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
+				break;
+			}
 
 			// Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start,
 			// indkasserer de ikke kr. 4000.
 			case 4:
-			case 5:
-			{player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(11));
-			Messager.showMoveChanceCard(player, player.getCurrentField());
-			// vi maa lige finde ud af det med faengslet, nu er der to muligheder for hvordan han rigtigt "is in jail"
-			FieldLogicController.getInstance().handleFieldAction(player);
-			player.isInJail(true);
-			break;}
-				
+			case 5: {
+				player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(11));
+				Messager.showMoveChanceCard(player, player.getCurrentField());
+				// vi maa lige finde ud af det med faengslet, nu er der to muligheder for
+				// hvordan han rigtigt "is in jail"
+				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
+				player.setIsInJail(true);
+				break;
+			}
 
 			// Ryk tre felter tilbage.
 
-			case 12:{
-			if(player.getCurrentField().getFieldNumber()==3){player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
-			Messager.showMoveChanceCard(player, player.getCurrentField());}
-			
-			else
-				//(player.getCurrentField().getFieldNumber()==1){player.setCurrentField(gbc.getFieldByNumber(38));}
-			{player.setCurrentField(GameBoardController.getInstance().getFieldByNumber( player.getCurrentField().getFieldNumber()-3));
-			Messager.showMoveChanceCard(player, player.getCurrentField());
-			
+			case 12: {
+				if (player.getCurrentField().getFieldNumber() == 3) {
+					player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
+					Messager.showMoveChanceCard(player, player.getCurrentField());
+				}
+
+				else
+				// (player.getCurrentField().getFieldNumber()==1){player.setCurrentField(gbc.getFieldByNumber(38));}
+				{
+					player.setCurrentField(GameBoardController.getInstance()
+							.getFieldByNumber(player.getCurrentField().getFieldNumber() - 3));
+					Messager.showMoveChanceCard(player, player.getCurrentField());
+
+				}
+				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
+				break;
 			}
-			FieldLogicController.getInstance().handleFieldAction(player);
-				break;}
 
 			// Ryk frem til Grønningen. Hvis De passerer start, indkasser da kr. 4000.
 			case 19:
 				// {player
 				break;
-				
-					/*
-					player.setCurrentField(gbc.getFieldByNumber(25));
-				Messager.showMoveChanceCard(player, player.getCurrentField());
-				if(player.getCurrentField().getFieldNumber()<player.getPreviousField().getFieldNumber())
-				{player.deposit(4000);
-				Messager.showPassedStart(player);}
-				flc.handleFieldAction(player);
-				break;
-				
-				*/
-			
+
+			/*
+			 * player.setCurrentField(gbc.getFieldByNumber(25));
+			 * Messager.showMoveChanceCard(player, player.getCurrentField());
+			 * if(player.getCurrentField().getFieldNumber()<player.getPreviousField().
+			 * getFieldNumber()) {player.deposit(4000); Messager.showPassedStart(player);}
+			 * flc.handleFieldAction(player); break;
+			 * 
+			 */
+
 			// Ryk frem til start.
-			case 20:
-			{player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(1));
-			Messager.showMoveChanceCard(player, player.getCurrentField());
-				break;}
+			case 20: {
+				player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(1));
+				Messager.showMoveChanceCard(player, player.getCurrentField());
+				break;
+			}
 
 			// Ryk frem til Frederiksberg Allê. Hvis de passerer start, indkasser kr. 4000.
 			// Ryk frem til Frederiksberg Alle. Hvis de passerer start, indkasser kr. 4000.
 			case 29:
 				// find fields
-				moveTofield = GameBoardController.getInstance().getFieldByName(FieldName.FrederiksbergAlle);
+				moveTofield = gbc.getFieldByName(FieldName.FrederiksbergAlle);
 				Field fromField = player.getCurrentField();
-				
-				
-				
-				GUIController.getInstance().showMessage(card.getText());
-				
-				GUIController.getInstance().showPromt(String.format("(%s):", player.getName()));
-				
-				
-				
-				
 
 				// update player field
 				player.setCurrentField(moveTofield);
 
+				// TODO: Kan det ikke laves smartere?
 				// update gui
-				GUIController.getInstance().updatePlayerPosition(player.getName(), fromField.getFieldNumber(),
-						moveTofield.getFieldNumber());
+				gui.updatePlayerPosition(player.getName(), fromField.getFieldNumber(), moveTofield.getFieldNumber());
+
+				// update gui
+				gui.showMessage(card.getText());
+				gui.showPromt(String.format("(%s):", player.getName()));
 				break;
 
 			// Tag med den nærmeste færge - ryk brikken frem, og hvis du passerer start
@@ -240,42 +250,35 @@ public class ChanceCardController {
 				rc.getAmount();
 				player.deposit(rc.getAmount());
 				Messager.showReceiveChanceCard(player, rc.getAmount());
-				
+
 				// er de ting der kommer nu en lav prioritet
 				break;
 			// 25;De modtager Matador-legatet for værdig trængende, stort kr. 40000. Ved
 			// værdig trængende forstås, at deres formue, d.v.s. Deres kontante penge +
 			// skøder + bygninger ikke overstiger kr. 15000.;
 			case 25:
-				if(player.getNetWorth()<=15000)
-				{player.deposit(40000);
-				Messager.showReceiveChanceCard(player,40000);}
-				else
-				{Messager.showMessage("du er aaaaalt for rig til at gælde som værdigt trængende. Du får intet");}
-				
+				if (player.getNetWorth() <= 15000) {
+					player.deposit(40000);
+					Messager.showReceiveChanceCard(player, 40000);
+				} else {
+					Messager.showMessage("du er aaaaalt for rig til at gælde som værdigt trængende. Du får intet");
+				}
+
 				break;
-				
+
 			// 26;Det er deres fødselsdag. Modtag af hver medspiller kr. 200.;
 			case 26:
-				//nu faar spilleren den rigtige maengde penge, saa skal de andre bare lige miste dem :)
-				//Players[]= GC.getPlayers();
-				
-				//kan komme ind igen naar man faar adgang til player arrayet fra gamecontroller
-//				player.deposit(200*GC.getPlayers().length);
-//				
-//				Messager.showReceiveChanceCard(player,200*GC.getPlayers().length);
-//				for (int i = 0; i < GC.getPlayers().length; i++) {
-//					 GC.getPlayers()[i].withdraw(200);
-//					Messager.showPayChanceCard(GC.getPlayers()[i], 200); }
-				
-				
-//				
-				
-				
-					
-					
-				
-//						
+				// nu faar spilleren den rigtige maengde penge, saa skal de andre bare lige
+				// miste dem :)
+				// Players[]= GC.getPlayers();
+
+				// kan komme ind igen naar man faar adgang til player arrayet fra gamecontroller
+				// player.deposit(200*GC.getPlayers().length);
+				//
+				// Messager.showReceiveChanceCard(player,200*GC.getPlayers().length);
+				// for (int i = 0; i < GC.getPlayers().length; i++) {
+				// GC.getPlayers()[i].withdraw(200);
+				// Messager.showPayChanceCard(GC.getPlayers()[i], 200); }
 				break;
 			default:
 				throw new Exception("Case not found!");
@@ -284,6 +287,11 @@ public class ChanceCardController {
 		}
 	}
 
+	public void informPlayer(String textToDisplay) {
+		
+		gui.showMessage(textToDisplay);
+	}
+	
 	public static ChanceCardController getInstance() throws IOException {
 
 		if (instance == null)

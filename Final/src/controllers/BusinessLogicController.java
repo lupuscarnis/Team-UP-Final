@@ -159,7 +159,7 @@ public class BusinessLogicController {
 			if (field instanceof LotField) {
 				LotField lotField = (LotField) field;
 				playerFieldWorth += (lotField.getPrice()
-						+ (lotField.getHouseCount() + 5 * lotField.getHotelCount()) * lotField.getBuildingCost()) / 2;
+						+ (lotField.getHouseCount() + 5 * lotField.getHotelCount()) * lotField.getBuildingCost())/2;
 			}
 		}
 
@@ -176,7 +176,7 @@ public class BusinessLogicController {
 
 		// update number of houses on lot
 		houseCount = lf.getHouseCount();
-		gui.setHouse(houseCount + 1, lf.getFieldNumber());
+		gui.setHouse(houseCount + 1,lf.getFieldNumber());
 		// update gui
 		gui.updateBalance(player);
 		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
@@ -440,7 +440,7 @@ public class BusinessLogicController {
 
 				// pay player money for pawning
 				field.getOwner().deposit(field.getPawnPrice());
-
+				
 				// update gui (is pawned and balance
 				GUIController.getInstance().setPawnStatus(field.getFieldNumber());
 				GUIController.getInstance().updateBalance(field.getOwner());
@@ -456,10 +456,23 @@ public class BusinessLogicController {
 			throw new Exception("Field never found!");
 	}
 
-	public void auction(Field field, Player[] players) {
-
+	
+	public Player auction(Field field, Player[] players) throws Exception{
+		Player highestBidder = null;
+		int highestBid =0;
+		for (int i = 0; i < players.length; i++) {
+			int newBid = Messager.showAuctionMessage(players[i], field);
+			
+			if(newBid>highestBid){highestBid=newBid; players[i]=highestBidder;}
+		}	
+		if (highestBid ==0){highestBidder=null;}
+		
+	
+			return highestBidder;
+		
+		
+		
 	}
-
 	/**
 	 * @author Nicolai Barnett
 	 * @param result
