@@ -117,8 +117,10 @@ public class GameLogicCtrl {
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 
 		// Throw Die
-		int faceValue = 5;//cup.rollDice();
-		// gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
+		int faceValue = cup.rollDice();
+		gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
+		
+		
 		// Checks if he passes start and gives him money
 		checkPassedStart(currentPlayer, faceValue, true);
 		// get next field
