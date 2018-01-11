@@ -61,7 +61,7 @@ public class GameLogicCtrl {
 		index++;
 		
 		}
-		else {
+		if(!currentPlayer.isDoneThrowing()) {
 			options[index] = UserOption.ThrowDice;
 			index++;
 		}
