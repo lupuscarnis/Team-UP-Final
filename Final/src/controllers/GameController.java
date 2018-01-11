@@ -161,7 +161,7 @@ public class GameController {
 
 					// show pawnable lots
 					OwnableField[] fields = BusinessLogicController.getInstance().getPawnableFields(currentPlayer);
-
+					
 					String[] tmp = new String[fields.length + 1];
 
 					tmp[0] = "- Annuller!";
@@ -192,6 +192,33 @@ public class GameController {
 				case EndTurn:
 					currentPlayer.setDoneThrowing(false);
 					break;
+				case Unpawn:
+				{
+					OwnableField[] pawnedList = BusinessLogicController.getInstance().getPawnedFields(currentPlayer);
+					String[] pawnedNameList = new String[pawnedList.length + 1];
+					
+					pawnedNameList[0] = "Annuller!";
+					int index1 = 1;
+					
+					for(OwnableField field : pawnedList)
+					{
+						
+						pawnedNameList[index1] = field.getTitle();
+						index1++;
+						
+						
+					}
+					
+					String answer = Messager.getSelectionResult(pawnedNameList, currentPlayer.getName());
+
+					// unpawn selected lot
+					if (!answer.equals("Annuller!"))
+						BusinessLogicController.getInstance().unpawn(answer, currentPlayer);
+				
+						
+					break;
+				}
+				
 				default:
 					throw new Exception("Case not found!");
 				}

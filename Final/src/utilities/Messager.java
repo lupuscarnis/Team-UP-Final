@@ -134,6 +134,7 @@ public class Messager {
 
 	public static void showFieldPawned(String fieldName) throws IOException {
 		GUIController.getInstance().showMessage(String.format("Du har nu pantsat \"%s\"", fieldName));
-	}
+	}	
+	
 }
 

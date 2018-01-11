@@ -341,6 +341,8 @@ public class GUIController {
 			return UserOption.IncomeTaxPay4000;
 		if (parseUserOption(UserOption.IncomeTaxPayTenPercent) == result)
 			return UserOption.IncomeTaxPayTenPercent;
+		if (parseUserOption(UserOption.Unpawn) == result)
+			return UserOption.Unpawn;
 		throw new Exception("Translation not found!");
 	}
 
@@ -391,6 +393,8 @@ public class GUIController {
 			return "Betal 4000";
 		case IncomeTaxPayTenPercent:
 			return "Betal 10%";
+		case Unpawn:
+			return "Ophæv Pantsætning";
 		default:
 			throw new Exception("Case not found!");
 		}
@@ -430,7 +434,10 @@ public class GUIController {
 			
 		}
 
-	public void updatePawnStatus(int fieldNumber) {
+	public void setPawnStatus(int fieldNumber) {
 		gui.getFields()[fieldNumber-1].setSubText("PANTSAT");	
-	}	
+	}
+	public void clearPawnStatus(int fieldNumber, String ownerName) throws IOException, Exception {
+		GUIController.getInstance().updateLotOwner(ownerName, fieldNumber);
+	}
 }
