@@ -187,7 +187,7 @@ public class GameController {
 					glc.rollAndMove(currentPlayer);
 
 					// handle possible field actions
-					flc.handleFieldAction(currentPlayer);
+					flc.handleFieldAction(currentPlayer, players);
 					break;
 				case EndTurn:
 					currentPlayer.setDoneThrowing(false);

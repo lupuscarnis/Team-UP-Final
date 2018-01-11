@@ -123,7 +123,7 @@ public class GameLogicCtrl {
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 
 		// Throw Die
-		int faceValue = cup.rollDice();
+		int faceValue = 2;//cup.rollDice();
 		gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
 		
 		
