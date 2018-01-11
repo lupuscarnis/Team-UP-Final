@@ -397,8 +397,8 @@ public class GUIController {
 	}
 /**
  * shows the dice on the gui with a roll and small delay
- * @param value1
- * @param value2
+ * @param Dice 1 Value
+ * @param Dice 2 Value
  * @throws InterruptedException
  */
 	public void showDice(int Dice1, int Dice2) throws InterruptedException
