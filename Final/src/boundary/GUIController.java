@@ -343,7 +343,6 @@ public class GUIController {
 			return UserOption.IncomeTaxPayTenPercent;
 		if(parseUserOption(UserOption.bidOnField) == result)
 			return UserOption.bidOnField;
-
 		if (parseUserOption(UserOption.GetOutOfJailCard) == result)
 			return UserOption.GetOutOfJailCard;
 		if (parseUserOption(UserOption.PayToLeaveJail) == result)
