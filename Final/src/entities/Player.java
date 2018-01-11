@@ -121,11 +121,11 @@ public class Player {
 		return this.previousField;
 	}
 
-	public void isInJail(boolean isInJail) {
+	public void setIsInJail(boolean isInJail) {
 		this.isInJail = isInJail;
 	}
 
-	public boolean isInJail() {
+	public boolean GetIsInJail() {
 
 		return this.isInJail;
 	}
