@@ -190,7 +190,7 @@ public class GameController {
 					flc.handleFieldAction(currentPlayer, players);
 					break;
 				case GetOutOfJailCard:
-					currentPlayer.isInJail(false);
+					currentPlayer.setIsInJail(false);
 					currentPlayer.setJailCard(false);
 					
 				case EndTurn:
