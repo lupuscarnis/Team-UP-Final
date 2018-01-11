@@ -56,12 +56,12 @@ public class GameLogicCtrl {
 			options[index] = UserOption.EndTurn;
 			index++;
 		} 
-		if(currentPlayer.GetIsInJail()==true)
+		if(currentPlayer.isInJail()==true)
 		{options[index] = UserOption.PayToLeaveJail;
 		index++;
 		
 		}
-		if(currentPlayer.GetIsInJail()==true && currentPlayer.getJailCard()) {
+		if(currentPlayer.isInJail()==true && currentPlayer.getJailCard()) {
 			options[index] = UserOption.GetOutOfJailCard;
 			index++;
 		}

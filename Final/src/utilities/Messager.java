@@ -144,8 +144,13 @@ public class Messager {
 		int bid;
 		// det er muligvis et problem at der ligger saa meget logik i Messager, men det er i haab om at 
 		// Bussinesslogiccontroller ikke direkte interegerer med Gui'en
-		UserOption[] options ={GUIController.getInstance().parseFromStringToUserOption(bf), GUIController.getInstance().parseFromStringToUserOption(nt)};
-	UserOption choice = presentOptions(options, player.getName());
+		//UserOption[] options ={GUIController.getInstance().parseFromStringToUserOption(bf), GUIController.getInstance().parseFromStringToUserOption(nt)};
+	//UserOption choice = presentOptions(options, player.getName());
+	
+	
+	UserOption choice = GUIController.getInstance().showOptions("kid",new UserOption[] {UserOption.bidOnField,UserOption.NoThanks});
+	
+	
 	if (choice==GUIController.getInstance().parseFromStringToUserOption(bf)){
 		showMessage(player.getName()+ " skal indtaste sit bud");
 		bid = GUIController.getInstance().getUsersInt();
