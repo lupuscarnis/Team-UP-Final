@@ -196,7 +196,7 @@ public class BusinessLogicController {
 		LotField lf = (LotField) player.getCurrentField();
 
 		// withdraw money (5 times the cost of a house)
-		player.withdraw(lf.getPrice() * 5);
+		player.withdraw(lf.getBuildingCost() * 5);
 
 		// set owner
 		lf.setOwner(player);
