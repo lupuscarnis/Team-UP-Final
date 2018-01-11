@@ -66,7 +66,7 @@
   </class>  
   <class id="8" language="java" name="utilities.Messager" project="Kode" file="/Kode/src/utilities/Messager.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="4450" y="1077"/>    
+    <position height="-1" width="-1" x="4448" y="1073"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      

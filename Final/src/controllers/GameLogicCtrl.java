@@ -57,7 +57,10 @@ public class GameLogicCtrl {
 			index++;
 		} 
 		if(currentPlayer.isInJail()==true)
-		{}
+		{options[index] = UserOption.Pay1000;
+		index++;
+		
+		}
 		else {
 			options[index] = UserOption.ThrowDice;
 			index++;
