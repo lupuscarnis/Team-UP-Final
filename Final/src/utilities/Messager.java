@@ -139,8 +139,9 @@ public class Messager {
 		//Player highestBidder = null;
 		GUIController.getInstance().showMessage(player.getName()+ " kan nu byde på grunden "+field);
 		//return highestBidder;
-		
-		UserOption[] options = null;
+		String bf = "bidOnFIeld";
+		String nt = "NoThanks";
+		UserOption[] options ={GUIController.getInstance().parseFromStringToUserOption(bf), GUIController.getInstance().parseFromStringToUserOption(nt)};
 	presentOptions(options, player.getName());
 	
 	}

@@ -319,7 +319,7 @@ public class GUIController {
 	 * @return
 	 * @throws Exception
 	 */
-	private UserOption parseFromStringToUserOption(String result) throws Exception {
+	public UserOption parseFromStringToUserOption(String result) throws Exception {
 
 		if (parseUserOption(UserOption.BuyHotel) == result)
 			return UserOption.BuyHotel;
@@ -435,4 +435,10 @@ public class GUIController {
 	public void updatePawnStatus(int fieldNumber) {
 		gui.getFields()[fieldNumber-1].setSubText("PANTSAT");	
 	}	
+	public int getUsersInt(){
+		String input = "Giv bud";
+		return gui.getUserInteger(input);
+		
+	}
+	
 }
