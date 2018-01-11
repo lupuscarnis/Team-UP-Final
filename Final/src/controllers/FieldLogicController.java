@@ -40,7 +40,10 @@ public class FieldLogicController {
 
 				// user opted to buy field
 				if (choice == UserOption.BuyField)
-					blc.buyLot(currentPlayer);
+					{blc.buyLot(currentPlayer);}
+				
+//				else(choice == UserOption.NoThanks)
+//				{blc.}
 			}
 			// pay rent
 			else {
