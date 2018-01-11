@@ -135,18 +135,25 @@ public class Messager {
 	public static void showFieldPawned(String fieldName) throws IOException {
 		GUIController.getInstance().showMessage(String.format("Du har nu pantsat \"%s\"", fieldName));
 	}
-	public static void showAuctionMessage(Player player, Field field) throws Exception{
+	public static int showAuctionMessage(Player player, Field field) throws Exception{
 		//Player highestBidder = null;
 		GUIController.getInstance().showMessage(player.getName()+ " kan nu byde på grunden "+field);
 		//return highestBidder;
 		String bf = "bidOnFIeld";
 		String nt = "NoThanks";
+		int bid;
 		UserOption[] options ={GUIController.getInstance().parseFromStringToUserOption(bf), GUIController.getInstance().parseFromStringToUserOption(nt)};
-	presentOptions(options, player.getName());
-	
+	UserOption choice = presentOptions(options, player.getName());
+	if (choice==GUIController.getInstance().parseFromStringToUserOption(bf)){
+		showMessage(player.getName()+ " skal indtaste sit bud");
+		bid = GUIController.getInstance().getUsersInt();
+		
 	}
+	else{showMessage("du har valgt ikke at deltage i auktionen");}
+	bid = 0;
 	
-	
+	return bid;
+}
 	
 	
 	
