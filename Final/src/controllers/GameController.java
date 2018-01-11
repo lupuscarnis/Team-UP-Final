@@ -49,7 +49,24 @@ public class GameController {
 	}
 
 	private boolean gameOver(Player[] players) {
-		// TODO Auto-generated method stub
+		int playerCount = 0;
+		for (Player player : players) {
+			if(player.getBalance()>0) {
+				playerCount++;
+			}
+		}
+		int index = 0;
+		Player[] playersRemaining = new Player[playerCount];
+		for (Player player : players) {
+			if(player.getBalance()>0) {
+				playersRemaining[index] = player;
+				index++;
+			}
+		}
+		
+		if(playersRemaining.length==1) {
+			return true;
+		}
 		return false;
 	}
 
