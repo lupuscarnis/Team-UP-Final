@@ -402,6 +402,8 @@ public class GUIController {
 			return "Benyt benådning";
 		case PayToLeaveJail:
 			return "Betal kaution";
+		case bidOnField:
+			return "byd på ejendommen";
 		default:
 			throw new Exception("Case not found!");
 		}

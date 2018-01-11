@@ -139,7 +139,7 @@ public class Messager {
 		//Player highestBidder = null;
 		GUIController.getInstance().showMessage(player.getName()+ " kan nu byde på grunden "+field);
 		//return highestBidder;
-		String bf = "bidOnFIeld";
+		String bf = "bidOnField";
 		String nt = "NoThanks";
 		int bid;
 		// det er muligvis et problem at der ligger saa meget logik i Messager, men det er i haab om at 

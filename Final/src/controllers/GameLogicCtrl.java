@@ -127,7 +127,7 @@ public class GameLogicCtrl {
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 
 		// Throw Die
-		int faceValue = 30;//cup.rollDice();
+		int faceValue = 3;//cup.rollDice();
 		gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
 		
 		
