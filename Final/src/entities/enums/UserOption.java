@@ -10,5 +10,8 @@ public enum UserOption {
 	NoThanks, 
 	PayRent,	
 	IncomeTaxPayTenPercent, 
-	IncomeTaxPay4000
+	IncomeTaxPay4000,
+	Pay1000,
+	TryRolling,
+	Unpawn,
 }

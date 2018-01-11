@@ -413,4 +413,19 @@ public class BusinessLogicController {
 		if (!found)
 			throw new Exception("Field never found!");
 	}
+	/**
+	 * @author Nicolai Barnett
+	 * @param result
+	 * @param owner
+	 */
+//	 public void setPawnState(String result, Player owner)
+//	 {
+//		 switch(result)
+//		 
+//	 case
+//		 
+//		 
+//	 }
+//	
+	
 }
