@@ -32,6 +32,21 @@ public class Messager {
 		return GUIController.getInstance().showOptions(CHOOSE, new UserOption[] { UserOption.BuyField, UserOption.NoThanks });
 	}
 
+	public static UserOption showWantToBuildHouseMessage(String title, String playerName) throws Exception {
+		GUIController.getInstance().showMessage("you have landed on \"" + title + "\", which you already own. Do you wish to build a house here?");
+		
+		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);;
+		
+		return GUIController.getInstance().showOptions(CHOOSE, new UserOption[] { UserOption.BuyHouse, UserOption.NoThanks });
+	}
+
+	public static UserOption showWantToBuildHotelMessage(String title, String playerName) throws Exception {
+		GUIController.getInstance().showMessage("you have landed on \"" + title + "\", which you already own. Do you wish to build a hotel here?");
+		
+		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);;
+		
+		return GUIController.getInstance().showOptions(CHOOSE, new UserOption[] { UserOption.BuyHotel, UserOption.NoThanks });
+	}	
 	public static void showLotBoughtMessage(OwnableField of) throws IOException, Exception {
 		Player player = of.getOwner();
 

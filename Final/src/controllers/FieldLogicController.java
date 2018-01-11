@@ -40,7 +40,24 @@ public class FieldLogicController {
 
 				// user opted to buy field
 				if (choice == UserOption.BuyField)
-					blc.buyLot(currentPlayer);
+					{blc.buyLot(currentPlayer);}
+				
+		/*else if(choice == UserOption.NoThanks)
+				{blc.auction(currentPlayer.getCurrentField(), players);
+				blc.buyLot(currentPlayer);
+				*/
+				
+			} 
+			else if (of.getOwner() == currentPlayer) {
+				
+				//Player wants to buy a house
+				choice = Messager.showWantToBuildHouseMessage(of.getTitle(), currentPlayer.getName());
+				
+				// user opted to build a house
+				if (choice == UserOption.BuyHouse)
+					blc.buildHouse(currentPlayer);
+				
+
 			}
 			// pay rent
 			else {

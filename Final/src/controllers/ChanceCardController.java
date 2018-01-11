@@ -2,8 +2,6 @@ package controllers;
 
 import java.io.IOException;
 
-import org.omg.CORBA.Current;
-
 import boundary.GUIController;
 import entities.Player;
 import entities.chancecard.ChanceCard;
@@ -23,7 +21,7 @@ public class ChanceCardController {
 	private ChanceCard[] cardArray;
 	//er noedvendig for at at foedselsdagskortet virker, men laver stackoverflow
 	//private GameController GC = new GameController();
-	GUIController gui = GUIController.getInstance();
+	private GUIController gui = GUIController.getInstance();
 	private GameBoardController gbc = GameBoardController.getInstance();
 	
 	private ChanceCardController() throws IOException {

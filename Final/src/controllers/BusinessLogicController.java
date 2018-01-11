@@ -4,9 +4,8 @@ import java.io.IOException;
 
 import boundary.GUIController;
 import entities.Player;
-import entities.enums.BreweriesOwned;
 import entities.enums.UserOption;
-import entities.field.BreweryField;
+import entities.field.Field;
 import entities.field.LotField;
 import entities.field.OwnableField;
 import utilities.Messager;
@@ -17,7 +16,7 @@ import utilities.Messager;
  * Class intended to hold logic reg. business transactions etc.
  *
  */
-//
+
 // TODO: Implement class
 public class BusinessLogicController {
 
@@ -171,12 +170,13 @@ public class BusinessLogicController {
 
 	public void buildHouse(Player player) throws Exception {
 		LotField lf = (LotField) player.getCurrentField();
-
+		int houseCount;
 		// withdraw money (Price of one house)
 		player.withdraw(lf.getBuildingCost());
 
 		// update number of houses on lot
-
+		houseCount = lf.getHouseCount();
+		gui.setHouse(houseCount + 1,lf.getFieldNumber());
 		// update gui
 		gui.updateBalance(player);
 		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
@@ -413,4 +413,25 @@ public class BusinessLogicController {
 		if (!found)
 			throw new Exception("Field never found!");
 	}
+
+	public void auction(Field field, Player[] players){
+		
+		
+	}
+	/**
+	 * @author Nicolai Barnett
+	 * @param result
+	 * @param owner
+	 */
+//	 public void setPawnState(String result, Player owner)
+//	 {
+//		 switch(result)
+//		 
+//	 case
+//		 
+//		 
+//	 }
+//	
+	
+
 }
