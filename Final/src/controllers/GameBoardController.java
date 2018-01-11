@@ -9,6 +9,7 @@ import entities.enums.LotColor;
 import entities.field.Field;
 import entities.field.LotField;
 import entities.field.OwnableField;
+import entities.field.ShippingField;
 import utilities.FieldLoader;
 
 public class GameBoardController {
@@ -33,9 +34,36 @@ public class GameBoardController {
 	// Finde n�rmeste f�rge (fra nuv�r. pos)
 	// Find n�rmeste rederi (fra nuv�r. pos)
 	public Field getNearestShipping(int currentPosition) {
-		// TODO Auto-generated method stub
+
+		ShippingField[] allShipping = this.getAllShippingFields();
+
+		for (Field field : fieldArray) {
+
+		}
+
+		// shipping fields: 6-16-26-36
+
 		return null;
 	};
+
+	// returns all shipping fields
+	private ShippingField[] getAllShippingFields() {
+
+		int length =4;
+		
+		ShippingField[] tmp = new ShippingField[4]; // Only 4 shipping fields
+		int index = 0;
+		for (OwnableField field : tmp) {
+			
+			if(field.getFieldType()==FieldType.SHIPPING)
+			{
+				tmp[index]= (ShippingField) field;
+				index++;				
+			}			
+		}	
+
+		return tmp;
+	}
 
 	// TODO: Skal hedder "getFieldByTitle"
 	public Field getFieldByName(FieldName fieldToFind) throws Exception {
