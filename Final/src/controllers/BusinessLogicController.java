@@ -413,7 +413,8 @@ public class BusinessLogicController {
 			throw new Exception("Field never found!");
 	}
 
-	public void auction(Field field){
+	public void auction(Field field, Player[] players){
+		
 		
 	}
 	/**
