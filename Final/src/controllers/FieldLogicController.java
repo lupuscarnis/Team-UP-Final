@@ -20,7 +20,7 @@ public class FieldLogicController {
 	private FieldLogicController() throws IOException {
 	}
 
-	public void handleFieldAction(Player currentPlayer) throws Exception {
+	public void handleFieldAction(Player currentPlayer, Player[] allPlayers) throws Exception {
 
 		Field currentField = currentPlayer.getCurrentField();
 		UserOption choice = null;
@@ -74,9 +74,7 @@ public class FieldLogicController {
 			// ingen grund til cast da den bare er en Field type
 			break;
 		case CHANCE:
-			gui.showMessage("you have landed on " + currentField.getFieldType() + " draw a card");
-			ccc.drawChanceCard();
-			ccc.handleDraw(currentPlayer);
+			ccc.handleDraw(currentPlayer, allPlayers);			
 			break;
 		case EXTRATAX:
 			break;

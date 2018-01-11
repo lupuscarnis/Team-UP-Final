@@ -49,8 +49,8 @@ public class GUIController {
 	public String[] getNewPlayerNames() {
 
 		// For testing - DONT REMOVE JUST COMMENT OUT :)
-		//if (1 == 1)
-			//return new String[] { "Huga", "Hanne", "Balder" };
+		if (1 == 1)
+			return new String[] { "Huga", "Hanne", "Balder" };
 
 		// get number of players
 		String noOfPlayers = gui.getUserSelection("Vælg antal spillere", "3", "4", "5", "6");
@@ -343,6 +343,11 @@ public class GUIController {
 			return UserOption.IncomeTaxPayTenPercent;
 		if(parseUserOption(UserOption.bidOnField) == result)
 			return UserOption.bidOnField;
+
+		if (parseUserOption(UserOption.GetOutOfJailCard) == result)
+			return UserOption.GetOutOfJailCard;
+		if (parseUserOption(UserOption.PayToLeaveJail) == result)
+			return UserOption.PayToLeaveJail;
 		throw new Exception("Translation not found!");
 	}
 
@@ -393,6 +398,10 @@ public class GUIController {
 			return "Betal 4000";
 		case IncomeTaxPayTenPercent:
 			return "Betal 10%";
+		case GetOutOfJailCard:
+			return "Benyt benådning";
+		case PayToLeaveJail:
+			return "Betal kaution";
 		default:
 			throw new Exception("Case not found!");
 		}
