@@ -32,7 +32,7 @@ public class ChanceCardController {
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
 
-		return cardArray[30];
+		return cardArray[31];
 	}
 
 	// Handles the logic regarding all chance cards
@@ -45,16 +45,19 @@ public class ChanceCardController {
 
 			// 31+32; I anledning af kongens fødselsdag benådes de herved for fængsel. Dette
 			// kort kan opbevares, indtil de får brug for det, eller de kan sælge det.			
-			switch (card.getId()) {
-			
+			switch (card.getId()) {		
 			
 			case 31:
 			case 32:
+				
+				System.out.println(player.getJailCard());
 				// update logic
 				player.setJailCard(true);
 				
 				// update gui
 				informPlayer(card.getText());
+				
+				System.out.println(player.getJailCard());
 				
 				break;
 
@@ -98,7 +101,7 @@ public class ChanceCardController {
 				// vi maa lige finde ud af det med faengslet, nu er der to muligheder for
 				// hvordan han rigtigt "is in jail"
 				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
-				player.isInJail(true);
+				player.setIsInJail(true);
 				break;
 			}
 
