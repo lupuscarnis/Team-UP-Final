@@ -15,4 +15,5 @@ public enum UserOption {
 	GetOutOfJailCard,
 	TryRolling,
 	Unpawn,
+	bidOnField,
 }
