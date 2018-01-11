@@ -487,8 +487,8 @@ public class BusinessLogicController {
 	}
 	/**
 	 * @author Nicolai Barnett
-	 * @param result
-	 * @param owner
+	 * @param result The field to be unpawned.
+	 * @param owner Owner of the field.
 	 * @throws Exception
 	 */
 	public void unpawn(String result, Player owner) throws Exception {
@@ -496,8 +496,31 @@ public class BusinessLogicController {
 
 		for (OwnableField fields : fieldsOwned) {
 			if (fields.getTitle().equals(result)) {
-				owner.withdraw((int) (fields.getPawnPrice() / 10) + fields.getPawnPrice());
-
+				
+				int Value = 0;
+				int calculations;
+				// gets modulus and devision the pawn price untill i get a number the is correcet
+				//calc holds the remainder after i have devided by 100 
+				// if its over 50 i round up and if its below i round down
+				//value just lets me know how many times i have mutiply 100 with to get the right 
+				//100
+				
+					calculations = ((fields.getPawnPrice() / 10)%100);
+					Value +=	((fields.getPawnPrice() / 10)/100);
+							
+				
+				if(calculations >= 50)
+				{
+					calculations = 100;
+				}
+				else {
+					calculations = 0;
+				}
+				owner.withdraw(Value*100+calculations);
+					
+				
+				
+				GUIController.getInstance().updateBalance(owner);
 				fields.setPawned(false);
 				GUIController.getInstance().clearPawnStatus(fields.getFieldNumber(), owner.getName());
 
