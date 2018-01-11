@@ -49,8 +49,8 @@ public class GUIController {
 	public String[] getNewPlayerNames() {
 
 		// For testing - DONT REMOVE JUST COMMENT OUT :)
-		if (1 == 1)
-			return new String[] { "Huga", "Hanne", "Balder" };
+		//if (1 == 1)
+			//return new String[] { "Huga", "Hanne", "Balder" };
 
 		// get number of players
 		String noOfPlayers = gui.getUserSelection("Vælg antal spillere", "3", "4", "5", "6");
@@ -363,7 +363,7 @@ public class GUIController {
 			rollDecreaser2 -= 1;
 			rollDecreaser1 -= 1;
 		gui.setDice(((int)(Math.random()*maxValue)+minValue), rollDecreaser1, ((int)(Math.random()*maxValue)+minValue), rollDecreaser2);
-		Thread.sleep(300);
+		Thread.sleep(30);
 		}
 		gui.setDice(value1, 3, value2, 3);					
 	}
