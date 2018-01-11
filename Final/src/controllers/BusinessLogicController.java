@@ -412,11 +412,10 @@ public class BusinessLogicController {
 		if (!found)
 			throw new Exception("Field never found!");
 	}
-<<<<<<< HEAD
+
 	public void auction(Field field){
 		
 	}
-=======
 	/**
 	 * @author Nicolai Barnett
 	 * @param result
@@ -432,5 +431,5 @@ public class BusinessLogicController {
 //	 }
 //	
 	
->>>>>>> branch '2.-iteration' of https://github.com/lupuscarnis/Team-UP-Final.git
+
 }
