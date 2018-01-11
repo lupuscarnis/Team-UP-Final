@@ -417,8 +417,9 @@ public class BusinessLogicController {
 	public Player auction(Field field, Player[] players) throws Exception{
 		Player highestBidder = null;
 		for (int i = 0; i < players.length; i++) {
-			Messager.showAuctionMessage(players[i], field);
-			
+			int newBid = Messager.showAuctionMessage(players[i], field);
+			int highestBid =0;
+			if(newBid>highestBid){highestBid=newBid; players[i]=highestBidder;}
 		}	
 			return highestBidder;
 			
