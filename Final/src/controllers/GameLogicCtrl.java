@@ -156,10 +156,7 @@ public class GameLogicCtrl {
 		// Update gui
 		gui.movePlayer(currentPlayer);
 		}
-		if(currentPlayer.isInJail()) {
-			
-		}
-		else {
+		if(currentPlayer.getRollDoubleStreak()==3) {
 			handleGoToJail(currentPlayer);
 			Messager.showRollStreakJail(currentPlayer);
 		}
