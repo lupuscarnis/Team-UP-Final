@@ -136,6 +136,7 @@ public class GameLogicCtrl {
 		if(cup.rolledDouble()) {
 			int streak = currentPlayer.getRollDoubleStreak();
 			currentPlayer.setRollDoubleStreak(streak+1);
+			currentPlayer.setIsInJail(false);
 		}
 		if(!cup.rolledDouble()) {
 			currentPlayer.setRollDoubleStreak(0);
