@@ -170,12 +170,13 @@ public class BusinessLogicController {
 
 	public void buildHouse(Player player) throws Exception {
 		LotField lf = (LotField) player.getCurrentField();
-
+		int houseCount;
 		// withdraw money (Price of one house)
 		player.withdraw(lf.getBuildingCost());
 
 		// update number of houses on lot
-
+		houseCount = lf.getHouseCount();
+		gui.setHouse(houseCount + 1,lf.getFieldNumber());
 		// update gui
 		gui.updateBalance(player);
 		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
