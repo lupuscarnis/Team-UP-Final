@@ -144,7 +144,7 @@ public class Messager {
 
 	public static void showFieldPawned(String fieldName) throws IOException {
 		GUIController.getInstance().showMessage(String.format("Du har nu pantsat \"%s\"", fieldName));
-	}
+	}	
 	public static int showAuctionMessage(Player player, Field field) throws Exception{
 		//Player highestBidder = null;
 		GUIController.getInstance().showMessage(player.getName()+ " kan nu byde på grunden "+field);

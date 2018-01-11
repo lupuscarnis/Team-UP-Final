@@ -347,6 +347,8 @@ public class GUIController {
 			return UserOption.GetOutOfJailCard;
 		if (parseUserOption(UserOption.PayToLeaveJail) == result)
 			return UserOption.PayToLeaveJail;
+		if (parseUserOption(UserOption.Unpawn) == result)
+			return UserOption.Unpawn;
 		throw new Exception("Translation not found!");
 	}
 
@@ -359,22 +361,6 @@ public class GUIController {
 	 * @return
 	 * @throws Exception
 	 */
-	public void showDice(int value1, int value2) throws InterruptedException
-	{
-		int minValue=1,maxValue=6;
-		int rollDecreaser1 = 6;
-		int rollDecreaser2 = 6;
-		for(int i=0; i<=6;i++)
-		{
-			rollDecreaser2 -= 1;
-			rollDecreaser1 -= 1;
-		gui.setDice(((int)(Math.random()*maxValue)+minValue), rollDecreaser1, ((int)(Math.random()*maxValue)+minValue), rollDecreaser2);
-		Thread.sleep(30);
-		}
-		gui.setDice(value1, 3, value2, 3);					
-	}
-	
-	
 	private String parseUserOption(UserOption option) throws Exception {
 		switch (option) {
 		case PayRent:
@@ -403,17 +389,43 @@ public class GUIController {
 			return "Betal kaution";
 		case bidOnField:
 			return "byd på ejendommen";
+		case Unpawn:
+			return "Ophæv Pantsætning";
 		default:
 			throw new Exception("Case not found!");
 		}
 	}
-
+/**
+ * shows the dice on the gui with a roll and small delay
+ * @param value1
+ * @param value2
+ * @throws InterruptedException
+ */
+	public void showDice(int Dice1, int Dice2) throws InterruptedException
+	{
+		int minValue=1,maxValue=6;
+		int rollDecreaser1 = 6;
+		int rollDecreaser2 = 6;
+		for(int i=0; i<=6;i++)
+		{
+			rollDecreaser2 -= 1;
+			rollDecreaser1 -= 1;
+		gui.setDice(((int)(Math.random()*maxValue)+minValue), rollDecreaser1, ((int)(Math.random()*maxValue)+minValue), rollDecreaser2);
+		Thread.sleep(30);
+		}
+		gui.setDice(Dice1, 3, Dice2, 3);					
+	}
 	public void updatePlayerPosition(String playerName, int fromField, int toField) throws Exception {		
 		moveCar(fromField, toField, findPlayer(playerName));
 	}
 	
 	
-
+/**
+ * Creates the multiple choice buttons
+ * @param label whats next to the buttons
+ * @param strings String array of the button you pressed.
+ * @return Returns a string of tge button you pressed. 
+ */
 	public String getSelection(String label, String[] strings) {
 		return gui.getUserSelection(label, strings);		
 	}
@@ -430,8 +442,8 @@ public class GUIController {
 	}
 	/**
 	 * @author Nicolai
-	 * @param hasHotel
-	 * @param fieldNumber'
+	 * @param hasHotel if true a hotel is placed
+	 * @param fieldNumber where the hotel should be placed
 	 * Sets A hotel or takes it off.
 	 */
 	public void setHotel(boolean hasHotel, int fieldNumber) {
@@ -442,9 +454,12 @@ public class GUIController {
 			
 		}
 
-	public void updatePawnStatus(int fieldNumber) {
+	public void setPawnStatus(int fieldNumber) {
 		gui.getFields()[fieldNumber-1].setSubText("PANTSAT");	
-	}	
+	}
+	public void clearPawnStatus(int fieldNumber, String ownerName) throws IOException, Exception {
+		GUIController.getInstance().updateLotOwner(ownerName, fieldNumber);
+	}
 	public int getUsersInt(){
 		String input = "Giv bud";
 		return gui.getUserInteger(input);

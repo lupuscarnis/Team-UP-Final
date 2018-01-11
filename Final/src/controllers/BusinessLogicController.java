@@ -371,6 +371,48 @@ public class BusinessLogicController {
 		return tmp;
 	}
 
+	public OwnableField[] getPawnedFields(Player currentPlayer) throws Exception
+{
+	
+	OwnableField[] ownedFields= GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
+	OwnableField[] tmp = new OwnableField[40];
+	int index = 0;
+	int count = 0;
+	for(OwnableField fields : ownedFields) 
+	{
+		
+		//count of Pawnedfields
+		
+		if(fields.isPawned() == true)
+		{
+			
+			tmp[index] = ownedFields[index];
+			index++;
+			count++;
+		}
+		else {
+			
+			index++;
+			}
+	}
+		
+		OwnableField[] cleanVersion = new OwnableField[count];
+		//clear all null posts
+		int index2 = 0;
+		for(OwnableField nullpost : tmp)
+		{	
+			if(tmp != null)
+			{
+				
+			cleanVersion[index2] = nullpost;
+			index2++;
+			}
+			
+		}
+		
+		return cleanVersion;	
+	}
+
 	/**
 	 * Indicates if a player can pawn any lots or not. *
 	 * 
@@ -400,7 +442,7 @@ public class BusinessLogicController {
 				field.getOwner().deposit(field.getPawnPrice());
 				
 				// update gui (is pawned and balance
-				GUIController.getInstance().updatePawnStatus(field.getFieldNumber());
+				GUIController.getInstance().setPawnStatus(field.getFieldNumber());
 				GUIController.getInstance().updateBalance(field.getOwner());
 
 				// confirm in gui
@@ -414,6 +456,7 @@ public class BusinessLogicController {
 			throw new Exception("Field never found!");
 	}
 
+	
 	public Player auction(Field field, Player[] players) throws Exception{
 		Player highestBidder = null;
 		int highestBid =0;
@@ -434,16 +477,22 @@ public class BusinessLogicController {
 	 * @author Nicolai Barnett
 	 * @param result
 	 * @param owner
+	 * @throws Exception
 	 */
-//	 public void setPawnState(String result, Player owner)
-//	 {
-//		 switch(result)
-//		 
-//	 case
-//		 
-//		 
-//	 }
-//	
-	
+	public void unpawn(String result, Player owner) throws Exception {
+		OwnableField[] fieldsOwned = GameBoardController.getInstance().getFieldsByOwner(owner);
+
+		for (OwnableField fields : fieldsOwned) {
+			if (fields.getTitle().equals(result)) {
+				owner.withdraw((int) (fields.getPawnPrice() / 10) + fields.getPawnPrice());
+
+				fields.setPawned(false);
+				GUIController.getInstance().clearPawnStatus(fields.getFieldNumber(), owner.getName());
+
+			}
+
+		}
+
+	}
 
 }
