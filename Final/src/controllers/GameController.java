@@ -137,7 +137,9 @@ public class GameController {
 
 				// stopper currentplayer for at blive til next player.
 			} else { // find next player
-				currentPlayer = glc.getNextPlayer(players);
+				do{
+					currentPlayer = glc.getNextPlayer(players);
+				} while(currentPlayer.getBalance()==0);
 			}
 
 			/*

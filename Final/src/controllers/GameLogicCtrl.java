@@ -144,7 +144,7 @@ public class GameLogicCtrl {
 		
 		gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
 		
-		if(currentPlayer.getRollDoubleStreak()<3) {
+		if(currentPlayer.getRollDoubleStreak()<3 && !currentPlayer.isInJail()) {
 		// Checks if he passes start and gives him money
 		checkPassedStart(currentPlayer, faceValue, true);
 		// get next field
@@ -155,6 +155,9 @@ public class GameLogicCtrl {
 
 		// Update gui
 		gui.movePlayer(currentPlayer);
+		}
+		if(currentPlayer.isInJail()) {
+			
 		}
 		else {
 			handleGoToJail(currentPlayer);
