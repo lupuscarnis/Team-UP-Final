@@ -42,10 +42,11 @@ public class FieldLogicController {
 				if (choice == UserOption.BuyField)
 					{blc.buyLot(currentPlayer);}
 				
-//				else(choice == UserOption.NoThanks)
-//				{blc.}
-					blc.buyLot(currentPlayer);
+		else if(choice == UserOption.NoThanks)
+				{blc.auction(currentPlayer.getCurrentField());
+				//blc.buyLot(currentPlayer);
 				
+				}
 			} else if (of.getOwner() == currentPlayer) {
 				
 				//Player wants to buy a house
