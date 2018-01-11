@@ -194,11 +194,12 @@ public class GameController {
 				case GetOutOfJailCard:
 					currentPlayer.setIsInJail(false);
 					currentPlayer.setJailCard(false);
+					break;
 				case PayToLeaveJail:
 					currentPlayer.withdraw(1000);
 					gui.updateBalance(currentPlayer);
 					currentPlayer.setIsInJail(false);
-				
+					break;				
 				case EndTurn:
 					currentPlayer.setDoneThrowing(false);
 					break;
