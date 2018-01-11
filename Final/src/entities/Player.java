@@ -125,7 +125,7 @@ public class Player {
 		this.isInJail = isInJail;
 	}
 
-	public boolean GetIsInJail() {
+	public boolean isInJail() {
 
 		return this.isInJail;
 	}

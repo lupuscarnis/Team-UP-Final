@@ -31,36 +31,34 @@ public class GameBoardController {
 		return instance;
 	}
 
-	// Finde n�rmeste f�rge (fra nuv�r. pos)
 	// Find n�rmeste rederi (fra nuv�r. pos)
-	public Field getNearestShipping(int currentPosition) {
+	public ShippingField getNearestShipping(int currentPosition) throws Exception {
 
-		ShippingField[] allShipping = this.getAllShippingFields();
+		int start = currentPosition;
+		start = start >= 36 ? 0 : start;
+		
+		Field[] fields = this.getFields();
 
-		for (Field field : fieldArray) {
-
+		for (int i = start; start < fields.length; i++) {
+			if (fields[i].getFieldType() == FieldType.SHIPPING)
+				return (ShippingField) fields[i];
 		}
-
-		// shipping fields: 6-16-26-36
-
-		return null;
+		
+		throw new Exception("Shipping field not found!");
 	};
 
 	// returns all shipping fields
 	private ShippingField[] getAllShippingFields() {
 
-		int length =4;
-		
 		ShippingField[] tmp = new ShippingField[4]; // Only 4 shipping fields
 		int index = 0;
 		for (OwnableField field : tmp) {
-			
-			if(field.getFieldType()==FieldType.SHIPPING)
-			{
-				tmp[index]= (ShippingField) field;
-				index++;				
-			}			
-		}	
+
+			if (field.getFieldType() == FieldType.SHIPPING) {
+				tmp[index] = (ShippingField) field;
+				index++;
+			}
+		}
 
 		return tmp;
 	}

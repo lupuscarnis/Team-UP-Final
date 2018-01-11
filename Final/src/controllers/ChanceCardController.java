@@ -32,7 +32,7 @@ public class ChanceCardController {
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
 
-		return cardArray[31];
+		return cardArray[0];
 	}
 
 	// Handles the logic regarding all chance cards
@@ -49,23 +49,16 @@ public class ChanceCardController {
 			
 			case 31:
 			case 32:
-				
-				System.out.println(player.getJailCard());
 				// update logic
 				player.setJailCard(true);
 				
 				// update gui
-				informPlayer(card.getText());
-				
-				System.out.println(player.getJailCard());
-				
+				informPlayer(card.getText());				
 				break;
 
 			default:
 				throw new Exception("Case not found!");
 			}
-
-			System.out.println("Get out card trukket");
 		}
 		// Draw: Move
 		else if (card instanceof MoveChanceCard) {
@@ -73,22 +66,30 @@ public class ChanceCardController {
 			Field moveTofield = null;
 
 			switch (card.getId()) {
-			// 1;Ryk brikken frem til det nærmeste rederi og betal to gange den leje han
-			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.
-			// 2;Ryk brikken frem til det nærmeste rederi og betal to gange den leje han
-			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.
+			// 1+2;Ryk brikken frem til det nærmeste rederi og betal to gange den leje han
+			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.			
 			case 1:
 			case 2:
-
+				// find nearest shipping
+				moveTofield = gbc.getNearestShipping(player.getCurrentField().getFieldNumber());
+				
+				// update gui				
+				gui.showMessage(card.getText());
+				gui.showPromt("");
+				gui.updatePlayerPosition(player.getName(), player.getCurrentField().getFieldNumber(), moveTofield.getFieldNumber());
+				
+				// move player
+				player.setCurrentField(moveTofield);
+				
+				// evalute landed on field
+				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
 				break;
-
-			// Tag ind på rådhuspladsen
-
+				
+			// 3:Tag ind på rådhuspladsen
 			case 3: {
 				player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
 				Messager.showMoveChanceCard(player, player.getCurrentField());
 				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
-
 				break;
 			}
 

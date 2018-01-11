@@ -231,7 +231,7 @@ public class GameLogicCtrl {
 		int fromField = currentPlayer.getCurrentField().getFieldNumber();
 
 		// put player in jail
-		currentPlayer.isInJail(true);
+		currentPlayer.setIsInJail(true);
 		currentPlayer.setCurrentField(jail);
 
 		// update gui
