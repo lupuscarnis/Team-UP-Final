@@ -17,7 +17,7 @@ import utilities.Messager;
  * Class intended to hold logic reg. business transactions etc.
  *
  */
-//
+
 // TODO: Implement class
 public class BusinessLogicController {
 

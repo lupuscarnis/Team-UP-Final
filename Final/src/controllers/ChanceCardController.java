@@ -46,11 +46,6 @@ public class ChanceCardController {
 			// 32;I anledning af kongens fødselsdag benådes de herved for fængsel. Dette
 			// kort kan opbevares, indtil de får brug for det, eller de kan sælge det.
 
-			// 31;I anledning af kongens fødselsdag benådes de herved for føngsel. Dette
-			// kort kan opbevares, indtil de før brug for det, eller de kan sælge det.
-			// 32;I anledning af kongens fødselsdag benådes de herved for føngsel. Dette
-			// kort kan opbevares, indtil de før brug for det, eller de kan sælge det.
-
 			switch (card.getId()) {
 
 			case 31:
