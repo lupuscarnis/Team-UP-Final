@@ -43,8 +43,14 @@ public class FieldLogicController {
 					{blc.buyLot(currentPlayer);}
 				
 		else if(choice == UserOption.NoThanks)
-				{Player HighestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
-				blc.buyLot(HighestBidder);
+				{Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
+				
+					if(highestBidder==null ){Messager.showMessage("ingen gad at købte " +currentPlayer.getCurrentField());}
+				
+					else{
+				blc.buyLot(highestBidder);
+					}
+				
 				
 				}
 				
