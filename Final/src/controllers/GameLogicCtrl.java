@@ -55,7 +55,13 @@ public class GameLogicCtrl {
 		if (currentPlayer.isDoneThrowing()) {
 			options[index] = UserOption.EndTurn;
 			index++;
-		} else {
+		} 
+		if(currentPlayer.isInJail()==true)
+		{options[index] = UserOption.Pay1000;
+		index++;
+		
+		}
+		else {
 			options[index] = UserOption.ThrowDice;
 			index++;
 		}
