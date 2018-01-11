@@ -6,6 +6,7 @@ import entities.Player;
 import entities.enums.FieldType;
 import entities.enums.UserOption;
 import entities.field.Field;
+import entities.field.LotField;
 import entities.field.OwnableField;
 import utilities.Messager;
 
@@ -28,47 +29,101 @@ public class FieldLogicController {
 		switch (currentField.getFieldType()) {
 
 		case LOT:
-		case SHIPPING:
-		case BREWERY:
-			OwnableField of = (OwnableField) currentField;
+//			OwnableField of = (OwnableField) currentField;
+			LotField lf = (LotField) currentField;
+			
+			// no owner! Player can buy
+			if (lf.getOwner() == null) {
 
-			// no owner!
-			if (of.getOwner() == null) {
+				// Check if player can afford to buy the lot
+				if (blc.userCanAfford(currentPlayer.getBalance(), lf)) {
 
-				// TODO: What if player don't have the money?
-				choice = Messager.showWantToBuyMessage(of.getTitle(), currentPlayer.getName());
+					choice = Messager.showWantToBuyMessage(lf.getTitle(), currentPlayer.getName());
 
-				// user opted to buy field
-				if (choice == UserOption.BuyField)
+					// user opted to buy field
+					if (choice == UserOption.BuyField)
 					{blc.buyLot(currentPlayer);}
-				
-		else if(choice == UserOption.NoThanks)
-				{Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
-				
+
+					// Check if player was presented with a choice or no choice was given (a little redundant)
+					else if(choice == UserOption.NoThanks || choice == null)
+					{
+						Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
+
+
+						if(highestBidder==null ){Messager.showMessage("ingen gad at købte " +currentPlayer.getCurrentField());}
+
+						else{
+							blc.buyLot(highestBidder);
+						}
+
+					} 
+
+				// If the player cannot afford to buy, still give the other players the possibility to buy it on auction 
+				} else {
+
+					Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
+
+
 					if(highestBidder==null ){Messager.showMessage("ingen gad at købte " +currentPlayer.getCurrentField());}
-				
+
 					else{
-				blc.buyLot(highestBidder);
+						blc.buyLot(highestBidder);
 					}
-				
-				
+
 				}
-				
 			} 
-			else if (of.getOwner() == currentPlayer) {
+			// Player owns this lot, has balance and lot has < 4 houses = Player can build a house
+			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT && blc.userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4 ) {
 				
 				//Player wants to buy a house
-				choice = Messager.showWantToBuildHouseMessage(of.getTitle(), currentPlayer.getName());
-				
+				choice = Messager.showWantToBuildHouseMessage(lf.getTitle(), currentPlayer.getName());
+
 				// user opted to build a house
 				if (choice == UserOption.BuyHouse)
-					blc.buildHouse(currentPlayer);
+					{blc.buildHouse(currentPlayer);}
+
+			}
+			// Player owns this lot, has balance and has 4 houses on it and no hotel already = Player can build a hotel
+			else if (lf.getOwner() == currentPlayer  && currentField.getFieldType() == FieldType.LOT && blc.userCanAffordHotel(currentPlayer.getBalance(), lf) && lf.getHouseCount() == 4 && lf.getHotelCount() != 1) {
 				
+				//Player wants to buy a house
+				choice = Messager.showWantToBuildHotelMessage(lf.getTitle(), currentPlayer.getName());
+
+				// user opted to build a house
+				if (choice == UserOption.BuyHotel)
+					{blc.buildHotel(currentPlayer);}
 
 			}
 			// pay rent
 			else {
-				if (!of.isPawned())
+				if (!lf.isPawned())
+					blc.payRent(currentPlayer);
+				else
+					gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
+			}
+			break;
+			
+		case SHIPPING:
+		case BREWERY:
+			OwnableField ofSB = (OwnableField) currentField;
+			// no owner! Player can buy
+			if (ofSB.getOwner() == null) {
+				
+				// Check if player can afford to buy the lot
+				if (blc.userCanAfford(currentPlayer.getBalance(), ofSB)) {
+				
+					choice = Messager.showWantToBuyMessage(ofSB.getTitle(), currentPlayer.getName());
+
+					// user opted to buy field
+					if (choice == UserOption.BuyField)
+					{blc.buyLot(currentPlayer);}
+					
+				}
+
+			}
+			// pay rent
+			else {
+				if (!ofSB.isPawned())
 					blc.payRent(currentPlayer);
 				else
 					gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");

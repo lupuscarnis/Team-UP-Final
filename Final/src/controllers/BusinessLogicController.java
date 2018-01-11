@@ -170,13 +170,11 @@ public class BusinessLogicController {
 
 	public void buildHouse(Player player) throws Exception {
 		LotField lf = (LotField) player.getCurrentField();
-		int houseCount;
 		// withdraw money (Price of one house)
 		player.withdraw(lf.getBuildingCost());
 
 		// update number of houses on lot
-		houseCount = lf.getHouseCount();
-		gui.setHouse(houseCount + 1,lf.getFieldNumber());
+		gui.setHouse(lf.getHouseCount() + 1,lf.getFieldNumber());
 		// update gui
 		gui.updateBalance(player);
 		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
@@ -194,10 +192,15 @@ public class BusinessLogicController {
 	 */
 	public void buildHotel(Player player) throws Exception {
 		LotField lf = (LotField) player.getCurrentField();
-
 		// withdraw money (5 times the cost of a house)
 		player.withdraw(lf.getBuildingCost() * 5);
 
+		// update number of houses on lot
+		lf.setHouseCount(0);
+		
+		// update number of hotels on lot
+		lf.setHotelCount(1);
+		
 		// set owner
 		lf.setOwner(player);
 
@@ -252,21 +255,6 @@ public class BusinessLogicController {
 		return instance;
 	}
 
-	/**
-	 * Added by Frederik on 09-01-2018 00:17:56
-	 * 
-	 * Check if user can afford lot
-	 * 
-	 * @param currentPlayer
-	 * @return
-	 */
-	public boolean userCanAfford(int currentPlayerBalance, OwnableField fieldToBuy) {
-
-		if (currentPlayerBalance >= fieldToBuy.getPrice())
-			return true;
-
-		return false;
-	}
 
 	public void payIncomeTax(Player currentPlayer, UserOption choice) throws Exception {
 
@@ -282,6 +270,22 @@ public class BusinessLogicController {
 		Messager.showYouPaidIncomeTax(currentPlayer, sumToCollect);
 	}
 
+	/**
+	 * Added by Frederik on 09-01-2018 00:17:56
+	 * 
+	 * Check if user can afford lot
+	 * 
+	 * @param currentPlayer
+	 * @return
+	 */
+	public boolean userCanAfford(int currentPlayerBalance, OwnableField fieldToBuy) {
+
+		if (currentPlayerBalance >= fieldToBuy.getPrice())
+			return true;
+
+		return false;
+	}
+	
 	/**
 	 * Added by Kasper on 09-01-2018 00:17:56
 	 * 
@@ -334,6 +338,7 @@ public class BusinessLogicController {
 			if (field instanceof LotField) {
 				LotField lf = (LotField) field;
 
+				
 				int buildingCount = lf.getHotelCount() + lf.getHouseCount();
 
 				if (buildingCount == 0 && !lf.isPawned()) {

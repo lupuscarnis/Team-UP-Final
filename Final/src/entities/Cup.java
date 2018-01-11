@@ -75,4 +75,12 @@ public class Cup {
 public String toString() {
 	return "Spaces you traveled: "+ traversedSpace+"Ammount of rerolls:  "+rerolls+"Dice: "+ d1 + " " + d2;
 }
+
+
+public boolean rolledDouble() {
+	if(d1.getValue()==d2.getValue()) {
+		return true;
+	}
+	return false;
+}
 }

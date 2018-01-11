@@ -137,7 +137,9 @@ public class GameController {
 
 				// stopper currentplayer for at blive til next player.
 			} else { // find next player
-				currentPlayer = glc.getNextPlayer(players);
+				do{
+					currentPlayer = glc.getNextPlayer(players);
+				} while(currentPlayer.getBalance()==0);
 			}
 
 			/*
@@ -192,10 +194,12 @@ public class GameController {
 				case GetOutOfJailCard:
 					currentPlayer.setIsInJail(false);
 					currentPlayer.setJailCard(false);
+					break;
 				case PayToLeaveJail:
 					currentPlayer.withdraw(1000);
 					gui.updateBalance(currentPlayer);
-				
+					currentPlayer.setIsInJail(false);
+					break;				
 				case EndTurn:
 					currentPlayer.setDoneThrowing(false);
 					break;

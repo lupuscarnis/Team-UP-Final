@@ -130,10 +130,21 @@ public class GameLogicCtrl {
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 
 		// Throw Die
-		int faceValue = 3;//cup.rollDice();
+		int faceValue = cup.rollDice();
+		
+		//if the player rolled double, increase counter by 1, else set it to 0
+		if(cup.rolledDouble()) {
+			int streak = currentPlayer.getRollDoubleStreak();
+			currentPlayer.setRollDoubleStreak(streak+1);
+			currentPlayer.setIsInJail(false);
+		}
+		if(!cup.rolledDouble()) {
+			currentPlayer.setRollDoubleStreak(0);
+		}
+		
 		gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
 		
-		
+		if(currentPlayer.getRollDoubleStreak()<3 && !currentPlayer.isInJail()) {
 		// Checks if he passes start and gives him money
 		checkPassedStart(currentPlayer, faceValue, true);
 		// get next field
@@ -144,6 +155,11 @@ public class GameLogicCtrl {
 
 		// Update gui
 		gui.movePlayer(currentPlayer);
+		}
+		if(currentPlayer.getRollDoubleStreak()==3) {
+			handleGoToJail(currentPlayer);
+			Messager.showRollStreakJail(currentPlayer);
+		}
 	}
 
 	// checks if the Player Move past start this turn and receives 4000
@@ -171,8 +187,13 @@ public class GameLogicCtrl {
 
 			return players[0];
 		}
-
+		if (previousPlayer.getRollDoubleStreak() > 0) {
+			
+			return previousPlayer;
+		}
+		
 		int indexMax = players.length - 1;
+		
 		for (int i = 0; i < players.length; i++) {
 			Player player = players[i];
 
@@ -187,7 +208,7 @@ public class GameLogicCtrl {
 				}
 			}
 		}
-
+		
 		throw new Exception("Player was not found!");
 	}
 

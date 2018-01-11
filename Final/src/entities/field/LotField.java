@@ -103,7 +103,7 @@ public class LotField extends OwnableField {
 	
 	public void setHouseCount(int numHouses) {
 		
-		this.houseCount = houseCount+1;
+		this.houseCount = numHouses;
 
 	}
 	
@@ -124,13 +124,13 @@ public class LotField extends OwnableField {
 	/**
 	 * Added by Kasper on 1/9-2018
 	 * 
-	 * Handles setting number of hotels on lot 
+	 * Handles setting hotel on lot (bool) 
 	 *  
 	 */
 	
 	public void setHotelCount(int numHotel) {
 		
-		this.hotelCount = hotelCount+1;
+		this.hotelCount = numHotel;
 
 	}
 	

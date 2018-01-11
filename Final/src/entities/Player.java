@@ -7,6 +7,7 @@ public class Player {
 	private String name = "";
 	private Field currentField = null; // Current field player is on.
 	private Field previousField = null; // Previous field player stood on.
+	private int rollDoubleStreak = 0; // How many times in a row the player has rolled a double.
 	private boolean isInJail;
 	private boolean hasJailCard = false;
 	private boolean doneThrowing = false; // Indicates that user is done throwing this turn 
@@ -174,5 +175,21 @@ public class Player {
 
 	public void setDoneThrowing(boolean doneThrowing) {
 		this.doneThrowing = doneThrowing;
+	}
+
+	/**
+	 * @return rollDoubleStreak
+	 */
+	public int getRollDoubleStreak() {
+		return rollDoubleStreak;
+	}
+
+	/**
+	 * Sets rollDoubleStreak to parameter value
+	 * 
+	 * @param newStreak
+	 */
+	public void setRollDoubleStreak(int newStreak) {
+		this.rollDoubleStreak = newStreak;
 	}
 }
