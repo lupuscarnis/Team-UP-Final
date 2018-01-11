@@ -4,9 +4,8 @@ import java.io.IOException;
 
 import boundary.GUIController;
 import entities.Player;
-import entities.enums.BreweriesOwned;
 import entities.enums.UserOption;
-import entities.field.BreweryField;
+import entities.field.Field;
 import entities.field.LotField;
 import entities.field.OwnableField;
 import utilities.Messager;
@@ -414,6 +413,11 @@ public class BusinessLogicController {
 		if (!found)
 			throw new Exception("Field never found!");
 	}
+
+	public void auction(Field field, Player[] players){
+		
+		
+	}
 	/**
 	 * @author Nicolai Barnett
 	 * @param result
@@ -429,4 +433,5 @@ public class BusinessLogicController {
 //	 }
 //	
 	
+
 }
