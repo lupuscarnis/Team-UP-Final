@@ -16,7 +16,7 @@ import utilities.Messager;
  * Class intended to hold logic reg. business transactions etc.
  *
  */
-//
+
 // TODO: Implement class
 public class BusinessLogicController {
 
@@ -412,7 +412,25 @@ public class BusinessLogicController {
 		if (!found)
 			throw new Exception("Field never found!");
 	}
+<<<<<<< HEAD
 	public void auction(Field field){
 		
 	}
+=======
+	/**
+	 * @author Nicolai Barnett
+	 * @param result
+	 * @param owner
+	 */
+//	 public void setPawnState(String result, Player owner)
+//	 {
+//		 switch(result)
+//		 
+//	 case
+//		 
+//		 
+//	 }
+//	
+	
+>>>>>>> branch '2.-iteration' of https://github.com/lupuscarnis/Team-UP-Final.git
 }

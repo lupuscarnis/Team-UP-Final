@@ -89,11 +89,11 @@ public class PlayerController {
 	 * 
 	 * 
 	 *
-	 *public int getAssetValue(Player player) { int combinedValue;
+	 * public int getAssetValue(Player player) { int combinedValue;
 	 *
 	 *
 	 * Find value of proporties combinedValue = combinedValue; // Number of
-	 *hotels combinedValue = combinedValue + (player.getHotelsOwned()*hotelPrice);
+	 * hotels combinedValue = combinedValue + (player.getHotelsOwned()*hotelPrice);
 	 * 
 	 * Number of houses combinedValue =
 	 * combinedValue+(player.getHousesOwned()*housePrice);

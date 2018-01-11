@@ -411,7 +411,7 @@ public class GUIController {
 	 * @param fieldNumber
 	 * sets the number of houses
 	 */
-	public void updateHouseCount(int count,int fieldNumber )
+	public void setHouse(int count,int fieldNumber )
 	{	
 		GUI_Street housePlacer = (GUI_Street)gui.getFields()[fieldNumber-1];		
 		housePlacer.setHouses(count);
@@ -423,11 +423,11 @@ public class GUIController {
 	 * Sets A hotel or takes it off.
 	 */
 	public void setHotel(boolean hasHotel, int fieldNumber) {
-			/*
+			
 		GUI_Street housePlacer = new GUI_Street();
-		housePlacer = (GUI_Street)guiFields[fieldNumber];  
+		housePlacer = (GUI_Street)gui.getFields()[fieldNumber-1];  
 		housePlacer.setHotel(hasHotel);
-			*/
+			
 		}
 
 	public void updatePawnStatus(int fieldNumber) {
