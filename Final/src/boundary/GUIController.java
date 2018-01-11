@@ -341,6 +341,10 @@ public class GUIController {
 			return UserOption.IncomeTaxPay4000;
 		if (parseUserOption(UserOption.IncomeTaxPayTenPercent) == result)
 			return UserOption.IncomeTaxPayTenPercent;
+		if (parseUserOption(UserOption.GetOutOfJailCard) == result)
+			return UserOption.GetOutOfJailCard;
+		if (parseUserOption(UserOption.PayToLeaveJail) == result)
+			return UserOption.PayToLeaveJail;
 		throw new Exception("Translation not found!");
 	}
 
@@ -391,6 +395,10 @@ public class GUIController {
 			return "Betal 4000";
 		case IncomeTaxPayTenPercent:
 			return "Betal 10%";
+		case GetOutOfJailCard:
+			return "Benyt benådning";
+		case PayToLeaveJail:
+			return "Betal kaution";
 		default:
 			throw new Exception("Case not found!");
 		}

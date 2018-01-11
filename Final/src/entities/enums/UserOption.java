@@ -11,7 +11,7 @@ public enum UserOption {
 	PayRent,	
 	IncomeTaxPayTenPercent, 
 	IncomeTaxPay4000,
-	Pay1000,
+	PayToLeaveJail,
 	GetOutOfJailCard,
 	TryRolling,
 	Unpawn,

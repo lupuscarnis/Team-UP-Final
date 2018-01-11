@@ -189,6 +189,10 @@ public class GameController {
 					// handle possible field actions
 					flc.handleFieldAction(currentPlayer);
 					break;
+				case GetOutOfJailCard:
+					currentPlayer.isInJail(false);
+					currentPlayer.setJailCard(false);
+					
 				case EndTurn:
 					currentPlayer.setDoneThrowing(false);
 					break;
