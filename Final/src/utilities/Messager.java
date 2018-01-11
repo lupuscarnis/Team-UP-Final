@@ -100,6 +100,16 @@ public class Messager {
 		
 		GUIController.getInstance().movePlayer(currentPlayer);
 	}
+
+	public static void showRollStreakJail(Player currentPlayer) throws Exception {
+		
+		GUIController.getInstance().showMessage("Du har slået to ens tre gange i træk og må derfor i fængsel.");
+		
+		GUIController.getInstance().showPromt("Du flyttes i fængsel!");
+		
+		GUIController.getInstance().movePlayer(currentPlayer);
+	}
+	
 	public static void  showPassedStart(Player currentPlayer) throws Exception
 	{
 		GUIController.getInstance().updateBalance(currentPlayer);		
@@ -160,9 +170,7 @@ public class Messager {
 	bid = 0;
 	
 	return bid;
-}
-	
-	
+	}
 	
 }
 
