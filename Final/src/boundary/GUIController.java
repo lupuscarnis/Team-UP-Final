@@ -341,6 +341,8 @@ public class GUIController {
 			return UserOption.IncomeTaxPay4000;
 		if (parseUserOption(UserOption.IncomeTaxPayTenPercent) == result)
 			return UserOption.IncomeTaxPayTenPercent;
+		if(parseUserOption(UserOption.bidOnField) == result)
+			return UserOption.bidOnField;
 		throw new Exception("Translation not found!");
 	}
 
