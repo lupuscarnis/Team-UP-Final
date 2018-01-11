@@ -159,8 +159,8 @@ public class BusinessLogicController {
 		for (OwnableField field : fieldsOwned) {
 			if (field instanceof LotField) {
 				LotField lotField = (LotField) field;
-				playerFieldWorth += lotField.getPrice()
-						+ (lotField.getHouseCount() + 5 * lotField.getHotelCount()) * lotField.getBuildingCost();
+				playerFieldWorth += (lotField.getPrice()
+						+ (lotField.getHouseCount() + 5 * lotField.getHotelCount()) * lotField.getBuildingCost())/2;
 			}
 		}
 
