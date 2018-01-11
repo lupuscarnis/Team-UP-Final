@@ -42,10 +42,17 @@ public class FieldLogicController {
 				if (choice == UserOption.BuyField)
 					{blc.buyLot(currentPlayer);}
 				
-		/*else if(choice == UserOption.NoThanks)
-				{blc.auction(currentPlayer.getCurrentField(), players);
-				blc.buyLot(currentPlayer);
-				*/
+		else if(choice == UserOption.NoThanks)
+				{Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
+				
+					if(highestBidder==null ){Messager.showMessage("ingen gad at købte " +currentPlayer.getCurrentField());}
+				
+					else{
+				blc.buyLot(highestBidder);
+					}
+				
+				
+				}
 				
 			} 
 			else if (of.getOwner() == currentPlayer) {

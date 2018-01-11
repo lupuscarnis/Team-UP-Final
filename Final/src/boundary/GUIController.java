@@ -319,7 +319,7 @@ public class GUIController {
 	 * @return
 	 * @throws Exception
 	 */
-	private UserOption parseFromStringToUserOption(String result) throws Exception {
+	public UserOption parseFromStringToUserOption(String result) throws Exception {
 
 		if (parseUserOption(UserOption.BuyHotel) == result)
 			return UserOption.BuyHotel;
@@ -341,6 +341,12 @@ public class GUIController {
 			return UserOption.IncomeTaxPay4000;
 		if (parseUserOption(UserOption.IncomeTaxPayTenPercent) == result)
 			return UserOption.IncomeTaxPayTenPercent;
+		if(parseUserOption(UserOption.bidOnField) == result)
+			return UserOption.bidOnField;
+		if (parseUserOption(UserOption.GetOutOfJailCard) == result)
+			return UserOption.GetOutOfJailCard;
+		if (parseUserOption(UserOption.PayToLeaveJail) == result)
+			return UserOption.PayToLeaveJail;
 		throw new Exception("Translation not found!");
 	}
 
@@ -391,6 +397,12 @@ public class GUIController {
 			return "Betal 4000";
 		case IncomeTaxPayTenPercent:
 			return "Betal 10%";
+		case GetOutOfJailCard:
+			return "Benyt benådning";
+		case PayToLeaveJail:
+			return "Betal kaution";
+		case bidOnField:
+			return "byd på ejendommen";
 		default:
 			throw new Exception("Case not found!");
 		}
@@ -433,4 +445,10 @@ public class GUIController {
 	public void updatePawnStatus(int fieldNumber) {
 		gui.getFields()[fieldNumber-1].setSubText("PANTSAT");	
 	}	
+	public int getUsersInt(){
+		String input = "Giv bud";
+		return gui.getUserInteger(input);
+		
+	}
+	
 }

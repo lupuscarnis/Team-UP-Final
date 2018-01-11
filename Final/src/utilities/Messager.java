@@ -135,5 +135,29 @@ public class Messager {
 	public static void showFieldPawned(String fieldName) throws IOException {
 		GUIController.getInstance().showMessage(String.format("Du har nu pantsat \"%s\"", fieldName));
 	}
+	public static int showAuctionMessage(Player player, Field field) throws Exception{
+		//Player highestBidder = null;
+		GUIController.getInstance().showMessage(player.getName()+ " kan nu byde på grunden "+field);
+		//return highestBidder;
+		String bf = "bidOnField";
+		String nt = "NoThanks";
+		int bid;
+		// det er muligvis et problem at der ligger saa meget logik i Messager, men det er i haab om at 
+		// Bussinesslogiccontroller ikke direkte interegerer med Gui'en
+		UserOption[] options ={GUIController.getInstance().parseFromStringToUserOption(bf), GUIController.getInstance().parseFromStringToUserOption(nt)};
+	UserOption choice = presentOptions(options, player.getName());
+	if (choice==GUIController.getInstance().parseFromStringToUserOption(bf)){
+		showMessage(player.getName()+ " skal indtaste sit bud");
+		bid = GUIController.getInstance().getUsersInt();
+		
+	}
+	else{showMessage("du har valgt ikke at deltage i auktionen");}
+	bid = 0;
+	
+	return bid;
+}
+	
+	
+	
 }
 

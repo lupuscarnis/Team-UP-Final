@@ -56,10 +56,14 @@ public class GameLogicCtrl {
 			options[index] = UserOption.EndTurn;
 			index++;
 		} 
-		if(currentPlayer.isInJail()==true)
-		{options[index] = UserOption.Pay1000;
+		if(currentPlayer.GetIsInJail()==true)
+		{options[index] = UserOption.PayToLeaveJail;
 		index++;
 		
+		}
+		if(currentPlayer.GetIsInJail()==true && currentPlayer.getJailCard()) {
+			options[index] = UserOption.GetOutOfJailCard;
+			index++;
 		}
 		if(!currentPlayer.isDoneThrowing()) {
 			options[index] = UserOption.ThrowDice;
@@ -123,7 +127,7 @@ public class GameLogicCtrl {
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 
 		// Throw Die
-		int faceValue = 2;//cup.rollDice();
+		int faceValue = 3;//cup.rollDice();
 		gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
 		
 		

@@ -414,7 +414,19 @@ public class BusinessLogicController {
 			throw new Exception("Field never found!");
 	}
 
-	public void auction(Field field, Player[] players){
+	public Player auction(Field field, Player[] players) throws Exception{
+		Player highestBidder = null;
+		int highestBid =0;
+		for (int i = 0; i < players.length; i++) {
+			int newBid = Messager.showAuctionMessage(players[i], field);
+			
+			if(newBid>highestBid){highestBid=newBid; players[i]=highestBidder;}
+		}	
+		if (highestBid ==0){highestBidder=null;}
+		
+	
+			return highestBidder;
+		
 		
 		
 	}
