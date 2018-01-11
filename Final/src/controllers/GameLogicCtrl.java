@@ -8,6 +8,7 @@ import entities.Player;
 import entities.enums.FieldName;
 import entities.enums.UserOption;
 import entities.field.Field;
+import entities.field.OwnableField;
 import utilities.Messager;
 import utilities.MyRandom;
 
@@ -40,7 +41,7 @@ public class GameLogicCtrl {
 			options[index] = UserOption.PawnLot;
 			index++;
 		}
-		if(BusinessLogicController.getInstance().canPawn(currentPlayer))
+		if(BusinessLogicController.getInstance().hasPawn(currentPlayer))
 			options[index] = UserOption.Unpawn;
 		index++;
 
