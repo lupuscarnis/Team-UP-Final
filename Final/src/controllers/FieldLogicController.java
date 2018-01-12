@@ -56,7 +56,7 @@ public class FieldLogicController {
 							OwnableField of = (OwnableField) currentField;
 							highestBidder.withdraw(of.getPrice());
 							of.setOwner(highestBidder);
-							Messager.showMessage(highestBidder.getName()+" har nu købt "+currentField);
+							Messager.showMessage(highestBidder.getName()+" har nu købt ");
 						}
 
 					} 

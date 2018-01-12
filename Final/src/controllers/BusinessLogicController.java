@@ -485,7 +485,7 @@ public class BusinessLogicController {
 	}
 
 	public Player auction(Field field, Player[] players) throws Exception {
-		Player highestBidder = null;
+		Player highestBidder = new Player("highestBidder", 0);
 		Player NoBid = new Player("NoBid", 0);
 		int highestBid = 0;
 		for (int i = 0; i < players.length; i++) {
