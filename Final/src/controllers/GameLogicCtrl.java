@@ -141,6 +141,12 @@ public class GameLogicCtrl {
 		}
 		if(!cup.rolledDouble()) {
 			currentPlayer.setRollDoubleStreak(0);
+			if(currentPlayer.isInJail()) {
+				currentPlayer.setTurnsJailed(currentPlayer.getTurnsJailed()+1);
+			}
+			if(currentPlayer.getTurnsJailed()==3) {
+				
+			}
 		}
 		
 		gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
@@ -265,5 +271,14 @@ public class GameLogicCtrl {
 
 		// update gui
 		GUIController.getInstance().updatePlayerPosition(currentPlayer.getName(), fromField, jail.getFieldNumber());
+	}
+	
+	/**
+	 * @throws Exception
+	 */
+	public void payToLeaveJail(Player player) throws Exception {
+		player.withdraw(1000);
+		gui.updateBalance(player);
+		player.setIsInJail(false);
 	}
 }
