@@ -41,7 +41,7 @@ public class GameLogicCtrl {
 			options[index] = UserOption.PawnLot;
 			index++;
 		}
-		if(BusinessLogicController.getInstance().hasPawn(currentPlayer))
+		if (BusinessLogicController.getInstance().hasPawn(currentPlayer))
 			options[index] = UserOption.Unpawn;
 		index++;
 
@@ -59,39 +59,20 @@ public class GameLogicCtrl {
 		if (currentPlayer.isDoneThrowing()) {
 			options[index] = UserOption.EndTurn;
 			index++;
-		} 
-		if(currentPlayer.isInJail()==true)
-		{options[index] = UserOption.PayToLeaveJail;
-		index++;
-		
 		}
-		if(currentPlayer.isInJail()==true && currentPlayer.getJailCard()) {
+		if (currentPlayer.isInJail() == true) {
+			options[index] = UserOption.PayToLeaveJail;
+			index++;
+
+		}
+		if (currentPlayer.isInJail() == true && currentPlayer.getJailCard()) {
 			options[index] = UserOption.GetOutOfJailCard;
 			index++;
 		}
-		if(!currentPlayer.isDoneThrowing()) {
+		if (!currentPlayer.isDoneThrowing()) {
 			options[index] = UserOption.ThrowDice;
 			index++;
 		}
-
-		// if (currentPlayer.isDoneThrowing()) {
-
-		// }
-
-		// if not in jail - you can throw dice
-		// TODO: Check for roll streak
-		// else if (!currentPlayer.isInJail()) {
-		// options[index] = UserOption.ThrowDice;
-		// index++;
-		// }
-
-		/*
-		 * options[index] = UserOption.BuyHouse; index++;
-		 * 
-		 * options[index] = UserOption.BuyHotel; index++;
-		 * 
-		 * options[index] = UserOption.PawnLot; index++;
-		 */
 
 		// empty array of nulls
 		int elements = 0;
@@ -131,51 +112,57 @@ public class GameLogicCtrl {
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 
 		// Throw Die
-		int faceValue = 2;//cup.rollDice();
-		
-		//if the player rolled double, increase counter by 1, else set it to 0
-		if(cup.rolledDouble()) {
+		int faceValue = 36;// cup.rollDice();
+
+		// if the player rolled double, increase counter by 1, else set it to 0
+		if (cup.rolledDouble()) {
 			int streak = currentPlayer.getRollDoubleStreak();
-			currentPlayer.setRollDoubleStreak(streak+1);
+			currentPlayer.setRollDoubleStreak(streak + 1);
 			currentPlayer.setIsInJail(false);
 		}
-		if(!cup.rolledDouble()) {
+		if (!cup.rolledDouble()) {
 			currentPlayer.setRollDoubleStreak(0);
-			if(currentPlayer.isInJail()) {
-				currentPlayer.setTurnsJailed(currentPlayer.getTurnsJailed()+1);
+			if (currentPlayer.isInJail()) {
+				currentPlayer.setTurnsJailed(currentPlayer.getTurnsJailed() + 1);
 			}
-			if(currentPlayer.getTurnsJailed()==3) {
+			if (currentPlayer.getTurnsJailed() == 3) {
 				payToLeaveJail(currentPlayer);
 			}
 		}
-		
+
 		gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
-		
-		if(currentPlayer.getRollDoubleStreak()<3 && !currentPlayer.isInJail()) {
-		// Checks if he passes start and gives him money
-		checkPassedStart(currentPlayer, faceValue, true);
-		// get next field
-		Field nextField = flc.getNextField(currentFieldNo, faceValue);
 
-		// Update current pos on player object
-		currentPlayer.setCurrentField(nextField);
+		if (currentPlayer.getRollDoubleStreak() < 3 && !currentPlayer.isInJail()) {
+			// Checks if he passes start and gives him money
+			checkPassedStart(currentPlayer, faceValue, true);
+			// get next field
+			Field nextField = flc.getNextField(currentFieldNo, faceValue);
 
-		// Update gui
-		gui.movePlayer(currentPlayer);
+			// Update current pos on player object
+			currentPlayer.setCurrentField(nextField);
+
+			// Update gui
+			gui.movePlayer(currentPlayer);
 		}
-		if(currentPlayer.getRollDoubleStreak()==3) {
+		if (currentPlayer.getRollDoubleStreak() == 3) {
 			handleGoToJail(currentPlayer);
 			Messager.showRollStreakJail(currentPlayer);
 		}
 	}
 
 	// checks if the Player Move past start this turn and receives 4000
-	private void checkPassedStart(Player currentPlayer, int faceValue, boolean canReceive) throws Exception {
+	public void checkPassedStart(Player currentPlayer, int faceValue, boolean canReceive) throws Exception {
 		if ((currentPlayer.getCurrentField().getFieldNumber() + faceValue > 40) && (canReceive == true)) {
-			currentPlayer.deposit(4000);
+			BusinessLogicController.getInstance();
+			currentPlayer.deposit(BusinessLogicController.MONEY_FOR_PASSING_START); 
 			Messager.showPassedStart(currentPlayer);
 			System.out.println("Du fik 4000 over start! hurray!");
 		}
+	}
+
+	// check if player passed start
+	public boolean checkHavePassedStart(int fromField, int toField) {
+		return toField < fromField;
 	}
 
 	/**
@@ -195,12 +182,12 @@ public class GameLogicCtrl {
 			return players[0];
 		}
 		if (previousPlayer.getRollDoubleStreak() > 0) {
-			
+
 			return previousPlayer;
 		}
-		
+
 		int indexMax = players.length - 1;
-		
+
 		for (int i = 0; i < players.length; i++) {
 			Player player = players[i];
 
@@ -215,7 +202,7 @@ public class GameLogicCtrl {
 				}
 			}
 		}
-		
+
 		throw new Exception("Player was not found!");
 	}
 
@@ -272,7 +259,7 @@ public class GameLogicCtrl {
 		// update gui
 		GUIController.getInstance().updatePlayerPosition(currentPlayer.getName(), fromField, jail.getFieldNumber());
 	}
-	
+
 	/**
 	 * @throws Exception
 	 */

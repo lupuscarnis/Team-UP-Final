@@ -19,6 +19,11 @@ import utilities.Messager;
 
 // TODO: Implement class
 public class BusinessLogicController {
+	
+	
+	
+	public static final int MONEY_FOR_PASSING_START=4000;
+	
 
 	private static BusinessLogicController instance;
 	private GUIController gui = GUIController.getInstance();
