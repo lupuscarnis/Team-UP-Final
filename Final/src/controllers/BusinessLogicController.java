@@ -517,30 +517,24 @@ public class BusinessLogicController {
 		for (OwnableField fields : fieldsOwned) {
 			if (fields.getTitle().equals(result)) {
 
-				int Value = 0;
-				int calculations;
-				// gets modulus and devision the pawn price untill i get a number the is
-				// correcet
-				// calc holds the remainder after i have devided by 100
-				// if its over 50 i round up and if its below i round down
-				// value just lets me know how many times i have mutiply 100 with to get the
-				// right
-				// 100
+				int cost = 0;
+				
+				// cost is first set to the pawn price + 100 for each 1000 of the pawn price
+				// then if modulus of (pawnprice/10)/100 is different from 0 (if it doesn't divide perfectly with 100) you add 100 to that
+				// it is supposed to round UP to nearest 100
 
-				calculations = ((fields.getPawnPrice() / 10) % 100);
-				Value += ((fields.getPawnPrice() / 10) / 100);
-
-				if (calculations >= 50) {
-					calculations = 100;
-				} else {
-					calculations = 0;
+				cost = fields.getPawnPrice()+((fields.getPawnPrice() / 1000) * 100);
+				if((fields.getPawnPrice()/10)%100!=0) {
+				cost += 100;
 				}
-				owner.withdraw(Value * 100 + calculations);
-
+				
+				owner.withdraw(cost);
 				GUIController.getInstance().updateBalance(owner);
+				
 				fields.setPawned(false);
 				GUIController.getInstance().clearPawnStatus(fields.getFieldNumber(), owner.getName());
-
+				
+			
 			}
 
 		}
