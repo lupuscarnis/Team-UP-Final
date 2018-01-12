@@ -145,7 +145,7 @@ public class GameLogicCtrl {
 				currentPlayer.setTurnsJailed(currentPlayer.getTurnsJailed()+1);
 			}
 			if(currentPlayer.getTurnsJailed()==3) {
-				
+				payToLeaveJail(currentPlayer);
 			}
 		}
 		
