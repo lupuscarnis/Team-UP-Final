@@ -486,6 +486,7 @@ public class BusinessLogicController {
 
 	public Player auction(Field field, Player[] players) throws Exception {
 		Player highestBidder = null;
+		Player NoBid = new Player("NoBid", 0);
 		int highestBid = 0;
 		for (int i = 0; i < players.length; i++) {
 			int newBid = Messager.showAuctionMessage(players[i], field);
@@ -493,11 +494,14 @@ public class BusinessLogicController {
 			if (newBid > highestBid) {
 				highestBid = newBid;
 				players[i] = highestBidder;
+				
+			}
+			if (highestBid == 0) {
+				highestBidder = NoBid;
 			}
 		}
-		if (highestBid == 0) {
-			highestBidder = null;
-		}
+		
+		
 
 		return highestBidder;
 
