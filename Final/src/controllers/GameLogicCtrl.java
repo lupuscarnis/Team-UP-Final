@@ -132,7 +132,8 @@ public class GameLogicCtrl {
 
 		// Throw Die
 		int faceValue = cup.rollDice();
-		
+		//Stores the current diceValue in player.
+		currentPlayer.setLastRoll(faceValue);
 		//if the player rolled double, increase counter by 1, else set it to 0
 		if(cup.rolledDouble()) {
 			int streak = currentPlayer.getRollDoubleStreak();
