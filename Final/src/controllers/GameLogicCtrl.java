@@ -131,7 +131,7 @@ public class GameLogicCtrl {
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 
 		// Throw Die
-		int faceValue = cup.rollDice();
+		int faceValue = 2;//cup.rollDice();
 		
 		//if the player rolled double, increase counter by 1, else set it to 0
 		if(cup.rolledDouble()) {

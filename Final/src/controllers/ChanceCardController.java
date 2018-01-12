@@ -32,7 +32,7 @@ public class ChanceCardController {
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
 
-		return cardArray[0];
+		return cardArray[2];
 	}
 
 	// Handles the logic regarding all chance cards
@@ -66,6 +66,7 @@ public class ChanceCardController {
 			Field moveTofield = null;
 
 			switch (card.getId()) {
+			
 			// 1+2;Ryk brikken frem til det nærmeste rederi og betal to gange den leje han
 			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.			
 			case 1:
@@ -86,9 +87,22 @@ public class ChanceCardController {
 				break;
 				
 			// 3:Tag ind på rådhuspladsen
-			case 3: {
-				player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
-				Messager.showMoveChanceCard(player, player.getCurrentField());
+			case 3: {				
+				// find field
+				moveTofield = gbc.getFieldByName(FieldName.Rådhuspladsen);
+								
+				// opdate gui 
+				gui.showMessage(card.getText());
+				gui.showPromt("");
+				gui.updatePlayerPosition(player.getName(), player.getCurrentField().getFieldNumber(), moveTofield.getFieldNumber());
+								
+				// update logic
+				player.setCurrentField(moveTofield);			
+				
+				//player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
+				//Messager.showMoveChanceCard(player, player.getCurrentField());
+				
+				// eval landed on field
 				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
 				break;
 			}
