@@ -62,18 +62,18 @@ public class FieldLogicController {
 					} 
 
 				// If the player cannot afford to buy, still give the other players the possibility to buy it on auction 
-				} else {
-
-					Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
-
-
-					if(highestBidder==null ){Messager.showMessage("ingen gad at købte " +currentPlayer.getCurrentField());}
-
-					else{
-						blc.buyLot(highestBidder);
-					}
-
-				}
+//				} else {
+//
+//					Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
+//
+//
+//					if(highestBidder==null ){Messager.showMessage("ingen gad at købte " +currentPlayer.getCurrentField());}
+//
+//					else{
+//						blc.buyLot(highestBidder);
+//					}
+//
+//				}
 			} 
 			// Player owns this lot, has balance and lot has < 4 houses = Player can build a house
 			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT && blc.userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4 ) {
@@ -109,7 +109,7 @@ public class FieldLogicController {
 						gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
 					}
 			break;
-			
+			}
 		case SHIPPING:
 		case BREWERY:
 			OwnableField ofSB = (OwnableField) currentField;
