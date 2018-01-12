@@ -502,9 +502,8 @@ public class BusinessLogicController {
 		}
 		
 		
-
+		highestBidder.withdraw(highestBid);
 		return highestBidder;
-
 	}
 
 	/**
