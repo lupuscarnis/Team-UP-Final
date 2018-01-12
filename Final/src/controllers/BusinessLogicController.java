@@ -172,9 +172,9 @@ public class BusinessLogicController {
 		LotField lf = (LotField) player.getCurrentField();
 		// withdraw money (Price of one house)
 		player.withdraw(lf.getBuildingCost());
-		// update number of houses on lot +1
+		// update number of houses on lot + 1
 		lf.setHouseCount(lf.getHouseCount()+1);
-		// update number of houses on lot +1 (GUI)
+		// update number of houses on lot + 1 (GUI)
 		gui.setHouse(lf.getHouseCount() + 1, lf.getFieldNumber());
 		// update gui
 		gui.updateBalance(player);
