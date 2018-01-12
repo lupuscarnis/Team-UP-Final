@@ -274,7 +274,7 @@ public class BusinessLogicController {
 	 * @param currentPlayer
 	 * @return
 	 */
-	public boolean userCanAfford(int currentPlayerBalance, OwnableField fieldToBuy) {
+	public boolean userCanAffordLot(int currentPlayerBalance, OwnableField fieldToBuy) {
 
 		if (currentPlayerBalance >= fieldToBuy.getPrice())
 			return true;
