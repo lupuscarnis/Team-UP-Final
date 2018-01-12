@@ -485,6 +485,7 @@ public class BusinessLogicController {
 	}
 
 	public Player auction(Field field, Player[] players) throws Exception {
+		//lige nu laver du en rigtig spiller om til highestbidder, spilleren slettes, der skal nok sendes noget andet videre
 		Player highestBidder = new Player("highestBidder", 0);
 		Player NoBid = new Player("NoBid", 0);
 		int highestBid = 0;
@@ -493,7 +494,7 @@ public class BusinessLogicController {
 
 			if (newBid > highestBid) {
 				highestBid = newBid;
-				players[i] = highestBidder;
+				  highestBidder=players[i];
 				
 			}
 			if (highestBid == 0) {

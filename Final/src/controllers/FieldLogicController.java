@@ -55,7 +55,7 @@ public class FieldLogicController {
 						else{
 							OwnableField of = (OwnableField) currentField;
 							of.setOwner(highestBidder);
-							//Messager.showLotBoughtMessage(of);
+							Messager.showLotBoughtMessage(of);
 							//at opdatere GUI'en crasher programmet, saa lige nu bruger jeg console til at teste det virker.
 							System.out.println(highestBidder.getBalance());
 							
@@ -75,7 +75,8 @@ public class FieldLogicController {
 //						blc.buyLot(highestBidder);
 //					}
 //
-//				}
+//			
+					}
 			} 
 			// Player owns this lot, has balance and lot has < 4 houses = Player can build a house
 			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT && blc.userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4 ) {
@@ -111,7 +112,7 @@ public class FieldLogicController {
 						gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
 					}
 			break;
-			}
+			
 		case SHIPPING:
 		case BREWERY:
 			OwnableField ofSB = (OwnableField) currentField;
@@ -140,6 +141,7 @@ public class FieldLogicController {
 					else {
 						gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
 					}
+	
 			break;
 		case VISITJAIL:
 			gui.showMessage(
