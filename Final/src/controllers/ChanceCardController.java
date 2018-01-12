@@ -171,15 +171,7 @@ public class ChanceCardController {
 				// resolve new field
 				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);				
 				break;
-			/*
-			 * player.setCurrentField(gbc.getFieldByNumber(25));
-			 * Messager.showMoveChanceCard(player, player.getCurrentField());
-			 * if(player.getCurrentField().getFieldNumber()<player.getPreviousField().
-			 * getFieldNumber()) {player.deposit(4000); Messager.showPassedStart(player);}
-			 * flc.handleFieldAction(player); break;
-			 * 
-			 */
-
+			
 			// Ryk frem til start.
 			case 20: {
 				player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(1));
