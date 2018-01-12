@@ -7,7 +7,6 @@ public class Player {
 	private String name = "";
 	private Field currentField = null; // Current field player is on.
 	private Field previousField = null; // Previous field player stood on.
-	private int bid = 0; // the bid made by a player during auction
 	private int rollDoubleStreak = 0; // How many times in a row the player has rolled a double.
 	private int turnsJailed = 0; // How many turns have the player been jailed.
 	private boolean isInJail;
