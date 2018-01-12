@@ -54,10 +54,11 @@ public class FieldLogicController {
 
 						else{
 							OwnableField of = (OwnableField) currentField;
-							//highestBidder.withdraw(of.getPrice());
 							of.setOwner(highestBidder);
-							//Messager.showLot BoughtMessage(of);
-							break;
+							//Messager.showLotBoughtMessage(of);
+							//at opdatere GUI'en crasher programmet, saa lige nu bruger jeg console til at teste det virker.
+							System.out.println(highestBidder.getBalance());
+							
 						}
 
 					} 
