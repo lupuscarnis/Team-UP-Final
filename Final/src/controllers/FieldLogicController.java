@@ -95,12 +95,16 @@ public class FieldLogicController {
 
 			}
 			// pay rent
-			else {
-				if (!lf.isPawned())
+			// pay rent
+			else if(!lf.isPawned() | !lf.getOwner().isInJail()) {
 					blc.payRent(currentPlayer);
-				else
-					gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
-			}
+				}
+				else if(lf.getOwner().isInJail()){
+					gui.showMessage("Du skal ikke betale leje da feltets ejer er fængslet!");
+				}
+					else {
+						gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
+					}
 			break;
 			
 		case SHIPPING:
@@ -122,12 +126,15 @@ public class FieldLogicController {
 
 			}
 			// pay rent
-			else {
-				if (!ofSB.isPawned())
+			else if(!ofSB.isPawned() | !ofSB.getOwner().isInJail()) {
 					blc.payRent(currentPlayer);
-				else
-					gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
-			}
+				}
+				else if(ofSB.getOwner().isInJail()){
+					gui.showMessage("Du skal ikke betale leje da feltets ejer er fængslet!");
+				}
+					else {
+						gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
+					}
 			break;
 		case VISITJAIL:
 			gui.showMessage(
