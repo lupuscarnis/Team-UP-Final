@@ -50,10 +50,13 @@ public class FieldLogicController {
 						Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
 
 
-						if(highestBidder==null ){Messager.showMessage("ingen gad at købte " +currentPlayer.getCurrentField());}
+						//if(highestBidder==null ){Messager.showMessage("ingen gad at købe " +currentPlayer.getCurrentField());}
 
-						else{
-							blc.buyLot(highestBidder);
+						{
+							OwnableField of = (OwnableField) currentField;
+							highestBidder.withdraw(of.getPrice());
+							of.setOwner(highestBidder);
+							Messager.showMessage(highestBidder.getName()+" har nu købt "+currentField);
 						}
 
 					} 

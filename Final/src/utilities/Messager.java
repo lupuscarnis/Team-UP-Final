@@ -149,8 +149,8 @@ public class Messager {
 		//Player highestBidder = null;
 		GUIController.getInstance().showMessage(player.getName()+ " kan nu byde på grunden "+field);
 		//return highestBidder;
-		String bf = "bidOnField";
-		String nt = "NoThanks";
+		String bf = "byd på ejendommen";
+		String nt = "Nej tak";
 		int bid;
 		// det er muligvis et problem at der ligger saa meget logik i Messager, men det er i haab om at 
 		// Bussinesslogiccontroller ikke direkte interegerer med Gui'en
