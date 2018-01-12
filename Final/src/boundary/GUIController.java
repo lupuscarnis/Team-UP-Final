@@ -68,6 +68,10 @@ public class GUIController {
 					if (name.equals(players[a - 1])) {
 						invalidName = true;
 					}
+					
+					if (name.equals("NoBid")) {
+						invalidName = true;
+					}
 				}
 				// checks if name is empty
 				if (name.length() < 1) {
