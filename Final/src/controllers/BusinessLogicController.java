@@ -159,7 +159,7 @@ public class BusinessLogicController {
 			if (field instanceof LotField) {
 				LotField lotField = (LotField) field;
 				playerFieldWorth += (lotField.getPrice()
-						+ (lotField.getHouseCount() + 5 * lotField.getHotelCount()) * lotField.getBuildingCost())/2;
+						+ (lotField.getHouseCount() + 5 * lotField.getHotelCount()) * lotField.getBuildingCost()) / 2;
 			}
 		}
 
@@ -174,7 +174,7 @@ public class BusinessLogicController {
 		player.withdraw(lf.getBuildingCost());
 
 		// update number of houses on lot
-		gui.setHouse(lf.getHouseCount() + 1,lf.getFieldNumber());
+		gui.setHouse(lf.getHouseCount() + 1, lf.getFieldNumber());
 		// update gui
 		gui.updateBalance(player);
 		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
@@ -197,10 +197,10 @@ public class BusinessLogicController {
 
 		// update number of houses on lot
 		lf.setHouseCount(0);
-		
+
 		// update number of hotels on lot
 		lf.setHotelCount(1);
-		
+
 		// set owner
 		lf.setOwner(player);
 
@@ -255,7 +255,6 @@ public class BusinessLogicController {
 		return instance;
 	}
 
-
 	public void payIncomeTax(Player currentPlayer, UserOption choice) throws Exception {
 
 		int sumToCollect = 0;
@@ -285,7 +284,7 @@ public class BusinessLogicController {
 
 		return false;
 	}
-	
+
 	/**
 	 * Added by Kasper on 09-01-2018 00:17:56
 	 * 
@@ -338,7 +337,6 @@ public class BusinessLogicController {
 			if (field instanceof LotField) {
 				LotField lf = (LotField) field;
 
-				
 				int buildingCount = lf.getHotelCount() + lf.getHouseCount();
 
 				if (buildingCount == 0 && !lf.isPawned()) {
@@ -375,59 +373,72 @@ public class BusinessLogicController {
 
 		return tmp;
 	}
-/**
- * @author Nicolai
- * @param currentPlayer
- * @return Returns an List Of Fields thats pawned or returns null if no fields are pawned
- * @throws Exception
- */
-	public OwnableField[] getPawnedFields(Player currentPlayer) throws Exception
-{
-	//Get the fields owned by our player
-	OwnableField[] ownedFields= GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
-	//Creates temporary storage
-	OwnableField[] tmp = new OwnableField[40];
-	//Creates Variables
-	int index = 0;
-	int count = 0;
-	int index2 = 0;
-	//runs all owned fields trough checking if pawned adding them to tmp
-	for(OwnableField fields : ownedFields) 
-	{
-		
-		//count of Pawnedfields
-		//uses Count to create a semi Dynamic array
-		if(fields.isPawned() == true)
-		{
-			
-			tmp[index] = ownedFields[index];
-			index++;
-			count++;
-		}
-		else {
-			
-			index++;
-			}
-	}
-	
-	
-	//Creates a New OwnedFields to the right value of pawned fields while clearing all null posts 
-		OwnableField[] cleanVersion = new OwnableField[count];
-		//clear all null posts
 
-		
-		for(OwnableField pawnedFields : tmp)
-		{	
-			
-			if(pawnedFields != null)
-			{
-			cleanVersion[index2] = pawnedFields;
-			index2++;
+	/**
+	 * @author Nicolaiq
+	 * @param currentPlayer
+	 * @return Returns an List Of Fields thats pawned or returns null if no fields
+	 *         are pawned
+	 * @throws Exception
+	 */
+	public OwnableField[] getPawnedFields(Player currentPlayer) throws Exception {
+		// Get the fields owned by our player
+		OwnableField[] ownedFields = GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
+		// Creates temporary storage
+		OwnableField[] tmp = new OwnableField[40];
+		// Creates Variables
+		int index = 0;
+		int count = 0;
+		int index2 = 0;
+		// runs all owned fields trough checking if pawned adding them to tmp
+		for (OwnableField fields : ownedFields) {
+
+			// count of Pawnedfields
+			// uses Count to create a semi Dynamic array
+			if (fields.isPawned() == true) {
+
+				tmp[index] = ownedFields[index];
+				index++;
+				count++;
+			} else {
+
+				index++;
 			}
-			
 		}
-		return cleanVersion;	
-			
+
+		// Creates a New OwnedFields to the right value of pawned fields while clearing
+		// all null posts
+		OwnableField[] cleanVersion = new OwnableField[count];
+		// clear all null posts
+
+		for (OwnableField pawnedFields : tmp) {
+
+			if (pawnedFields != null) {
+				cleanVersion[index2] = pawnedFields;
+				index2++;
+			}
+
+		}
+		return cleanVersion;
+
+	}
+
+	public boolean hasPawn(Player currentPlayer) throws Exception {
+		// Get the fields owned by our player
+		OwnableField[] ownedFields = GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
+
+		// runs all owned fields trough checking if pawned
+		for (OwnableField fields : ownedFields) {
+
+			// check if there is a  Pawnedfields
+			if (fields.isPawned() == true) {
+				return true;
+
+			} 
+		}
+		return false;
+
+
 	}
 
 	/**
@@ -457,7 +468,7 @@ public class BusinessLogicController {
 
 				// pay player money for pawning
 				field.getOwner().deposit(field.getPawnPrice());
-				
+
 				// update gui (is pawned and balance
 				GUIController.getInstance().setPawnStatus(field.getFieldNumber());
 				GUIController.getInstance().updateBalance(field.getOwner());
@@ -473,27 +484,31 @@ public class BusinessLogicController {
 			throw new Exception("Field never found!");
 	}
 
-	
-	public Player auction(Field field, Player[] players) throws Exception{
+	public Player auction(Field field, Player[] players) throws Exception {
 		Player highestBidder = null;
-		int highestBid =0;
+		int highestBid = 0;
 		for (int i = 0; i < players.length; i++) {
 			int newBid = Messager.showAuctionMessage(players[i], field);
-			
-			if(newBid>highestBid){highestBid=newBid; players[i]=highestBidder;}
-		}	
-		if (highestBid ==0){highestBidder=null;}
-		
-	
-			return highestBidder;
-		
-		
-		
+
+			if (newBid > highestBid) {
+				highestBid = newBid;
+				players[i] = highestBidder;
+			}
+		}
+		if (highestBid == 0) {
+			highestBidder = null;
+		}
+
+		return highestBidder;
+
 	}
+
 	/**
 	 * @author Nicolai Barnett
-	 * @param result The field to be unpawned.
-	 * @param owner Owner of the field.
+	 * @param result
+	 *            The field to be unpawned.
+	 * @param owner
+	 *            Owner of the field.
 	 * @throws Exception
 	 */
 	public void unpawn(String result, Player owner) throws Exception {
@@ -501,30 +516,27 @@ public class BusinessLogicController {
 
 		for (OwnableField fields : fieldsOwned) {
 			if (fields.getTitle().equals(result)) {
-				
+
 				int Value = 0;
 				int calculations;
-				// gets modulus and devision the pawn price untill i get a number the is correcet
-				//calc holds the remainder after i have devided by 100 
+				// gets modulus and devision the pawn price untill i get a number the is
+				// correcet
+				// calc holds the remainder after i have devided by 100
 				// if its over 50 i round up and if its below i round down
-				//value just lets me know how many times i have mutiply 100 with to get the right 
-				//100
-				
-					calculations = ((fields.getPawnPrice() / 10)%100);
-					Value +=	((fields.getPawnPrice() / 10)/100);
-							
-				
-				if(calculations >= 50)
-				{
+				// value just lets me know how many times i have mutiply 100 with to get the
+				// right
+				// 100
+
+				calculations = ((fields.getPawnPrice() / 10) % 100);
+				Value += ((fields.getPawnPrice() / 10) / 100);
+
+				if (calculations >= 50) {
 					calculations = 100;
-				}
-				else {
+				} else {
 					calculations = 0;
 				}
-				owner.withdraw(Value*100+calculations);
-					
-				
-				
+				owner.withdraw(Value * 100 + calculations);
+
 				GUIController.getInstance().updateBalance(owner);
 				fields.setPawned(false);
 				GUIController.getInstance().clearPawnStatus(fields.getFieldNumber(), owner.getName());
