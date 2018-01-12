@@ -32,7 +32,7 @@ public class ChanceCardController {
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
 
-		return cardArray[2];
+		return cardArray[4];
 	}
 
 	// Handles the logic regarding all chance cards
@@ -99,9 +99,6 @@ public class ChanceCardController {
 				// update logic
 				player.setCurrentField(moveTofield);			
 				
-				//player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
-				//Messager.showMoveChanceCard(player, player.getCurrentField());
-				
 				// eval landed on field
 				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
 				break;
@@ -110,13 +107,17 @@ public class ChanceCardController {
 			// Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start,
 			// indkasserer de ikke kr. 4000.
 			case 4:
-			case 5: {
-				player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(11));
-				Messager.showMoveChanceCard(player, player.getCurrentField());
-				// vi maa lige finde ud af det med faengslet, nu er der to muligheder for
-				// hvordan han rigtigt "is in jail"
-				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
-				player.setIsInJail(true);
+			case 5: {				
+				// find field
+				moveTofield = gbc.getFieldByName(FieldName.Fængslet);
+				
+				// opdate gui 
+				gui.showMessage(card.getText());
+				gui.showPromt("");
+				gui.updatePlayerPosition(player.getName(), player.getCurrentField().getFieldNumber(), moveTofield.getFieldNumber());
+				
+				// handle logic
+				GameLogicCtrl.getInstance().handleGoToJail(player);				
 				break;
 			}
 
