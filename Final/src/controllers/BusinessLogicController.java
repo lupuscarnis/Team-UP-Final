@@ -172,13 +172,14 @@ public class BusinessLogicController {
 		LotField lf = (LotField) player.getCurrentField();
 		// withdraw money (Price of one house)
 		player.withdraw(lf.getBuildingCost());
-
-		// update number of houses on lot
+		// update number of houses on lot + 1
+		lf.setHouseCount(lf.getHouseCount()+1);
+		// update number of houses on lot + 1 (GUI)
 		gui.setHouse(lf.getHouseCount() + 1, lf.getFieldNumber());
 		// update gui
 		gui.updateBalance(player);
 		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
-		gui.showMessage("Du har nu bygget et hotel på grunden: " + lf.getTitle());
+		gui.showMessage("Du har nu bygget et hus på grunden: " + lf.getTitle());
 	}
 
 	/**
@@ -194,16 +195,12 @@ public class BusinessLogicController {
 		LotField lf = (LotField) player.getCurrentField();
 		// withdraw money (5 times the cost of a house)
 		player.withdraw(lf.getBuildingCost() * 5);
-
 		// update number of houses on lot
 		lf.setHouseCount(0);
-
 		// update number of hotels on lot
 		lf.setHotelCount(1);
-
 		// set owner
 		lf.setOwner(player);
-
 		// update gui
 		gui.updateBalance(player);
 		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
