@@ -13,7 +13,7 @@ import utilities.EnumParser;
 
 /**
  * Class is the intermediary between GUI (Boundry) and the rest of the system
- * (Entities)
+ * (Entities). Class is implemented as a Singleton, so .getInstance() is needed instead of new.
  */
 public class GUIController {
 
@@ -22,10 +22,17 @@ public class GUIController {
 	private GUI_Car[] carList = null;
 	private static GUIController instance;
 
+	// default constructor
 	private GUIController() throws IOException {
 		gui = new BoardGenerator().makeBoard();
 	}
 
+	/**
+	 * Returns instance of class (singleton). 
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	public static GUIController getInstance() throws IOException {
 		if (instance == null)
 			instance = new GUIController();
