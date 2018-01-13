@@ -15,12 +15,10 @@ import utilities.Messager;
  * Class intended to hold logic reg. business transactions etc.
  */
 // TODO: Implement class
-public class BusinessLogicController {
+public class BusinessLogicController extends BaseController {
 
 	public static final int MONEY_FOR_PASSING_START = 4000;
-
 	private static BusinessLogicController instance;
-	private GUIController gui = GUIController.getInstance();
 	private GameBoardController gbc = GameBoardController.getInstance();
 
 	public BusinessLogicController() throws IOException {

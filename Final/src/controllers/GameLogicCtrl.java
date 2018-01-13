@@ -14,11 +14,10 @@ import utilities.MyRandom;
 /**
  * TODO: info about class *
  */
-public class GameLogicCtrl {
+public class GameLogicCtrl  extends BaseController{
 	private Player previousPlayer = null; // Who played last turn
 	private Player startPlayer = null; // Who starts first
 	private static GameLogicCtrl instance;
-	private GUIController gui = GUIController.getInstance();
 	private FieldLogicController flc = FieldLogicController.getInstance();
 
 	// TODO: FIX!

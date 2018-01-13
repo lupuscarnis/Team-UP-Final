@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-
 import entities.Player;
 import entities.enums.FieldName;
 import entities.enums.FieldType;

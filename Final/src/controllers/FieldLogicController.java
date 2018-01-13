@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import boundary.GUIController;
 import entities.Player;
 import entities.enums.FieldType;
 import entities.enums.UserOption;
@@ -10,13 +9,11 @@ import entities.field.LotField;
 import entities.field.OwnableField;
 import utilities.Messager;
 
-public class FieldLogicController {
-
+public class FieldLogicController extends BaseController {
 	private static FieldLogicController instance;
 	private BusinessLogicController blc = BusinessLogicController.getInstance();
 	private ChanceCardController ccc = ChanceCardController.getInstance();
 	private controllers.GameBoardController gbc = GameBoardController.getInstance();
-	private GUIController gui = GUIController.getInstance();
 
 	// default constructor.
 	private FieldLogicController() throws IOException {

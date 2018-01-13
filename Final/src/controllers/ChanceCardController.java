@@ -16,14 +16,13 @@ import utilities.ChanceLoader;
 import utilities.Messager;
 import utilities.MyRandom;
 
-public class ChanceCardController {
+public class ChanceCardController extends BaseController {
 
 	private static ChanceCardController instance;
 	private ChanceCard[] cardArray = null; // holds all cards from chancedata.txt
-	private GUIController gui = GUIController.getInstance();
 	private GameBoardController gbc = GameBoardController.getInstance();
 
-	private ChanceCardController() throws IOException {
+	private ChanceCardController()  throws IOException {
 		this.cardArray = new ChanceLoader().getCards();
 	}
 
