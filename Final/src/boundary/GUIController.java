@@ -9,6 +9,7 @@ import gui_fields.*;
 import gui_fields.GUI_Car.Pattern;
 import gui_fields.GUI_Car.Type;
 import gui_main.GUI;
+import utilities.EnumParser;
 
 /**
  * Class is the intermediary between GUI (Boundry) and the rest of the system
@@ -309,111 +310,16 @@ public class GUIController {
 		int index = 0;
 		for (UserOption option : userOptions) {
 
-			options[index] = parseUserOption(option);
+			options[index] = EnumParser.fromUserOptionToStr(option);
 
 			index++;
 		}
 
 		String result = gui.getUserButtonPressed(label, options);
 
-		return parseFromStringToUserOption(result);
+		return EnumParser.fromStrToUserOption(result);
 	}
-
-	/**
-	 * Added by Frederik on 08-01-2018 17:18:14
-	 * 
-	 * Parses user selection (string) to UserOption
-	 * 
-	 * @param result
-	 * @return
-	 * @throws Exception
-	 */
-	// TODO: Ska i egen klasse
-	public UserOption parseFromStringToUserOption(String result) throws Exception {
-
-		if (parseUserOption(UserOption.BuyHotel) == result)
-			return UserOption.BuyHotel;
-		if (parseUserOption(UserOption.BuyHouse) == result)
-			return UserOption.BuyHouse;
-		if (parseUserOption(UserOption.SellHotel) == result)
-			return UserOption.SellHotel;
-		if (parseUserOption(UserOption.SellHouse) == result)
-			return UserOption.SellHouse;
-		if (parseUserOption(UserOption.EndTurn) == result)
-			return UserOption.EndTurn;
-		if (parseUserOption(UserOption.PawnLot) == result)
-			return UserOption.PawnLot;
-		if (parseUserOption(UserOption.ThrowDice) == result)
-			return UserOption.ThrowDice;
-		if (parseUserOption(UserOption.BuyField) == result)
-			return UserOption.BuyField;
-		if (parseUserOption(UserOption.NoThanks) == result)
-			return UserOption.NoThanks;
-		if (parseUserOption(UserOption.PayRent) == result)
-			return UserOption.PayRent;
-		if (parseUserOption(UserOption.IncomeTaxPay4000) == result)
-			return UserOption.IncomeTaxPay4000;
-		if (parseUserOption(UserOption.IncomeTaxPayTenPercent) == result)
-			return UserOption.IncomeTaxPayTenPercent;
-		if (parseUserOption(UserOption.bidOnField) == result)
-			return UserOption.bidOnField;
-		if (parseUserOption(UserOption.GetOutOfJailCard) == result)
-			return UserOption.GetOutOfJailCard;
-		if (parseUserOption(UserOption.PayToLeaveJail) == result)
-			return UserOption.PayToLeaveJail;
-		if (parseUserOption(UserOption.Unpawn) == result)
-			return UserOption.Unpawn;
-		throw new Exception("Translation not found!");
-	}
-
-	/**
-	 * Added by Frederik on 08-01-2018 17:06:36
-	 * 
-	 * Converts from UserOption to text that can be displayed to the user.
-	 * 
-	 * @param option
-	 * @return
-	 * @throws Exception
-	 */
-	private String parseUserOption(UserOption option) throws Exception {
-		switch (option) {
-		case PayRent:
-			return "Betal leje";
-		case NoThanks:
-			return "Nej tak";
-		case BuyField:
-			return "Køb grund";
-		case BuyHotel:
-			return "Køb hotel";
-		case BuyHouse:
-			return "Køb hus";
-		case SellHotel:
-			return "Sælg hotel";
-		case SellHouse:
-			return "Sælg hus";
-		case EndTurn:
-			return "Afslut tur";
-		case PawnLot:
-			return "Pantsæt grund";
-		case ThrowDice:
-			return "Kast terning";
-		case IncomeTaxPay4000:
-			return "Betal 4000";
-		case IncomeTaxPayTenPercent:
-			return "Betal 10%";
-		case GetOutOfJailCard:
-			return "Benyt benådning";
-		case PayToLeaveJail:
-			return "Betal kaution";
-		case bidOnField:
-			return "byd på ejendommen";
-		case Unpawn:
-			return "Ophæv Pantsætning";
-		default:
-			throw new Exception("Case not found!");
-		}
-	}
-
+	
 	/**
 	 * Helper method: Shows the dice on the gui with a roll and small delay
 	 * 
