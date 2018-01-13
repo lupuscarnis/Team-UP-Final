@@ -9,9 +9,10 @@ import gui_fields.*;
 import gui_fields.GUI_Car.Pattern;
 import gui_fields.GUI_Car.Type;
 import gui_main.GUI;
+
 /**
- * Added by Frederik on 06-01-2018 03:02:05
- *
+ * Class is the intermediary between GUI (Boundry) and the rest of the system
+ * (Entities)
  */
 public class GUIController {
 
@@ -32,17 +33,16 @@ public class GUIController {
 	}
 
 	/**
-	 * Added by Frederik on 06-01-2018 03:02:01
+	 * Sets up game with player array from logic. 
 	 * 
-	 * @throws InterruptedException
+	 * @param players
 	 */
 	public void setup(Player[] players) {
-
 		setupPlayers(players);
 	}
 
 	/**
-	 * Added by Frederik on 06-01-2018 03:18:12
+	 * Gets array of player names from the gui at game start 
 	 * 
 	 * @return
 	 */
@@ -68,7 +68,7 @@ public class GUIController {
 					if (name.equals(players[a - 1])) {
 						invalidName = true;
 					}
-					
+
 					if (name.equals("NoBid")) {
 						invalidName = true;
 					}
@@ -106,7 +106,7 @@ public class GUIController {
 		// add players to GUI_Players array
 		int index = 0;
 		for (Player p : players) {
-			// should use the same constant value for game start amount as argument instead
+			// TODO: should use the same constant value for game start amount as argument instead
 			// of hardcoding
 			this.guiPlayers[index] = new GUI_Player(p.getName(), 30000, this.carList[index]);
 
@@ -125,24 +125,27 @@ public class GUIController {
 	}
 
 	/**
-	 * Added by Frederik on 06-01-2018 03:01:41
+	 * Helper method: Adds a player to the playerlist on the (gui)board
+	 * 
+	 * @param player
+	 */
+	private void addPlayerToBoard(GUI_Player player) {
+		this.gui.addPlayer(player);
+	}
+	/**
+	 * Helper method: moves a player on the (gui)board
 	 * 
 	 * @param fromField
 	 * @param toField
 	 * @param player
 	 */
-
-	private void addPlayerToBoard(GUI_Player player) {
-		this.gui.addPlayer(player);
-	}
-
 	private void moveCar(int fromField, int toField, GUI_Player player) {
 		removeCarFromField(fromField, player);
 		addCarToField(toField, player);
 	}
 
 	/**
-	 * Added by Frederik on 06-01-2018 03:01:46
+	 * Helper method: Adds (player piece) car to a field on the (gui)board
 	 * 
 	 * @param fieldNo
 	 * @param player
@@ -152,7 +155,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Added by Frederik on 06-01-2018 03:01:49
+	 * Helper method: Removes a (player piece) car from a field on the (gui)board
 	 * 
 	 * @param fieldNo
 	 * @param player
@@ -161,6 +164,13 @@ public class GUIController {
 		this.gui.getFields()[fieldNo - 1].setCar(player, false);
 	}
 
+	/**
+	 * Helper method: Moves a (player piece) car from one field to another field on
+	 * the (gui)board
+	 * 
+	 * @param playerToMove
+	 * @throws Exception
+	 */
 	public void movePlayer(Player playerToMove) throws Exception {
 
 		int fromField = playerToMove.getPreviousField().getFieldNumber();
@@ -171,6 +181,13 @@ public class GUIController {
 		moveCar(fromField, toField, gPlayer);
 	}
 
+	/**
+	 * Helper method: Looks up a "GUI"-player from a "Logic"-player name.
+	 * 
+	 * @param playerNameToFind
+	 * @return
+	 * @throws Exception
+	 */
 	private GUI_Player findPlayer(String playerNameToFind) throws Exception {
 
 		for (GUI_Player gPlayer : this.guiPlayers) {
@@ -183,9 +200,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Added by Frederik on 06-01-2018 22:51:40
-	 * 
-	 * Changes sub-text of field to show current owner.
+	 * Helper method: Changes sub-text of field to show current owner.
 	 * 
 	 * @param name
 	 * @param fieldId
@@ -199,11 +214,8 @@ public class GUIController {
 		// set subtext with owner name
 		gui.getFields()[fieldId - 1].setSubText("Ejer: " + name);
 	}
-
 	/**
-	 * Added by Frederik on 09-01-2018 00:49:47
-	 * 
-	 * Updates the balance of the player
+	 * Helper method: Updates the player balance. 
 	 * 
 	 * @param currentPlayer
 	 * @throws Exception
@@ -211,12 +223,11 @@ public class GUIController {
 	public void updateBalance(Player currentPlayer) throws Exception {
 		updateBalance(new Player[] { currentPlayer });
 	}
+
 	/**
-	 * Added by Frederik on 06-01-2018 23:30:48
+	 * Helper method: Updates the player balance for each player in the array.
 	 * 
-	 * Updates the balance of the names in the array
-	 * 
-	 * @param names
+	 * @param players
 	 * @throws Exception
 	 */
 	public void updateBalance(Player[] players) throws Exception {
@@ -232,9 +243,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Added by Frederik on 07-01-2018 00:07:55
-	 * 
-	 * Remove player from board
+	 * Helper method: Removes player from the board (he has lost).
 	 * 
 	 * @param playerToRemove
 	 * @throws Exception
@@ -270,9 +279,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Added by Frederik on 07-01-2018 01:25:01
-	 * 
-	 * Removes owner name from lot
+	 * Helper method: Removes owner name from lot field
 	 * 
 	 * @param field
 	 */
@@ -287,14 +294,12 @@ public class GUIController {
 	public void showPromt(String string) {
 		gui.showMessage(string);
 	}
-
 	/**
-	 * Added by Frederik on 08-01-2018 14:18:05
-	 * 
-	 * Can show buttons and return selection
+	 * Helper method: Show buttons to current player for selection.
 	 * 
 	 * @param label
-	 * @param options
+	 * @param userOptions
+	 * @return
 	 * @throws Exception
 	 */
 	public UserOption showOptions(String label, UserOption[] userOptions) throws Exception {
@@ -323,6 +328,7 @@ public class GUIController {
 	 * @return
 	 * @throws Exception
 	 */
+	// TODO: Ska i egen klasse
 	public UserOption parseFromStringToUserOption(String result) throws Exception {
 
 		if (parseUserOption(UserOption.BuyHotel) == result)
@@ -349,7 +355,7 @@ public class GUIController {
 			return UserOption.IncomeTaxPay4000;
 		if (parseUserOption(UserOption.IncomeTaxPayTenPercent) == result)
 			return UserOption.IncomeTaxPayTenPercent;
-		if(parseUserOption(UserOption.bidOnField) == result)
+		if (parseUserOption(UserOption.bidOnField) == result)
 			return UserOption.bidOnField;
 		if (parseUserOption(UserOption.GetOutOfJailCard) == result)
 			return UserOption.GetOutOfJailCard;
@@ -407,75 +413,102 @@ public class GUIController {
 			throw new Exception("Case not found!");
 		}
 	}
-/**
- * shows the dice on the gui with a roll and small delay
- * @param Dice 1 Value
- * @param Dice 2 Value
- * @throws InterruptedException
- */
-	public void showDice(int Dice1, int Dice2) throws InterruptedException
-	{
-		int minValue=1,maxValue=6;
+
+	/**
+	 * Helper method: Shows the dice on the gui with a roll and small delay
+	 * 
+	 * @param dice1
+	 * @param dice2
+	 * @throws InterruptedException
+	 */
+	public void showDice(int dice1, int dice2) throws InterruptedException {
+		int minValue = 1, maxValue = 6;
 		int rollDecreaser1 = 6;
 		int rollDecreaser2 = 6;
-		for(int i=0; i<=6;i++)
-		{
+		for (int i = 0; i <= 6; i++) {
 			rollDecreaser2 -= 1;
 			rollDecreaser1 -= 1;
-		gui.setDice(((int)(Math.random()*maxValue)+minValue), rollDecreaser1, ((int)(Math.random()*maxValue)+minValue), rollDecreaser2);
-		Thread.sleep(30);
+			gui.setDice(((int) (Math.random() * maxValue) + minValue), rollDecreaser1,
+					((int) (Math.random() * maxValue) + minValue), rollDecreaser2);
+			Thread.sleep(30);
 		}
-		gui.setDice(Dice1, 3, Dice2, 3);					
+		gui.setDice(dice1, 3, dice2, 3);
 	}
-	public void updatePlayerPosition(String playerName, int fromField, int toField) throws Exception {		
+
+	/**
+	 * Helper method: Updates the players position on the board
+	 * 
+	 * @param playerName
+	 * @param fromField
+	 * @param toField
+	 * @throws Exception
+	 */
+	public void updatePlayerPosition(String playerName, int fromField, int toField) throws Exception {
 		moveCar(fromField, toField, findPlayer(playerName));
 	}
-	
-	
-/**
- * Creates the multiple choice buttons
- * @param label whats next to the buttons
- * @param strings String array of the button you pressed.
- * @return Returns a string of tge button you pressed. 
- */
-	public String getSelection(String label, String[] strings) {
-		return gui.getUserSelection(label, strings);		
-	}
+
 	/**
-	 * @author Nicolai
+	 * Helper method: Creates drop down list for selection and returns choice.
+	 * 
+	 * @param label
+	 * @param strings
+	 * @return
+	 */
+	public String getSelection(String label, String[] strings) {
+		return gui.getUserSelection(label, strings);
+	}
+
+	/**
+	 * Helper method: Sets houses on a lot field
+	 * 
 	 * @param count
 	 * @param fieldNumber
-	 * sets the number of houses
 	 */
-	public void setHouse(int count,int fieldNumber )
-	{	
-		GUI_Street housePlacer = (GUI_Street)gui.getFields()[fieldNumber-1];		
+	public void setHouse(int count, int fieldNumber) {
+		GUI_Street housePlacer = (GUI_Street) gui.getFields()[fieldNumber - 1];
 		housePlacer.setHouses(count);
 	}
+
 	/**
-	 * @author Nicolai
-	 * @param hasHotel if true a hotel is placed
-	 * @param fieldNumber where the hotel should be placed
-	 * Sets A hotel or takes it off.
+	 * Helper method: Sets hotels on a lot field
+	 * 
+	 * @param hasHotel
+	 * @param fieldNumber
 	 */
 	public void setHotel(boolean hasHotel, int fieldNumber) {
-			
-		GUI_Street housePlacer = new GUI_Street();
-		housePlacer = (GUI_Street)gui.getFields()[fieldNumber-1];  
+		GUI_Street housePlacer = (GUI_Street) gui.getFields()[fieldNumber - 1];
 		housePlacer.setHotel(hasHotel);
-			
-		}
-
-	public void setPawnStatus(int fieldNumber) {
-		gui.getFields()[fieldNumber-1].setSubText("PANTSAT");	
 	}
+
+	/**
+	 * 
+	 * 
+	 * @param fieldNumber
+	 */
+	public void setPawnStatus(int fieldNumber) {
+		gui.getFields()[fieldNumber - 1].setSubText("PANTSAT");
+	}
+
+	/**
+	 * Helper method: Clears pawn label when field is unpawned.
+	 * 
+	 * @param fieldNumber
+	 * @param ownerName
+	 * @throws IOException
+	 * @throws Exception
+	 */
 	public void clearPawnStatus(int fieldNumber, String ownerName) throws IOException, Exception {
 		GUIController.getInstance().updateLotOwner(ownerName, fieldNumber);
 	}
-	public int getUsersInt(){
+
+	/**
+	 * Helper method: Gets user bid when bidding on lot field.
+	 * 
+	 * @return
+	 */
+	public int getUsersInt() {
 		String input = "Giv bud";
 		return gui.getUserInteger(input);
-		
+
 	}
-	
 }
