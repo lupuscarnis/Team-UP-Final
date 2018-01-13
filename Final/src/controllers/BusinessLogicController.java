@@ -491,9 +491,10 @@ public class BusinessLogicController {
 			int newBid = Messager.showAuctionMessage(players[i], field);
 
 			if (newBid > highestBid) {
+				if(highestBidder.getBalance()>highestBid){
 				highestBid = newBid;
-				  highestBidder=players[i];
-				
+				  highestBidder=players[i];}
+				else{Messager.showMessage( highestBidder.getName()+" bød mere end han har råd til, og er diskvalificeret fra at byde");}
 			}
 			if (highestBid == 0) {
 				highestBidder = NoBid;
@@ -501,9 +502,12 @@ public class BusinessLogicController {
 		}
 		
 		
+		
 		highestBidder.withdraw(highestBid);
+	
+		
 		return highestBidder;
-	}
+}
 
 	/**
 	 * @author Nicolai Barnett
