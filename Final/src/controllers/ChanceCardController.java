@@ -264,8 +264,7 @@ public class ChanceCardController {
 				
 				// inform/update player
 				gui.showMessage(card.getText());
-				gui.showPromt("");
-				
+				gui.showPromt("");				
 				
 				// update logic
 				player.withdraw(pc.getAmount());
@@ -277,8 +276,6 @@ public class ChanceCardController {
 			default:
 				throw new Exception("Case not found!");
 			}
-
-			System.out.println("Pay card trukket");
 		}
 		// Draw: Receive
 		else if (card instanceof ReceiveChanceCard) {
@@ -294,7 +291,7 @@ public class ChanceCardController {
 			 * udbytte af Deres aktier kr. 1000.;1000 18;Modtag udbytte af Deres aktier kr.
 			 * 1000.;1000 24;Værdien af egen avl fra nyttehaven udgør kr. 200, som De
 			 * modtager af banken.;200 27;De har vundet i Klasselotteriet Modtag kr. 500;500
-			 */
+			 */			
 			case 7:
 			case 8:
 			case 9:
@@ -306,11 +303,17 @@ public class ChanceCardController {
 			case 24:
 			case 27:
 				ReceiveChanceCard rc = (ReceiveChanceCard) card;
-				rc.getAmount();
+				
+				// inform/update player
+				gui.showMessage(card.getText());
+				gui.showPromt("");	
+				
+				// update logic
 				player.deposit(rc.getAmount());
-				Messager.showReceiveChanceCard(player, rc.getAmount());
-
-				// er de ting der kommer nu en lav prioritet
+				
+				// update (gui) balance
+				gui.updateBalance(player);
+				
 				break;
 			// 25;De modtager Matador-legatet for værdig trængende, stort kr. 40000. Ved
 			// værdig trængende forstås, at deres formue, d.v.s. Deres kontante penge +
