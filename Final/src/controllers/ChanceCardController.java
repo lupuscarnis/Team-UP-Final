@@ -33,8 +33,7 @@ public class ChanceCardController {
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
 		// TODO: REMOVE
-		return cardArray[(GameController.setChanceCardNumberToDraw == -1 ? nextCard
-				: GameController.setChanceCardNumberToDraw - 1)];
+		return cardArray[nextCard];
 	}
 
 	// Handles the logic regarding all chance cards
