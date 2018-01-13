@@ -54,7 +54,7 @@ public class ChanceCardController {
 				player.setJailCard(true);
 
 				// update gui
-				informPlayer(card.getText());
+				gui.showMessage(card.getText());			
 				break;
 
 			default:
@@ -187,7 +187,6 @@ public class ChanceCardController {
 				break;
 			}
 
-			// Ryk frem til Frederiksberg Allê. Hvis de passerer start, indkasser kr. 4000.
 			// Ryk frem til Frederiksberg Alle. Hvis de passerer start, indkasser kr. 4000.
 			case 29:
 				// find fields
@@ -279,18 +278,21 @@ public class ChanceCardController {
 		}
 		// Draw: Receive
 		else if (card instanceof ReceiveChanceCard) {
-
+			
+			ReceiveChanceCard rc = (ReceiveChanceCard) card;
+			
 			switch (card.getId()) {
 			/*
-			 * 7;Deres premieobligation er kommet ud. De modtager kr 1000 af banken.;1000
-			 * 8;Deres premieobligation er kommet ud. De modtager kr 1000 af banken.;1000
-			 * 9;Grundet dyrtiden har de fået en gageforhøjelse. Modtag kr. 1000.;1000
-			 * 11;kommunen har eftergivet et kvartals skat. Hæv i banken kr. 3000.;3000
-			 * 14;De havde en række med elleve rigtige i tipning. Modtag kr. 1000.;1000
-			 * 16;De modtager Deres aktieudbytte. Modtag kr. 1000 af banken. ;1000 17;Modtag
-			 * udbytte af Deres aktier kr. 1000.;1000 18;Modtag udbytte af Deres aktier kr.
-			 * 1000.;1000 24;Værdien af egen avl fra nyttehaven udgør kr. 200, som De
-			 * modtager af banken.;200 27;De har vundet i Klasselotteriet Modtag kr. 500;500
+			 * 7;Deres premieobligation er kommet ud. De modtager kr 1000 af banken.
+			 * 8;Deres premieobligation er kommet ud. De modtager kr 1000 af banken.
+			 * 9;Grundet dyrtiden har de fået en gageforhøjelse. Modtag kr.
+			 * 11;kommunen har eftergivet et kvartals skat. Hæv i banken kr.
+			 * 14;De havde en række med elleve rigtige i tipning. Modtag kr.
+			 * 16;De modtager Deres aktieudbytte. Modtag kr. 1000 af banken.
+			 * 17;Modtag udbytte af Deres aktier kr. 1000.
+			 * 18;Modtag udbytte af Deres aktier kr. 1000.
+			 * 24;Værdien af egen avl fra nyttehaven udgør kr. 200, som De modtager af banken.
+			 * 27;De har vundet i Klasselotteriet Modtag kr. 500;500
 			 */			
 			case 7:
 			case 8:
@@ -301,9 +303,7 @@ public class ChanceCardController {
 			case 17:
 			case 18:
 			case 24:
-			case 27:
-				ReceiveChanceCard rc = (ReceiveChanceCard) card;
-				
+			case 27:			
 				// inform/update player
 				gui.showMessage(card.getText());
 				gui.showPromt("");	
@@ -320,7 +320,7 @@ public class ChanceCardController {
 			// skøder + bygninger ikke overstiger kr. 15000.;
 			case 25:
 				if (player.getNetWorth() <= 15000) {
-					player.deposit(40000);
+					player.deposit(40000); //TODO: skal komme et eller andet sted fra != HARDCODED
 					Messager.showReceiveChanceCard(player, 40000);
 				} else {
 					Messager.showMessage("du er aaaaalt for rig til at gælde som værdigt trængende. Du får intet");
@@ -330,41 +330,31 @@ public class ChanceCardController {
 
 			// 26;Det er deres fødselsdag. Modtag af hver medspiller kr. 200.;
 			case 26:
-				// nu faar spilleren den rigtige maengde penge, saa skal de andre bare lige
-				// miste dem :)
-				// Players[]= GC.getPlayers();
-
-				// kan komme ind igen naar man faar adgang til player arrayet fra gamecontroller
-				// player.deposit(200*GC.getPlayers().length);
-				//
-				// Messager.showReceiveChanceCard(player,200*GC.getPlayers().length);
-				// for (int i = 0; i < GC.getPlayers().length; i++) {
-				// GC.getPlayers()[i].withdraw(200);
-				// Messager.showPayChanceCard(GC.getPlayers()[i], 200); }
+				
+				// inform/update player
+				gui.showMessage(card.getText());
+				gui.showPromt("");	
+				
+				// update logic
+				for (Player p : allPlayers) {
+					
+					int amount = 200;
+					
+					// withdraw money
+					p.withdraw(amount);					
+					
+					// deposit money
+					player.deposit(amount);					
+				}
+				
+				// update gui
+				gui.updateBalance(allPlayers);				
+				
 				break;
 			default:
 				throw new Exception("Case not found!");
 			}
-			System.out.println("Receive card trukket");
 		}
-	}
-
-	// Update GUI: Show info and update player info regarding move chance cards.
-	private void updateAboutMove(Player player, String cardText, int fromField, int toField, boolean updatePlayer,
-			Player[] allPlayers) throws Exception {
-
-		if (updatePlayer)
-			gui.updateBalance(player);
-
-		gui.showMessage(cardText);
-		gui.showPromt("");
-		gui.updatePlayerPosition(player.getName(), fromField, toField);
-
-		FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
-	}
-
-	public void informPlayer(String textToDisplay) {
-		gui.showMessage(textToDisplay);
 	}
 
 	public static ChanceCardController getInstance() throws IOException {
