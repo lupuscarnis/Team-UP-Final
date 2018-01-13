@@ -68,6 +68,10 @@ public class GUIController {
 					if (name.equals(players[a - 1])) {
 						invalidName = true;
 					}
+					
+					if (name.equals("NoBid")) {
+						invalidName = true;
+					}
 				}
 				// checks if name is empty
 				if (name.length() < 1) {
@@ -325,6 +329,10 @@ public class GUIController {
 			return UserOption.BuyHotel;
 		if (parseUserOption(UserOption.BuyHouse) == result)
 			return UserOption.BuyHouse;
+		if (parseUserOption(UserOption.SellHotel) == result)
+			return UserOption.SellHotel;
+		if (parseUserOption(UserOption.SellHouse) == result)
+			return UserOption.SellHouse;
 		if (parseUserOption(UserOption.EndTurn) == result)
 			return UserOption.EndTurn;
 		if (parseUserOption(UserOption.PawnLot) == result)
@@ -373,6 +381,10 @@ public class GUIController {
 			return "Køb hotel";
 		case BuyHouse:
 			return "Køb hus";
+		case SellHotel:
+			return "Sælg hotel";
+		case SellHouse:
+			return "Sælg hus";
 		case EndTurn:
 			return "Afslut tur";
 		case PawnLot:

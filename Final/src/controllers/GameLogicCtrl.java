@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+
 import boundary.GUIController;
 import entities.Cup;
 import entities.Die;
@@ -131,7 +132,10 @@ public class GameLogicCtrl {
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 
 		// Throw Die
-		int faceValue = 2;//cup.rollDice();
+		//Stores the current diceValue in player.
+		int faceValue = cup.rollDice();
+		currentPlayer.setLastRoll(faceValue);
+		
 		
 		//if the player rolled double, increase counter by 1, else set it to 0
 		if(cup.rolledDouble()) {

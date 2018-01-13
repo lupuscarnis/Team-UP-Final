@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.FieldType;
@@ -36,10 +37,10 @@ public class FieldLogicController {
 			if (lf.getOwner() == null) {
 
 				// Check if player can afford to buy the lot
-				if (blc.userCanAfford(currentPlayer.getBalance(), lf)) {
+				if (blc.userCanAffordLot(currentPlayer.getBalance(), lf)) {
 
 					choice = Messager.showWantToBuyMessage(lf.getTitle(), currentPlayer.getName());
-
+					
 					// user opted to buy field
 					if (choice == UserOption.BuyField)
 					{blc.buyLot(currentPlayer);}
@@ -50,30 +51,33 @@ public class FieldLogicController {
 						Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
 
 
-						//if(highestBidder==null ){Messager.showMessage("ingen gad at købe " +currentPlayer.getCurrentField());}
+						if(highestBidder.getName() =="NoBid" ){Messager.showMessage("ingen gad at købe " +currentField);}
 
-						{
+						else{
 							OwnableField of = (OwnableField) currentField;
-							highestBidder.withdraw(of.getPrice());
 							of.setOwner(highestBidder);
-							Messager.showMessage(highestBidder.getName()+" har nu købt "+currentField);
+							Messager.showLotBoughtMessage(of);
+							//at opdatere GUI'en crasher programmet, saa lige nu bruger jeg console til at teste det virker.
+							System.out.println(highestBidder.getBalance());
+							
 						}
 
 					} 
 
 				// If the player cannot afford to buy, still give the other players the possibility to buy it on auction 
-				} else {
-
-					Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
-
-
-					if(highestBidder==null ){Messager.showMessage("ingen gad at købte " +currentPlayer.getCurrentField());}
-
-					else{
-						blc.buyLot(highestBidder);
+//				} else {
+//
+//					Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
+//
+//
+//					if(highestBidder==null ){Messager.showMessage("ingen gad at købte " +currentPlayer.getCurrentField());}
+//
+//					else{
+//						blc.buyLot(highestBidder);
+//					}
+//
+//			
 					}
-
-				}
 			} 
 			// Player owns this lot, has balance and lot has < 4 houses = Player can build a house
 			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT && blc.userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4 ) {
@@ -117,7 +121,7 @@ public class FieldLogicController {
 			if (ofSB.getOwner() == null) {
 				
 				// Check if player can afford to buy the lot
-				if (blc.userCanAfford(currentPlayer.getBalance(), ofSB)) {
+				if (blc.userCanAffordLot(currentPlayer.getBalance(), ofSB)) {
 				
 					choice = Messager.showWantToBuyMessage(ofSB.getTitle(), currentPlayer.getName());
 
@@ -138,6 +142,7 @@ public class FieldLogicController {
 					else {
 						gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
 					}
+	
 			break;
 		case VISITJAIL:
 			gui.showMessage(
