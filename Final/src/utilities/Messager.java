@@ -166,9 +166,9 @@ public class Messager {
 		bid = GUIController.getInstance().getUsersInt();
 		
 	}
-	else{showMessage("du har valgt ikke at deltage i auktionen");}
+	else{showMessage("du har valgt ikke at deltage i auktionen");
 	bid = 0;
-	
+	}
 	return bid;
 	}
 	

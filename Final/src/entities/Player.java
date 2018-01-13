@@ -10,6 +10,7 @@ public class Player {
 	private int rollDoubleStreak = 0; // How many times in a row the player has rolled a double.
 	private int turnsJailed = 0; // How many turns have the player been jailed.
 	private boolean isInJail;
+	private int lastRoll;
 	
 	private boolean hasJailCard = false;
 	private boolean doneThrowing = false; // Indicates that user is done throwing this turn 
@@ -128,7 +129,11 @@ public class Player {
 	public void setIsInJail(boolean isInJail) {
 		this.isInJail = isInJail;
 	}
-
+/**
+ * 
+ * @return Returns the isInJail true if the player is marked for jail 
+ */
+	
 	public boolean isInJail() {
 
 		return this.isInJail;
@@ -209,4 +214,20 @@ public class Player {
 	public void setTurnsJailed(int turnsJailed) {
 		this.turnsJailed = turnsJailed;
 	}
+	/**
+	 * @param int value
+	 */
+	public void setLastRoll(int value)
+	{
+		this.lastRoll = value;
+	}
+	/**
+	 * 
+	 * @return int
+	 */
+	public int getLastRoll()
+	{
+		return this.lastRoll;
+	}
+	
 }

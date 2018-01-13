@@ -1,5 +1,6 @@
 package controllers;
 
+
 import java.io.IOException;
 
 import boundary.GUIController;
@@ -279,7 +280,7 @@ public class BusinessLogicController {
 	 * @param currentPlayer
 	 * @return
 	 */
-	public boolean userCanAfford(int currentPlayerBalance, OwnableField fieldToBuy) {
+	public boolean userCanAffordLot(int currentPlayerBalance, OwnableField fieldToBuy) {
 
 		if (currentPlayerBalance >= fieldToBuy.getPrice())
 			return true;
@@ -487,23 +488,31 @@ public class BusinessLogicController {
 	}
 
 	public Player auction(Field field, Player[] players) throws Exception {
-		Player highestBidder = null;
+		//lige nu laver du en rigtig spiller om til highestbidder, spilleren slettes, der skal nok sendes noget andet videre
+		Player highestBidder = new Player("highestBidder", 0);
+		Player NoBid = new Player("NoBid", 0);
 		int highestBid = 0;
 		for (int i = 0; i < players.length; i++) {
 			int newBid = Messager.showAuctionMessage(players[i], field);
 
 			if (newBid > highestBid) {
+				if(players[i].getBalance()>newBid){
 				highestBid = newBid;
-				players[i] = highestBidder;
+				  highestBidder=players[i];}
+				else{Messager.showMessage( highestBidder.getName()+" bød mere end han har råd til, og er diskvalificeret fra at byde");}
+			}
+			if (highestBid == 0) {
+				highestBidder = NoBid;
 			}
 		}
-		if (highestBid == 0) {
-			highestBidder = null;
-		}
-
+		
+		
+		
+		highestBidder.withdraw(highestBid);
+	
+		
 		return highestBidder;
-
-	}
+}
 
 	/**
 	 * @author Nicolai Barnett

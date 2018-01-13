@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+
 import boundary.GUIController;
 import entities.Cup;
 import entities.Die;
@@ -18,7 +19,7 @@ public class GameLogicCtrl {
 	private static GameLogicCtrl instance;
 	private GUIController gui = GUIController.getInstance();
 	private FieldLogicController flc = FieldLogicController.getInstance();
-	//TODO: FIX!
+	// TODO: FIX!
 	Die d1 = new Die(6, 1);
 	Die d2 = new Die(6, 1);
 	Cup cup = new Cup(0, 0, d1, d2);
@@ -117,37 +118,44 @@ public class GameLogicCtrl {
 
 		// if the player rolled double, increase counter by 1, else set it to 0
 		if (cup.rolledDouble()) {
-			int streak = currentPlayer.getRollDoubleStreak();
-			currentPlayer.setRollDoubleStreak(streak + 1);
-			currentPlayer.setIsInJail(false);
-		}
-		if (!cup.rolledDouble()) {
-			currentPlayer.setRollDoubleStreak(0);
-			if (currentPlayer.isInJail()) {
-				currentPlayer.setTurnsJailed(currentPlayer.getTurnsJailed() + 1);
+			// Stores the current diceValue in player.
+			// int faceValue = cup.rollDice();
+			currentPlayer.setLastRoll(faceValue);
+
+			// if the player rolled double, increase counter by 1, else set it to 0
+			if (cup.rolledDouble()) {
+				int streak = currentPlayer.getRollDoubleStreak();
+				currentPlayer.setRollDoubleStreak(streak + 1);
+				currentPlayer.setIsInJail(false);
 			}
-			if (currentPlayer.getTurnsJailed() == 3) {
-				payToLeaveJail(currentPlayer);
+			if (!cup.rolledDouble()) {
+				currentPlayer.setRollDoubleStreak(0);
+				if (currentPlayer.isInJail()) {
+					currentPlayer.setTurnsJailed(currentPlayer.getTurnsJailed() + 1);
+				}
+				if (currentPlayer.getTurnsJailed() == 3) {
+					payToLeaveJail(currentPlayer);
+				}
 			}
-		}
 
-		gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
+			gui.showDice(cup.getD1().getValue(), cup.getD2().getValue());
 
-		if (currentPlayer.getRollDoubleStreak() < 3 && !currentPlayer.isInJail()) {
-			// Checks if he passes start and gives him money
-			checkPassedStart(currentPlayer, faceValue, true);
-			// get next field
-			Field nextField = flc.getNextField(currentFieldNo, faceValue);
+			if (currentPlayer.getRollDoubleStreak() < 3 && !currentPlayer.isInJail()) {
+				// Checks if he passes start and gives him money
+				checkPassedStart(currentPlayer, faceValue, true);
+				// get next field
+				Field nextField = flc.getNextField(currentFieldNo, faceValue);
 
-			// Update current pos on player object
-			currentPlayer.setCurrentField(nextField);
+				// Update current pos on player object
+				currentPlayer.setCurrentField(nextField);
 
-			// Update gui
-			gui.movePlayer(currentPlayer);
-		}
-		if (currentPlayer.getRollDoubleStreak() == 3) {
-			handleGoToJail(currentPlayer);
-			Messager.showRollStreakJail(currentPlayer);
+				// Update gui
+				gui.movePlayer(currentPlayer);
+			}
+			if (currentPlayer.getRollDoubleStreak() == 3) {
+				handleGoToJail(currentPlayer);
+				Messager.showRollStreakJail(currentPlayer);
+			}
 		}
 	}
 

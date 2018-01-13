@@ -1,6 +1,8 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -8,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import controllers.BusinessLogicController;
 import entities.Player;
 
 public class BusinessLogicCtrlTests {
@@ -66,5 +69,11 @@ public class BusinessLogicCtrlTests {
 				
 		// check that player does not have card
 		assertFalse(p.getJailCard());
+	}
+	
+	@Test
+	public void testAuction() {
+		//BusinessLogicController blc = new BusinessLogicController();
+		fail("Not yet implemented");
 	}
 }
