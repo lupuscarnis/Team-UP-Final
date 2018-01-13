@@ -548,6 +548,8 @@ public class BusinessLogicController {
 				fields.setPawned(false);
 				GUIController.getInstance().clearPawnStatus(fields.getFieldNumber(), owner.getName());
 				
+				// confirm in gui
+				Messager.showFieldunPawned(fields.getTitle());
 			
 			}
 
