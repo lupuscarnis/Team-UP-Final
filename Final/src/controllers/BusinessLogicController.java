@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import boundary.GUIController;
 import entities.Player;
+import entities.enums.FieldName;
 import entities.enums.UserOption;
 import entities.field.Field;
 import entities.field.LotField;
@@ -493,6 +494,7 @@ public class BusinessLogicController {
 		Player NoBid = new Player("NoBid", 0);
 		int highestBid = 0;
 		for (int i = 0; i < players.length; i++) {
+			if(players[i].getBalance()!=0){
 			int newBid = Messager.showAuctionMessage(players[i], field);
 
 			if (newBid > highestBid) {
@@ -500,6 +502,7 @@ public class BusinessLogicController {
 				highestBid = newBid;
 				  highestBidder=players[i];}
 				else{Messager.showMessage( highestBidder.getName()+" bød mere end han har råd til, og er diskvalificeret fra at byde");}
+			}
 			}
 			if (highestBid == 0) {
 				highestBidder = NoBid;
@@ -550,6 +553,18 @@ public class BusinessLogicController {
 
 		}
 
+	}
+	public void destroyPlayer(Player deadGuy) throws Exception{
+		//hvis implementeret her, vil beskeden gentages en masse gange
+		//Messager.showMessage(deadGuy.getName()+" har mistet alle hans penge");
+		OwnableField[] OF = GameBoardController.getInstance().getFieldsByOwner(deadGuy);
+		for (OwnableField field : OF) {
+			field.setOwner(null);
+			//GUIController.getInstance().updatePlayerPosition(deadGuy.getName(), deadGuy.getCurrentField().getFieldNumber(), GameBoardController.getInstance().getFieldByName(FieldName.Fængslet).getFieldNumber());
+//			Field jail = GameBoardController.getInstance().getFieldByName(FieldName.Fængslet).getFieldNumber();
+			deadGuy.setCurrentField(GameBoardController.getInstance().getFieldByName(FieldName.Fængslet));
+			GUIController.getInstance().updatePlayerPosition(deadGuy.getName(), deadGuy.getCurrentField().getFieldNumber(), GameBoardController.getInstance().getFieldByName(FieldName.Fængslet).getFieldNumber());
+		}
 	}
 
 }
