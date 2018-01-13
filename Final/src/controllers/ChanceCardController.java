@@ -231,41 +231,40 @@ public class ChanceCardController {
 		else if (card instanceof PayChanceCard) {
 
 			switch (card.getId()) {
-
-			// Oliepriserne er steget, og de skal betale kr 500 pr. hus og kr 2000 pr.
+			// 6: Oliepriserne er steget, og de skal betale kr 500 pr. hus og kr 2000 pr.
 			// hotel.
+			// 13;Ejendomsskatterne er steget, ekstraudgifterne er kr. 800 pr. hus og kr.
+			// 2300 pr. hotel.;
 			case 6:
-				
+			case 13:
+				int amountPrHotel = (card.getId() == 6 ? 2000 : 2300); // If card 6 then 2000 else 2300
+				int amountPrHouse = (card.getId() == 6 ? 500 : 800); // if card 6 then 500 else 800
+
 				// show card to player
 				gui.showMessage(card.getText());
 				gui.showPromt("");
-				
+
 				// find all fields belonging til player
 				LotField[] fields = gbc.getLotFieldsByOwner(player);
 
 				// count houses and hotel on field
 				int houseCount = 0;
 				int hotelCount = 0;
-				for (LotField lotField : fields) {					
-					houseCount+=lotField.getHouseCount();
-					hotelCount+=lotField.getHotelCount();				
+				for (LotField lotField : fields) {
+					houseCount += lotField.getHouseCount();
+					hotelCount += lotField.getHotelCount();
 				}
 				
 				// calc sum to pay
-				int paySum = (houseCount*500)+(hotelCount*2000);				
+				int paySum = (houseCount * amountPrHouse) + (hotelCount * amountPrHotel);
+
+				System.out.println(paySum );
 				
 				// update logic
 				player.withdraw(paySum);
-				
+
 				// update gui
 				gui.updateBalance(player);
-
-				break;
-
-			// 13;Ejendomsskatterne er steget, ekstraudgifterne er kr. 800 pr. hus og kr.
-			// 2300 pr. hotel.;
-			case 13:
-				// TODO: Skal implementeres
 				break;
 
 			/*
