@@ -9,7 +9,8 @@ public class Cup {
 	private Die d2 = new Die(6, 1);
 // rough sketch of cup might need more work depending on what it has to do 
 	
-
+	
+	//TODO: FIX!
 	public Cup(int traversedSpace, int rerolls, Die d1, Die d2) {
 		super();
 		this.traversedSpace = traversedSpace;

@@ -31,8 +31,9 @@ public class ChanceCardController {
 		int minIndex = 0;
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
-
-		return cardArray[11];
+		//TODO: REMOVE
+		return cardArray[(GameController.setChanceCardNumberToDraw == -1 ? nextCard
+				: GameController.setChanceCardNumberToDraw)];
 	}
 
 	// Handles the logic regarding all chance cards
@@ -63,7 +64,8 @@ public class ChanceCardController {
 		// Draw: Move
 		else if (card instanceof MoveChanceCard) {
 
-			Field moveTofield = null;
+			Field toField = null;
+			Field fromField = player.getCurrentField();
 
 			switch (card.getId()) {
 
@@ -72,16 +74,16 @@ public class ChanceCardController {
 			case 1:
 			case 2:
 				// find nearest shipping
-				moveTofield = gbc.getNearestShipping(player.getCurrentField().getFieldNumber());
+				toField = gbc.getNearestShipping(player.getCurrentField().getFieldNumber());
 
 				// update gui
 				gui.showMessage(card.getText());
 				gui.showPromt("");
 				gui.updatePlayerPosition(player.getName(), player.getCurrentField().getFieldNumber(),
-						moveTofield.getFieldNumber());
+						toField.getFieldNumber());
 
 				// move player
-				player.setCurrentField(moveTofield);
+				player.setCurrentField(toField);
 
 				// evalute landed on field
 				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
@@ -90,16 +92,16 @@ public class ChanceCardController {
 			// 3:Tag ind på rådhuspladsen
 			case 3: {
 				// find field
-				moveTofield = gbc.getFieldByName(FieldName.Rådhuspladsen);
+				toField = gbc.getFieldByName(FieldName.Rådhuspladsen);
 
 				// opdate gui
 				gui.showMessage(card.getText());
 				gui.showPromt("");
 				gui.updatePlayerPosition(player.getName(), player.getCurrentField().getFieldNumber(),
-						moveTofield.getFieldNumber());
+						toField.getFieldNumber());
 
 				// update logic
-				player.setCurrentField(moveTofield);
+				player.setCurrentField(toField);
 
 				// eval landed on field
 				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
@@ -111,13 +113,13 @@ public class ChanceCardController {
 			case 4:
 			case 5: {
 				// find field
-				moveTofield = gbc.getFieldByName(FieldName.Fængslet);
+				toField = gbc.getFieldByName(FieldName.Fængslet);
 
 				// opdate gui
 				gui.showMessage(card.getText());
 				gui.showPromt("");
 				gui.updatePlayerPosition(player.getName(), player.getCurrentField().getFieldNumber(),
-						moveTofield.getFieldNumber());
+						toField.getFieldNumber());
 
 				// handle logic
 				GameLogicCtrl.getInstance().handleGoToJail(player);
@@ -129,20 +131,17 @@ public class ChanceCardController {
 
 				// edgecase = player moves back over start
 				if (player.getCurrentField().getFieldNumber() == 3)
-					moveTofield = gbc.getFieldByNumber(40);
+					toField = gbc.getFieldByNumber(40);
 				// all other fields
 				else
 					// find field
-					moveTofield = gbc.getFieldByNumber(player.getCurrentField().getFieldNumber() - 3);
+					toField = gbc.getFieldByNumber(player.getCurrentField().getFieldNumber() - 3);
 
 				// opdate gui
-				gui.showMessage(card.getText());
-				gui.showPromt("");
-				gui.updatePlayerPosition(player.getName(), player.getCurrentField().getFieldNumber(),
-						moveTofield.getFieldNumber());
-				
+				gui.updatePlayerPosition(player.getName(), fromField.getFieldNumber(), toField.getFieldNumber());
+
 				// update logic
-				player.setCurrentField(moveTofield);
+				player.setCurrentField(toField);
 
 				// handle new field
 				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
@@ -151,22 +150,40 @@ public class ChanceCardController {
 
 			// Ryk frem til Grønningen. Hvis De passerer start, indkasser da kr. 4000.
 			case 19:
-				// {player
-				break;
 
-			/*
-			 * player.setCurrentField(gbc.getFieldByNumber(25));
-			 * Messager.showMoveChanceCard(player, player.getCurrentField());
-			 * if(player.getCurrentField().getFieldNumber()<player.getPreviousField().
-			 * getFieldNumber()) {player.deposit(4000); Messager.showPassedStart(player);}
-			 * flc.handleFieldAction(player); break;
-			 * 
-			 */
+				// find field
+				toField = gbc.getFieldByName(FieldName.Grønningen);
+
+				// get money for passing start
+				if (GameLogicCtrl.getInstance().checkHavePassedStart(player.getCurrentField().getFieldNumber(),
+						toField.getFieldNumber()))
+					player.deposit(BusinessLogicController.MONEY_FOR_PASSING_START);
+
+				gui.showMessage(card.getText());
+				gui.showPromt("");
+				gui.updatePlayerPosition(player.getName(), fromField.getFieldNumber(), toField.getFieldNumber());
+
+				// update gui
+				gui.updateBalance(player);
+				gui.updatePlayerPosition(player.getName(), fromField.getFieldNumber(), toField.getFieldNumber());
+
+				// update logic
+				player.setCurrentField(toField);
+
+				// resolve new field
+				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
+				break;
 
 			// Ryk frem til start.
 			case 20: {
-				player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(1));
-				Messager.showMoveChanceCard(player, player.getCurrentField());
+
+				toField = gbc.getFieldByName(FieldName.Start);
+
+				gui.showMessage(card.getText());
+				gui.showPromt("");
+				gui.updatePlayerPosition(player.getName(), fromField.getFieldNumber(), toField.getFieldNumber());
+
+				player.setCurrentField(toField);
 				break;
 			}
 
@@ -174,15 +191,14 @@ public class ChanceCardController {
 			// Ryk frem til Frederiksberg Alle. Hvis de passerer start, indkasser kr. 4000.
 			case 29:
 				// find fields
-				moveTofield = gbc.getFieldByName(FieldName.FrederiksbergAlle);
-				Field fromField = player.getCurrentField();
+				toField = gbc.getFieldByName(FieldName.FrederiksbergAlle);
 
 				// update player field
-				player.setCurrentField(moveTofield);
+				player.setCurrentField(toField);
 
 				// TODO: Kan det ikke laves smartere?
 				// update gui
-				gui.updatePlayerPosition(player.getName(), fromField.getFieldNumber(), moveTofield.getFieldNumber());
+				gui.updatePlayerPosition(player.getName(), fromField.getFieldNumber(), toField.getFieldNumber());
 
 				// update gui
 				gui.showMessage(card.getText());
@@ -310,8 +326,21 @@ public class ChanceCardController {
 		}
 	}
 
-	public void informPlayer(String textToDisplay) {
+	// Update GUI: Show info and update player info regarding move chance cards.
+	private void updateAboutMove(Player player, String cardText, int fromField, int toField, boolean updatePlayer,
+			Player[] allPlayers) throws Exception {
 
+		if (updatePlayer)
+			gui.updateBalance(player);
+
+		gui.showMessage(cardText);
+		gui.showPromt("");
+		gui.updatePlayerPosition(player.getName(), fromField, toField);
+
+		FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
+	}
+
+	public void informPlayer(String textToDisplay) {
 		gui.showMessage(textToDisplay);
 	}
 
