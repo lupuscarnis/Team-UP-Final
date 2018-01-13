@@ -110,10 +110,6 @@ public class GameController {
 		// setup
 		setupGame();
 
-		System.out.println("-------------------------");
-		System.out.println("-- The Game has Begun! --");
-		System.out.println("-------------------------");
-
 		// start game loop
 		while (!gameOver(players)) {
 
