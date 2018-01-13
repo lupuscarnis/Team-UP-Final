@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.FieldType;
@@ -19,6 +18,7 @@ public class FieldLogicController {
 	private controllers.GameBoardController gbc = GameBoardController.getInstance();
 	private GUIController gui = GUIController.getInstance();
 
+	// default constructor.
 	private FieldLogicController() throws IOException {
 	}
 
@@ -30,9 +30,9 @@ public class FieldLogicController {
 		switch (currentField.getFieldType()) {
 
 		case LOT:
-//			OwnableField of = (OwnableField) currentField;
+			// OwnableField of = (OwnableField) currentField;
 			LotField lf = (LotField) currentField;
-			
+
 			// no owner! Player can buy
 			if (lf.getOwner() == null) {
 
@@ -40,126 +40,117 @@ public class FieldLogicController {
 				if (blc.userCanAffordLot(currentPlayer.getBalance(), lf)) {
 
 					choice = Messager.showWantToBuyMessage(lf.getTitle(), currentPlayer.getName());
-					
-					// user opted to buy field
-					if (choice == UserOption.BuyField)
-					{blc.buyLot(currentPlayer);}
 
-					// Check if player was presented with a choice or no choice was given (a little redundant)
-					else if(choice == UserOption.NoThanks || choice == null)
-					{
+					// user opted to buy field
+					if (choice == UserOption.BuyField) {
+						blc.buyLot(currentPlayer);
+					}
+
+					// Check if player was presented with a choice or no choice was given (a little
+					// redundant)
+					else if (choice == UserOption.NoThanks || choice == null) {
 						Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
 
+						if (highestBidder.getName() == "NoBid") {
+							Messager.showMessage("ingen gad at købe " + currentField.getTitle());
+						}
 
-						if(highestBidder.getName() =="NoBid" ){Messager.showMessage("ingen gad at købe " +currentField.getTitle());}
-
-						else{
+						else {
 							OwnableField of = (OwnableField) currentField;
 							of.setOwner(highestBidder);
 							Messager.showLotBoughtMessage(of);
-							//at opdatere GUI'en crasher programmet, saa lige nu bruger jeg console til at teste det virker.
+							// at opdatere GUI'en crasher programmet, saa lige nu bruger jeg console til at
+							// teste det virker.
 							System.out.println(highestBidder.getBalance());
-							
+
 						}
-
-					} 
-
-				// If the player cannot afford to buy, still give the other players the possibility to buy it on auction 
-//				} else {
-//
-//					Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
-//
-//
-//					if(highestBidder==null ){Messager.showMessage("ingen gad at købte " +currentPlayer.getCurrentField());}
-//
-//					else{
-//						blc.buyLot(highestBidder);
-//					}
-//
-//			
 					}
-			} 
-			// Player owns this lot, has balance and lot has < 4 houses = Player can build a house
-			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT && blc.userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4 ) {
-				
-				//Player wants to buy a house
+				}
+			}
+			// Player owns this lot, has balance and lot has < 4 houses = Player can build a
+			// house
+			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT
+					&& blc.userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4) {
+
+				// Player wants to buy a house
 				choice = Messager.showWantToBuildHouseMessage(lf.getTitle(), currentPlayer.getName());
 
 				// user opted to build a house
-				if (choice == UserOption.BuyHouse)
-					{blc.buildHouse(currentPlayer);}
+				if (choice == UserOption.BuyHouse) {
+					blc.buildHouse(currentPlayer);
+				}
 
 			}
-			// Player owns this lot, has balance and has 4 houses on it and no hotel already = Player can build a hotel
-			else if (lf.getOwner() == currentPlayer  && currentField.getFieldType() == FieldType.LOT && blc.userCanAffordHotel(currentPlayer.getBalance(), lf) && lf.getHouseCount() == 4 && lf.getHotelCount() != 1) {
-				
-				//Player wants to buy a house
+			// Player owns this lot, has balance and has 4 houses on it and no hotel already
+			// = Player can build a hotel
+			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT
+					&& blc.userCanAffordHotel(currentPlayer.getBalance(), lf) && lf.getHouseCount() == 4
+					&& lf.getHotelCount() != 1) {
+
+				// Player wants to buy a house
 				choice = Messager.showWantToBuildHotelMessage(lf.getTitle(), currentPlayer.getName());
 
 				// user opted to build a house
-				if (choice == UserOption.BuyHotel)
-					{blc.buildHotel(currentPlayer);}
+				if (choice == UserOption.BuyHotel) {
+					blc.buildHotel(currentPlayer);
+				}
 
 			}
 			// pay rent
 			// pay rent
-			else if(!lf.isPawned() | !lf.getOwner().isInJail()) {
-					blc.payRent(currentPlayer);
-				}
-				else if(lf.getOwner().isInJail()){
-					gui.showMessage("Du skal ikke betale leje da feltets ejer er fængslet!");
-				}
-					else {
-						gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
-					}
+			else if (!lf.isPawned() | !lf.getOwner().isInJail()) {
+				blc.payRent(currentPlayer);
+			} else if (lf.getOwner().isInJail()) {
+				gui.showMessage("Du skal ikke betale leje da feltets ejer er fængslet!");
+			} else {
+				gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
+			}
 			break;
-			
+
 		case SHIPPING:
 		case BREWERY:
 			OwnableField ofSB = (OwnableField) currentField;
 			// no owner! Player can buy
 			if (ofSB.getOwner() == null) {
-				
+
 				// Check if player can afford to buy the lot
 				if (blc.userCanAffordLot(currentPlayer.getBalance(), ofSB)) {
-				
+
 					choice = Messager.showWantToBuyMessage(ofSB.getTitle(), currentPlayer.getName());
 
 					// user opted to buy field
-					if (choice == UserOption.BuyField)
-					{blc.buyLot(currentPlayer);}
-					
+					if (choice == UserOption.BuyField) {
+						blc.buyLot(currentPlayer);
+					}
+
 				}
-				if(blc.userCanAffordLot(currentPlayer.getBalance(), ofSB)==false)
-				{
+				if (blc.userCanAffordLot(currentPlayer.getBalance(), ofSB) == false) {
 					Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
 
+					if (highestBidder.getName() == "NoBid") {
+						Messager.showMessage("ingen gad at købe " + currentField.getTitle());
+					}
 
-					if(highestBidder.getName() =="NoBid" ){Messager.showMessage("ingen gad at købe " +currentField.getTitle());}
-
-					else{
+					else {
 						OwnableField of = (OwnableField) currentField;
 						of.setOwner(highestBidder);
 						Messager.showLotBoughtMessage(of);
-						//at opdatere GUI'en crasher programmet, saa lige nu bruger jeg console til at teste det virker.
+						// at opdatere GUI'en crasher programmet, saa lige nu bruger jeg console til at
+						// teste det virker.
 						System.out.println(highestBidder.getBalance());
-						
-					}
 
+					}
 				}
-				
 			}
 			// pay rent
-			else if(!ofSB.isPawned() | !ofSB.getOwner().isInJail()) {
-					blc.payRent(currentPlayer);
-				}
-				else if(ofSB.getOwner().isInJail()){
-					gui.showMessage("Du skal ikke betale leje da feltets ejer er fængslet!");
-				}
-					else {
-						gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
-					}
-	
+			else if (!ofSB.isPawned() | !ofSB.getOwner().isInJail()) {
+				blc.payRent(currentPlayer);
+			} else if (ofSB.getOwner().isInJail()) {
+				gui.showMessage("Du skal ikke betale leje da feltets ejer er fængslet!");
+			} else {
+				gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
+			}
+
 			break;
 		case VISITJAIL:
 			gui.showMessage(
@@ -167,13 +158,12 @@ public class FieldLogicController {
 			// ingen grund til cast da den bare er en Field type
 			break;
 		case CHANCE:
-			ccc.handleDraw(currentPlayer, allPlayers);			
+			ccc.handleDraw(currentPlayer, allPlayers);
 			break;
 		case EXTRATAX:
 			break;
 		case START:
 		case FREEPARKING:
-
 			// landed on START
 			if (currentField.getFieldType() == FieldType.START) {
 
@@ -227,11 +217,9 @@ public class FieldLogicController {
 	}
 
 	public static FieldLogicController getInstance() throws IOException {
-
 		if (instance == null)
 			instance = new FieldLogicController();
 
 		return instance;
-
 	}
 }

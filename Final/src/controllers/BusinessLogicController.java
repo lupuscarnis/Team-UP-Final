@@ -1,6 +1,5 @@
 package controllers;
 
-
 import java.io.IOException;
 
 import boundary.GUIController;
@@ -13,19 +12,12 @@ import entities.field.OwnableField;
 import utilities.Messager;
 
 /**
- * Added by Frederik on 06-01-2018 20:38:39
- * 
  * Class intended to hold logic reg. business transactions etc.
- *
  */
-
 // TODO: Implement class
 public class BusinessLogicController {
-	
-	
-	
-	public static final int MONEY_FOR_PASSING_START=4000;
-	
+
+	public static final int MONEY_FOR_PASSING_START = 4000;
 
 	private static BusinessLogicController instance;
 	private GUIController gui = GUIController.getInstance();
@@ -104,17 +96,6 @@ public class BusinessLogicController {
 		int faceValue = 10; // Random value - must come from dice!
 		OwnableField currentField = (OwnableField) currentPlayer.getCurrentField();
 
-		// finds how far player moved, without using the dice.
-		/*
-		 * 
-		 * if (currentPlayer.getCurrentField().getFieldNumber() >=
-		 * currentPlayer.getPreviousField().getFieldNumber()) { faceValue =
-		 * currentPlayer.getPreviousField().getFieldNumber() -
-		 * currentPlayer.getCurrentField().getFieldNumber(); } else { faceValue = 40 -
-		 * currentPlayer.getPreviousField().getFieldNumber() +
-		 * currentPlayer.getCurrentField().getFieldNumber(); }
-		 */
-		//
 		int rent = currentField.calculateRent(faceValue);
 		Player payee = currentField.getOwner();
 		Player payer = currentPlayer;
@@ -132,29 +113,6 @@ public class BusinessLogicController {
 		// update balances in gui
 		gui.updateBalance(new Player[] { payer, payee });
 	}
-
-	/*
-	 * OwnableField field = (OwnableField) currentPlayer.getCurrentField(); Player
-	 * owner = field.getOwner(); ======= // tell user he must pay rent
-	 * Messager.showMustPayRent(payee.getName(), rent); >>>>>>> branch
-	 * '2.-iteration' of https://github.com/lupuscarnis/Team-UP-Final.git
-	 * 
-	 * // withdraw from payer // TODO: What happens if user cant afford?
-	 * payer.withdraw(rent);
-	 * 
-	 * // deposit to payee payee.deposit(rent);
-	 * 
-	 * // update balances in gui gui.updateBalance(new Player[] { payer, payee }); }
-	 * 
-	 * /** Added by Kasper on 09-01-2018 23:16:41
-	 * 
-	 * Handles player wants to build a house. DOES NOT CHECK FOR SUFFICIENT FUNDS!!
-	 * MUST BE DONE BEFORE CALL TO METHOD!
-	 * 
-	 * @param player
-	 * 
-	 * @throws Exception
-	 */
 
 	public int playerNetWorth(Player currentPlayer) throws IOException {
 		int netWorth;
@@ -180,7 +138,7 @@ public class BusinessLogicController {
 		// withdraw money (Price of one house)
 		player.withdraw(lf.getBuildingCost());
 		// update number of houses on lot + 1
-		lf.setHouseCount(lf.getHouseCount()+1);
+		lf.setHouseCount(lf.getHouseCount() + 1);
 		// update number of houses on lot + 1 (GUI)
 		gui.setHouse(lf.getHouseCount() + 1, lf.getFieldNumber());
 		// update gui
@@ -405,7 +363,6 @@ public class BusinessLogicController {
 				index++;
 				count++;
 			} else {
-
 				index++;
 			}
 		}
@@ -424,9 +381,16 @@ public class BusinessLogicController {
 
 		}
 		return cleanVersion;
-
 	}
 
+	/**
+	 * Indicates if a user has anything to pawn or not.
+	 * 
+	 * @param currentPlayer
+	 * @return false if nothing to pawn, true if yes.
+	 * @throws Exception
+	 */
+	//TODO: Can this be replace with call to getPawnedFields(Player currentPlayer)?
 	public boolean hasPawn(Player currentPlayer) throws Exception {
 		// Get the fields owned by our player
 		OwnableField[] ownedFields = GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
@@ -434,15 +398,12 @@ public class BusinessLogicController {
 		// runs all owned fields trough checking if pawned
 		for (OwnableField fields : ownedFields) {
 
-			// check if there is a  Pawnedfields
+			// check if there is a Pawnedfields
 			if (fields.isPawned() == true) {
 				return true;
-
-			} 
+			}
 		}
 		return false;
-
-
 	}
 
 	/**
@@ -489,33 +450,34 @@ public class BusinessLogicController {
 	}
 
 	public Player auction(Field field, Player[] players) throws Exception {
-		//lige nu laver du en rigtig spiller om til highestbidder, spilleren slettes, der skal nok sendes noget andet videre
+		// lige nu laver du en rigtig spiller om til highestbidder, spilleren slettes,
+		// der skal nok sendes noget andet videre
 		Player highestBidder = new Player("highestBidder", 0);
 		Player NoBid = new Player("NoBid", 0);
 		int highestBid = 0;
 		for (int i = 0; i < players.length; i++) {
-			if(players[i].getBalance()!=0){
-			int newBid = Messager.showAuctionMessage(players[i], field);
+			if (players[i].getBalance() != 0) {
+				int newBid = Messager.showAuctionMessage(players[i], field);
 
-			if (newBid > highestBid) {
-				if(players[i].getBalance()>newBid){
-				highestBid = newBid;
-				  highestBidder=players[i];}
-				else{Messager.showMessage( highestBidder.getName()+" bød mere end han har råd til, og er diskvalificeret fra at byde");}
-			}
+				if (newBid > highestBid) {
+					if (players[i].getBalance() > newBid) {
+						highestBid = newBid;
+						highestBidder = players[i];
+					} else {
+						Messager.showMessage(highestBidder.getName()
+								+ " bød mere end han har råd til, og er diskvalificeret fra at byde");
+					}
+				}
 			}
 			if (highestBid == 0) {
 				highestBidder = NoBid;
 			}
 		}
-		
-		
-		
+
 		highestBidder.withdraw(highestBid);
-	
-		
+
 		return highestBidder;
-}
+	}
 
 	/**
 	 * @author Nicolai Barnett
@@ -532,41 +494,39 @@ public class BusinessLogicController {
 			if (fields.getTitle().equals(result)) {
 
 				int cost = 0;
-				
-				// cost is first set to the pawn price + 100 for each 1000 of the pawn price
-				// then if modulus of (pawnprice/10)/100 is different from 0 (if it doesn't divide perfectly with 100) you add 100 to that
-				// it is supposed to round UP to nearest 100
 
-				cost = fields.getPawnPrice()+((fields.getPawnPrice() / 1000) * 100);
-				if((fields.getPawnPrice()/10)%100!=0) {
-				cost += 100;
+				// cost is first set to the pawn price + 100 for each 1000 of the pawn price
+				// then if modulus of (pawnprice/10)/100 is different from 0 (if it doesn't
+				// divide perfectly with 100) you add 100 to that
+				// it is supposed to round UP to nearest 100
+				cost = fields.getPawnPrice() + ((fields.getPawnPrice() / 1000) * 100);
+				if ((fields.getPawnPrice() / 10) % 100 != 0) {
+					cost += 100;
 				}
-				
+
 				owner.withdraw(cost);
 				GUIController.getInstance().updateBalance(owner);
-				
+
 				fields.setPawned(false);
 				GUIController.getInstance().clearPawnStatus(fields.getFieldNumber(), owner.getName());
-				
+
 				// confirm in gui
 				Messager.showFieldunPawned(fields.getTitle());
-			
 			}
-
 		}
-
 	}
-	public void destroyPlayer(Player deadGuy) throws Exception{
-		//hvis implementeret her, vil beskeden gentages en masse gange
-		//Messager.showMessage(deadGuy.getName()+" har mistet alle hans penge");
+
+	public void destroyPlayer(Player deadGuy) throws Exception {
+		// hvis implementeret her, vil beskeden gentages en masse gange
+		// Messager.showMessage(deadGuy.getName()+" har mistet alle hans penge");
 		OwnableField[] OF = GameBoardController.getInstance().getFieldsByOwner(deadGuy);
 		for (OwnableField field : OF) {
 			field.setOwner(null);
-			//GUIController.getInstance().updatePlayerPosition(deadGuy.getName(), deadGuy.getCurrentField().getFieldNumber(), GameBoardController.getInstance().getFieldByName(FieldName.Fængslet).getFieldNumber());
-//			Field jail = GameBoardController.getInstance().getFieldByName(FieldName.Fængslet).getFieldNumber();
+			
 			deadGuy.setCurrentField(GameBoardController.getInstance().getFieldByName(FieldName.Fængslet));
-			GUIController.getInstance().updatePlayerPosition(deadGuy.getName(), deadGuy.getCurrentField().getFieldNumber(), GameBoardController.getInstance().getFieldByName(FieldName.Fængslet).getFieldNumber());
+			GUIController.getInstance().updatePlayerPosition(deadGuy.getName(),
+					deadGuy.getCurrentField().getFieldNumber(),
+					GameBoardController.getInstance().getFieldByName(FieldName.Fængslet).getFieldNumber());
 		}
 	}
-
 }

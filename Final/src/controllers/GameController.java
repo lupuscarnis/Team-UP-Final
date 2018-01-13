@@ -16,6 +16,7 @@ public class GameController {
 	private FieldLogicController flc = FieldLogicController.getInstance();
 	private GameLogicCtrl glc = GameLogicCtrl.getInstance();
 	private GUIController gui = GUIController.getInstance();
+	private GameBoardController gbc = GameBoardController.getInstance();
 
 	// ATTRIBUTES
 	private Player[] players = null;
@@ -203,13 +204,7 @@ public class GameController {
 		return players;
 	}
 
-	public Player[] createNewPlayers(String[] playerNames) throws Exception {
-
-		// TODO: Move to global scope.
-		// instead have a field number to place they are standing in the field array and
-		// let the other controller handle
-		// what happends there.
-		GameBoardController gbc = GameBoardController.getInstance();
+	public Player[] createNewPlayers(String[] playerNames) throws Exception {		
 
 		Player[] tmp = new Player[playerNames.length];
 
