@@ -116,8 +116,7 @@ public class GameLogicCtrl {
 		// Throw Die
 		int faceValue = (GameController.diceFaceValue == -1) ? cup.rollDice() : GameController.diceFaceValue;
 
-		// if the player rolled double, increase counter by 1, else set it to 0
-		if (cup.rolledDouble()) {
+		
 			// Stores the current diceValue in player.
 			// int faceValue = cup.rollDice();
 			currentPlayer.setLastRoll(faceValue);
@@ -156,7 +155,7 @@ public class GameLogicCtrl {
 				handleGoToJail(currentPlayer);
 				Messager.showRollStreakJail(currentPlayer);
 			}
-		}
+		
 	}
 
 	// checks if the Player Move past start this turn and receives 4000
