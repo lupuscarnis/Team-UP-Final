@@ -73,7 +73,8 @@ public class BusinessLogicCtrlTests {
 	
 	@Test
 	public void testAuction() {
-		//BusinessLogicController blc = new BusinessLogicController();
+		// giver foerst mening hvis der e ren metode til at kunne trykke eller skrive input i gui, saa auktion test vil halvt vaere en gui test
+		
 		fail("Not yet implemented");
 	}
 }

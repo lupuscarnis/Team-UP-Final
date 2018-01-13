@@ -25,7 +25,7 @@ public class BusinessLogicController {
 	private GUIController gui = GUIController.getInstance();
 	private GameBoardController gbc = GameBoardController.getInstance();
 
-	private BusinessLogicController() throws IOException {
+	public BusinessLogicController() throws IOException {
 	}
 
 	// Calculate rent for field
