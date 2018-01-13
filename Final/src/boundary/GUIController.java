@@ -329,6 +329,10 @@ public class GUIController {
 			return UserOption.BuyHotel;
 		if (parseUserOption(UserOption.BuyHouse) == result)
 			return UserOption.BuyHouse;
+		if (parseUserOption(UserOption.SellHotel) == result)
+			return UserOption.SellHotel;
+		if (parseUserOption(UserOption.SellHouse) == result)
+			return UserOption.SellHouse;
 		if (parseUserOption(UserOption.EndTurn) == result)
 			return UserOption.EndTurn;
 		if (parseUserOption(UserOption.PawnLot) == result)
@@ -377,6 +381,10 @@ public class GUIController {
 			return "Køb hotel";
 		case BuyHouse:
 			return "Køb hus";
+		case SellHotel:
+			return "Sælg hotel";
+		case SellHouse:
+			return "Sælg hus";
 		case EndTurn:
 			return "Afslut tur";
 		case PawnLot:

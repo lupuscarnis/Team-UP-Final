@@ -32,7 +32,7 @@ public class ChanceCardController {
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
 
-		return cardArray[0];
+		return cardArray[11];
 	}
 
 	// Handles the logic regarding all chance cards
@@ -44,16 +44,16 @@ public class ChanceCardController {
 		if (card instanceof GetOutJailForFreeChanceCard) {
 
 			// 31+32; I anledning af kongens fødselsdag benådes de herved for fængsel. Dette
-			// kort kan opbevares, indtil de får brug for det, eller de kan sælge det.			
-			switch (card.getId()) {		
-			
+			// kort kan opbevares, indtil de får brug for det, eller de kan sælge det.
+			switch (card.getId()) {
+
 			case 31:
 			case 32:
 				// update logic
 				player.setJailCard(true);
-				
+
 				// update gui
-				informPlayer(card.getText());				
+				informPlayer(card.getText());
 				break;
 
 			default:
@@ -66,29 +66,42 @@ public class ChanceCardController {
 			Field moveTofield = null;
 
 			switch (card.getId()) {
+
 			// 1+2;Ryk brikken frem til det nærmeste rederi og betal to gange den leje han
-			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.			
+			// ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det.
 			case 1:
 			case 2:
 				// find nearest shipping
 				moveTofield = gbc.getNearestShipping(player.getCurrentField().getFieldNumber());
-				
-				// update gui				
+
+				// update gui
 				gui.showMessage(card.getText());
 				gui.showPromt("");
-				gui.updatePlayerPosition(player.getName(), player.getCurrentField().getFieldNumber(), moveTofield.getFieldNumber());
-				
+				gui.updatePlayerPosition(player.getName(), player.getCurrentField().getFieldNumber(),
+						moveTofield.getFieldNumber());
+
 				// move player
 				player.setCurrentField(moveTofield);
-				
+
 				// evalute landed on field
 				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
 				break;
-				
+
 			// 3:Tag ind på rådhuspladsen
 			case 3: {
-				player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
-				Messager.showMoveChanceCard(player, player.getCurrentField());
+				// find field
+				moveTofield = gbc.getFieldByName(FieldName.Rådhuspladsen);
+
+				// opdate gui
+				gui.showMessage(card.getText());
+				gui.showPromt("");
+				gui.updatePlayerPosition(player.getName(), player.getCurrentField().getFieldNumber(),
+						moveTofield.getFieldNumber());
+
+				// update logic
+				player.setCurrentField(moveTofield);
+
+				// eval landed on field
 				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
 				break;
 			}
@@ -97,31 +110,41 @@ public class ChanceCardController {
 			// indkasserer de ikke kr. 4000.
 			case 4:
 			case 5: {
-				player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(11));
-				Messager.showMoveChanceCard(player, player.getCurrentField());
-				// vi maa lige finde ud af det med faengslet, nu er der to muligheder for
-				// hvordan han rigtigt "is in jail"
-				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
-				player.setIsInJail(true);
+				// find field
+				moveTofield = gbc.getFieldByName(FieldName.Fængslet);
+
+				// opdate gui
+				gui.showMessage(card.getText());
+				gui.showPromt("");
+				gui.updatePlayerPosition(player.getName(), player.getCurrentField().getFieldNumber(),
+						moveTofield.getFieldNumber());
+
+				// handle logic
+				GameLogicCtrl.getInstance().handleGoToJail(player);
 				break;
 			}
 
 			// Ryk tre felter tilbage.
-
 			case 12: {
-				if (player.getCurrentField().getFieldNumber() == 3) {
-					player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(40));
-					Messager.showMoveChanceCard(player, player.getCurrentField());
-				}
 
+				// edgecase = player moves back over start
+				if (player.getCurrentField().getFieldNumber() == 3)
+					moveTofield = gbc.getFieldByNumber(40);
+				// all other fields
 				else
-				// (player.getCurrentField().getFieldNumber()==1){player.setCurrentField(gbc.getFieldByNumber(38));}
-				{
-					player.setCurrentField(GameBoardController.getInstance()
-							.getFieldByNumber(player.getCurrentField().getFieldNumber() - 3));
-					Messager.showMoveChanceCard(player, player.getCurrentField());
+					// find field
+					moveTofield = gbc.getFieldByNumber(player.getCurrentField().getFieldNumber() - 3);
 
-				}
+				// opdate gui
+				gui.showMessage(card.getText());
+				gui.showPromt("");
+				gui.updatePlayerPosition(player.getName(), player.getCurrentField().getFieldNumber(),
+						moveTofield.getFieldNumber());
+				
+				// update logic
+				player.setCurrentField(moveTofield);
+
+				// handle new field
 				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
 				break;
 			}
@@ -288,10 +311,10 @@ public class ChanceCardController {
 	}
 
 	public void informPlayer(String textToDisplay) {
-		
+
 		gui.showMessage(textToDisplay);
 	}
-	
+
 	public static ChanceCardController getInstance() throws IOException {
 
 		if (instance == null)

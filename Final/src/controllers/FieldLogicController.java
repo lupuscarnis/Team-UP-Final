@@ -29,14 +29,14 @@ public class FieldLogicController {
 		switch (currentField.getFieldType()) {
 
 		case LOT:
-//			OwnableField of = (OwnableField) currentField;
+            //OwnableField of = (OwnableField) currentField;
 			LotField lf = (LotField) currentField;
 			
 			// no owner! Player can buy
 			if (lf.getOwner() == null) {
 
 				// Check if player can afford to buy the lot
-				if (blc.userCanAfford(currentPlayer.getBalance(), lf)) {
+				if (blc.userCanAffordLot(currentPlayer.getBalance(), lf)) {
 
 					choice = Messager.showWantToBuyMessage(lf.getTitle(), currentPlayer.getName());
 
@@ -120,7 +120,7 @@ public class FieldLogicController {
 			if (ofSB.getOwner() == null) {
 				
 				// Check if player can afford to buy the lot
-				if (blc.userCanAfford(currentPlayer.getBalance(), ofSB)) {
+				if (blc.userCanAffordLot(currentPlayer.getBalance(), ofSB)) {
 				
 					choice = Messager.showWantToBuyMessage(ofSB.getTitle(), currentPlayer.getName());
 

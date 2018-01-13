@@ -5,6 +5,8 @@ public enum UserOption {
 	PawnLot, 
 	BuyHotel, 
 	BuyHouse, 
+	SellHotel, 
+	SellHouse, 
 	EndTurn,
 	BuyField, 
 	NoThanks, 
