@@ -165,10 +165,9 @@ public class Messager {
 	UserOption choice = GUIController.getInstance().showOptions("kid",new UserOption[] {UserOption.bidOnField,UserOption.NoThanks});
 	
 	
-	if (choice==GUIController.getInstance().parseFromStringToUserOption(bf)){
+	if (choice==EnumParser.fromStrToUserOption(bf)){
 		showMessage(player.getName()+ " skal indtaste sit bud");
-		bid = GUIController.getInstance().getUsersInt();
-		
+		bid = GUIController.getInstance().getUsersInt();		
 	}
 	else{showMessage("du har valgt ikke at deltage i auktionen");
 	bid = 0;
