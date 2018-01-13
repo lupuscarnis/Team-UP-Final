@@ -24,8 +24,7 @@ public class GameLogicCtrl {
 	Die d2 = new Die(6, 1);
 	Cup cup = new Cup(0, 0, d1, d2);
 
-	private GameLogicCtrl() throws IOException {
-	}
+	private GameLogicCtrl() throws IOException {}
 
 	public static GameLogicCtrl getInstance() throws IOException {
 		if (instance == null)
@@ -108,14 +107,12 @@ public class GameLogicCtrl {
 	 * @param currentPlayer
 	 * @throws Exception
 	 */
-	// TODO: M
 	public void rollAndMove(Player currentPlayer) throws Exception {
 
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 
 		// Throw Die
-		int faceValue = (GameController.diceFaceValue == -1) ? cup.rollDice() : GameController.diceFaceValue;
-
+		int faceValue = cup.rollDice();
 		
 			// Stores the current diceValue in player.
 			// int faceValue = cup.rollDice();
