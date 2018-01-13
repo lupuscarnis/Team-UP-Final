@@ -34,7 +34,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Sets up game with player array from logic. 
+	 * Sets up game with player array from logic.
 	 * 
 	 * @param players
 	 */
@@ -43,7 +43,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Gets array of player names from the gui at game start 
+	 * Gets array of player names from the gui at game start
 	 * 
 	 * @return
 	 */
@@ -107,7 +107,8 @@ public class GUIController {
 		// add players to GUI_Players array
 		int index = 0;
 		for (Player p : players) {
-			// TODO: should use the same constant value for game start amount as argument instead
+			// TODO: should use the same constant value for game start amount as argument
+			// instead
 			// of hardcoding
 			this.guiPlayers[index] = new GUI_Player(p.getName(), 30000, this.carList[index]);
 
@@ -133,6 +134,7 @@ public class GUIController {
 	private void addPlayerToBoard(GUI_Player player) {
 		this.gui.addPlayer(player);
 	}
+
 	/**
 	 * Helper method: moves a player on the (gui)board
 	 * 
@@ -215,8 +217,9 @@ public class GUIController {
 		// set subtext with owner name
 		gui.getFields()[fieldId - 1].setSubText("Ejer: " + name);
 	}
+
 	/**
-	 * Helper method: Updates the player balance. 
+	 * Helper method: Updates the player balance.
 	 * 
 	 * @param currentPlayer
 	 * @throws Exception
@@ -288,13 +291,24 @@ public class GUIController {
 		gui.getFields()[field.getFieldNumber() - 1].setSubText("Pris: " + field.getPrice());
 	}
 
+	/**
+	 * Helper method: Shows message in chance card slot.
+	 * 
+	 * @param string
+	 */
 	public void showMessage(String string) {
 		gui.displayChanceCard(string);
 	}
 
+	/**
+	 * Helper method: Shows message to user and awaits "OK" button press.
+	 * 
+	 * @param string
+	 */
 	public void showPromt(String string) {
 		gui.showMessage(string);
 	}
+
 	/**
 	 * Helper method: Show buttons to current player for selection.
 	 * 
@@ -314,12 +328,11 @@ public class GUIController {
 
 			index++;
 		}
-
 		String result = gui.getUserButtonPressed(label, options);
 
 		return EnumParser.fromStrToUserOption(result);
 	}
-	
+
 	/**
 	 * Helper method: Shows the dice on the gui with a roll and small delay
 	 * 
@@ -387,7 +400,7 @@ public class GUIController {
 	}
 
 	/**
-	 * 
+	 * Helper method: Set sub text on field to indicate that field is pawned.
 	 * 
 	 * @param fieldNumber
 	 */
@@ -415,6 +428,5 @@ public class GUIController {
 	public int getUsersInt() {
 		String input = "Giv bud";
 		return gui.getUserInteger(input);
-
 	}
 }
