@@ -33,7 +33,7 @@ public class ChanceCardController {
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
 		//TODO: REMOVE
 		return cardArray[(GameController.setChanceCardNumberToDraw == -1 ? nextCard
-				: GameController.setChanceCardNumberToDraw)];
+				: GameController.setChanceCardNumberToDraw-1)];
 	}
 
 	// Handles the logic regarding all chance cards
@@ -207,7 +207,20 @@ public class ChanceCardController {
 
 			// Tag med den nærmeste færge - ryk brikken frem, og hvis du passerer start
 			// indkasser da kr. 4000.
-			case 30:
+			case 30:				
+				// find fields
+				toField = gbc.getNearestShipping(player.getFieldNumber());
+				
+				// inform/update player
+				gui.showMessage(card.getText());
+				gui.showPromt("");
+				gui.updatePlayerPosition(player.getName(), fromField.getFieldNumber(), toField.getFieldNumber());
+
+				// update logic
+				player.setCurrentField(toField);
+				
+				// handle new field
+				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);				
 				break;
 
 			default:
