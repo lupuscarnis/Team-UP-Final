@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.FieldType;
@@ -29,7 +30,7 @@ public class FieldLogicController {
 		switch (currentField.getFieldType()) {
 
 		case LOT:
-            //OwnableField of = (OwnableField) currentField;
+//			OwnableField of = (OwnableField) currentField;
 			LotField lf = (LotField) currentField;
 			
 			// no owner! Player can buy
@@ -39,7 +40,7 @@ public class FieldLogicController {
 				if (blc.userCanAffordLot(currentPlayer.getBalance(), lf)) {
 
 					choice = Messager.showWantToBuyMessage(lf.getTitle(), currentPlayer.getName());
-
+					
 					// user opted to buy field
 					if (choice == UserOption.BuyField)
 					{blc.buyLot(currentPlayer);}

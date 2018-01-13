@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+
 import boundary.GUIController;
 import entities.Cup;
 import entities.Die;
