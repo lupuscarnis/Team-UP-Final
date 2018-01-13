@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import boundary.GUIController;
 import entities.Player;
+import entities.enums.FieldName;
 import entities.enums.UserOption;
+import entities.field.Field;
 import entities.field.OwnableField;
 import utilities.Messager;
 
@@ -23,7 +25,6 @@ public class GameController {
 	// controllers
 	private BusinessLogicController blc = BusinessLogicController.getInstance();
 	private FieldLogicController flc = FieldLogicController.getInstance();
-	private PlayerController pc = PlayerController.getInstance();
 	private GameLogicCtrl glc = GameLogicCtrl.getInstance();
 	private GUIController gui = GUIController.getInstance();
 
@@ -42,9 +43,9 @@ public class GameController {
 	private Player[] players = null;
 	private Player lastPlayer = null; // Who played last turn
 	private Player currentPlayer = null; // The current players round
-	//TODO: REMOVE
-	public static int diceFaceValue =-1; // STRICTLY FOR TESTING
-	public static int setChanceCardNumberToDraw=-1; // STRICTLY FOR TESTING
+	// TODO: REMOVE
+	public static int diceFaceValue = -1; // STRICTLY FOR TESTING
+	public static int setChanceCardNumberToDraw = -1; // STRICTLY FOR TESTING
 
 	// FOR TESTING PURPOSES!
 
@@ -55,20 +56,20 @@ public class GameController {
 	private boolean gameOver(Player[] players) {
 		int playerCount = 0;
 		for (Player player : players) {
-			if(player.getBalance()>0) {
+			if (player.getBalance() > 0) {
 				playerCount++;
 			}
 		}
 		int index = 0;
 		Player[] playersRemaining = new Player[playerCount];
 		for (Player player : players) {
-			if(player.getBalance()>0) {
+			if (player.getBalance() > 0) {
 				playersRemaining[index] = player;
 				index++;
 			}
 		}
-		
-		if(playersRemaining.length==1) {
+
+		if (playersRemaining.length == 1) {
 			return true;
 		}
 		return false;
@@ -91,7 +92,7 @@ public class GameController {
 		String[] playerNames = gui.getNewPlayerNames();
 
 		// create new players via PlayerCtrl.
-		players = pc.createNewPlayers(playerNames);
+		players = createNewPlayers(playerNames);
 
 		// now GUI can be setup with players
 		gui.setup(players);
@@ -137,9 +138,9 @@ public class GameController {
 
 				// stopper currentplayer for at blive til next player.
 			} else { // find next player
-				do{
+				do {
 					currentPlayer = glc.getNextPlayer(players);
-				} while(currentPlayer.getBalance()==0);
+				} while (currentPlayer.getBalance() == 0);
 			}
 
 			/*
@@ -163,7 +164,7 @@ public class GameController {
 
 					// show pawnable lots
 					OwnableField[] fields = BusinessLogicController.getInstance().getPawnableFields(currentPlayer);
-					
+
 					String[] tmp = new String[fields.length + 1];
 
 					tmp[0] = "- Annuller!";
@@ -197,38 +198,34 @@ public class GameController {
 					break;
 				case PayToLeaveJail:
 					glc.payToLeaveJail(currentPlayer);
-					break;				
+					break;
 				case EndTurn:
 					currentPlayer.setDoneThrowing(false);
 					break;
 				case Unpawn:
-				
+
 					OwnableField[] pawnedList = BusinessLogicController.getInstance().getPawnedFields(currentPlayer);
-					
-					
+
 					String[] pawnedNameList = new String[pawnedList.length + 1];
-					
+
 					pawnedNameList[0] = "Annuller!";
 					int index1 = 1;
-					
-					for(OwnableField field : pawnedList)
-					{
-						
+
+					for (OwnableField field : pawnedList) {
+
 						pawnedNameList[index1] = field.getTitle();
 						index1++;
-						
-						
+
 					}
-					
+
 					String answer = Messager.getSelectionResult(pawnedNameList, currentPlayer.getName());
 
 					// unpawn selected lot
 					if (!answer.equals("Annuller!"))
 						BusinessLogicController.getInstance().unpawn(answer, currentPlayer);
-					
+
 					break;
-				
-				
+
 				default:
 					throw new Exception("Case not found!");
 				}
@@ -237,32 +234,52 @@ public class GameController {
 		}
 	}
 
-	
 	/**
 	 * FOR TESTING: You can "hard code" face value of dice
 	 * 
-	 * Added by Frederik on 12-01-2018 13:52:27 
+	 * Added by Frederik on 12-01-2018 13:52:27
 	 * 
 	 * @param value
 	 */
-	public void setFaceValue(int value)
-	{
+	public void setFaceValue(int value) {
 		GameController.diceFaceValue = value;
 	}
-	
+
 	/**
 	 * FOR TESTING: You can "hard code" which chance card to draw EVERY time.
 	 * 
-	 * Added by Frederik on 12-01-2018 13:52:27 
+	 * Added by Frederik on 12-01-2018 13:52:27
 	 * 
 	 * @param value
 	 */
-	public void setChanceCardToDraw(int cardNo)
-	{
+	public void setChanceCardToDraw(int cardNo) {
 		GameController.setChanceCardNumberToDraw = cardNo;
 	}
-	
+
 	public Player[] getPlayers() {
 		return players;
+	}
+
+	public Player[] createNewPlayers(String[] playerNames) throws Exception {
+
+		// TODO: Move to global scope.
+		// instead have a field number to place they are standing in the field array and
+		// let the other controller handle
+		// what happends there.
+		GameBoardController gbc = GameBoardController.getInstance();
+
+		Player[] tmp = new Player[playerNames.length];
+
+		int index = 0;
+		for (String name : playerNames) {
+
+			Field start = gbc.getFieldByName(FieldName.Start);
+
+			tmp[index] = new Player(name, 30000, start); // HACK: 30000: Where should the money come from?
+
+			index++;
+		}
+
+		return tmp;
 	}
 }
