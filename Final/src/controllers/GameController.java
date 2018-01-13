@@ -139,8 +139,10 @@ public class GameController {
 				// stopper currentplayer for at blive til next player.
 			} else { // find next player
 				do {
+					blc.destroyPlayer(currentPlayer);
 					currentPlayer = glc.getNextPlayer(players);
 				} while (currentPlayer.getBalance() == 0);
+				
 			}
 
 			/*
@@ -231,7 +233,12 @@ public class GameController {
 				}
 
 			} while (userChoice != UserOption.EndTurn);
+			if(gameOver(players)){
+				Messager.showMessage("spillet er ovre vinderen er den med penge tilbage :)");
+				break;
+			}
 		}
+		
 	}
 
 	/**

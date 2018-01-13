@@ -25,7 +25,7 @@ public class Messager {
 
 	
 	public static UserOption showWantToBuyMessage(String title, String playerName) throws Exception {
-		GUIController.getInstance().showMessage("you have landed on \"" + title + "\" do you wish to purchase it?");
+		GUIController.getInstance().showMessage("Du er landet på feltet \"" + title + "\" vil du købe dette felt?");
 		
 		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);;
 		
@@ -33,7 +33,7 @@ public class Messager {
 	}
 
 	public static UserOption showWantToBuildHouseMessage(String title, String playerName) throws Exception {
-		GUIController.getInstance().showMessage("you have landed on \"" + title + "\", which you already own. Do you wish to build a house here?");
+		GUIController.getInstance().showMessage("Du er landet på feltet \"" + title + "\", som du allerede ejer. Vil du bygge et hus her?");
 		
 		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);;
 		
@@ -41,7 +41,7 @@ public class Messager {
 	}
 
 	public static UserOption showWantToBuildHotelMessage(String title, String playerName) throws Exception {
-		GUIController.getInstance().showMessage("you have landed on \"" + title + "\", which you already own. Do you wish to build a hotel here?");
+		GUIController.getInstance().showMessage("Du er landet på feltet \"" + title + "\", som du allerede ejer. Vil du bygge et hotel her?");
 		
 		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);;
 		
@@ -72,7 +72,7 @@ public class Messager {
 	public static UserOption showMustPayIncomeTax(FieldType fieldType, String playerName) throws IOException, Exception {
 
 		// show message
-		GUIController.getInstance().showMessage("you have landed on " + fieldType);
+		GUIController.getInstance().showMessage("Du er landet på " + fieldType);
 
 		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);;
 		
@@ -94,7 +94,7 @@ public class Messager {
 		
 		Field field = currentPlayer.getCurrentField();
 		
-		GUIController.getInstance().showMessage("you have landed on " + field.getTitle());
+		GUIController.getInstance().showMessage("Du er landet på feltet " + field.getTitle());
 		
 		GUIController.getInstance().showPromt("Du flyttes i fængsel!");
 		

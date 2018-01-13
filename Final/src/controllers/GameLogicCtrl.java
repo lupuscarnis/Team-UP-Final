@@ -263,7 +263,6 @@ public class GameLogicCtrl {
 		// put player in jail
 		currentPlayer.setIsInJail(true);
 		currentPlayer.setCurrentField(jail);
-
 		// update gui
 		GUIController.getInstance().updatePlayerPosition(currentPlayer.getName(), fromField, jail.getFieldNumber());
 	}
