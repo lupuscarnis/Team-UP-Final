@@ -18,6 +18,7 @@ public class GameLogicCtrl {
 	private static GameLogicCtrl instance;
 	private GUIController gui = GUIController.getInstance();
 	private FieldLogicController flc = FieldLogicController.getInstance();
+	//TODO: FIX!
 	Die d1 = new Die(6, 1);
 	Die d2 = new Die(6, 1);
 	Cup cup = new Cup(0, 0, d1, d2);
@@ -112,7 +113,7 @@ public class GameLogicCtrl {
 		int currentFieldNo = currentPlayer.getCurrentField().getFieldNumber();
 
 		// Throw Die
-		int faceValue = 36;// cup.rollDice();
+		int faceValue = (GameController.diceFaceValue == -1) ? cup.rollDice() : GameController.diceFaceValue;
 
 		// if the player rolled double, increase counter by 1, else set it to 0
 		if (cup.rolledDouble()) {
@@ -154,7 +155,7 @@ public class GameLogicCtrl {
 	public void checkPassedStart(Player currentPlayer, int faceValue, boolean canReceive) throws Exception {
 		if ((currentPlayer.getCurrentField().getFieldNumber() + faceValue > 40) && (canReceive == true)) {
 			BusinessLogicController.getInstance();
-			currentPlayer.deposit(BusinessLogicController.MONEY_FOR_PASSING_START); 
+			currentPlayer.deposit(BusinessLogicController.MONEY_FOR_PASSING_START);
 			Messager.showPassedStart(currentPlayer);
 			System.out.println("Du fik 4000 over start! hurray!");
 		}

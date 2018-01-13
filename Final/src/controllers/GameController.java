@@ -41,6 +41,9 @@ public class GameController {
 	private Player[] players = null;
 	private Player lastPlayer = null; // Who played last turn
 	private Player currentPlayer = null; // The current players round
+	//TODO: REMOVE
+	public static int diceFaceValue =-1; // STRICTLY FOR TESTING
+	public static int setChanceCardNumberToDraw=-1; // STRICTLY FOR TESTING
 
 	// FOR TESTING PURPOSES!
 
@@ -237,8 +240,32 @@ public class GameController {
 		}
 	}
 
+	
+	/**
+	 * FOR TESTING: You can "hard code" face value of dice
+	 * 
+	 * Added by Frederik on 12-01-2018 13:52:27 
+	 * 
+	 * @param value
+	 */
+	public void setFaceValue(int value)
+	{
+		GameController.diceFaceValue = value;
+	}
+	
+	/**
+	 * FOR TESTING: You can "hard code" which chance card to draw EVERY time.
+	 * 
+	 * Added by Frederik on 12-01-2018 13:52:27 
+	 * 
+	 * @param value
+	 */
+	public void setChanceCardToDraw(int cardNo)
+	{
+		GameController.setChanceCardNumberToDraw = cardNo;
+	}
+	
 	public Player[] getPlayers() {
 		return players;
-
 	}
 }

@@ -31,8 +31,9 @@ public class ChanceCardController {
 		int minIndex = 0;
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
-
-		return cardArray[19-1];
+		//TODO: REMOVE
+		return cardArray[(GameController.setChanceCardNumberToDraw == -1 ? nextCard
+				: GameController.setChanceCardNumberToDraw)];
 	}
 
 	// Handles the logic regarding all chance cards
@@ -138,7 +139,7 @@ public class ChanceCardController {
 
 				// opdate gui
 				gui.updatePlayerPosition(player.getName(), fromField.getFieldNumber(), toField.getFieldNumber());
-				
+
 				// update logic
 				player.setCurrentField(toField);
 
@@ -152,30 +153,37 @@ public class ChanceCardController {
 
 				// find field
 				toField = gbc.getFieldByName(FieldName.Grønningen);
-				
+
 				// get money for passing start
-				if(GameLogicCtrl.getInstance().checkHavePassedStart(player.getCurrentField().getFieldNumber(), toField.getFieldNumber()))
-						player.deposit(BusinessLogicController.MONEY_FOR_PASSING_START);
+				if (GameLogicCtrl.getInstance().checkHavePassedStart(player.getCurrentField().getFieldNumber(),
+						toField.getFieldNumber()))
+					player.deposit(BusinessLogicController.MONEY_FOR_PASSING_START);
 
 				gui.showMessage(card.getText());
 				gui.showPromt("");
 				gui.updatePlayerPosition(player.getName(), fromField.getFieldNumber(), toField.getFieldNumber());
-				
+
 				// update gui
 				gui.updateBalance(player);
 				gui.updatePlayerPosition(player.getName(), fromField.getFieldNumber(), toField.getFieldNumber());
-							
+
 				// update logic
-				player.setCurrentField(toField);	
-				
+				player.setCurrentField(toField);
+
 				// resolve new field
-				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);				
+				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
 				break;
-			
+
 			// Ryk frem til start.
 			case 20: {
-				player.setCurrentField(GameBoardController.getInstance().getFieldByNumber(1));
-				Messager.showMoveChanceCard(player, player.getCurrentField());
+
+				toField = gbc.getFieldByName(FieldName.Start);
+
+				gui.showMessage(card.getText());
+				gui.showPromt("");
+				gui.updatePlayerPosition(player.getName(), fromField.getFieldNumber(), toField.getFieldNumber());
+
+				player.setCurrentField(toField);
 				break;
 			}
 
@@ -319,15 +327,16 @@ public class ChanceCardController {
 	}
 
 	// Update GUI: Show info and update player info regarding move chance cards.
-	private void updateAboutMove(Player player, String cardText, int fromField, int toField, boolean updatePlayer, Player[] allPlayers) throws Exception {
-		
-		if(updatePlayer)
+	private void updateAboutMove(Player player, String cardText, int fromField, int toField, boolean updatePlayer,
+			Player[] allPlayers) throws Exception {
+
+		if (updatePlayer)
 			gui.updateBalance(player);
-		
+
 		gui.showMessage(cardText);
 		gui.showPromt("");
 		gui.updatePlayerPosition(player.getName(), fromField, toField);
-		
+
 		FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
 	}
 
