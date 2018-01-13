@@ -9,19 +9,19 @@ import entities.field.Field;
 import entities.field.OwnableField;
 import utilities.Messager;
 
-public class GameController {
+public class GameController extends BaseController {
 
 	// controllers
 	private BusinessLogicController blc = BusinessLogicController.getInstance();
 	private FieldLogicController flc = FieldLogicController.getInstance();
-	private GameLogicCtrl glc = GameLogicCtrl.getInstance();
-	private GUIController gui = GUIController.getInstance();
+	private GameLogicCtrl glc = GameLogicCtrl.getInstance();	
 	private GameBoardController gbc = GameBoardController.getInstance();
 
-	// ATTRIBUTES
+	// fields
 	private Player[] players = null;
 	private Player currentPlayer = null; // The current players round
 
+	// default contstructor
 	public GameController() throws IOException {
 	}
 
