@@ -178,12 +178,12 @@ public class FieldLogicController {
 			if (currentField.getFieldType() == FieldType.START) {
 
 				// TODO: Move out to BLC and pay START money even if you dont land on start!!
-				gui.showMessage("you have landed on " + currentField.getFieldType() + " you gain 4000 kr.");
+				gui.showMessage("Du har landet på " + currentField.getFieldType() + " modtag 4000 kr.");
 				currentPlayer.deposit(4000);
 			}
 			// landed on FREE PARKTIN
 			else {
-				gui.showMessage("you have landed on " + currentField.getFieldType() + " nothing happens");
+				gui.showMessage("du har landet på " + currentField.getFieldType() + " der sker intet");
 			}
 			break;
 		case GOTOJAIL:
