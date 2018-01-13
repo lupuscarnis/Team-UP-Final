@@ -115,10 +115,8 @@ public class LotField extends OwnableField {
 	 * @Return houseCount
 	 */
 	
-	public int getHouseCount() {
-		
+	public int getHouseCount() {		
 		return houseCount;
-
 	}
 	
 	/**
@@ -128,10 +126,8 @@ public class LotField extends OwnableField {
 	 *  
 	 */
 	
-	public void setHotelCount(int numHotel) {
-		
+	public void setHotelCount(int numHotel) {		
 		this.hotelCount = numHotel;
-
 	}
 	
 	/**
