@@ -11,14 +11,13 @@ public class Player {
 	private int turnsJailed = 0; // How many turns have the player been jailed.
 	private boolean isInJail;
 	private int lastRoll;
-	
+
 	private boolean hasJailCard = false;
-	private boolean doneThrowing = false; // Indicates that user is done throwing this turn 
+	private boolean doneThrowing = false; // Indicates that user is done throwing this turn
 	/**
 	 * Indicates whether user has rolled or not.
 	 */
 	private boolean hasRolled = false;
-	
 
 	public Player(String name, int startAmount) {
 		this(name, startAmount, null);
@@ -100,7 +99,7 @@ public class Player {
 	 * @param Amount
 	 * @return Returns if the withdraw was successful or not.
 	 */
-	public boolean withdraw(int amount) {		
+	public boolean withdraw(int amount) {
 		return account.withdraw(amount);
 	}
 
@@ -129,11 +128,12 @@ public class Player {
 	public void setIsInJail(boolean isInJail) {
 		this.isInJail = isInJail;
 	}
-/**
- * 
- * @return Returns the isInJail true if the player is marked for jail 
- */
-	
+
+	/**
+	 * 
+	 * @return Returns the isInJail true if the player is marked for jail
+	 */
+
 	public boolean isInJail() {
 
 		return this.isInJail;
@@ -166,8 +166,9 @@ public class Player {
 	public void setJailCard(boolean hasCard) {
 		this.hasJailCard = hasCard;
 	}
+
 	/**
-	 * Added by Frederik on 06-01-2018 22:02:44 
+	 * Added by Frederik on 06-01-2018 22:02:44
 	 * 
 	 * Returns GetOutOfJailCard status
 	 * 
@@ -175,7 +176,7 @@ public class Player {
 	 */
 	public boolean getJailCard() {
 		return this.hasJailCard;
-	}	
+	}
 
 	public boolean isDoneThrowing() {
 		return doneThrowing;
@@ -209,25 +210,38 @@ public class Player {
 	}
 
 	/**
-	 * @param turnsJailed the turnsJailed to set
+	 * @param turnsJailed
+	 *            the turnsJailed to set
 	 */
 	public void setTurnsJailed(int turnsJailed) {
 		this.turnsJailed = turnsJailed;
 	}
+
 	/**
-	 * @param int value
+	 * @param int
+	 *            value
 	 */
-	public void setLastRoll(int value)
-	{
+	public void setLastRoll(int value) {
 		this.lastRoll = value;
 	}
+
 	/**
 	 * 
 	 * @return int
 	 */
-	public int getLastRoll()
-	{
+	public int getLastRoll() {
 		return this.lastRoll;
 	}
-	
+
+	/**
+	 * Returns current field number
+	 * 
+	 * Added by Frederik on 13-01-2018 15:06:59
+	 * 
+	 * @return
+	 */
+	public int getFieldNumber() {
+		return getCurrentField().getFieldNumber();
+	}
+
 }
