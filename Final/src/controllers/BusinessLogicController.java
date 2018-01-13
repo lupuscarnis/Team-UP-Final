@@ -491,7 +491,7 @@ public class BusinessLogicController {
 			int newBid = Messager.showAuctionMessage(players[i], field);
 
 			if (newBid > highestBid) {
-				if(highestBidder.getBalance()>highestBid){
+				if(players[i].getBalance()>newBid){
 				highestBid = newBid;
 				  highestBidder=players[i];}
 				else{Messager.showMessage( highestBidder.getName()+" bød mere end han har råd til, og er diskvalificeret fra at byde");}

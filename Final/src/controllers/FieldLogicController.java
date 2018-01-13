@@ -51,7 +51,7 @@ public class FieldLogicController {
 						Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
 
 
-						if(highestBidder.getName() =="NoBid" ){Messager.showMessage("ingen gad at købe " +currentField);}
+						if(highestBidder.getName() =="NoBid" ){Messager.showMessage("ingen gad at købe " +currentField.getTitle());}
 
 						else{
 							OwnableField of = (OwnableField) currentField;
@@ -130,7 +130,24 @@ public class FieldLogicController {
 					{blc.buyLot(currentPlayer);}
 					
 				}
+				if(blc.userCanAffordLot(currentPlayer.getBalance(), ofSB)==false)
+				{
+					Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
 
+
+					if(highestBidder.getName() =="NoBid" ){Messager.showMessage("ingen gad at købe " +currentField.getTitle());}
+
+					else{
+						OwnableField of = (OwnableField) currentField;
+						of.setOwner(highestBidder);
+						Messager.showLotBoughtMessage(of);
+						//at opdatere GUI'en crasher programmet, saa lige nu bruger jeg console til at teste det virker.
+						System.out.println(highestBidder.getBalance());
+						
+					}
+
+				}
+				
 			}
 			// pay rent
 			else if(!ofSB.isPawned() | !ofSB.getOwner().isInJail()) {
