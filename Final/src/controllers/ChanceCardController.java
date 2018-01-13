@@ -225,8 +225,7 @@ public class ChanceCardController {
 
 			default:
 				throw new Exception("Case not found!");
-			}
-			System.out.println("Move card trukket");
+			}			
 		}
 		// Draw: Pay
 		else if (card instanceof PayChanceCard) {
@@ -235,36 +234,44 @@ public class ChanceCardController {
 
 			// Oliepriserne er steget, og de skal betale kr 500 pr. hus og kr 2000 pr.
 			// hotel.
-			case 6:
+			case 6:				
+				// TODO: Skal implementeres			
 				break;
 
 			// 13;Ejendomsskatterne er steget, ekstraudgifterne er kr. 800 pr. hus og kr.
 			// 2300 pr. hotel.;
 			case 13:
+				// TODO: Skal implementeres	
 				break;
 
 			/*
-			 * <<<<<<< HEAD 10;De har måttet vedtage en parkeringsbøde. Betal kr. 200 i
-			 * bøde.;200 15;De ======= 10;De har måttet vedtage en parkeringsbåde. Betal kr.
-			 * 200 i både.;200 15;De >>>>>>> branch 'develop' of
-			 * https://github.com/lupuscarnis/Team-UP-Final.git har modtaget Deres
-			 * tandlægeregning. Betal kr. 2000.;2000 21;Betal kr. 3000 for reparation af
-			 * Deres vogn.;3000 22;Betal kr. 3000 for reparation af Deres vogn.;3000
-			 * 23;Betal Deres bilforsikring kr. 1000.;1000 28;De har været en tur i udlandet
-			 * og har haft for mange cigaretter med hjem. Betal kr. 200;200 33;De har kørt
-			 * frem for fuld stop. Betal kr. 1000.;1000
-			 */
+			 * 	10;De har måttet vedtage en parkeringsbøde. Betal kr. 200 i bøde.
+			 * 	15;De har modtaget Deres tandlægeregning. Betal kr. 2000.
+			 * 	21;Betal kr. 3000 for reparation af Deres vogn.
+			 * 	22;Betal kr. 3000 for reparation af Deres vogn.
+			 * 	23;Betal Deres bilforsikring kr. 1000.
+			 *	28;De har været en tur i udlandet og har haft for mange cigaretter med hjem. Betal kr. 200
+			 * 	33;De har kørt frem for fuld stop. Betal kr. 1000.
+			 */				
 			case 10:
 			case 15:
 			case 21:
 			case 22:
 			case 23:
 			case 28:
-			case 33:
+			case 33:					
 				PayChanceCard pc = (PayChanceCard) card;
-				pc.getAmount();
+				
+				// inform/update player
+				gui.showMessage(card.getText());
+				gui.showPromt("");
+				
+				
+				// update logic
 				player.withdraw(pc.getAmount());
-				Messager.showPayChanceCard(player, pc.getAmount());
+				
+				// update (gui) balance
+				gui.updateBalance(player);
 				break;
 
 			default:
