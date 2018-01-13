@@ -192,7 +192,6 @@ public class GameController {
 				break;
 			}
 		}
-
 	}
 
 	/**
