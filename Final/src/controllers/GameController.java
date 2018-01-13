@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.FieldName;
@@ -9,16 +8,6 @@ import entities.enums.UserOption;
 import entities.field.Field;
 import entities.field.OwnableField;
 import utilities.Messager;
-
-//TODO: MANGLER:
-// - Chancekort
-// - Slå dig ud af fængslet
-// - bygninger på grunde
-// - pantsætning
-// - Ret stavning i Chancedata.txt
-// - Get net worth
-// - Player lose
-// - Player won
 
 public class GameController {
 
@@ -28,31 +17,19 @@ public class GameController {
 	private GameLogicCtrl glc = GameLogicCtrl.getInstance();
 	private GUIController gui = GUIController.getInstance();
 
-	// CONSTANTS
-	private static final int PLAYER_MIN = 3;
-	private static final int PLAYER_MAX = 6;
-
-	// Maybe move these to bank
-	private static final int MONEY_START_AMOUNT = 30000; // Amount for each player at game start
-	private static final int MONEY_START = 4000; // Amount when passing START
-	private static final int MONEY_JAIL = 1000; // Amount to pay to leave jail
-	private static final int TAX_CASH_AMOUNT = 4000;
-	private static final double TAX_PERCENTAGE_AMOUNT = 0.1;
-
 	// ATTRIBUTES
 	private Player[] players = null;
-	private Player lastPlayer = null; // Who played last turn
 	private Player currentPlayer = null; // The current players round
-	// TODO: REMOVE
-	public static int diceFaceValue = -1; // STRICTLY FOR TESTING
-	public static int setChanceCardNumberToDraw = -1; // STRICTLY FOR TESTING
 
-	// FOR TESTING PURPOSES!
-
-	// Testing Gameover
 	public GameController() throws IOException {
 	}
 
+	/**
+	 * Indicates whether game is over or not.
+	 * 
+	 * @param players
+	 * @return
+	 */
 	private boolean gameOver(Player[] players) {
 		int playerCount = 0;
 		for (Player player : players) {
@@ -75,17 +52,11 @@ public class GameController {
 		return false;
 	}
 
-	// Testing player is in jail
-	private boolean isJail(Player[] players) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	// Testing player gets out of jail
-	private boolean getOutJail(Player[] players) {
-		return false;
-	}
-
+	/**
+	 * Method sets up game at game start.
+	 * 
+	 * @throws Exception
+	 */
 	public void setupGame() throws Exception {
 
 		// get player names from UI
@@ -98,12 +69,12 @@ public class GameController {
 		gui.setup(players);
 	}
 
+	/**
+	 * Main game loop, that continues until game over.
+	 * 
+	 * @throws Exception
+	 */
 	public void play() throws Exception {
-
-		// indicates number of turns in current game
-		int turnCounter = 0;
-		// indicates number of rerolls made by player
-		int rerolls = 0;
 
 		// indicates if first turn or not
 		boolean isFirstTurn = true;
@@ -114,9 +85,6 @@ public class GameController {
 		// start game loop
 		while (!gameOver(players)) {
 
-			// increment turn counter
-			turnCounter++;
-
 			// Checking which players starts first if turn == 1
 			if (isFirstTurn) {
 
@@ -126,29 +94,15 @@ public class GameController {
 				// Get first player from highest "roll"
 				currentPlayer = glc.getStartPlayer(players);
 
-				// Vis start spil knap
-
-				// gui.showPromt("Start spil");
-
-				// gui.showPromt("Start spil");
-				/*
-				 * if(glc.d1.getValue()==glc.d2.getValue()){ currentPlayer = currentPlayer;
-				 * rerolls++;
-				 */
-
 				// stopper currentplayer for at blive til next player.
 			} else { // find next player
 				do {
 					blc.destroyPlayer(currentPlayer);
 					currentPlayer = glc.getNextPlayer(players);
 				} while (currentPlayer.getBalance() == 0);
-				
-			}
 
-			/*
-			 * } rerolls = 0; }
-			 */
-			gui.showPromt("Det er " + currentPlayer.getName() + "s tur!");
+			}
+			//gui.showPromt("Det er " + currentPlayer.getName() + "s tur!");
 
 			// present options for user
 			// End when EndTurn is selected
@@ -233,36 +187,19 @@ public class GameController {
 				}
 
 			} while (userChoice != UserOption.EndTurn);
-			if(gameOver(players)){
+			if (gameOver(players)) {
 				Messager.showMessage("spillet er ovre vinderen er den med penge tilbage :)");
 				break;
 			}
 		}
-		
+
 	}
 
 	/**
-	 * FOR TESTING: You can "hard code" face value of dice
+	 * Gets player array (the players currently playing the game). 
 	 * 
-	 * Added by Frederik on 12-01-2018 13:52:27
-	 * 
-	 * @param value
+	 * @return
 	 */
-	public void setFaceValue(int value) {
-		GameController.diceFaceValue = value;
-	}
-
-	/**
-	 * FOR TESTING: You can "hard code" which chance card to draw EVERY time.
-	 * 
-	 * Added by Frederik on 12-01-2018 13:52:27
-	 * 
-	 * @param value
-	 */
-	public void setChanceCardToDraw(int cardNo) {
-		GameController.setChanceCardNumberToDraw = cardNo;
-	}
-
 	public Player[] getPlayers() {
 		return players;
 	}
