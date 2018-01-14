@@ -173,8 +173,14 @@ public class BusinessLogicController extends BaseController {
 		lf.setOwner(player);
 		// update gui
 		gui.updateBalance(player);
+		
+		gui.setHouse(0, lf.getFieldNumber());
+		
+		gui.setHotel(true, lf.getFieldNumber());
 		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
 		gui.showMessage("Du har nu bygget et hotel på grunden: " + lf.getTitle());
+	
+		
 	}
 
 	/** 
