@@ -126,6 +126,9 @@ public class Player {
 	}
 
 	public void setIsInJail(boolean isInJail) {
+		if(!isInJail) {
+			turnsJailed=0;
+		}
 		this.isInJail = isInJail;
 	}
 
