@@ -14,7 +14,7 @@ import entities.field.OwnableField;
  * controller-tangle issue, we have dropped moving this to the controller
  * package.
  */
-public class Messager {
+public class Messenger {
 
 	private static String getChooseText(String name) {
 		return String.format("(%s): Du kan vælge flg.:", name);

@@ -7,7 +7,7 @@ import entities.enums.UserOption;
 import entities.field.Field;
 import entities.field.LotField;
 import entities.field.OwnableField;
-import utilities.Messager;
+import utilities.Messenger;
 
 public class FieldLogicController extends BaseController {
 
@@ -72,14 +72,14 @@ public class FieldLogicController extends BaseController {
 				// Check if player can afford to buy the lot
 				if (blc.userCanAffordLot(currentPlayer.getBalance(), lf)) {
 
-					choice = Messager.showWantToBuyMessage(lf.getTitle(), currentPlayer.getName());
+					choice = Messenger.showWantToBuyMessage(lf.getTitle(), currentPlayer.getName());
 
 					// user opted to buy field
 					if (choice == UserOption.BuyField) {
 						blc.buyLot(currentPlayer);
 						
 						// update gui
-						Messager.showLotBoughtMessage((OwnableField) currentPlayer.getCurrentField());
+						Messenger.showLotBoughtMessage((OwnableField) currentPlayer.getCurrentField());
 					}
 
 					// Check if player was presented with a choice or no choice was given (a little
@@ -88,13 +88,13 @@ public class FieldLogicController extends BaseController {
 						Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
 
 						if (highestBidder.getName() == "NoBid") {
-							Messager.showMessage("ingen gad at købe " + currentField.getTitle());
+							Messenger.showMessage("ingen gad at købe " + currentField.getTitle());
 						}
 
 						else {
 							OwnableField of = (OwnableField) currentField;
 							of.setOwner(highestBidder);
-							Messager.showLotBoughtMessage(of);
+							Messenger.showLotBoughtMessage(of);
 							// at opdatere GUI'en crasher programmet, saa lige nu bruger jeg console til at
 							// teste det virker.
 							System.out.println(highestBidder.getBalance());
@@ -115,7 +115,7 @@ public class FieldLogicController extends BaseController {
 //					&& blc.userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4) {
 
 				// Player wants to buy a house
-				choice = Messager.showWantToBuildHouseMessage(lf.getTitle(), currentPlayer.getName());
+				choice = Messenger.showWantToBuildHouseMessage(lf.getTitle(), currentPlayer.getName());
 
 				// user opted to build a house
 				if (choice == UserOption.BuyHouse) {
@@ -136,7 +136,7 @@ public class FieldLogicController extends BaseController {
 //					&& lf.getHotelCount() != 1) {
 
 				// Player wants to buy a house
-				choice = Messager.showWantToBuildHotelMessage(lf.getTitle(), currentPlayer.getName());
+				choice = Messenger.showWantToBuildHotelMessage(lf.getTitle(), currentPlayer.getName());
 
 				// user opted to build a house
 				if (choice == UserOption.BuyHotel) {
@@ -164,7 +164,7 @@ public class FieldLogicController extends BaseController {
 				// Check if player can afford to buy the lot
 				if (blc.userCanAffordLot(currentPlayer.getBalance(), ofSB)) {
 
-					choice = Messager.showWantToBuyMessage(ofSB.getTitle(), currentPlayer.getName());
+					choice = Messenger.showWantToBuyMessage(ofSB.getTitle(), currentPlayer.getName());
 
 					// user opted to buy field
 					if (choice == UserOption.BuyField) {
@@ -176,13 +176,13 @@ public class FieldLogicController extends BaseController {
 					Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
 
 					if (highestBidder.getName() == "NoBid") {
-						Messager.showMessage("ingen gad at købe " + currentField.getTitle());
+						Messenger.showMessage("ingen gad at købe " + currentField.getTitle());
 					}
 
 					else {
 						OwnableField of = (OwnableField) currentField;
 						of.setOwner(highestBidder);
-						Messager.showLotBoughtMessage(of);
+						Messenger.showLotBoughtMessage(of);
 					
 
 					}
@@ -223,14 +223,14 @@ public class FieldLogicController extends BaseController {
 			break;
 		case GOTOJAIL:
 			// Show message to player
-			Messager.showMustGoToJail(currentPlayer);
+			Messenger.showMustGoToJail(currentPlayer);
 
 			// handle logic reg. going to jail
 			glc.handleGoToJail(currentPlayer);
 			break;
 		case INCOMETAX:
 			// Tell user he must pay income tax and get choice (10% or 4000)
-			choice = Messager.showMustPayIncomeTax(currentField.getFieldType(), currentPlayer.getName());
+			choice = Messenger.showMustPayIncomeTax(currentField.getFieldType(), currentPlayer.getName());
 
 			// pay tax
 			blc.payIncomeTax(currentPlayer, choice);

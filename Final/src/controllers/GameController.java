@@ -7,7 +7,7 @@ import entities.enums.UserOption;
 import entities.field.Field;
 import entities.field.LotField;
 import entities.field.OwnableField;
-import utilities.Messager;
+import utilities.Messenger;
 import utilities.MyRandom;
 
 public class GameController extends BaseController {
@@ -148,7 +148,7 @@ public class GameController extends BaseController {
 
 					}
 
-					String answerSell = Messager.getSelectionResult(houseNameList, currentPlayer.getName());
+					String answerSell = Messenger.getSelectionResult(houseNameList, currentPlayer.getName());
 
 					// unpawn selected lot
 					if (!answerSell.equals("Annuller!"))
@@ -172,7 +172,7 @@ public class GameController extends BaseController {
 
 					}
 
-					String answerSellHotel = Messager.getSelectionResult(hotelNameList, currentPlayer.getName());
+					String answerSellHotel = Messenger.getSelectionResult(hotelNameList, currentPlayer.getName());
 
 					// unpawn selected lot
 					if (!answerSellHotel.equals("Annuller!"))
@@ -195,7 +195,7 @@ public class GameController extends BaseController {
 						index++;
 					}
 
-					String result = Messager.getSelectionResult(tmp, currentPlayer.getName());
+					String result = Messenger.getSelectionResult(tmp, currentPlayer.getName());
 
 					// pawn selected lot
 					if (!result.equals("- Annuller!"))
@@ -238,7 +238,7 @@ public class GameController extends BaseController {
 
 					}
 
-					String answer = Messager.getSelectionResult(pawnedNameList, currentPlayer.getName());
+					String answer = Messenger.getSelectionResult(pawnedNameList, currentPlayer.getName());
 
 					// unpawn selected lot
 					if (!answer.equals("Annuller!"))
@@ -252,7 +252,7 @@ public class GameController extends BaseController {
 
 			} while (userChoice != UserOption.EndTurn);
 			if (gameOver(players)) {
-				Messager.showMessage("spillet er ovre vinderen er den med penge tilbage :)");
+				Messenger.showMessage("spillet er ovre vinderen er den med penge tilbage :)");
 				break;
 			}
 		}
