@@ -212,7 +212,6 @@ public class FieldLogicController extends BaseController {
 
 				// TODO: Move out to BLC and pay START money even if you dont land on start!!
 				gui.showMessage("Du har landet på " + currentField.getFieldType() + " modtag 4000 kr.");
-				currentPlayer.deposit(4000);
 			}
 			// landed on FREE PARKTIN
 			else {

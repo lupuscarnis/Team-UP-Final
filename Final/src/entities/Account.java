@@ -1,25 +1,15 @@
 package entities;
 
-/**
- * @version 1.0
- * @author Nicolai Barnett
- */
+
 public class Account {
 	private int _balance;
 
-	/**
-	 * @version 1.0
-	 * @author Nicolai Barnett
-	 * @param balance
-	 *            Makes a player Balance.
-	 */
 
 	public Account(int balance) {
 		_balance = balance;
 	}
 
 	/**
-	 * @author Nicolai
 	 * 
 	 * @version 1.0
 	 * @param Deposit
@@ -34,7 +24,6 @@ public class Account {
 	}
 
 	/**
-	 * @author Nicolai
 	 * @version 1.1
 	 * @param Amount
 	 * @return Returns if the withdraw was successful or not.
@@ -52,7 +41,6 @@ public class Account {
 
 	/**
 	 * @version 1.0
-	 * @author Nicolai Barnett
 	 * @param balance
 	 *            Sets the player balance
 	 */
@@ -62,7 +50,6 @@ public class Account {
 
 	/**
 	 * @version 1.0
-	 * @author Nicolai Barnett
 	 * @return _balance Gets The current player balance if non had been entered
 	 *         previously it returns 20
 	 */

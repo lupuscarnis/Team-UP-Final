@@ -15,6 +15,11 @@ import utilities.ChanceLoader;
 import utilities.Messager;
 import utilities.MyRandom;
 
+/**
+ * 
+ * Handles when players land on chance card field (draw card, evaluate card)
+ *
+ */
 public class ChanceCardController extends BaseController {
 
 	private ChanceCard[] cardArray = null; // holds all cards from chancedata.txt
@@ -32,8 +37,10 @@ public class ChanceCardController extends BaseController {
 	public void setGlc(GameLogicCtrl glc) {
 		this.glc = glc;
 	}
-
-	// Draws random card from card array
+/**
+ * 
+ * @return drawn ChanceCard
+ */
 	private ChanceCard drawNextCard() {
 		int minIndex = 0;
 		int maxIndex = cardArray.length - 1;
@@ -41,8 +48,14 @@ public class ChanceCardController extends BaseController {
 
 		return cardArray[nextCard];
 	}
-
-	// Handles the logic regarding all chance cards
+/**
+ * 
+ * Draws chance chance and performs action of drawn chance card
+ * 
+ * @param player
+ * @param allPlayers
+ * @throws Exception
+ */
 	public void handleDraw(Player player, Player[] allPlayers) throws Exception {
 		// Draw card
 		ChanceCard card = drawNextCard();
