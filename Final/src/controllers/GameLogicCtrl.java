@@ -80,19 +80,6 @@ public class GameLogicCtrl extends BaseController {
         			
         }
 		
-		// can buy hotel
-		if (currentPlayer.getCurrentField() instanceof LotField)
-        {
-        	LotField lf = (LotField) currentPlayer.getCurrentField();
-        	
-        	if (blc.playerCanBuildHotel(currentPlayer, lf)) {
-        		
-        		options[index] = UserOption.BuyHotel;
-        		index++;
-        	
-        	}
-        			
-        }
 		
 		if (currentPlayer.isDoneThrowing()) {
 			options[index] = UserOption.EndTurn;
@@ -256,7 +243,7 @@ public class GameLogicCtrl extends BaseController {
 			Field nextField = flc.getNextField(currentFieldNo, faceValue);
 
 			// Update current pos on player object
-			currentPlayer.setCurrentField(gbc.getFieldByNumber(19));
+			currentPlayer.setCurrentField(nextField);
 
 			// Update gui
 			gui.movePlayer(currentPlayer);
