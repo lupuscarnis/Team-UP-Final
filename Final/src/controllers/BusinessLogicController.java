@@ -318,9 +318,130 @@ public class BusinessLogicController extends BaseController {
 		return false;
 	}
 
-	
+
+	/**
+	 * Indicates if a user has houses to sell or not.
+	 * 
+	 * @param currentPlayer
+	 * @return false if nothing to sell, true if yes.
+	 * @throws Exception
+	 */
+	public boolean hasHouse(Player currentPlayer) throws Exception {
+		// Get the fields owned by our player
+		OwnableField[] ownedField = gbc.getFieldsByOwner(currentPlayer);
+
+		// runs all owned fields trough checking if pawned
+		for (OwnableField field : ownedField) {
+
+			// if lot field check for buildings
+			
+			if (field instanceof LotField) {
+				LotField lf = (LotField) field;
+
+				// check if there are houses on the lotfield
+				if (lf.getHouseCount() >= 1) {
+					return true;
+				}
+
+			}
+		}
+		return false;
+	}
 	
 
+	/**
+	 * @param result
+	 *            The field which houses are to be sold.
+	 * @param owner
+	 *            Owner of the field.
+	 * @throws Exception
+	 */
+	public void sellHouse(String result, Player owner) throws Exception {
+		OwnableField[] fieldsOwned = gbc.getFieldsByOwner(owner);
+
+		for (OwnableField fields : fieldsOwned) {
+
+			if (fields instanceof LotField) {
+				LotField lf = (LotField) fields;
+
+				// Determine desposit amount for the seller
+				int depositAmount = (lf.getHousePrice() * lf.getHouseCount()) / 2;
+
+				lf.setHouseCount(lf.getHouseCount() - 1);
+
+				owner.deposit(depositAmount);
+				gui.updateBalance(owner);
+
+				// update GUI
+				if (lf.getHouseCount() < 0)
+				{
+
+					gui.setHouse(0, fields.getFieldNumber());
+
+				} else {
+					gui.setHouse(lf.getHouseCount(), fields.getFieldNumber());
+				}
+				// confirm in gui
+				Messager.showHouseSold(lf);
+			}
+		}
+	}
+
+	/**
+	 * @param currentPlayer
+	 * @return Returns an List Of Fields that has houses or returns null if no fields
+	 *         are pawned
+	 * @throws Exception
+	 */
+	public OwnableField[] getFieldsWithHouses(Player currentPlayer) throws Exception {
+		// Get the fields owned by our player
+		OwnableField[] ownedFields = gbc.getFieldsByOwner(currentPlayer);
+		// Creates temporary storage
+		OwnableField[] tmp = new OwnableField[40];
+		// Creates Variables
+		int index = 0;
+		int count = 0;
+		int index2 = 0;
+		// runs all owned fields trough checking if pawned adding them to tmp
+		for (OwnableField field : ownedFields) {
+
+			// if lot field then make sure no buildings are on it
+			if (field instanceof LotField) {
+				LotField lf = (LotField) field;
+
+				int buildingCount = lf.getHouseCount();
+
+				// count of Pawnedfields
+				// uses Count to create a semi Dynamic array
+
+				if (buildingCount >= 1 && !lf.isPawned()) {
+
+					tmp[index] = ownedFields[index];
+					index++;
+					count++;
+				} else {
+					index++;
+				}
+			}
+
+		}
+		// Creates a New OwnedFields to the right value of pawned fields while clearing
+		// all null posts
+		OwnableField[] cleanVersion = new OwnableField[count];
+		// clear all null posts
+
+		for (OwnableField housesFields : tmp) {
+
+			if (housesFields != null) {
+				cleanVersion[index2] = housesFields;
+				index2++;
+			}
+
+		}
+		return cleanVersion;
+	}
+
+	
 	/**
 	 * Gets a list of all the all the fields player have that a pawnable
 	 * @param owner

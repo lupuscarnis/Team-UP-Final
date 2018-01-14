@@ -60,6 +60,11 @@ public class GameLogicCtrl extends BaseController {
 			options[index] = UserOption.Unpawn;
 		index++;
 
+		// can sell house
+		if (blc.hasHouse(currentPlayer))
+			options[index] = UserOption.SellHouse;
+		index++;
+		
 		if (currentPlayer.isDoneThrowing()) {
 			options[index] = UserOption.EndTurn;
 			index++;

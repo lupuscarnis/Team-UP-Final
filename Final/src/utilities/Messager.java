@@ -54,6 +54,13 @@ public class Messager {
 		GUIController.getInstance().showMessage("Du har nu købt grunden: " + of.getTitle());
 	}
 
+	public static void showHouseSold(OwnableField of) throws IOException, Exception {
+		Player player = of.getOwner();
+
+		GUIController.getInstance().updateBalance(player);
+		GUIController.getInstance().showMessage("Du har nu solgt et hus på grunden: " + of.getTitle());
+	}
+	
 	public static void showMustPayRent(String name, int rent, String playerName) throws Exception {
 
 		// show message
