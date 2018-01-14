@@ -509,11 +509,12 @@ public class BusinessLogicController extends BaseController {
 		OwnableField[] OF = gbc.getFieldsByOwner(deadGuy);
 		for (OwnableField field : OF) {
 			field.setOwner(null);
-			
-			deadGuy.setCurrentField(gbc.getFieldByName(FieldName.Fængslet));
-			gui.updatePlayerPosition(deadGuy.getName(),
-					deadGuy.getCurrentField().getFieldNumber(),
-					gbc.getFieldByName(FieldName.Fængslet).getFieldNumber());
 		}
+			
+		
+			gui.updatePlayerPosition(deadGuy.getName(), deadGuy.getCurrentField().getFieldNumber(), gbc.getFieldByName(FieldName.Fængslet).getFieldNumber());
+			deadGuy.setCurrentField(gbc.getFieldByName(FieldName.Fængslet));
+			deadGuy.getAccount().setBalance(0);
+		
 	}
 }
