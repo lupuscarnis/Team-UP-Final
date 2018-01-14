@@ -22,7 +22,10 @@ public class Player {
 	public Player(String name, int startAmount) {
 		this(name, startAmount, null);
 	}
-
+	/**
+	 * There are two constructors which is to help setup a few dummy players, as well as the real ones
+	 *
+	 */
 	public Player(String name, int startAmount, Field currentField) {
 		this.account = new Account(startAmount);
 		this.name = name;
@@ -134,7 +137,7 @@ public class Player {
 	/**
 	 * Added by Frederik on 06-01-2018 21:55:29
 	 * 
-	 * Indicates whether player has GetOutOfJailForFreeCard or not.
+	 * changes whether a player has a getOutOfJailFreeCard or not
 	 * 
 	 * @param hasCard
 	 */

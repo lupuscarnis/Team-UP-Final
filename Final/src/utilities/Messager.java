@@ -8,8 +8,8 @@ import entities.enums.UserOption;
 import entities.field.Field;
 import entities.field.OwnableField;
 
-// TODO: GUI skal ikke kaldes via GUIController.getInstance()
-// TODO: All text must be in EITHER danish or english!!
+
+
 public class Messager {
 
 	// private static
@@ -164,16 +164,8 @@ public class Messager {
 		// Player highestBidder = null;
 		GUIController.getInstance().showMessage(player.getName() + " kan nu byde på grunden " + field);
 		// return highestBidder;
-		String bf = "byd på ejendommen";
-		String nt = "Nej tak";
+		String bf = "Byd på ejendommen";
 		int bid;
-		// det er muligvis et problem at der ligger saa meget logik i Messager, men det
-		// er i haab om at
-		// Bussinesslogiccontroller ikke direkte interegerer med Gui'en
-		// UserOption[] options
-		// ={GUIController.getInstance().parseFromStringToUserOption(bf),
-		// GUIController.getInstance().parseFromStringToUserOption(nt)};
-		// UserOption choice = presentOptions(options, player.getName());
 
 		UserOption choice = GUIController.getInstance().showOptions("kid",
 				new UserOption[] { UserOption.bidOnField, UserOption.NoThanks });

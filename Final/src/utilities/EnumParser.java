@@ -88,7 +88,7 @@ public class EnumParser {
 		case PayToLeaveJail:
 			return "Betal kaution";
 		case bidOnField:
-			return "byd på ejendommen";
+			return "Byd på ejendommen";
 		case Unpawn:
 			return "Ophæv Pantsætning";
 		default:

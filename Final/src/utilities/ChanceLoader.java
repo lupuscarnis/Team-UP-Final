@@ -4,21 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import entities.chancecard.ChanceCard;
 import entities.chancecard.GetOutJailForFreeChanceCard;
 import entities.chancecard.MoveChanceCard;
 import entities.chancecard.PayChanceCard;
 import entities.chancecard.ReceiveChanceCard;
-import entities.enums.FieldType;
-import entities.enums.LotColor;
-import entities.field.BreweryField;
-import entities.field.Field;
-import entities.field.LotField;
-import entities.field.ShippingField;
 
 /**
- * Added by Frederik on 24-11-2017 20:06:51
+ * This class handles loading of chance card data from "chancedata.txt"
  *
  */
 public class ChanceLoader {
@@ -27,6 +20,14 @@ public class ChanceLoader {
 		return getClass().getResourceAsStream(filename);
 	}
 
+	/**
+	 * Primary method that loads and inserts chance card data into a array of chance
+	 * cards.
+	 * 
+	 * @return
+	 * @throws IOException 
+	 * @throws Exception
+	 */
 	public ChanceCard[] getCards() throws IOException {
 		ChanceCard[] cards = new ChanceCard[33];
 		InputStream in = getInputStream("/chancedata.txt");
@@ -52,21 +53,20 @@ public class ChanceLoader {
 						cards[id - 1] = new MoveChanceCard(id, text);
 						break;
 					case "PAY":
-						int payAmount=(arr.length>3)?Integer.parseInt(arr[3]):0;
-						cards[id - 1] = new PayChanceCard(id, text,payAmount);
+						int payAmount = (arr.length > 3) ? Integer.parseInt(arr[3]) : 0;
+						cards[id - 1] = new PayChanceCard(id, text, payAmount);
 						break;
 					case "RECEIVE":
-						int receiveAmount =(arr.length>3)?Integer.parseInt(arr[3]):0;
-						cards[id - 1] = new ReceiveChanceCard(id, text,receiveAmount);
+						int receiveAmount = (arr.length > 3) ? Integer.parseInt(arr[3]) : 0;
+						cards[id - 1] = new ReceiveChanceCard(id, text, receiveAmount);
 						break;
 					case "FREEJAIL":
 						cards[id - 1] = new GetOutJailForFreeChanceCard(id, text);
-						break;
+						break;					
 					}
 				}
 				currentLine = br.readLine();
 			}
-
 		}
 
 		return cards;
