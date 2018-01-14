@@ -150,27 +150,47 @@ public class BusinessLogicControllerTests {
 
 	public void testPayIncomeTax() throws Exception {
 		// test the 10% option
-		assertEquals(520, p.getBalance());		
-		blc.payIncomeTax(p,UserOption.IncomeTaxPayTenPercent);		
-		assertEquals(520-52, p.getBalance());
-		
+		assertEquals(520, p.getBalance());
+		blc.payIncomeTax(p, UserOption.IncomeTaxPayTenPercent);
+		assertEquals(520 - 52, p.getBalance());
+
 		// pay 4000 option
 		p.setBalance(5000);
-		assertEquals(5000, p.getBalance());		
-		blc.payIncomeTax(p,UserOption.IncomeTaxPay4000);		
-		assertEquals(1000, p.getBalance());		
+		assertEquals(5000, p.getBalance());
+		blc.payIncomeTax(p, UserOption.IncomeTaxPay4000);
+		assertEquals(1000, p.getBalance());
 	}
 
 	public void testUserCanAffordLot() {
 
 	}
 
+	/**
+	 * Test that user can buy house
+	 */
+	@Test
 	public void testUserCanAffordHouse() {
 
+		LotField lf = (LotField) gbc.getFieldByNumber(4);
+
+		// assert false
+		assertFalse(blc.userCanAffordHouse(p.getBalance(), lf));
+
+		// assert true
+		p.setBalance(5000);
+		assertTrue(blc.userCanAffordHouse(p.getBalance(), lf));
 	}
 
+	@Test
 	public void testUserCanAffordHotel() {
+		LotField lf = (LotField) gbc.getFieldByNumber(2);
 
+		// assert false
+		assertFalse(blc.userCanAffordHotel(p.getBalance(), lf));
+
+		// assert true
+		p.setBalance(5000);
+		assertTrue(blc.userCanAffordHotel(p.getBalance(), lf));
 	}
 
 	public void testPlayerCanBuildHouse() {
