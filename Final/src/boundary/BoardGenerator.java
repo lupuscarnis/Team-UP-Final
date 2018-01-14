@@ -26,8 +26,8 @@ import gui_main.GUI;
 import utilities.FieldLoader;
 
 /**
- * This class was intended as a "Controller" for board generation of the board and fields,
- * as it would fill too much in the GUICtrl - what do you think?
+ * This class was intended as a "Controller" for board generation of the board and fields.
+ * As it would fill too much in the GUICtrl, it became a seperate class.
  */
 public class BoardGenerator {
 /**
@@ -57,8 +57,8 @@ public class BoardGenerator {
 			 */
 
 			case START:
-				// TODO: How do you make title larger?
-				desc = tmp.getDesc(); // TODO: How do you center the text?
+				
+				desc = tmp.getDesc(); 
 				sub = "Modtag 4000";
 				bgColor = Color.red;
 
@@ -106,7 +106,7 @@ public class BoardGenerator {
 
 			case INCOMETAX:
 			case EXTRATAX:
-				// check wether it's a income or extra tax field,
+				// check whether it's a income or extra tax field,
 				// and insert subtext accordingly.
 				sub = tmp.getFieldType() == FieldType.INCOMETAX ? "10% el. 4000" : "Betal 2000";
 
@@ -149,7 +149,7 @@ public class BoardGenerator {
 /**
  *  Gets The background Color of the current lot 
  * @param lotColor
- * @return
+ * @return Color
  */
 	public Color getBgColor(LotColor lotColor) {
 
@@ -183,10 +183,10 @@ public class BoardGenerator {
 		}
 	}
 /**
- * Gets the brewery description
+ * This static method gets the brewery description
  * 
  * @param field
- * @return
+ * @return String
  */
 	private static String getBreweryDesc(BreweryField field) {
 
@@ -196,7 +196,7 @@ public class BoardGenerator {
 				field.getTitle(), field.getModifierFor(BreweriesOwned.ONE), field.getModifierFor(BreweriesOwned.TWO));
 	}
 /**
- * Gets The shipping desc
+ * This static method gets The shipping desc
  * @param field
  * @return
  */
@@ -217,7 +217,7 @@ public class BoardGenerator {
 				field.getRentFor(ShippingOwned.Three), field.getRentFor(ShippingOwned.Four));
 	}
 /**
- * Gets the lot descriptions
+ * This static method gets the lot descriptions
  * @param field
  * @return
  */
@@ -235,7 +235,7 @@ public class BoardGenerator {
 				lf.getRentFor(LotRentTier.Hotel));
 	}
 /**
- * Get color of the foreground 
+ * static method that is used to get the color of the foreground 
  * @param color
  * @return
  */
@@ -246,7 +246,7 @@ public class BoardGenerator {
 		return Color.BLACK;
 	}
 /**
- * Format the text
+ * Format the text. Is used to get the text in the right format for the reader.
  * @param text
  * @param i
  * @return
