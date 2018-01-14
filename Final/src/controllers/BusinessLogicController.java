@@ -4,6 +4,7 @@ import java.io.IOException;
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.FieldName;
+import entities.enums.FieldType;
 import entities.enums.UserOption;
 import entities.field.Field;
 import entities.field.LotField;
@@ -134,7 +135,7 @@ public class BusinessLogicController extends BaseController {
 		// update number of houses on lot + 1
 		lf.setHouseCount(lf.getHouseCount() + 1);
 		// update number of houses on lot + 1 (GUI)
-		gui.setHouse(lf.getHouseCount() + 1, lf.getFieldNumber());
+		gui.setHouse(lf.getHouseCount(), lf.getFieldNumber());
 		// update gui
 		gui.updateBalance(player);
 		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
@@ -239,7 +240,7 @@ public class BusinessLogicController extends BaseController {
 	 * 
 	 * Check if user can afford to build a house
 	 * 
-	 * @param currentPlayer
+	 * @param currentPlayerBalance
 	 *            LotField
 	 * @return
 	 */
@@ -256,7 +257,7 @@ public class BusinessLogicController extends BaseController {
 	 * 
 	 * Check if user can afford to build a hotel (price getBuildingCost * 5)
 	 * 
-	 * @param currentPlayer
+	 * @param currentPlayerBalance
 	 *            LotField
 	 * @return
 	 */
@@ -268,6 +269,41 @@ public class BusinessLogicController extends BaseController {
 		return false;
 	}
 
+	/**
+	 * Added by Kasper on 09-01-2018 00:17:56
+	 * 
+	 * Check if a user can build a house
+	 * 
+	 * @param currentPlayer
+	 *            LotField
+	 * @return
+	 */
+	public boolean playerCanBuildHouse(Player currentPlayer, LotField lf) {
+		
+		if (lf.getOwner() == currentPlayer && userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4)
+			return true;
+
+		return false;
+	}
+	
+	/**
+	 * Added by Kasper on 09-01-2018 00:17:56
+	 * 
+	 * Check if a user can build a hotel
+	 * 
+	 * @param currentPlayer
+	 *            LotField
+	 * @return
+	 */
+	public boolean playerCanBuildHotel(Player currentPlayer, LotField lf) {
+		
+		if (lf.getOwner() == currentPlayer && userCanAffordHotel(currentPlayer.getBalance(), lf) && lf.getHouseCount() == 4	&& lf.getHotelCount() != 1)
+			return true;
+
+		return false;
+	}
+
+	
 	public OwnableField[] getPawnableFields(Player owner) throws IOException {
 		OwnableField[] fieldsOwned = gbc.getFieldsByOwner(owner);
 
