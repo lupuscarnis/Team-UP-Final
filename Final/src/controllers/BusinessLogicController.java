@@ -148,7 +148,7 @@ public class BusinessLogicController extends BaseController {
 		// update number of houses on lot + 1
 		lf.setHouseCount(lf.getHouseCount() + 1);
 		// update number of houses on lot + 1 (GUI)
-		gui.setHouse(lf.getHouseCount() + 1, lf.getFieldNumber());
+		gui.setHouse(lf.getHouseCount(), lf.getFieldNumber());
 		// update gui
 		gui.updateBalance(player);
 		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
