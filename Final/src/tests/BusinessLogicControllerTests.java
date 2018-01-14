@@ -161,8 +161,20 @@ public class BusinessLogicControllerTests {
 		assertEquals(1000, p.getBalance());
 	}
 
+	/**
+	 * Tests if user can buy lots or not
+	 *
+	 */
+	@Test
 	public void testUserCanAffordLot() {
+		LotField lf = (LotField) gbc.getFieldByNumber(2);
 
+		// assert false
+		assertFalse(blc.userCanAffordLot(p.getBalance(), lf));
+
+		// assert true
+		p.setBalance(5000);
+		assertTrue(blc.userCanAffordLot(p.getBalance(), lf));
 	}
 
 	/**
@@ -181,6 +193,9 @@ public class BusinessLogicControllerTests {
 		assertTrue(blc.userCanAffordHouse(p.getBalance(), lf));
 	}
 
+	/**
+	 * Test that user can buy hotel
+	 */
 	@Test
 	public void testUserCanAffordHotel() {
 		LotField lf = (LotField) gbc.getFieldByNumber(2);
