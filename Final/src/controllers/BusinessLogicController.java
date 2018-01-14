@@ -176,7 +176,7 @@ public class BusinessLogicController extends BaseController {
 	 */
 	public Player[] evaluatePlayer(Player currentPlayer, Player[] allPlayers) throws Exception {
 
-		if (currentPlayer.getNetWorth() <= 0) {
+		if (this.playerNetWorth(currentPlayer) <= 0) {
 
 			Player[] tmp = new Player[allPlayers.length - 1];
 

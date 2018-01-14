@@ -27,6 +27,7 @@ public class GameController extends BaseController {
 		flc.setGlc(glc);		
 		ccc.setFlc(flc);
 		ccc.setGlc(glc);
+		ccc.setBlc(blc);
 		glc.setBlc(blc);
 		glc.setFlc(flc);
 	}
