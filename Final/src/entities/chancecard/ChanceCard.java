@@ -1,5 +1,9 @@
 package entities.chancecard;
 
+/**
+ * Class representing a chance card.
+ *
+ */
 public abstract class ChanceCard {
 
 	private int id;
@@ -10,6 +14,11 @@ public abstract class ChanceCard {
 		this.setText(text);
 	}
 
+	/**
+	 * Gets id of chance card.
+	 * 
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}
@@ -18,6 +27,11 @@ public abstract class ChanceCard {
 		this.id = id;
 	}
 
+	/**
+	 * Gets the text on the chance card.
+	 * 
+	 * @return
+	 */
 	public String getText() {
 		return text;
 	}
