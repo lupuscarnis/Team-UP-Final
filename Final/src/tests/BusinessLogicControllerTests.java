@@ -3,7 +3,8 @@ package tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import java.io.IOException;import org.junit.After;
+import java.io.IOException;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import controllers.BusinessLogicController;
 import controllers.GameBoardController;
 import entities.Player;
+import entities.enums.UserOption;
 import entities.field.LotField;
 import entities.field.OwnableField;
 
@@ -38,7 +40,7 @@ public class BusinessLogicControllerTests {
 	public void tearDown() throws Exception {
 		gbc.destroy();
 	}
-	
+
 	/**
 	 * Tests that you can set owner state on field.
 	 */
@@ -73,22 +75,27 @@ public class BusinessLogicControllerTests {
 
 	/**
 	 * Tests that system can set owner on selected field.
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	@Test
 	public void testBuyLot() throws Exception {
 
 		for (OwnableField field : gbc.getAllOwnableFields()) {
+
 			
 			p.setBalance(10000);
 			
+
+
+
 			// field not owned
 			assertTrue(field.getOwner() == null);
-			
+
 			p.setCurrentField(field);
 
 			// buy lot
-			blc.buyLot(p);			
+			blc.buyLot(p);
 
 			// field owned
 			assertTrue(field.getOwner() == p);
@@ -134,9 +141,10 @@ public class BusinessLogicControllerTests {
 
 	/**
 	 * Test that player can build house on field.
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
-	public void testBuildHouse() throws Exception {	
+	public void testBuildHouse() throws Exception {
 		// TODO: To be implemented
 	}
 
@@ -145,11 +153,20 @@ public class BusinessLogicControllerTests {
 	}
 
 	public void testEvaluatePlayer() {
-
+		// TODO: To be implemented
 	}
 
-	public void testPayIncomeTax() {
-
+	public void testPayIncomeTax() throws Exception {
+		// test the 10% option
+		assertEquals(520, p.getBalance());		
+		blc.payIncomeTax(p,UserOption.IncomeTaxPayTenPercent);		
+		assertEquals(520-52, p.getBalance());
+		
+		// pay 4000 option
+		p.setBalance(5000);
+		assertEquals(5000, p.getBalance());		
+		blc.payIncomeTax(p,UserOption.IncomeTaxPay4000);		
+		assertEquals(1000, p.getBalance());		
 	}
 
 	public void testUserCanAffordLot() {
