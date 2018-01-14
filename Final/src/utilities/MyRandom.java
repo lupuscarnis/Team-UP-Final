@@ -2,21 +2,23 @@ package utilities;
 
 import java.util.Random;
 
+/**
+ * Class that simulates random number generation between min and max. 
+ *
+ */
 public class MyRandom {
 
-	private static Random _rand = new Random();
-
-	
+	private static Random rand = new Random();
 	/**
+	 * Returns new int between min and max. 
+	 * 
 	 * @param min
-	 *            Lowest possible value
 	 * @param max
-	 *            Highest possible value
-	 * @return Value within the boundaries of min and max
+	 * @return
 	 */
 	public static int randInt(int min, int max) {
 
-		int randomNum = _rand.nextInt((max - min) + 1) + min;
+		int randomNum = rand.nextInt((max - min) + 1) + min;
 
 		return randomNum;
 	}
