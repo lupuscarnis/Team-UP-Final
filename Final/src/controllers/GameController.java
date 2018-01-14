@@ -107,7 +107,7 @@ public class GameController extends BaseController {
 				// stopper currentplayer for at blive til next player.
 			} else { // find next player
 				if(currentPlayer.getBalance() == 0) {blc.destroyPlayer(currentPlayer);}
-					
+
 				do{
 					currentPlayer = glc.getNextPlayer(players);	
 				}while(currentPlayer.getBalance() == 0);
@@ -122,13 +122,16 @@ public class GameController extends BaseController {
 				switch (userChoice) {
 
 				case BuyHotel:
+
+					blc.buildHotel(currentPlayer);
+
 					break;
 				case BuyHouse:
 
-						blc.buildHouse(currentPlayer);
-	
+					blc.buildHouse(currentPlayer);
+
 					break;
-					
+
 				case SellHouse:
 
 					OwnableField[] houseList = blc.getFieldsWithHouses(currentPlayer);
@@ -152,7 +155,7 @@ public class GameController extends BaseController {
 						blc.sellHouse(answerSell, currentPlayer);
 
 					break;
-					
+
 				case PawnLot:
 
 					// show pawnable lots
@@ -176,7 +179,7 @@ public class GameController extends BaseController {
 
 					break;
 				case ThrowDice:
-					
+
 					currentPlayer.setDoneThrowing(true);
 
 					// roll and move player
@@ -239,12 +242,12 @@ public class GameController extends BaseController {
 	public Player[] getPlayers() {
 		return players;
 	}
-/**
- * Creates a New player array with placement on start and monetary value of 30000
- * @param playerNames
- * @return
- * @throws Exception
- */
+	/**
+	 * Creates a New player array with placement on start and monetary value of 30000
+	 * @param playerNames
+	 * @return
+	 * @throws Exception
+	 */
 	public Player[] createNewPlayers(String[] playerNames) throws Exception {
 
 		Player[] tmp = new Player[playerNames.length];
