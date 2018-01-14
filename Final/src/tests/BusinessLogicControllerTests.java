@@ -38,14 +38,9 @@ public class BusinessLogicControllerTests {
 	public void tearDown() throws Exception {
 		gbc.destroy();
 	}
-
-	public void testPawnLotOwnableField() {
-
-	}
-
+	
 	/**
 	 * Tests that you can set owner state on field.
-	 *
 	 */
 	@Test
 	public void testSetOwner() {
@@ -78,13 +73,21 @@ public class BusinessLogicControllerTests {
 
 	/**
 	 * Tests that system can set owner on selected field.
+	 * @throws Exception 
 	 */
-	public void testBuyLot() {
+	@Test
+	public void testBuyLot() throws Exception {
 
 		for (OwnableField field : gbc.getAllOwnableFields()) {
-
+			
 			// field not owned
-			assertFalse(field.getOwner() == null);
+			assertTrue(field.getOwner() == null);
+			
+			p.setCurrentField(field);
+			blc.setOwner(field, p);
+			
+			// buy lot
+			blc.buyLot(p);			
 
 			// field owned
 			assertTrue(field.getOwner() == p);
@@ -130,22 +133,12 @@ public class BusinessLogicControllerTests {
 	 * Test that player can build house on field.
 	 * @throws Exception 
 	 */
-	@Test
-	public void testBuildHouse() throws Exception {
-		/*
-		p.setBalance(10000);
-		
-		LotField lf = (LotField) gbc.getFieldByNumber(4);
-		
-		blc.setOwner(lf, p);
-		
-		blc.buildHouse(p);
-		*/
-		
+	public void testBuildHouse() throws Exception {	
+		// TODO: To be implemented
 	}
 
 	public void testBuildHotel() {
-
+		// TODO: To be implemented
 	}
 
 	public void testEvaluatePlayer() {

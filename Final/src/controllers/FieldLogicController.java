@@ -77,6 +77,9 @@ public class FieldLogicController extends BaseController {
 					// user opted to buy field
 					if (choice == UserOption.BuyField) {
 						blc.buyLot(currentPlayer);
+						
+						// update gui
+						Messager.showLotBoughtMessage((OwnableField) currentPlayer.getCurrentField());
 					}
 
 					// Check if player was presented with a choice or no choice was given (a little

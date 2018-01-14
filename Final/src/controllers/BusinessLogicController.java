@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import boundary.GUIController;
 import entities.Player;
 import entities.enums.FieldName;
 import entities.enums.UserOption;
@@ -18,15 +17,6 @@ public class BusinessLogicController extends BaseController {
 	public static final int MONEY_FOR_PASSING_START = 4000;
 
 	public BusinessLogicController() throws IOException {
-	}
-
-	/**
-	 * 
-	 * 
-	 * @param field
-	 */
-	public void pawnLot(OwnableField field) {
-		// TODO: Implement method
 	}
 
 	/**
@@ -75,9 +65,6 @@ public class BusinessLogicController extends BaseController {
 
 		// set owner
 		of.setOwner(player);
-
-		// update gui
-		Messager.showLotBoughtMessage(of);
 	}
 
 	/**
