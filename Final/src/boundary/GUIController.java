@@ -55,11 +55,7 @@ public class GUIController {
 	 * @return
 	 */
 	public String[] getNewPlayerNames() {
-
-		// For testing - DONT REMOVE JUST COMMENT OUT :)
-		if (1 == 1)
-			return new String[] { "Huga", "Hanne", "Balder" };
-
+		
 		// get number of players
 		String noOfPlayers = gui.getUserSelection("Vælg antal spillere", "3", "4", "5", "6");
 		String[] players = new String[Integer.parseInt(noOfPlayers)];
@@ -90,7 +86,9 @@ public class GUIController {
 		}
 		return players;
 	}
-
+/**
+ * Sets up the sets up 5 cars.
+ */
 	private void initializeCarList() {
 		this.carList = new GUI_Car[6];
 		this.carList[0] = new GUI_Car(Color.RED, Color.yellow, Type.RACECAR, Pattern.DOTTED);
