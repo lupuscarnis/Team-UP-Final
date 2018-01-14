@@ -81,6 +81,8 @@ public class FieldLogicController extends BaseController {
 			
 			else if (blc.playerCanBuildHouse(currentPlayer, lf)) {
 			
+				// Moved the logic to BLC (playerCanBuildHouse)
+				
 //			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT
 //					&& blc.userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4) {
 
@@ -98,6 +100,8 @@ public class FieldLogicController extends BaseController {
 			
 			else if (blc.playerCanBuildHotel(currentPlayer, lf)) {
 			
+				// Moved the logic to BLC (playerCanBuildHotel)
+				
 //			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT
 //					&& blc.userCanAffordHotel(currentPlayer.getBalance(), lf) && lf.getHouseCount() == 4
 //					&& lf.getHotelCount() != 1) {
