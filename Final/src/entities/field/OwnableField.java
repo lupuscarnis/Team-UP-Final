@@ -56,12 +56,17 @@ public abstract class OwnableField extends Field {
 		this.owner = owner;
 	}
 
+	/**
+	 * overrid af javas egen toString metode, bruges til at faa en string med denne felttypes informationer.
+	 * 
+	 * @return
+	 */
 	public String toString() {
 		return super.toString() + String.format("Pawnprice: %s\n" + "Price: %s\n", getPawnPrice(), getPrice());
 	}
 
 	/**
-	 * Idicates if field is pawned or not.
+	 * Indicates if field is pawned or not.
 	 * 
 	 * @return
 	 */

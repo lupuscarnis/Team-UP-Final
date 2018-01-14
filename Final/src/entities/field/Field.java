@@ -41,7 +41,7 @@ public class Field {
 		return title;
 	}
 	/**
-	 * returns a long string with all the information of the field.
+	 * returns a long string with all the information of the field. Overrider javas toString metode.
 	 * 
 	 * @return String
 	 */

@@ -31,6 +31,12 @@ public class ShippingField extends OwnableField {
 		return this.rentList[qtyOwned.ordinal()];
 	}
 
+	/**
+	 * Override af toString, der laver en string med beskrivelsen af et shipping Field.  
+	 * 
+	 * 
+	 * @return String
+	 */
 	public String toString() {
 
 		return super.toString() + String.format(
