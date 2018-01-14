@@ -6,6 +6,7 @@ public class Cup {
 
 	private Die d1 = new Die(6, 1);
 	private Die d2 = new Die(6, 1);
+	private boolean rolledDouble = false;
  
 	
 	
@@ -58,8 +59,21 @@ public class Cup {
 	 */
 	public boolean rolledDouble() {
 		 if(d1.getValue()==d2.getValue()) {
+			rolledDouble = true;
 			return true;
 		}
+		rolledDouble = false;
 		return false;
+	}
+
+
+	public void setRolledDouble(boolean b) {
+	rolledDouble = b;
+		
+	}
+
+
+	public boolean getRolledDouble() {
+		return this.rolledDouble;
 	}	
 }
