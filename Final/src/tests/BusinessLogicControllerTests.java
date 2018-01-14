@@ -23,6 +23,7 @@ public class BusinessLogicControllerTests {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
+	Player p = new Player("Gurli", 520);
 	private GameBoardController gbc;
 	private BusinessLogicController blc;
 
@@ -41,10 +42,12 @@ public class BusinessLogicControllerTests {
 
 	}
 
+	/**
+	 * Tests that you can set owner state on field.
+	 *
+	 */
 	@Test
 	public void testSetOwner() {
-		
-		Player p = new Player("Gurli", 520);
 
 		for (OwnableField field : gbc.getAllOwnableFields()) {
 
@@ -56,7 +59,21 @@ public class BusinessLogicControllerTests {
 		}
 	}
 
+	/**
+	 * Tests that player can get GOOJCFF (GetOutOfJail.....)
+	 */
+	@Test
 	public void testSetGetOutOfJailCard() {
+		
+		// assert player dont have card
+	assertFalse(p.getJailCard());
+		
+		// set state
+		blc.setGetOutOfJailCard(p, true);
+		
+	//assert player has card
+		assertTrue(p.getJailCard());
+		
 
 	}
 
