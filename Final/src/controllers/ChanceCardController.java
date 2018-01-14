@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.IOException;
 
-import boundary.GUIController;
 import entities.Player;
 import entities.chancecard.ChanceCard;
 import entities.chancecard.GetOutJailForFreeChanceCard;
@@ -18,12 +17,20 @@ import utilities.MyRandom;
 
 public class ChanceCardController extends BaseController {
 
-	private static ChanceCardController instance;
 	private ChanceCard[] cardArray = null; // holds all cards from chancedata.txt
-	private GameBoardController gbc = GameBoardController.getInstance();
+	private FieldLogicController flc;
+	private GameLogicCtrl glc;
 
-	private ChanceCardController()  throws IOException {
-		this.cardArray = new ChanceLoader().getCards();
+	public ChanceCardController() throws IOException {
+		this.cardArray = new ChanceLoader().getCards();		
+	}
+
+	public void setFlc(FieldLogicController flc) {
+		this.flc = flc;
+	}
+
+	public void setGlc(GameLogicCtrl glc) {
+		this.glc = glc;
 	}
 
 	// Draws random card from card array
@@ -31,7 +38,7 @@ public class ChanceCardController extends BaseController {
 		int minIndex = 0;
 		int maxIndex = cardArray.length - 1;
 		int nextCard = MyRandom.randInt(minIndex, maxIndex);
-		// TODO: REMOVE
+
 		return cardArray[nextCard];
 	}
 
@@ -85,7 +92,7 @@ public class ChanceCardController extends BaseController {
 				player.setCurrentField(toField);
 
 				// evalute landed on field
-				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
+				flc.handleFieldAction(player, allPlayers);
 				break;
 
 			// 3:Tag ind på rådhuspladsen
@@ -103,7 +110,7 @@ public class ChanceCardController extends BaseController {
 				player.setCurrentField(toField);
 
 				// eval landed on field
-				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
+				flc.handleFieldAction(player, allPlayers);
 				break;
 			}
 
@@ -121,7 +128,7 @@ public class ChanceCardController extends BaseController {
 						toField.getFieldNumber());
 
 				// handle logic
-				GameLogicCtrl.getInstance().handleGoToJail(player);
+				glc.handleGoToJail(player);
 				break;
 			}
 
@@ -143,7 +150,7 @@ public class ChanceCardController extends BaseController {
 				player.setCurrentField(toField);
 
 				// handle new field
-				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
+				flc.handleFieldAction(player, allPlayers);
 				break;
 			}
 
@@ -154,8 +161,7 @@ public class ChanceCardController extends BaseController {
 				toField = gbc.getFieldByName(FieldName.Grønningen);
 
 				// get money for passing start
-				if (GameLogicCtrl.getInstance().checkHavePassedStart(player.getCurrentField().getFieldNumber(),
-						toField.getFieldNumber()))
+				if (glc.checkHavePassedStart(player.getCurrentField().getFieldNumber(), toField.getFieldNumber()))
 					player.deposit(BusinessLogicController.MONEY_FOR_PASSING_START);
 
 				gui.showMessage(card.getText());
@@ -170,7 +176,7 @@ public class ChanceCardController extends BaseController {
 				player.setCurrentField(toField);
 
 				// resolve new field
-				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
+				flc.handleFieldAction(player, allPlayers);
 				break;
 
 			// Ryk frem til start.
@@ -218,7 +224,7 @@ public class ChanceCardController extends BaseController {
 				player.setCurrentField(toField);
 
 				// handle new field
-				FieldLogicController.getInstance().handleFieldAction(player, allPlayers);
+				flc.handleFieldAction(player, allPlayers);
 				break;
 
 			default:
@@ -252,12 +258,12 @@ public class ChanceCardController extends BaseController {
 					houseCount += lotField.getHouseCount();
 					hotelCount += lotField.getHotelCount();
 				}
-				
+
 				// calc sum to pay
 				int paySum = (houseCount * amountPrHouse) + (hotelCount * amountPrHotel);
 
-				System.out.println(paySum );
-				
+				System.out.println(paySum);
+
 				// update logic
 				player.withdraw(paySum);
 
@@ -375,13 +381,5 @@ public class ChanceCardController extends BaseController {
 				throw new Exception("Case not found!");
 			}
 		}
-	}
-
-	public static ChanceCardController getInstance() throws IOException {
-
-		if (instance == null)
-			instance = new ChanceCardController();
-
-		return instance;
 	}
 }

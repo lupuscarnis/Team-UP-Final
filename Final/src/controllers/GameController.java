@@ -1,28 +1,34 @@
 package controllers;
 
 import java.io.IOException;
-import boundary.GUIController;
 import entities.Player;
 import entities.enums.FieldName;
 import entities.enums.UserOption;
 import entities.field.Field;
 import entities.field.OwnableField;
 import utilities.Messager;
+import utilities.MyRandom;
 
 public class GameController extends BaseController {
 
-	// controllers
-	private BusinessLogicController blc = BusinessLogicController.getInstance();
-	private FieldLogicController flc = FieldLogicController.getInstance();
-	private GameLogicCtrl glc = GameLogicCtrl.getInstance();	
-	private GameBoardController gbc = GameBoardController.getInstance();
-
 	// fields
 	private Player[] players = null;
-	private Player currentPlayer = null; // The current players round
+	private Player currentPlayer = null; // The current players round	
+	private BusinessLogicController blc = new BusinessLogicController();
+	private GameLogicCtrl glc = new GameLogicCtrl();
+	private FieldLogicController flc = new FieldLogicController();
+	private ChanceCardController ccc = new ChanceCardController();
 
 	// default contstructor
 	public GameController() throws IOException {
+		// setup controllers		
+		flc.setBlc(blc);
+		flc.setCcc(ccc);
+		flc.setGlc(glc);		
+		ccc.setFlc(flc);
+		ccc.setGlc(glc);
+		glc.setBlc(blc);
+		glc.setFlc(flc);
 	}
 
 	/**
@@ -70,6 +76,7 @@ public class GameController extends BaseController {
 		gui.setup(players);
 	}
 
+
 	/**
 	 * Main game loop, that continues until game over.
 	 * 
@@ -103,7 +110,7 @@ public class GameController extends BaseController {
 				} while (currentPlayer.getBalance() == 0);
 
 			}
-			//gui.showPromt("Det er " + currentPlayer.getName() + "s tur!");
+			// gui.showPromt("Det er " + currentPlayer.getName() + "s tur!");
 
 			// present options for user
 			// End when EndTurn is selected
@@ -120,7 +127,7 @@ public class GameController extends BaseController {
 				case PawnLot:
 
 					// show pawnable lots
-					OwnableField[] fields = BusinessLogicController.getInstance().getPawnableFields(currentPlayer);
+					OwnableField[] fields = blc.getPawnableFields(currentPlayer);
 
 					String[] tmp = new String[fields.length + 1];
 
@@ -136,7 +143,7 @@ public class GameController extends BaseController {
 
 					// pawn selected lot
 					if (!result.equals("- Annuller!"))
-						BusinessLogicController.getInstance().pawnLot(result, currentPlayer);
+						blc.pawnLot(result, currentPlayer);
 
 					break;
 				case ThrowDice:
@@ -161,7 +168,7 @@ public class GameController extends BaseController {
 					break;
 				case Unpawn:
 
-					OwnableField[] pawnedList = BusinessLogicController.getInstance().getPawnedFields(currentPlayer);
+					OwnableField[] pawnedList = blc.getPawnedFields(currentPlayer);
 
 					String[] pawnedNameList = new String[pawnedList.length + 1];
 
@@ -179,7 +186,7 @@ public class GameController extends BaseController {
 
 					// unpawn selected lot
 					if (!answer.equals("Annuller!"))
-						BusinessLogicController.getInstance().unpawn(answer, currentPlayer);
+						blc.unpawn(answer, currentPlayer);
 
 					break;
 
@@ -196,7 +203,7 @@ public class GameController extends BaseController {
 	}
 
 	/**
-	 * Gets player array (the players currently playing the game). 
+	 * Gets player array (the players currently playing the game).
 	 * 
 	 * @return
 	 */
@@ -204,7 +211,7 @@ public class GameController extends BaseController {
 		return players;
 	}
 
-	public Player[] createNewPlayers(String[] playerNames) throws Exception {		
+	public Player[] createNewPlayers(String[] playerNames) throws Exception {
 
 		Player[] tmp = new Player[playerNames.length];
 

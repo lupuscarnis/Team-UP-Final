@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-
 import boundary.GUIController;
 import entities.Player;
 import entities.enums.FieldName;
@@ -18,9 +17,7 @@ import utilities.Messager;
 public class BusinessLogicController extends BaseController {
 
 	public static final int MONEY_FOR_PASSING_START = 4000;
-	private static BusinessLogicController instance;
-	private GameBoardController gbc = GameBoardController.getInstance();
-
+	
 	public BusinessLogicController() throws IOException {
 	}
 
@@ -117,7 +114,7 @@ public class BusinessLogicController extends BaseController {
 		int playerBalance = currentPlayer.getBalance();
 		int playerFieldWorth = 0;
 
-		OwnableField[] fieldsOwned = GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
+		OwnableField[] fieldsOwned = gbc.getFieldsByOwner(currentPlayer);
 		for (OwnableField field : fieldsOwned) {
 			if (field instanceof LotField) {
 				LotField lotField = (LotField) field;
@@ -128,7 +125,6 @@ public class BusinessLogicController extends BaseController {
 
 		netWorth = playerBalance + playerFieldWorth;
 		return netWorth;
-
 	}
 
 	public void buildHouse(Player player) throws Exception {
@@ -208,13 +204,6 @@ public class BusinessLogicController extends BaseController {
 		return allPlayers;
 	}
 
-	public static BusinessLogicController getInstance() throws IOException {
-		if (instance == null)
-			instance = new BusinessLogicController();
-
-		return instance;
-	}
-
 	public void payIncomeTax(Player currentPlayer, UserOption choice) throws Exception {
 
 		int sumToCollect = 0;
@@ -280,7 +269,7 @@ public class BusinessLogicController extends BaseController {
 	}
 
 	public OwnableField[] getPawnableFields(Player owner) throws IOException {
-		OwnableField[] fieldsOwned = GameBoardController.getInstance().getFieldsByOwner(owner);
+		OwnableField[] fieldsOwned = gbc.getFieldsByOwner(owner);
 
 		// if no fields are found return empty array.
 		if (fieldsOwned.length == 0)
@@ -343,7 +332,7 @@ public class BusinessLogicController extends BaseController {
 	 */
 	public OwnableField[] getPawnedFields(Player currentPlayer) throws Exception {
 		// Get the fields owned by our player
-		OwnableField[] ownedFields = GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
+		OwnableField[] ownedFields = gbc.getFieldsByOwner(currentPlayer);
 		// Creates temporary storage
 		OwnableField[] tmp = new OwnableField[40];
 		// Creates Variables
@@ -391,7 +380,7 @@ public class BusinessLogicController extends BaseController {
 	//TODO: Can this be replace with call to getPawnedFields(Player currentPlayer)?
 	public boolean hasPawn(Player currentPlayer) throws Exception {
 		// Get the fields owned by our player
-		OwnableField[] ownedFields = GameBoardController.getInstance().getFieldsByOwner(currentPlayer);
+		OwnableField[] ownedFields = gbc.getFieldsByOwner(currentPlayer);
 
 		// runs all owned fields trough checking if pawned
 		for (OwnableField fields : ownedFields) {
@@ -420,7 +409,7 @@ public class BusinessLogicController extends BaseController {
 	public void pawnLot(String result, Player owner) throws Exception {
 
 		boolean found = false;
-		OwnableField[] fieldsOwned = GameBoardController.getInstance().getFieldsByOwner(owner);
+		OwnableField[] fieldsOwned = gbc.getFieldsByOwner(owner);
 
 		for (OwnableField field : fieldsOwned) {
 
@@ -433,8 +422,8 @@ public class BusinessLogicController extends BaseController {
 				field.getOwner().deposit(field.getPawnPrice());
 
 				// update gui (is pawned and balance
-				GUIController.getInstance().setPawnStatus(field.getFieldNumber());
-				GUIController.getInstance().updateBalance(field.getOwner());
+				gui.setPawnStatus(field.getFieldNumber());
+				gui.updateBalance(field.getOwner());
 
 				// confirm in gui
 				Messager.showFieldPawned(field.getTitle());
@@ -486,7 +475,7 @@ public class BusinessLogicController extends BaseController {
 	 * @throws Exception
 	 */
 	public void unpawn(String result, Player owner) throws Exception {
-		OwnableField[] fieldsOwned = GameBoardController.getInstance().getFieldsByOwner(owner);
+		OwnableField[] fieldsOwned = gbc.getFieldsByOwner(owner);
 
 		for (OwnableField fields : fieldsOwned) {
 			if (fields.getTitle().equals(result)) {
@@ -503,10 +492,10 @@ public class BusinessLogicController extends BaseController {
 				}
 
 				owner.withdraw(cost);
-				GUIController.getInstance().updateBalance(owner);
+				gui.updateBalance(owner);
 
 				fields.setPawned(false);
-				GUIController.getInstance().clearPawnStatus(fields.getFieldNumber(), owner.getName());
+				gui.clearPawnStatus(fields.getFieldNumber(), owner.getName());
 
 				// confirm in gui
 				Messager.showFieldunPawned(fields.getTitle());
@@ -517,14 +506,14 @@ public class BusinessLogicController extends BaseController {
 	public void destroyPlayer(Player deadGuy) throws Exception {
 		// hvis implementeret her, vil beskeden gentages en masse gange
 		// Messager.showMessage(deadGuy.getName()+" har mistet alle hans penge");
-		OwnableField[] OF = GameBoardController.getInstance().getFieldsByOwner(deadGuy);
+		OwnableField[] OF = gbc.getFieldsByOwner(deadGuy);
 		for (OwnableField field : OF) {
 			field.setOwner(null);
 			
-			deadGuy.setCurrentField(GameBoardController.getInstance().getFieldByName(FieldName.Fængslet));
-			GUIController.getInstance().updatePlayerPosition(deadGuy.getName(),
+			deadGuy.setCurrentField(gbc.getFieldByName(FieldName.Fængslet));
+			gui.updatePlayerPosition(deadGuy.getName(),
 					deadGuy.getCurrentField().getFieldNumber(),
-					GameBoardController.getInstance().getFieldByName(FieldName.Fængslet).getFieldNumber());
+					gbc.getFieldByName(FieldName.Fængslet).getFieldNumber());
 		}
 	}
 }

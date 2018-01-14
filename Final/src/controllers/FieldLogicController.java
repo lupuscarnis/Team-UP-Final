@@ -10,13 +10,25 @@ import entities.field.OwnableField;
 import utilities.Messager;
 
 public class FieldLogicController extends BaseController {
-	private static FieldLogicController instance;
-	private BusinessLogicController blc = BusinessLogicController.getInstance();
-	private ChanceCardController ccc = ChanceCardController.getInstance();
-	private controllers.GameBoardController gbc = GameBoardController.getInstance();
+
+	private BusinessLogicController blc = null;
+	private ChanceCardController ccc = null;
+	private GameLogicCtrl glc = null;
 
 	// default constructor.
-	private FieldLogicController() throws IOException {
+	public FieldLogicController() throws IOException {
+	}
+
+	public void setBlc(BusinessLogicController blc) {
+		this.blc = blc;
+	}
+
+	public void setCcc(ChanceCardController ccc) {
+		this.ccc = ccc;
+	}
+
+	public void setGlc(GameLogicCtrl glc) {
+		this.glc = glc;
 	}
 
 	public void handleFieldAction(Player currentPlayer, Player[] allPlayers) throws Exception {
@@ -178,7 +190,7 @@ public class FieldLogicController extends BaseController {
 			Messager.showMustGoToJail(currentPlayer);
 
 			// handle logic reg. going to jail
-			GameLogicCtrl.getInstance().handleGoToJail(currentPlayer);
+			glc.handleGoToJail(currentPlayer);
 			break;
 		case INCOMETAX:
 			// Tell user he must pay income tax and get choice (10% or 4000)
@@ -211,12 +223,5 @@ public class FieldLogicController extends BaseController {
 			nextFieldNo += -gbc.FIELD_COUNT;
 
 		return gbc.getFieldByNumber(nextFieldNo);
-	}
-
-	public static FieldLogicController getInstance() throws IOException {
-		if (instance == null)
-			instance = new FieldLogicController();
-
-		return instance;
 	}
 }

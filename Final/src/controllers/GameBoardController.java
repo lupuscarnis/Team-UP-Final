@@ -13,10 +13,9 @@ import utilities.FieldLoader;
 
 public class GameBoardController {
 
+	// fields
+	private static GameBoardController instance = null;
 	public static final int FIELD_COUNT = 40;
-
-	private static GameBoardController instance;
-
 	private Field[] fieldArray = null;
 
 	private GameBoardController() throws IOException {
@@ -35,14 +34,14 @@ public class GameBoardController {
 
 		int start = currentPosition;
 		start = start >= 36 ? 0 : start;
-		
+
 		Field[] fields = this.getFields();
 
 		for (int i = start; start < fields.length; i++) {
 			if (fields[i].getFieldType() == FieldType.SHIPPING)
 				return (ShippingField) fields[i];
 		}
-		
+
 		throw new Exception("Shipping field not found!");
 	};
 

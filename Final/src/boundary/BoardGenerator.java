@@ -2,7 +2,6 @@ package boundary;
 
 import java.awt.Color;
 import java.io.IOException;
-
 import controllers.GameBoardController;
 import entities.enums.BreweriesOwned;
 import entities.enums.FieldType;
@@ -37,13 +36,11 @@ public class BoardGenerator {
 	public GUI makeBoard() throws IOException {
 
 		FieldLoader fl = new FieldLoader();
-		GameBoardController gbc = GameBoardController.getInstance();
-
 		GUI_Field[] fields = new GUI_Field[40];
 
 		for (int i = 0; i < fields.length; i++) {
 
-			Field tmp = gbc.getFieldByNumber(i + 1);
+			Field tmp = GameBoardController.getInstance().getFieldByNumber(i + 1);
 
 			String title = formatText(tmp.getTitle(), 8);
 			String sub = "Sub";// tmp.getText2();

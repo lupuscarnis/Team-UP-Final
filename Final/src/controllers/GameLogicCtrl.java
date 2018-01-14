@@ -11,44 +11,48 @@ import entities.field.Field;
 import utilities.Messager;
 import utilities.MyRandom;
 
+
+
 /**
  * TODO: info about class *
  */
-public class GameLogicCtrl  extends BaseController{
-	private Player previousPlayer = null; // Who played last turn
-	private Player startPlayer = null; // Who starts first
-	private static GameLogicCtrl instance;
-	private FieldLogicController flc = FieldLogicController.getInstance();
+// TODO: Rename class to controller
+public class GameLogicCtrl extends BaseController {
 
 	// TODO: FIX!
 	Die d1 = new Die(6, 1);
 	Die d2 = new Die(6, 1);
 	Cup cup = new Cup(0, 0, d1, d2);
+	private Player previousPlayer = null; // Who played last turn
+	private Player startPlayer = null; // Who starts first
+	private BusinessLogicController blc = null;
+	private FieldLogicController flc = null;
 
 	// default constructor.
-	private GameLogicCtrl() throws IOException {
+	public GameLogicCtrl() throws IOException {
+
+	}
+	public void setFlc(FieldLogicController flc) {
+		this.flc = flc;
 	}
 
-	public static GameLogicCtrl getInstance() throws IOException {
-		if (instance == null)
-			instance = new GameLogicCtrl();
-		return instance;
+	public void setBlc(BusinessLogicController blc) {
+		this.blc = blc;
 	}
-
 	public UserOption showUserOptions(Player currentPlayer) throws Exception {
 
 		int index = 0;
 		UserOption[] options = new UserOption[10]; // Hack: we don't know the size yet, so 10 is random!
 
 		// can pawn
-		if (BusinessLogicController.getInstance().canPawn(currentPlayer)) {
+		if (blc.canPawn(currentPlayer)) {
 			options[index] = UserOption.PawnLot;
 			index++;
 		}
-		if (BusinessLogicController.getInstance().hasPawn(currentPlayer))
+		if (blc.hasPawn(currentPlayer))
 			options[index] = UserOption.Unpawn;
 		index++;
-		
+
 		if (currentPlayer.isDoneThrowing()) {
 			options[index] = UserOption.EndTurn;
 			index++;
@@ -56,7 +60,6 @@ public class GameLogicCtrl  extends BaseController{
 		if (currentPlayer.isInJail() == true) {
 			options[index] = UserOption.PayToLeaveJail;
 			index++;
-
 		}
 		if (currentPlayer.isInJail() == true && currentPlayer.getJailCard()) {
 			options[index] = UserOption.GetOutOfJailCard;
@@ -91,6 +94,86 @@ public class GameLogicCtrl  extends BaseController{
 		return Messager.presentOptions(tmp, currentPlayer.getName());
 	}
 
+	/**
+	 * Added by Frederik on 23-11-2017 17:34:24
+	 * 
+	 * Gets the next player for the next turn.
+	 * 
+	 * @param players
+	 * @return
+	 * @throws Exception
+	 */
+	public Player getNextPlayer(Player[] players) throws Exception {
+
+		if (previousPlayer == null) {
+			previousPlayer = players[0];
+
+			return players[0];
+		}
+		if (previousPlayer.getRollDoubleStreak() > 0) {
+
+			return previousPlayer;
+		}
+
+		int indexMax = players.length - 1;
+
+		for (int i = 0; i < players.length; i++) {
+			Player player = players[i];
+
+			if (player.equals(previousPlayer)) {
+
+				if (i < indexMax) {
+					previousPlayer = players[i + 1];
+					return players[i + 1];
+				} else {
+					previousPlayer = players[0];
+					return players[0];
+				}
+			}
+		}
+
+		throw new Exception("Player was not found!");
+	}
+	/**
+	 * Added by Kasper on 16-01-2017
+	 * 
+	 * Calculates and returns who starts first.
+	 * 
+	 * @param players
+	 * @return startPlayer
+	 * @throws Exception
+	 */
+
+	public Player getStartPlayer(Player[] players) throws Exception {
+
+		int numPlayers = players.length;
+		int newHighest = 0;
+
+		for (int i = 0; i < numPlayers; i++) {
+
+			int resultRoll = MyRandom.randInt(1, 6);
+
+			if (resultRoll > newHighest) {
+
+				newHighest = resultRoll;
+
+				startPlayer = players[i];
+			}
+
+			System.out.println(players[i].getName() + " Rolled " + resultRoll);
+		}
+
+		if (startPlayer != null) {
+
+			System.out.println("-- " + startPlayer.getName() + " goes first! --");
+
+			previousPlayer = startPlayer;
+
+			return startPlayer;
+		}
+
+		throw new Exception("No players were found!");
+	}
 	/**
 	 * Added by Frederik on 06-01-2018 23:49:04
 	 * 
@@ -150,7 +233,6 @@ public class GameLogicCtrl  extends BaseController{
 	// checks if the Player Move past start this turn and receives 4000
 	public void checkPassedStart(Player currentPlayer, int faceValue, boolean canReceive) throws Exception {
 		if ((currentPlayer.getCurrentField().getFieldNumber() + faceValue > 40) && (canReceive == true)) {
-			BusinessLogicController.getInstance();
 			currentPlayer.deposit(BusinessLogicController.MONEY_FOR_PASSING_START);
 			Messager.showPassedStart(currentPlayer);
 			System.out.println("Du fik 4000 over start! hurray!");
@@ -162,98 +244,16 @@ public class GameLogicCtrl  extends BaseController{
 		return toField < fromField;
 	}
 
-	/**
-	 * Added by Frederik on 23-11-2017 17:34:24
-	 * 
-	 * Gets the next player for the next turn.
-	 * 
-	 * @param players
-	 * @return
-	 * @throws Exception
-	 */
-	public Player getNextPlayer(Player[] players) throws Exception {
-
-		if (previousPlayer == null) {
-			previousPlayer = players[0];
-
-			return players[0];
-		}
-		if (previousPlayer.getRollDoubleStreak() > 0) {
-
-			return previousPlayer;
-		}
-
-		int indexMax = players.length - 1;
-
-		for (int i = 0; i < players.length; i++) {
-			Player player = players[i];
-
-			if (player.equals(previousPlayer)) {
-
-				if (i < indexMax) {
-					previousPlayer = players[i + 1];
-					return players[i + 1];
-				} else {
-					previousPlayer = players[0];
-					return players[0];
-				}
-			}
-		}
-
-		throw new Exception("Player was not found!");
-	}
-
-	/**
-	 * Added by Kasper on 16-01-2017
-	 * 
-	 * Calculates and returns who starts first.
-	 * 
-	 * @param players
-	 * @return startPlayer
-	 * @throws Exception
-	 */
-
-	public Player getStartPlayer(Player[] players) throws Exception {
-
-		int numPlayers = players.length;
-		int newHighest = 0;
-
-		for (int i = 0; i < numPlayers; i++) {
-
-			int resultRoll = MyRandom.randInt(1, 6);
-
-			if (resultRoll > newHighest) {
-
-				newHighest = resultRoll;
-
-				startPlayer = players[i];
-			}
-
-			System.out.println(players[i].getName() + " Rolled " + resultRoll);
-		}
-
-		if (startPlayer != null) {
-
-			System.out.println("-- " + startPlayer.getName() + " goes first! --");
-
-			previousPlayer = startPlayer;
-
-			return startPlayer;
-		}
-
-		throw new Exception("No players were found!");
-	}
-
 	public void handleGoToJail(Player currentPlayer) throws IOException, Exception {
 
-		Field jail = GameBoardController.getInstance().getFieldByName(FieldName.Fængslet);
+		Field jail = gbc.getFieldByName(FieldName.Fængslet);
 		int fromField = currentPlayer.getCurrentField().getFieldNumber();
 
 		// put player in jail
 		currentPlayer.setIsInJail(true);
 		currentPlayer.setCurrentField(jail);
 		// update gui
-		GUIController.getInstance().updatePlayerPosition(currentPlayer.getName(), fromField, jail.getFieldNumber());
+		gui.updatePlayerPosition(currentPlayer.getName(), fromField, jail.getFieldNumber());
 	}
 
 	/**
