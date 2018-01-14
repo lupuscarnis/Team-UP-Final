@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import entities.enums.FieldType;
 import entities.enums.LotColor;
 import entities.field.BreweryField;
@@ -13,7 +12,7 @@ import entities.field.LotField;
 import entities.field.ShippingField;
 
 /**
- * Added by Frederik on 24-11-2017 20:06:51
+ * This class handles loading of field data from "fielddata.txt"
  *
  */
 public class FieldLoader {
@@ -48,7 +47,7 @@ public class FieldLoader {
 
 					// set attribs. according to FieldType
 					switch (fieldType) {
-					
+
 					case START:
 					case INCOMETAX:
 					case EXTRATAX:
@@ -57,8 +56,8 @@ public class FieldLoader {
 					case FREEPARKING:
 						field = new Field(fieldType, fieldNo, text1, arr[3]);
 						break;
-						
-					case CHANCE:					
+
+					case CHANCE:
 						field = new Field(fieldType, fieldNo, text1);
 						break;
 
