@@ -8,6 +8,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import controllers.BusinessLogicController;
+import controllers.GameBoardController;
+
 public class BusinessLogicControllerTests {
 
 	@BeforeClass
@@ -18,12 +21,18 @@ public class BusinessLogicControllerTests {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
+
+	private GameBoardController gbc;
+
 	@Before
 	public void setUp() throws Exception {
+		gbc = GameBoardController.getInstance();
+		blc= new BusinessLogicController();
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		gbc.destroy();
 	}
 
 	

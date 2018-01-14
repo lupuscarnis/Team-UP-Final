@@ -42,7 +42,7 @@ public class GameBoardController {
 	}
 	
 	/**
-	 * Method added for testing purposes. Need a way to "refresh" the board/fields. 
+	 * Method added for testing purposes. Need a way to "reset" the board/fields. 
 	 * @throws IOException 
 	 */
 	public void destroy() throws IOException
