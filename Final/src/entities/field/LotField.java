@@ -69,7 +69,7 @@ public class LotField extends OwnableField {
 	}
 
 	// TODO: Is this correct?
-	public int getBuildingCost() {
+	public int getHousePrice() {
 		return this.housePrice;
 	}
 
