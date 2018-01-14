@@ -6,7 +6,7 @@ import entities.enums.BreweriesOwned;
 import entities.enums.FieldType;
 
 /**
- * Sub class of OwnableField that represents a BreweryField.
+ * Sub class of OwnableField that represents a BreweryField. Uses Diemodifiers to determine price of rent
  *
  */
 public class BreweryField extends OwnableField {
@@ -36,7 +36,7 @@ public class BreweryField extends OwnableField {
 
 	@Override
 	/**
-	 * Calculates rent for this field.
+	 * Calculates rent for this field. Overrides the calculateRent method of OwnableField.
 	 */
 	public int calculateRent(int dieFaceValue) throws IOException {
 
