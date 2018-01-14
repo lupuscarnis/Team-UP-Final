@@ -14,15 +14,16 @@ import utilities.MyRandom;
 
 
 /**
- * TODO: info about class *
+ * Responsible for generating user choices,
+ * for finding nextPlayer,
+ * for moving player,
+ * for handling jail.
+ * 
  */
-// TODO: Rename class to controller
+
 public class GameLogicCtrl extends BaseController {
 
-	// TODO: FIX!
-	Die d1 = new Die(6, 1);
-	Die d2 = new Die(6, 1);
-	Cup cup = new Cup(0, 0, d1, d2);
+	Cup cup = new Cup();
 	private Player previousPlayer = null; // Who played last turn
 	private Player startPlayer = null; // Who starts first
 	private BusinessLogicController blc = null;
@@ -39,12 +40,18 @@ public class GameLogicCtrl extends BaseController {
 	public void setBlc(BusinessLogicController blc) {
 		this.blc = blc;
 	}
+	/**
+	 * Generates and presents the available UserOptions for the player
+	 * 
+	 * @param currentPlayer
+	 * @return Picked UserOption
+	 * @throws Exception
+	 */
 	public UserOption showUserOptions(Player currentPlayer) throws Exception {
 
 		int index = 0;
 		UserOption[] options = new UserOption[10]; // Hack: we don't know the size yet, so 10 is random!
 
-		// can pawn
 		if (blc.canPawn(currentPlayer)) {
 			options[index] = UserOption.PawnLot;
 			index++;
@@ -95,8 +102,7 @@ public class GameLogicCtrl extends BaseController {
 	}
 
 	/**
-	 * Added by Frederik on 23-11-2017 17:34:24
-	 * 
+	 *
 	 * Gets the next player for the next turn.
 	 * 
 	 * @param players
@@ -135,7 +141,6 @@ public class GameLogicCtrl extends BaseController {
 		throw new Exception("Player was not found!");
 	}
 	/**
-	 * Added by Kasper on 16-01-2017
 	 * 
 	 * Calculates and returns who starts first.
 	 * 
@@ -175,9 +180,8 @@ public class GameLogicCtrl extends BaseController {
 		throw new Exception("No players were found!");
 	}
 	/**
-	 * Added by Frederik on 06-01-2018 23:49:04
 	 * 
-	 * Rolls dice and moves player
+	 * Rolls dice, evaluate jail status and move player
 	 * 
 	 * @param currentPlayer
 	 * @throws Exception
@@ -239,12 +243,23 @@ public class GameLogicCtrl extends BaseController {
 		}
 	}
 
-	// check if player passed start
+	/**
+	 * 
+	 * @param fromField
+	 * @param toField
+	 * @return hasPassedStart
+	 */
 	public boolean checkHavePassedStart(int fromField, int toField) {
 		return toField < fromField;
 	}
 
-	public void handleGoToJail(Player currentPlayer) throws IOException, Exception {
+	/**
+	 * Method to put players in jail
+	 * 
+	 * @param currentPlayer
+	 * @throws Exception
+	 */
+	public void handleGoToJail(Player currentPlayer) throws Exception {
 
 		//to prevent players from continuing their turn when jailed.
 		currentPlayer.setRollDoubleStreak(0);
@@ -260,6 +275,9 @@ public class GameLogicCtrl extends BaseController {
 	}
 
 	/**
+	 * Releases player from jail for fee
+	 * 
+	 * @param player
 	 * @throws Exception
 	 */
 	public void payToLeaveJail(Player player) throws Exception {

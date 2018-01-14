@@ -18,7 +18,7 @@ public class GameController extends BaseController {
 	private GameLogicCtrl glc = new GameLogicCtrl();
 	private FieldLogicController flc = new FieldLogicController();
 	private ChanceCardController ccc = new ChanceCardController();
-
+	private int startValue = 30000; 
 	// default contstructor
 	public GameController() throws IOException {
 		// HACK: Solved like this because of controller intermingle problem		
@@ -214,7 +214,12 @@ public class GameController extends BaseController {
 	public Player[] getPlayers() {
 		return players;
 	}
-
+/**
+ * Creates a New player array with placement on start and monetary value of 30000
+ * @param playerNames
+ * @return
+ * @throws Exception
+ */
 	public Player[] createNewPlayers(String[] playerNames) throws Exception {
 
 		Player[] tmp = new Player[playerNames.length];
@@ -224,7 +229,7 @@ public class GameController extends BaseController {
 
 			Field start = gbc.getFieldByName(FieldName.Start);
 
-			tmp[index] = new Player(name, 30000, start); // HACK: 30000: Where should the money come from?
+			tmp[index] = new Player(name, startValue, start);
 
 			index++;
 		}
