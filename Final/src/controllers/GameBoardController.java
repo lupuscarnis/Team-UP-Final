@@ -40,7 +40,15 @@ public class GameBoardController {
 
 		return instance;
 	}
-
+	
+	/**
+	 * Method added for testing purposes. Need a way to "refresh" the board/fields. 
+	 * @throws IOException 
+	 */
+	public void destroy() throws IOException
+	{
+		instance = new GameBoardController();		
+	}
 	/**
 	 * The methods purpose is to find the nearest shipping type field, for a certain player. Used for a chanceCard
 	 * 
