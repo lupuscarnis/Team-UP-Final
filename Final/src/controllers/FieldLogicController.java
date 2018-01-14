@@ -100,6 +100,7 @@ public class FieldLogicController extends BaseController {
 					}
 				}
 			}
+			
 			// Player owns this lot, has balance and lot has < 4 houses = Player can build a
 			// house
 			
@@ -119,6 +120,7 @@ public class FieldLogicController extends BaseController {
 				}
 
 			}
+			
 			// Player owns this lot, has balance and has 4 houses on it and no hotel already
 			// = Player can build a hotel
 			

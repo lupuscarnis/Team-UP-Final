@@ -11,7 +11,10 @@ public abstract class BaseController {
 
 	protected GUIController gui = null;
 	protected GameBoardController gbc = null;
-	
+	/**
+	 * Gets the singletons of the two Controllers
+	 * @throws IOException
+	 */
 	public BaseController() throws IOException {
 		this.gui = GUIController.getInstance(); // singleton
 		this.gbc = GameBoardController.getInstance(); // singleton		
