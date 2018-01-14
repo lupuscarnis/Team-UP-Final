@@ -13,7 +13,7 @@ import org.junit.Test;
 import controllers.BusinessLogicController;
 import entities.Player;
 
-public class BusinessLogicCtrlTests {
+public class BusinessLogicCtrlTestsOLD {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -25,6 +25,11 @@ public class BusinessLogicCtrlTests {
 
 	@Before
 	public void setUp() throws Exception {
+		
+		
+		
+		
+		
 	}
 
 	@After
@@ -33,7 +38,16 @@ public class BusinessLogicCtrlTests {
 
 	@Test
 	public void testCalculateRent() {
-		fail("Not yet implemented");
+		
+		
+		// test shipping
+		gbc.
+		
+		
+		
+		
+		
+		
 	}
 
 	@Test
