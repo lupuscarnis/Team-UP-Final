@@ -1,14 +1,11 @@
 package entities.field;
 
-import java.io.IOException;
-
 import controllers.GameBoardController;
-import entities.enums.BreweriesOwned;
 import entities.enums.FieldType;
 import entities.enums.ShippingOwned;
 
 /**
- * Sub class of OwnableField that represents a BreweryField.
+ * Sub class of OwnableField that represents a ShippingField.
  *
  */
 public class ShippingField extends OwnableField {
@@ -24,8 +21,14 @@ public class ShippingField extends OwnableField {
 		this.text2 = text2;
 	}
 
+	/**
+	 * Gets rent modifier based on shipping fields owned.  
+	 * 
+	 * @param qtyOwned
+	 * @return
+	 */
 	public int getRentFor(ShippingOwned qtyOwned) {
-		return rentList[qtyOwned.ordinal()];
+		return this.rentList[qtyOwned.ordinal()];
 	}
 
 	public String toString() {
@@ -38,13 +41,16 @@ public class ShippingField extends OwnableField {
 	}
 
 	public String getDesc() {
-		return text2;
+		return this.text2;
 	}
 
 	public void setDesc(String text2) {
 		this.text2 = text2;
 	}
 
+	/**
+	 * Calcs rent for this field
+	 */
 	@Override
 	public int calculateRent(int dieFaceValue) throws Exception {
 

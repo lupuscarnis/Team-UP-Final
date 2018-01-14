@@ -1,11 +1,11 @@
 package entities.field;
 
 import java.io.IOException;
-
 import entities.Player;
 import entities.enums.FieldType;
+
 /**
- * Added by Frederik on 05-01-2018 22:48:23 
+ * Abstract class the represents the base class for all ownable fields.
  *
  */
 public abstract class OwnableField extends Field {
@@ -21,21 +21,19 @@ public abstract class OwnableField extends Field {
 		this.price = price;
 		this.pawnPrice = pawnPrice;
 	}
-	
+
 	/**
-	 * Added by Frederik on 09-01-2018 09:51:33 
+	 * Method that must be implemented by all sub classes.
 	 * 
-	 * Method that can calc. own rent.
-	 * 
+	 * @param dieFaceValue
 	 * @return
-	 * @throws IOException 
-	 * @throws Exception 
+	 * @throws IOException
+	 * @throws Exception
 	 */
-	//TODO: Think about what to b/c not all methods needs a die
 	public abstract int calculateRent(int dieFaceValue) throws IOException, Exception;
 
 	public int getPawnPrice() {
-		return pawnPrice;
+		return this.pawnPrice;
 	}
 
 	public void setPawnPrice(int pawnPrice) {
@@ -43,7 +41,7 @@ public abstract class OwnableField extends Field {
 	}
 
 	public int getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public void setPrice(int price) {
@@ -51,7 +49,7 @@ public abstract class OwnableField extends Field {
 	}
 
 	public Player getOwner() {
-		return owner;
+		return this.owner;
 	}
 
 	public void setOwner(Player owner) {
@@ -62,13 +60,17 @@ public abstract class OwnableField extends Field {
 		return super.toString() + String.format("Pawnprice: %s\n" + "Price: %s\n", getPawnPrice(), getPrice());
 	}
 
+	/**
+	 * Idicates if field is pawned or not.
+	 * 
+	 * @return
+	 */
 	public boolean isPawned() {
-		return isPawned;
+		return this.isPawned;
 	}
 
 	public void setPawned(boolean isPawned) {
 		this.isPawned = isPawned;
 	}
-	
-	
+
 }
