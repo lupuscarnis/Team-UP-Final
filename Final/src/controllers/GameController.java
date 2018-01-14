@@ -105,7 +105,7 @@ public class GameController extends BaseController {
 				// stopper currentplayer for at blive til next player.
 			} else { // find next player
 				do {
-					blc.destroyPlayer(currentPlayer);
+//					blc.destroyPlayer(currentPlayer);
 					currentPlayer = glc.getNextPlayer(players);
 				} while (currentPlayer.getBalance() == 0);
 
