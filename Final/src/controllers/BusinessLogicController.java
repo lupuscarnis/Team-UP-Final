@@ -21,18 +21,13 @@ public class BusinessLogicController extends BaseController {
 	public BusinessLogicController() throws IOException {
 	}
 
-	// Calculate rent for field
-	public int calculateRent(OwnableField field) {
-		// TODO: Implement method
-		return 0;
-	}
 
-	// Pawn lot
-	public void pawnLot(OwnableField field) {
-		// TODO: Implement method
-	}
-
-	// set owner of (ownable)field.
+	/**
+	 * Sets the owner  of the field.
+	 * 
+	 * @param field
+	 * @param owner
+	 */
 	public void setOwner(OwnableField field, Player owner) {
 
 		// set owner
@@ -42,9 +37,7 @@ public class BusinessLogicController extends BaseController {
 		gui.removeLotOwner(field);
 	}
 
-	/**
-	 * Added by Frederik on 06-01-2018 22:06:20
-	 * 
+	/** 
 	 * Set owner of Get Out Of Jail Card.
 	 * 
 	 * @param owner
@@ -55,8 +48,6 @@ public class BusinessLogicController extends BaseController {
 	}
 
 	/**
-	 * Added by Frederik on 06-01-2018 23:16:41
-	 * 
 	 * Handles player wants to buy lot. DOES NOT CHECK FOR SUFFICIENT FUNDS!! MUST
 	 * BE DONE BEFORE CALL TO METHOD!
 	 * 
@@ -78,8 +69,6 @@ public class BusinessLogicController extends BaseController {
 	}
 
 	/**
-	 * Added by Frederik on 06-01-2018 23:19:10
-	 * 
 	 * Handles the case where the user has landed of owned field and must pay rent.
 	 * 
 	 * @param currentPlayer
@@ -87,8 +76,8 @@ public class BusinessLogicController extends BaseController {
 	 */
 	public void payRent(Player currentPlayer) throws Exception {
 
-		// TODO: MANGLER EN TERNING
-		int faceValue = currentPlayer.getLastRoll(); // Random value - must come from dice!
+		// Gets the last dice.
+		int faceValue = currentPlayer.getLastRoll(); 
 		OwnableField currentField = (OwnableField) currentPlayer.getCurrentField();
 
 		int rent = currentField.calculateRent(faceValue);
@@ -99,7 +88,7 @@ public class BusinessLogicController extends BaseController {
 		Messager.showMustPayRent(payee.getName(), rent, currentPlayer.getName());
 
 		// withdraw from payer
-		// TODO: What happens if user cant afford?
+		//nothing happends if payer can't pay
 		payer.withdraw(rent);
 
 		// deposit to payee
@@ -109,6 +98,12 @@ public class BusinessLogicController extends BaseController {
 		gui.updateBalance(new Player[] { payer, payee });
 	}
 
+/**
+ * Calculates the players Current NetWorth	
+ * @param currentPlayer
+ * @return
+ * @throws IOException
+ */
 	public int playerNetWorth(Player currentPlayer) throws IOException {
 		int netWorth;
 		int playerBalance = currentPlayer.getBalance();
@@ -127,6 +122,12 @@ public class BusinessLogicController extends BaseController {
 		return netWorth;
 	}
 
+	/**
+	 * Builds a house and withdraws the money
+	 * 
+	 * @param player
+	 * @throws Exception
+	 */
 	public void buildHouse(Player player) throws Exception {
 		LotField lf = (LotField) player.getCurrentField();
 		// withdraw money (Price of one house)
@@ -141,9 +142,7 @@ public class BusinessLogicController extends BaseController {
 		gui.showMessage("Du har nu bygget et hus på grunden: " + lf.getTitle());
 	}
 
-	/**
-	 * Added by Kasper on 09-01-2018 23:16:41
-	 * 
+	/** 
 	 * Handles player wants to build a house. DOES NOT CHECK FOR SUFFICIENT FUNDS OR
 	 * IF THE LOT HAS 4 HOUSES AS REQUIRED!! MUST BE DONE BEFORE CALL TO METHOD!
 	 * 
@@ -166,9 +165,7 @@ public class BusinessLogicController extends BaseController {
 		gui.showMessage("Du har nu bygget et hotel på grunden: " + lf.getTitle());
 	}
 
-	/**
-	 * Added by Frederik on 07-01-2018 00:05:28
-	 * 
+	/** 
 	 * Check if player still has money left, else remove player from game
 	 * 
 	 * @param currentPlayer
@@ -203,7 +200,15 @@ public class BusinessLogicController extends BaseController {
 
 		return allPlayers;
 	}
-
+	/**
+	 *	Pays the IncomeTax
+	 * 10% option
+	 * determines the value
+	 * 
+	 * @param currentPlayer
+	 * @param choice
+	 * @throws Exception
+	 */
 	public void payIncomeTax(Player currentPlayer, UserOption choice) throws Exception {
 
 		int sumToCollect = 0;
@@ -219,7 +224,6 @@ public class BusinessLogicController extends BaseController {
 	}
 
 	/**
-	 * Added by Frederik on 09-01-2018 00:17:56
 	 * 
 	 * Check if user can afford lot
 	 * 
@@ -235,7 +239,6 @@ public class BusinessLogicController extends BaseController {
 	}
 
 	/**
-	 * Added by Kasper on 09-01-2018 00:17:56
 	 * 
 	 * Check if user can afford to build a house
 	 * 
@@ -252,7 +255,6 @@ public class BusinessLogicController extends BaseController {
 	}
 
 	/**
-	 * Added by Kasper on 09-01-2018 00:17:56
 	 * 
 	 * Check if user can afford to build a hotel (price getBuildingCost * 5)
 	 * 
@@ -268,6 +270,12 @@ public class BusinessLogicController extends BaseController {
 		return false;
 	}
 
+	/**
+	 * Gets a list of all the all the fields player have that a pawnable
+	 * @param owner
+	 * @return
+	 * @throws IOException
+	 */
 	public OwnableField[] getPawnableFields(Player owner) throws IOException {
 		OwnableField[] fieldsOwned = gbc.getFieldsByOwner(owner);
 
@@ -324,7 +332,6 @@ public class BusinessLogicController extends BaseController {
 	}
 
 	/**
-	 * @author Nicolaiq
 	 * @param currentPlayer
 	 * @return Returns an List Of Fields thats pawned or returns null if no fields
 	 *         are pawned
@@ -377,7 +384,6 @@ public class BusinessLogicController extends BaseController {
 	 * @return false if nothing to pawn, true if yes.
 	 * @throws Exception
 	 */
-	//TODO: Can this be replace with call to getPawnedFields(Player currentPlayer)?
 	public boolean hasPawn(Player currentPlayer) throws Exception {
 		// Get the fields owned by our player
 		OwnableField[] ownedFields = gbc.getFieldsByOwner(currentPlayer);
@@ -396,7 +402,6 @@ public class BusinessLogicController extends BaseController {
 	/**
 	 * Indicates if a player can pawn any lots or not. *
 	 * 
-	 * Added by Frederik on 10-01-2018 19:19:19
 	 * 
 	 * @param currentPlayer
 	 * @return
@@ -435,7 +440,14 @@ public class BusinessLogicController extends BaseController {
 		if (!found)
 			throw new Exception("Field never found!");
 	}
-
+/**
+ * Creates a auction And returns the highest bidder.
+ * @param field
+ * @param players
+ * @return
+ * @throws Exception
+ */
+	
 	public Player auction(Field field, Player[] players) throws Exception {
 		// lige nu laver du en rigtig spiller om til highestbidder, spilleren slettes,
 		// der skal nok sendes noget andet videre
@@ -467,7 +479,6 @@ public class BusinessLogicController extends BaseController {
 	}
 
 	/**
-	 * @author Nicolai Barnett
 	 * @param result
 	 *            The field to be unpawned.
 	 * @param owner
@@ -503,6 +514,11 @@ public class BusinessLogicController extends BaseController {
 		}
 	}
 
+	/**
+	 * Re
+	 * @param deadGuy
+	 * @throws Exception
+	 */
 	public void destroyPlayer(Player deadGuy) throws Exception {
 		// hvis implementeret her, vil beskeden gentages en masse gange
 		// Messager.showMessage(deadGuy.getName()+" har mistet alle hans penge");
