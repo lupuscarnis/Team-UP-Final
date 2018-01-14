@@ -160,7 +160,7 @@ public class Messager {
 		String bf = "Byd på ejendommen";
 		int bid;
 
-		UserOption choice = GUIController.getInstance().showOptions("kid",
+		UserOption choice = GUIController.getInstance().showOptions("",
 				new UserOption[] { UserOption.bidOnField, UserOption.NoThanks });
 
 		if (choice == EnumParser.fromStrToUserOption(bf)) {
