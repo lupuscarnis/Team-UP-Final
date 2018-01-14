@@ -269,6 +269,42 @@ public class BusinessLogicController extends BaseController {
 
 		return false;
 	}
+		/**
+	 * Added by Kasper on 09-01-2018 00:17:56
+	 * 
+	 * Check if a user can build a house
+	 * 
+	 * @param currentPlayer
+	 *            LotField
+	 * @return
+	 */
+	public boolean playerCanBuildHouse(Player currentPlayer, LotField lf) {
+		
+		if (lf.getOwner() == currentPlayer && userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4)
+			return true;
+
+		return false;
+	}
+	
+	/**
+	 * Added by Kasper on 09-01-2018 00:17:56
+	 * 
+	 * Check if a user can build a hotel
+	 * 
+	 * @param currentPlayer
+	 *            LotField
+	 * @return
+	 */
+	public boolean playerCanBuildHotel(Player currentPlayer, LotField lf) {
+		
+		if (lf.getOwner() == currentPlayer && userCanAffordHotel(currentPlayer.getBalance(), lf) && lf.getHouseCount() == 4	&& lf.getHotelCount() != 1)
+			return true;
+
+		return false;
+	}
+
+	
+	
 
 	/**
 	 * Gets a list of all the all the fields player have that a pawnable
