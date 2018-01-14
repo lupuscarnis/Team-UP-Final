@@ -2,6 +2,10 @@ package entities;
 
 import entities.field.Field;
 
+/**
+ * Player class that holds information regarding the player and his account.
+ *
+ */
 public class Player {
 	private Account account = null;
 	private String name = "";
@@ -9,15 +13,11 @@ public class Player {
 	private Field previousField = null; // Previous field player stood on.
 	private int rollDoubleStreak = 0; // How many times in a row the player has rolled a double.
 	private int turnsJailed = 0; // How many turns have the player been jailed.
-	private boolean isInJail;
-	private int lastRoll;
-
+	private boolean isInJail = false;
+	private int lastRoll = 0;
 	private boolean hasJailCard = false;
 	private boolean doneThrowing = false; // Indicates that user is done throwing this turn
-	/**
-	 * Indicates whether user has rolled or not.
-	 */
-	private boolean hasRolled = false;
+	private boolean hasRolled = false; // Indicates whether user has rolled or not.
 
 	public Player(String name, int startAmount) {
 		this(name, startAmount, null);
@@ -30,10 +30,9 @@ public class Player {
 	}
 
 	/**
-	 * @version 1.0
-	 * @author Fredrik Charles
+	 * Sets current field (the field the player is on) for player
+	 * 
 	 * @param newField
-	 *            Sets the players current field
 	 */
 	public void setCurrentField(Field newField) {
 
@@ -45,118 +44,91 @@ public class Player {
 	}
 
 	/**
-	 * @version 1.0
-	 * @author Fredrik Charles
-	 * @return returns the field the player is standing on.
+	 * Returns the field that the player is standing on.
+	 * 
+	 * @return
 	 */
 	public Field getCurrentField() {
 		return this.currentField;
 	}
 
-	/**
-	 * @version 1.0
-	 * @author Fredrik Charles
-	 * @param Navnet
-	 *            p� spiller
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * @version 1.0
-	 * @author Fredrik Charles
-	 * @return returns player names.
-	 */
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
-	/**
-	 * @version 1.0
-	 * @author Nicolai Barnett
-	 * @return Returns The players account balance.
-	 */
 	public int getBalance() {
-
 		return this.account.getBalance();
 	}
 
 	/**
-	 * @author Nicolai
-	 * @version 1.0
-	 * @param Amount
-	 * @return Deposit Money.
+	 * Deposits money in the players account
+	 * 
+	 * @param deposit
 	 */
 	public void deposit(int deposit) {
 		this.account.deposit(deposit);
-
 	}
 
 	/**
-	 * @author Nicolai
-	 * @version 1.0
-	 * @param Amount
-	 * @return Returns if the withdraw was successful or not.
+	 * Withdraws money from player account
+	 * 
+	 * @param amount
+	 * @return
 	 */
 	public boolean withdraw(int amount) {
-		return account.withdraw(amount);
+		return this.account.withdraw(amount);
 	}
 
 	/**
-	 * @version 1.0
-	 * @author Nicolai Barnett
+	 * Sets the current balance to the amount given.
+	 * 
 	 * @param balance
-	 *            Sets the current balance to the amount given.
 	 */
 	public void setBalance(int balance) {
 		this.account.setBalance(balance);
 	}
 
 	public String toString() {
-		return "Navn: " + "Balance: " + account.getBalance() + "Står på: " + currentField;
+		return "Navn: " + "Balance: " + this.account.getBalance() + "Står på: " + this.currentField;
 	}
 
+	/**
+	 * Returns the players account
+	 * 
+	 * @return
+	 */
 	public Account getAccount() {
 		return this.account;
 	}
 
+	/**
+	 * Gets the field that the player was previously standing on.
+	 * 
+	 * @return
+	 */
 	public Field getPreviousField() {
 		return this.previousField;
 	}
 
 	public void setIsInJail(boolean isInJail) {
-		if(!isInJail) {
-			turnsJailed=0;
+		if (!isInJail) {
+			this.turnsJailed = 0;
 		}
 		this.isInJail = isInJail;
 	}
 
 	/**
+	 * Indicates if player is in jail or not.
 	 * 
-	 * @return Returns the isInJail true if the player is marked for jail
+	 * @return
 	 */
-
 	public boolean isInJail() {
 
 		return this.isInJail;
-	}
-
-	// Opgøre sin formue så vi kan læse denne: "Deres kontante penge + skøder +
-	// bygninger ikke overstiger kr. 15000."
-	// og måske også Win condition?
-	public int getNetWorth() {
-		return getBalance();
-	}
-
-	// Count no. of houses owned.
-	public int getHousesOwned() {
-		return 0;
-	}
-
-	// Count no. of hotels owned.
-	public int getHotelsOwned() {
-		return 0;
 	}
 
 	/**
@@ -171,9 +143,7 @@ public class Player {
 	}
 
 	/**
-	 * Added by Frederik on 06-01-2018 22:02:44
-	 * 
-	 * Returns GetOutOfJailCard status
+	 * Indicates if player has "Get Out Of Jail For Free Card" or not.
 	 * 
 	 * @return
 	 */
@@ -181,8 +151,13 @@ public class Player {
 		return this.hasJailCard;
 	}
 
+	/**
+	 * Indicates if player can roll dice or not.
+	 * 
+	 * @return
+	 */
 	public boolean isDoneThrowing() {
-		return doneThrowing;
+		return this.doneThrowing;
 	}
 
 	public void setDoneThrowing(boolean doneThrowing) {
@@ -190,10 +165,12 @@ public class Player {
 	}
 
 	/**
-	 * @return rollDoubleStreak
+	 * Indicates how many times the player has rolled the same in current turn
+	 * 
+	 * @return
 	 */
 	public int getRollDoubleStreak() {
-		return rollDoubleStreak;
+		return this.rollDoubleStreak;
 	}
 
 	/**
@@ -206,45 +183,37 @@ public class Player {
 	}
 
 	/**
-	 * @return the turnsJailed
+	 * Shows number of turns player has been in jail
+	 * 
+	 * @return
 	 */
 	public int getTurnsJailed() {
-		return turnsJailed;
+		return this.turnsJailed;
 	}
 
 	/**
+	 * Set total number of turns in jail.
+	 * 
 	 * @param turnsJailed
-	 *            the turnsJailed to set
 	 */
 	public void setTurnsJailed(int turnsJailed) {
 		this.turnsJailed = turnsJailed;
 	}
 
 	/**
-	 * @param int
-	 *            value
+	 * Set what the player rolled last.
+	 * 
+	 * @param value
 	 */
 	public void setLastRoll(int value) {
 		this.lastRoll = value;
 	}
 
-	/**
-	 * 
-	 * @return int
-	 */
 	public int getLastRoll() {
 		return this.lastRoll;
 	}
 
-	/**
-	 * Returns current field number
-	 * 
-	 * Added by Frederik on 13-01-2018 15:06:59
-	 * 
-	 * @return
-	 */
 	public int getFieldNumber() {
 		return getCurrentField().getFieldNumber();
 	}
-
 }
