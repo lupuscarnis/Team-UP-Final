@@ -438,7 +438,7 @@ public class BusinessLogicController extends BaseController {
 
 				}
 				// confirm in gui
-				Messager.showHouseSold(lf);
+				Messager.showHotelSold(lf);
 			}
 		}
 	}
