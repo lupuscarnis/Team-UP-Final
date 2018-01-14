@@ -270,8 +270,6 @@ public class BusinessLogicController extends BaseController {
 		return false;
 	}
 		/**
-	 * Added by Kasper on 09-01-2018 00:17:56
-	 * 
 	 * Check if a user can build a house
 	 * 
 	 * @param currentPlayer
@@ -287,7 +285,6 @@ public class BusinessLogicController extends BaseController {
 	}
 	
 	/**
-	 * Added by Kasper on 09-01-2018 00:17:56
 	 * 
 	 * Check if a user can build a hotel
 	 * 
