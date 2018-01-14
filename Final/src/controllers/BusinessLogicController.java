@@ -88,7 +88,7 @@ public class BusinessLogicController extends BaseController {
 	public void payRent(Player currentPlayer) throws Exception {
 
 		// TODO: MANGLER EN TERNING
-		int faceValue = 10; // Random value - must come from dice!
+		int faceValue = currentPlayer.getLastRoll(); // Random value - must come from dice!
 		OwnableField currentField = (OwnableField) currentPlayer.getCurrentField();
 
 		int rent = currentField.calculateRent(faceValue);
@@ -211,7 +211,7 @@ public class BusinessLogicController extends BaseController {
 		if (choice == UserOption.IncomeTaxPay4000)
 			sumToCollect = 4000;
 		else
-			sumToCollect = (int) Math.floor(currentPlayer.getBalance() * 0.1);
+			sumToCollect = (int) Math.floor(playerNetWorth(currentPlayer) * 0.1);
 
 		currentPlayer.withdraw(sumToCollect);
 
@@ -509,11 +509,12 @@ public class BusinessLogicController extends BaseController {
 		OwnableField[] OF = gbc.getFieldsByOwner(deadGuy);
 		for (OwnableField field : OF) {
 			field.setOwner(null);
-			
-			deadGuy.setCurrentField(gbc.getFieldByName(FieldName.Fængslet));
-			gui.updatePlayerPosition(deadGuy.getName(),
-					deadGuy.getCurrentField().getFieldNumber(),
-					gbc.getFieldByName(FieldName.Fængslet).getFieldNumber());
 		}
+			
+		
+			gui.updatePlayerPosition(deadGuy.getName(), deadGuy.getCurrentField().getFieldNumber(), gbc.getFieldByName(FieldName.Fængslet).getFieldNumber());
+			deadGuy.setCurrentField(gbc.getFieldByName(FieldName.Fængslet));
+			deadGuy.getAccount().setBalance(0);
+		
 	}
 }
