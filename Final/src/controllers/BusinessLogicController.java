@@ -22,7 +22,6 @@ public class BusinessLogicController extends BaseController {
 
 
 	/**
-<<<<<<< HEAD
 	 * Helper method: Looks up a "GUI"-player from a "Logic"-player name.
 	 * 
 	 * @param field
