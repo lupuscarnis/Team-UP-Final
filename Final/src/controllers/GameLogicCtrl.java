@@ -243,7 +243,7 @@ public class GameLogicCtrl extends BaseController {
 			Field nextField = flc.getNextField(currentFieldNo, faceValue);
 
 			// Update current pos on player object
-			currentPlayer.setCurrentField(nextField);
+			currentPlayer.setCurrentField(gbc.getFieldByNumber(19));
 
 			// Update gui
 			gui.movePlayer(currentPlayer);
