@@ -1,6 +1,7 @@
 package utilities;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import entities.chancecard.ChanceCard;
@@ -24,9 +25,10 @@ public class ChanceLoader {
 	 * cards.
 	 * 
 	 * @return
+	 * @throws IOException 
 	 * @throws Exception
 	 */
-	public ChanceCard[] getCards() throws Exception {
+	public ChanceCard[] getCards() throws IOException {
 		ChanceCard[] cards = new ChanceCard[33];
 		InputStream in = getInputStream("/chancedata.txt");
 
@@ -60,9 +62,7 @@ public class ChanceLoader {
 						break;
 					case "FREEJAIL":
 						cards[id - 1] = new GetOutJailForFreeChanceCard(id, text);
-						break;
-					default:
-						throw new Exception("Card type not found!");
+						break;					
 					}
 				}
 				currentLine = br.readLine();
