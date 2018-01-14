@@ -21,15 +21,7 @@ public class Messager {
 	}
 
 	public static UserOption presentOptions(UserOption[] options, String playerName) throws Exception {
-<<<<<<< HEAD
 		return GUIController.getInstance().showOptions(getChooseText(playerName), options);
-=======
-
-		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);
-		
-
-		return GUIController.getInstance().showOptions(CHOOSE, options);
->>>>>>> branch '2.-iteration' of https://github.com/lupuscarnis/CDIO-Final.git
 	}
 
 	public static UserOption showWantToBuyMessage(String title, String playerName) throws Exception {
