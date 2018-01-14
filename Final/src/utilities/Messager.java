@@ -16,7 +16,7 @@ public class Messager {
 	public static UserOption presentOptions(UserOption[] options, String playerName) throws Exception {
 
 		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);
-		;
+		
 
 		return GUIController.getInstance().showOptions(CHOOSE, options);
 	}
