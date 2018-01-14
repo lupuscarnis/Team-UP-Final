@@ -234,7 +234,13 @@ public class GameLogicCtrl extends BaseController {
 
 	}
 
-	// checks if the Player Move past start this turn and receives 4000
+	/**
+	 * 
+	 * @param currentPlayer The Current player we are checking if passed start
+	 * @param faceValue  value of the dice you rolled
+	 * @param canReceive Can the Player recive Money over start
+	 * @throws Exception
+	 */
 	public void checkPassedStart(Player currentPlayer, int faceValue, boolean canReceive) throws Exception {
 		if ((currentPlayer.getCurrentField().getFieldNumber() + faceValue > 40) && (canReceive == true)) {
 			currentPlayer.deposit(BusinessLogicController.MONEY_FOR_PASSING_START);
