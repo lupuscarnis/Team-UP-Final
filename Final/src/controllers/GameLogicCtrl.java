@@ -246,6 +246,9 @@ public class GameLogicCtrl extends BaseController {
 
 	public void handleGoToJail(Player currentPlayer) throws IOException, Exception {
 
+		//to prevent players from continuing their turn when jailed.
+		currentPlayer.setRollDoubleStreak(0);
+		
 		Field jail = gbc.getFieldByName(FieldName.Fængslet);
 		int fromField = currentPlayer.getCurrentField().getFieldNumber();
 
