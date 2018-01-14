@@ -3,20 +3,20 @@ package entities;
 import entities.Die;
 
 public class Cup {
-	private int traversedSpace;
-	private int rerolls;
+
 	private Die d1 = new Die(6, 1);
 	private Die d2 = new Die(6, 1);
 // rough sketch of cup might need more work depending on what it has to do 
 	
 	
-	//TODO: FIX!
-	public Cup(int traversedSpace, int rerolls, Die d1, Die d2) {
-		super();
-		this.traversedSpace = traversedSpace;
-		this.rerolls = rerolls;
-		this.d1 = d1;
-		this.d2 = d2;
+	/**
+	 * Cup has two dice with faceValue.
+	 * Can roll dice and return combined faceValue.
+	 * Can check if rolled double.
+	 */
+	
+	public Cup() {
+		
 	}
 	
 	
@@ -39,49 +39,23 @@ public class Cup {
 		this.d2 = d2;
 	}
 
-
+	/**
+	 * Method rolls the two dice and add their faceValue together.
+	 * 
+	 * @return combined faceValue for d1 and d2.
+	 */
 	public int rollDice() {
 		d1.roll();
 		d2.roll();
-		if (d1.getValue()==d2.getValue()) {
 
-			rerolls++;
-			traversedSpace += d1.getValue() + d2.getValue();
-			return d1.getValue() + d2.getValue();
-		} else {
-			rerolls = 0;
-			return d1.getValue() + d2.getValue();
-		
-		}
-
-	}
-
+		return d1.getValue() + d2.getValue();
 	
-
-	public int getTraversedSpace() {
-		return traversedSpace;
 	}
 
-	public void setTraversedSpace(int traversedSpace) {
-		this.traversedSpace = traversedSpace;
-	}
-
-	public int getRerolls() {
-		return rerolls;
-	}
-
-	public void setRerolls(int rerolls) {
-		this.rerolls = rerolls;
-	}
-public String toString() {
-	return "Spaces you traveled: "+ traversedSpace+"Ammount of rerolls:  "+rerolls+"Dice: "+ d1 + " " + d2;
-}
-
-
-public boolean rolledDouble() {
-	if(d1.getValue()==d2.getValue()) {
-		return true;
-	}
-	return false;
-}
+	public boolean rolledDouble() {
+		 if(d1.getValue()==d2.getValue()) {
+			return true;
+		}
+		return false;
+	}	
 }
