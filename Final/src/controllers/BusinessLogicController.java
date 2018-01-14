@@ -130,7 +130,7 @@ public class BusinessLogicController extends BaseController {
 			if (field instanceof LotField) {
 				LotField lotField = (LotField) field;
 				playerFieldWorth += (lotField.getPrice()
-						+ (lotField.getHouseCount() + 5 * lotField.getHotelCount()) * lotField.getBuildingCost()) / 2;
+						+ (lotField.getHouseCount() + 5 * lotField.getHotelCount()) * lotField.getHousePrice()) / 2;
 			}
 		}
 
@@ -147,7 +147,7 @@ public class BusinessLogicController extends BaseController {
 	public void buildHouse(Player player) throws Exception {
 		LotField lf = (LotField) player.getCurrentField();
 		// withdraw money (Price of one house)
-		player.withdraw(lf.getBuildingCost());
+		player.withdraw(lf.getHousePrice());
 		// update number of houses on lot + 1
 		lf.setHouseCount(lf.getHouseCount() + 1);
 		// update number of houses on lot + 1 (GUI)
@@ -168,7 +168,7 @@ public class BusinessLogicController extends BaseController {
 	public void buildHotel(Player player) throws Exception {
 		LotField lf = (LotField) player.getCurrentField();
 		// withdraw money (5 times the cost of a house)
-		player.withdraw(lf.getBuildingCost() * 5);
+		player.withdraw(lf.getHousePrice() * 5);
 		// update number of houses on lot
 		lf.setHouseCount(0);
 		// update number of hotels on lot
@@ -264,7 +264,7 @@ public class BusinessLogicController extends BaseController {
 	 */
 	public boolean userCanAffordHouse(int currentPlayerBalance, LotField fieldToBuy) {
 
-		if (currentPlayerBalance >= fieldToBuy.getBuildingCost())
+		if (currentPlayerBalance >= fieldToBuy.getHousePrice())
 			return true;
 
 		return false;
@@ -280,7 +280,7 @@ public class BusinessLogicController extends BaseController {
 	 */
 	public boolean userCanAffordHotel(int currentPlayerBalance, LotField fieldToBuy) {
 
-		if (currentPlayerBalance >= fieldToBuy.getBuildingCost() * 5)
+		if (currentPlayerBalance >= fieldToBuy.getHousePrice() * 5)
 			return true;
 
 		return false;

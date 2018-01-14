@@ -229,7 +229,7 @@ public class BoardGenerator {
 
 				+ "<div>Leje:</div>" + "<div>Grund: %s</div>" + "<div>m. 1 hus: %s</div>" + "<div>m. 2 hus: %s</div>"
 				+ "<div>m. 3 hus: %s</div>" + "<div>m. 4 hus: %s</div>" + "<div>m. hotel: %s</div>" + "</html>",
-				lf.getTitle(), lf.getBuildingCost(), lf.getRentFor(LotRentTier.Lot),
+				lf.getTitle(), lf.getHousePrice(), lf.getRentFor(LotRentTier.Lot),
 				lf.getRentFor(LotRentTier.OneHouse), lf.getRentFor(LotRentTier.TwoHouses),
 				lf.getRentFor(LotRentTier.ThreeHouses), lf.getRentFor(LotRentTier.FourHouses),
 				lf.getRentFor(LotRentTier.Hotel));
