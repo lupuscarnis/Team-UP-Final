@@ -211,7 +211,7 @@ public class BusinessLogicController extends BaseController {
 		if (choice == UserOption.IncomeTaxPay4000)
 			sumToCollect = 4000;
 		else
-			sumToCollect = (int) Math.floor(currentPlayer.getBalance() * 0.1);
+			sumToCollect = (int) Math.floor(playerNetWorth(currentPlayer) * 0.1);
 
 		currentPlayer.withdraw(sumToCollect);
 
