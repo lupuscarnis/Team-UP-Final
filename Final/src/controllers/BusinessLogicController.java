@@ -88,7 +88,7 @@ public class BusinessLogicController extends BaseController {
 	public void payRent(Player currentPlayer) throws Exception {
 
 		// TODO: MANGLER EN TERNING
-		int faceValue = 10; // Random value - must come from dice!
+		int faceValue = currentPlayer.getLastRoll(); // Random value - must come from dice!
 		OwnableField currentField = (OwnableField) currentPlayer.getCurrentField();
 
 		int rent = currentField.calculateRent(faceValue);
