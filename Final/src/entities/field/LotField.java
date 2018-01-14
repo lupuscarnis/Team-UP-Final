@@ -10,7 +10,7 @@ import entities.enums.LotRentTier;
  * Sub class of OwnableField that represents a LotField.
  *
  */
-//TODO: Hvor er pris på et hus? Hvad med building cost?
+// TODO: Hvor er pris på et hus? Hvad med building cost?
 public class LotField extends OwnableField {
 
 	private int houseCount, hotelCount;
@@ -24,7 +24,7 @@ public class LotField extends OwnableField {
 	}
 
 	/**
-	 * Sets array with rent prices. 
+	 * Sets array with rent prices.
 	 * 
 	 * @param rent
 	 */
@@ -84,10 +84,11 @@ public class LotField extends OwnableField {
 	/**
 	 * Calculates rent for this type of field.
 	 */
-	//TODO: Udregner ikke leje rigtigt!
+	// TODO: Udregner ikke leje rigtigt!
 	@Override
 	public int calculateRent(int dieFaceValue) throws IOException {
 
+		int rent;
 		// count how many fields (LotFields) owned in same color
 		int lotsOwnedInColorGroup = GameBoardController.getInstance().countLotsOwnedByColor(this.getColor(),
 				this.getOwner());
@@ -99,8 +100,38 @@ public class LotField extends OwnableField {
 		boolean allOwned = (lotsOwnedInColorGroup == lotsInColorGroupTotal) ? true : false;
 
 		// calc rent
-		return (allOwned) ? this.getRentFor(LotRentTier.Lot) * 2 : this.getRentFor(LotRentTier.Lot);
+		rent = (allOwned) ? this.getRentFor(LotRentTier.Lot) * 2 : this.getRentFor(LotRentTier.Lot);
+
+		if (((getHouseCount() > 0) || (getHotelCount() > 0))) {
+			if (getHotelCount() != 1)
+				switch (getHouseCount()) {
+
+				case 1:
+
+					return this.getRentFor(LotRentTier.OneHouse);
+					
+				case 2:
+
+					return this.getRentFor(LotRentTier.TwoHouses);
+					
+				case 3:
+
+					return this.getRentFor(LotRentTier.ThreeHouses);
+					
+				case 4:
+
+					return this.getRentFor(LotRentTier.FourHouses);
+					
+				}
+			else {
+				return this.getRentFor(LotRentTier.Hotel);
+			}
+
+		}
+		return rent;
 	}
+
+	
 
 	/**
 	 * Handles setting number of houses on lot
