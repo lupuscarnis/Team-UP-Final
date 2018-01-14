@@ -8,26 +8,25 @@ import entities.enums.UserOption;
 import entities.field.Field;
 import entities.field.OwnableField;
 
-
-
+/**
+ * Intent of this class was to "streamline" the way the user is informed, so
+ * that it happend as uniformly as possible. However, since we can't resolve the
+ * controller-tangle issue, we have dropped moving this to the controller
+ * package.
+ */
 public class Messager {
 
-	// private static
+	private static String getChooseText(String name) {
+		return String.format("(%s): Du kan vælge flg.:", name);
+	}
+
 	public static UserOption presentOptions(UserOption[] options, String playerName) throws Exception {
-
-		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);
-		;
-
-		return GUIController.getInstance().showOptions(CHOOSE, options);
+		return GUIController.getInstance().showOptions(getChooseText(playerName), options);
 	}
 
 	public static UserOption showWantToBuyMessage(String title, String playerName) throws Exception {
 		GUIController.getInstance().showMessage("Du er landet på feltet \"" + title + "\" vil du købe dette felt?");
-
-		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);
-		;
-
-		return GUIController.getInstance().showOptions(CHOOSE,
+		return GUIController.getInstance().showOptions(getChooseText(playerName),
 				new UserOption[] { UserOption.BuyField, UserOption.NoThanks });
 	}
 
@@ -35,10 +34,7 @@ public class Messager {
 		GUIController.getInstance().showMessage(
 				"Du er landet på feltet \"" + title + "\", som du allerede ejer. Vil du bygge et hus her?");
 
-		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);
-		;
-
-		return GUIController.getInstance().showOptions(CHOOSE,
+		return GUIController.getInstance().showOptions(getChooseText(playerName),
 				new UserOption[] { UserOption.BuyHouse, UserOption.NoThanks });
 	}
 
@@ -46,10 +42,7 @@ public class Messager {
 		GUIController.getInstance().showMessage(
 				"Du er landet på feltet \"" + title + "\", som du allerede ejer. Vil du bygge et hotel her?");
 
-		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);
-		;
-
-		return GUIController.getInstance().showOptions(CHOOSE,
+		return GUIController.getInstance().showOptions(getChooseText(playerName),
 				new UserOption[] { UserOption.BuyHotel, UserOption.NoThanks });
 	}
 
@@ -68,12 +61,8 @@ public class Messager {
 				name, rent);
 		GUIController.getInstance().showMessage(txt);
 
-		// TODO: Skal laves om!!
-		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);
-		;
-
 		// Show pay button
-		GUIController.getInstance().showOptions(CHOOSE, new UserOption[] { UserOption.PayRent });
+		GUIController.getInstance().showOptions(getChooseText(playerName), new UserOption[] { UserOption.PayRent });
 	}
 
 	public static UserOption showMustPayIncomeTax(FieldType fieldType, String playerName)
@@ -82,11 +71,8 @@ public class Messager {
 		// show message
 		GUIController.getInstance().showMessage("Du er landet på " + fieldType);
 
-		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);
-		;
-
 		// get choice from player
-		return GUIController.getInstance().showOptions(CHOOSE,
+		return GUIController.getInstance().showOptions(getChooseText(playerName),
 				new UserOption[] { UserOption.IncomeTaxPayTenPercent, UserOption.IncomeTaxPay4000 });
 	}
 
@@ -145,11 +131,7 @@ public class Messager {
 	}
 
 	public static String getSelectionResult(String[] tmp, String playerName) throws IOException {
-
-		String CHOOSE = String.format("(%s): Du kan vælge flg.:", playerName);
-		;
-
-		return GUIController.getInstance().getSelection(CHOOSE, tmp);
+		return GUIController.getInstance().getSelection(getChooseText(playerName), tmp);
 	}
 
 	public static void showFieldPawned(String fieldName) throws IOException {
@@ -161,9 +143,9 @@ public class Messager {
 	}
 
 	public static int showAuctionMessage(Player player, Field field) throws Exception {
-		// Player highestBidder = null;
+
 		GUIController.getInstance().showMessage(player.getName() + " kan nu byde på grunden " + field);
-		// return highestBidder;
+
 		String bf = "Byd på ejendommen";
 		int bid;
 
