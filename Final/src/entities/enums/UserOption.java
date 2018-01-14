@@ -1,5 +1,9 @@
 package entities.enums;
 
+/**
+ * Represents the diff. types of choices a user can make.
+ *
+ */
 public enum UserOption {
 	ThrowDice, 
 	PawnLot, 

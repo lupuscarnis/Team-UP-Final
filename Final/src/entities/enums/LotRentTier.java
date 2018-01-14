@@ -1,7 +1,7 @@
 package entities.enums;
 
 /**
- * Added by Frederik on 05-01-2018 21:55:37 
+ * Is used to indicate if a lof field has x houses/hotel or lot only when calc. rent.
  * 
  * IMPORTANT: Do not change order of constants as their ordinal is used for array lookup in getRentFor() in LotField!
  *
