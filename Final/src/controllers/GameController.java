@@ -155,6 +155,30 @@ public class GameController extends BaseController {
 						blc.sellHouse(answerSell, currentPlayer);
 
 					break;
+					
+				case SellHotel:
+
+					OwnableField[] hotelList = blc.getFieldsWithHotels(currentPlayer);
+
+					String[] hotelNameList = new String[hotelList.length + 1];
+
+					hotelNameList[0] = "Annuller!";
+					int index3 = 1;
+
+					for (OwnableField field : hotelList) {
+
+						hotelNameList[index3] = field.getTitle();
+						index3++;
+
+					}
+
+					String answerSellHotel = Messager.getSelectionResult(hotelNameList, currentPlayer.getName());
+
+					// unpawn selected lot
+					if (!answerSellHotel.equals("Annuller!"))
+						blc.sellHotel(answerSellHotel, currentPlayer);
+
+					break;
 
 				case PawnLot:
 

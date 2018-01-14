@@ -64,7 +64,12 @@ public class GameLogicCtrl extends BaseController {
 		// can sell house
 		if (blc.hasHouse(currentPlayer))
 			options[index] = UserOption.SellHouse;
-		index++;
+		index++;	
+		
+		// can sell hotel
+		if (blc.hasHotel(currentPlayer))
+			options[index] = UserOption.SellHotel;
+		index++;	
 		
 		// can buy house
 		if (currentPlayer.getCurrentField() instanceof LotField)
