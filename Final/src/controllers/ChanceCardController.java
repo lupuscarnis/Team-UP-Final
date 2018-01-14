@@ -25,9 +25,10 @@ public class ChanceCardController extends BaseController {
 	private ChanceCard[] cardArray = null; // holds all cards from chancedata.txt
 	private FieldLogicController flc;
 	private GameLogicCtrl glc;
+	private BusinessLogicController blc;
 
 	public ChanceCardController() throws IOException {
-		this.cardArray = new ChanceLoader().getCards();		
+		this.cardArray = new ChanceLoader().getCards();
 	}
 
 	public void setFlc(FieldLogicController flc) {
@@ -358,13 +359,12 @@ public class ChanceCardController extends BaseController {
 			// værdig trængende forstås, at deres formue, d.v.s. Deres kontante penge +
 			// skøder + bygninger ikke overstiger kr. 15000.;
 			case 25:
-				if (player.getNetWorth() <= 15000) {
+				if (blc.playerNetWorth(player) <= 15000) {
 					player.deposit(40000); // TODO: skal komme et eller andet sted fra != HARDCODED
 					Messager.showReceiveChanceCard(player, 40000);
 				} else {
 					Messager.showMessage("du er aaaaalt for rig til at gælde som værdigt trængende. Du får intet");
 				}
-
 				break;
 
 			// 26;Det er deres fødselsdag. Modtag af hver medspiller kr. 200.;
@@ -394,5 +394,9 @@ public class ChanceCardController extends BaseController {
 				throw new Exception("Case not found!");
 			}
 		}
+	}
+
+	public void setBlc(BusinessLogicController blc) {
+		this.blc = blc;
 	}
 }

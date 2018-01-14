@@ -7,6 +7,10 @@ import entities.enums.BreweriesOwned;
 import entities.enums.FieldType;
 import entities.enums.ShippingOwned;
 
+/**
+ * Sub class of OwnableField that represents a BreweryField.
+ *
+ */
 public class ShippingField extends OwnableField {
 
 	private int[] rentList;

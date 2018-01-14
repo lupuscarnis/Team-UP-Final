@@ -1,21 +1,16 @@
 package entities.field;
 
 import java.io.IOException;
-
 import controllers.GameBoardController;
 import entities.enums.FieldType;
 import entities.enums.LotColor;
 import entities.enums.LotRentTier;
 
 /**
- * Added by Frederik on 05-01-2018 16:04:43
+ * Sub class of OwnableField that represents a LotField.
  *
- * Represents lot fields.
  */
-// TODO: There is no need for a diff. house/hotel cost price.
-// Cost of building is returned via getBuildingCost()
-// REMEMBER: If changed you might want to change fieldsdata.txt and FieldLoader
-// too :(
+//TODO: Hvor er pris på et hus? Hvad med building cost?
 public class LotField extends OwnableField {
 
 	private int houseCount, hotelCount;
@@ -28,16 +23,17 @@ public class LotField extends OwnableField {
 		super(fieldType, fieldNo, text1, price, pawnPrice);
 	}
 
-	public int getBuildingCost() {
-		return housePrice;
-	}
-
+	/**
+	 * Sets array with rent prices. 
+	 * 
+	 * @param rent
+	 */
 	public void setRent(int[] rent) {
 		this.rentTierList = rent;
 	}
 
 	public LotColor getColor() {
-		return color;
+		return this.color;
 	}
 
 	public void setColor(LotColor color) {
@@ -54,9 +50,7 @@ public class LotField extends OwnableField {
 	}
 
 	/**
-	 * Added by Frederik on 09-01-2018 14:35:38
-	 * 
-	 * Returns rent for x houses or hotel.
+	 * Gets the rent according to how many houses/hotels are on the lot.
 	 * 
 	 * @param rentTier
 	 * @return
@@ -65,8 +59,18 @@ public class LotField extends OwnableField {
 		return this.rentTierList[rentTier.ordinal()];
 	}
 
+	/**
+	 * Cost of building a hotel on this lot
+	 * 
+	 * @return
+	 */
 	public int getHotelPrice() {
-		return hotelPrice;
+		return this.hotelPrice;
+	}
+
+	// TODO: Is this correct?
+	public int getBuildingCost() {
+		return this.housePrice;
 	}
 
 	public void setHotelPrice(int hotelPrice) {
@@ -77,6 +81,10 @@ public class LotField extends OwnableField {
 		this.housePrice = housePrice;
 	}
 
+	/**
+	 * Calculates rent for this type of field.
+	 */
+	//TODO: Udregner ikke leje rigtigt!
 	@Override
 	public int calculateRent(int dieFaceValue) throws IOException {
 
@@ -93,54 +101,40 @@ public class LotField extends OwnableField {
 		// calc rent
 		return (allOwned) ? this.getRentFor(LotRentTier.Lot) * 2 : this.getRentFor(LotRentTier.Lot);
 	}
-	
-	/**
-	 * Added by Kasper on 1/9-2018
-	 * 
-	 * Handles setting number of houses on lot 
-	 *  
-	 */
-	
-	public void setHouseCount(int numHouses) {
-		
-		this.houseCount = numHouses;
 
-	}
-	
 	/**
-	 * Added by Kasper on 1/9-2018
+	 * Handles setting number of houses on lot
 	 * 
-	 * Handles getting number of houses on lot 
-	 *  
-	 * @Return houseCount
+	 * @return
 	 */
-	
-	public int getHouseCount() {		
-		return houseCount;
+	public void setHouseCount(int numHouses) {
+		this.houseCount = numHouses;
 	}
-	
+
 	/**
-	 * Added by Kasper on 1/9-2018
+	 * Handles getting number of houses on lot
 	 * 
-	 * Handles setting hotel on lot (bool) 
-	 *  
+	 * @return
 	 */
-	
-	public void setHotelCount(int numHotel) {		
+	public int getHouseCount() {
+		return this.houseCount;
+	}
+
+	/**
+	 * Handles setting hotel on lot (bool)
+	 * 
+	 * @param numHotel
+	 */
+	public void setHotelCount(int numHotel) {
 		this.hotelCount = numHotel;
 	}
-	
-	/**
-	 * Added by Kasper on 1/9-2018
-	 * 
-	 * Handles getting number of hotels on lot 
-	 *  
-	 * @Return hotelCount
-	 */
-	
-	public int getHotelCount() {
-		
-		return hotelCount;
 
+	/**
+	 * Handles getting number of hotels on lot
+	 * 
+	 * @return
+	 */
+	public int getHotelCount() {
+		return this.hotelCount;
 	}
 }

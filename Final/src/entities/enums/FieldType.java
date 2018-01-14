@@ -1,8 +1,6 @@
 package entities.enums;
 /**
- * Added by Frederik on 05-01-2018 20:38:34 
- *
- * Represents the type of field.
+ * Idicates the different types of fields on the board. 
  *
  */
 public enum FieldType {

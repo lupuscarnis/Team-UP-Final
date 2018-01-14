@@ -2,6 +2,10 @@ package entities.field;
 
 import entities.enums.FieldType;
 
+/**
+ * Represents all other types of fields that are not represented by a sub class.
+ *
+ */
 public class Field {
 
 	private int fieldNumber;
@@ -16,10 +20,15 @@ public class Field {
 	public Field(FieldType fieldType, int fieldNo, String title, String desc) {
 		this.fieldNumber = fieldNo;
 		this.title = title;
-		this.desc=desc;
+		this.desc = desc;
 		this.fieldType = fieldType;
 	}
 
+	/**
+	 * Gets the type of field.
+	 * 
+	 * @return
+	 */
 	public FieldType getFieldType() {
 		return this.fieldType;
 	}
@@ -43,5 +52,5 @@ public class Field {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
-	}	
+	}
 }

@@ -21,12 +21,13 @@ public class GameController extends BaseController {
 	private int startValue = 30000; 
 	// default contstructor
 	public GameController() throws IOException {
-		// setup controllers		
+		// HACK: Solved like this because of controller intermingle problem		
 		flc.setBlc(blc);
 		flc.setCcc(ccc);
 		flc.setGlc(glc);		
 		ccc.setFlc(flc);
 		ccc.setGlc(glc);
+		ccc.setBlc(blc);
 		glc.setBlc(blc);
 		glc.setFlc(flc);
 	}

@@ -100,6 +100,8 @@ public class GUIController {
 	}
 
 	/**
+	 * setup game with player array
+	 * 
 	 * @param players
 	 */
 	private void setupPlayers(Player[] players) {

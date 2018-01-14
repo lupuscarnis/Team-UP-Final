@@ -1,14 +1,9 @@
 package entities.enums;
 
 /**
- * Added by Frederik on 06-01-2018 00:14:02 
+ * Used to pull certain fields from GameBoardController.
  *
  */
-//TODO: Skal hedde "FieldTitle"
 public enum FieldName {
-	Rådhuspladsen,
-	Fængslet,
-	Grønningen,
-	Start,
-	FrederiksbergAlle
+	Rådhuspladsen, Fængslet, Grønningen, Start, FrederiksbergAlle
 }

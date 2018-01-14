@@ -1,5 +1,9 @@
 package entities.chancecard;
 
+/**
+ * Chance card sub class that represents cards where player has to pay.
+ *
+ */
 public class PayChanceCard extends ChanceCard {
 
 	private int amount;
@@ -10,6 +14,11 @@ public class PayChanceCard extends ChanceCard {
 		this.amount = payableAmount;
 	}
 
+	/**
+	 * Get amount player has to pay 
+	 * 
+	 * @return
+	 */
 	public int getAmount() {
 		return amount;
 	}
