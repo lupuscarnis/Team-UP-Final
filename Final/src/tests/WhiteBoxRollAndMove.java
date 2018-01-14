@@ -73,7 +73,8 @@ public class WhiteBoxRollAndMove {
 						//payToLeaveJail()
 					}
 				}
-			System.out.print(cup.getRolledDouble()+",");
+			boolean noRollStreak = testPlayer.getRollDoubleStreak()==0;
+			System.out.print(noRollStreak+",");
 			System.out.print(testPlayer.getRollDoubleStreak()+",");
 			System.out.print(testPlayer.isInJail()+",");
 			System.out.print(testPlayer.getTurnsJailed()+",");
