@@ -5,6 +5,7 @@ import entities.Player;
 import entities.enums.FieldName;
 import entities.enums.UserOption;
 import entities.field.Field;
+import entities.field.LotField;
 import entities.field.OwnableField;
 import utilities.Messager;
 import utilities.MyRandom;
@@ -123,6 +124,9 @@ public class GameController extends BaseController {
 				case BuyHotel:
 					break;
 				case BuyHouse:
+
+						blc.buildHouse(currentPlayer);
+	
 					break;
 					
 				case SellHouse:

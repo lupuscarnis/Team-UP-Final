@@ -287,7 +287,8 @@ public class BusinessLogicController extends BaseController {
 
 		return false;
 	}
-		/**
+	
+	/**
 	 * Check if a user can build a house
 	 * 
 	 * @param currentPlayer
@@ -379,7 +380,9 @@ public class BusinessLogicController extends BaseController {
 					gui.setHouse(0, fields.getFieldNumber());
 
 				} else {
+					
 					gui.setHouse(lf.getHouseCount(), fields.getFieldNumber());
+					
 				}
 				// confirm in gui
 				Messager.showHouseSold(lf);

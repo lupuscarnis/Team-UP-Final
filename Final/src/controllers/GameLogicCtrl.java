@@ -8,6 +8,7 @@ import entities.Player;
 import entities.enums.FieldName;
 import entities.enums.UserOption;
 import entities.field.Field;
+import entities.field.LotField;
 import utilities.Messager;
 import utilities.MyRandom;
 
@@ -48,7 +49,7 @@ public class GameLogicCtrl extends BaseController {
 	 * @throws Exception
 	 */
 	public UserOption showUserOptions(Player currentPlayer) throws Exception {
-
+		
 		int index = 0;
 		UserOption[] options = new UserOption[10]; // Hack: we don't know the size yet, so 10 is random!
 
@@ -64,6 +65,21 @@ public class GameLogicCtrl extends BaseController {
 		if (blc.hasHouse(currentPlayer))
 			options[index] = UserOption.SellHouse;
 		index++;
+		
+		// can buy house
+		if (currentPlayer.getCurrentField() instanceof LotField)
+        {
+        	LotField lf = (LotField) currentPlayer.getCurrentField();
+        	
+        	if (blc.playerCanBuildHouse(currentPlayer, lf)) {
+        		
+        		options[index] = UserOption.BuyHouse;
+        		index++;
+        	
+        	}
+        			
+        }
+		
 		
 		if (currentPlayer.isDoneThrowing()) {
 			options[index] = UserOption.EndTurn;
