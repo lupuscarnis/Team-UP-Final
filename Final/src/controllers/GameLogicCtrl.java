@@ -85,6 +85,19 @@ public class GameLogicCtrl extends BaseController {
         			
         }
 		
+		// can buy hotel
+		if (currentPlayer.getCurrentField() instanceof LotField)
+        {
+        	LotField lf = (LotField) currentPlayer.getCurrentField();
+        	
+        	if (blc.playerCanBuildHotel(currentPlayer, lf)) {
+        		
+        		options[index] = UserOption.BuyHotel;
+        		index++;
+        	
+        	}
+        			
+        }
 		
 		if (currentPlayer.isDoneThrowing()) {
 			options[index] = UserOption.EndTurn;
