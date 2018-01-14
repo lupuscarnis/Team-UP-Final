@@ -16,10 +16,9 @@ import utilities.Messager;
 public class BusinessLogicController extends BaseController {
 
 	public static final int MONEY_FOR_PASSING_START = 4000;
-	
+
 	public BusinessLogicController() throws IOException {
 	}
-
 
 	/**
 	 * 
@@ -36,7 +35,7 @@ public class BusinessLogicController extends BaseController {
 	 * @param playerNameToFind
 	 * @return
 	 * @throws Exception
-	 * Sets the owner  of the field.
+	 *             Sets the owner of the field.
 	 * 
 	 * @param field
 	 * @param owner
@@ -50,7 +49,7 @@ public class BusinessLogicController extends BaseController {
 		gui.removeLotOwner(field);
 	}
 
-	/** 
+	/**
 	 * Set owner of Get Out Of Jail Card.
 	 * 
 	 * @param owner
@@ -61,7 +60,8 @@ public class BusinessLogicController extends BaseController {
 	}
 
 	/**
-	 * Handles player wants to buy lot. The player will get field even if it can't afford it.
+	 * Handles player wants to buy lot. The player will get field even if it can't
+	 * afford it.
 	 * 
 	 * @param player
 	 * @throws Exception
@@ -89,7 +89,7 @@ public class BusinessLogicController extends BaseController {
 	public void payRent(Player currentPlayer) throws Exception {
 
 		// Gets the last dice.
-		int faceValue = currentPlayer.getLastRoll(); 
+		int faceValue = currentPlayer.getLastRoll();
 		OwnableField currentField = (OwnableField) currentPlayer.getCurrentField();
 
 		int rent = currentField.calculateRent(faceValue);
@@ -100,7 +100,7 @@ public class BusinessLogicController extends BaseController {
 		Messager.showMustPayRent(payee.getName(), rent, currentPlayer.getName());
 
 		// withdraw from payer
-		//nothing happends if payer can't pay
+		// nothing happends if payer can't pay
 		payer.withdraw(rent);
 
 		// deposit to payee
@@ -110,12 +110,13 @@ public class BusinessLogicController extends BaseController {
 		gui.updateBalance(new Player[] { payer, payee });
 	}
 
-/**
- * Calculates the players Current NetWorth	
- * @param currentPlayer
- * @return int
- * @throws IOException
- */
+	/**
+	 * Calculates the players Current NetWorth
+	 * 
+	 * @param currentPlayer
+	 * @return int
+	 * @throws IOException
+	 */
 	public int playerNetWorth(Player currentPlayer) throws IOException {
 		int netWorth;
 		int playerBalance = currentPlayer.getBalance();
@@ -154,7 +155,7 @@ public class BusinessLogicController extends BaseController {
 		gui.showMessage("Du har nu bygget et hus på grunden: " + lf.getTitle());
 	}
 
-	/** 
+	/**
 	 * Handles player wants to build a house. DOES NOT CHECK FOR SUFFICIENT FUNDS OR
 	 * IF THE LOT HAS 4 HOUSES AS REQUIRED!! MUST BE DONE BEFORE CALL TO METHOD!
 	 * 
@@ -173,17 +174,16 @@ public class BusinessLogicController extends BaseController {
 		lf.setOwner(player);
 		// update gui
 		gui.updateBalance(player);
-		
+
 		gui.setHouse(0, lf.getFieldNumber());
-		
+
 		gui.setHotel(true, lf.getFieldNumber());
 		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
 		gui.showMessage("Du har nu bygget et hotel på grunden: " + lf.getTitle());
-	
-		
+
 	}
 
-	/** 
+	/**
 	 * Check if player still has money left, else remove player from game
 	 * 
 	 * @param currentPlayer
@@ -218,10 +218,9 @@ public class BusinessLogicController extends BaseController {
 
 		return allPlayers;
 	}
+
 	/**
-	 *	Pays the IncomeTax
-	 * 10% option
-	 * determines the value
+	 * Pays the IncomeTax 10% option determines the value
 	 * 
 	 * @param currentPlayer
 	 * @param choice
@@ -287,7 +286,7 @@ public class BusinessLogicController extends BaseController {
 
 		return false;
 	}
-	
+
 	/**
 	 * Check if a user can build a house
 	 * 
@@ -296,13 +295,14 @@ public class BusinessLogicController extends BaseController {
 	 * @return
 	 */
 	public boolean playerCanBuildHouse(Player currentPlayer, LotField lf) {
-		
-		if (lf.getOwner() == currentPlayer && userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4 && lf.getHotelCount() != 1)
+
+		if (lf.getOwner() == currentPlayer && userCanAffordHouse(currentPlayer.getBalance(), lf)
+				&& lf.getHouseCount() < 4 && lf.getHotelCount() != 1)
 			return true;
 
 		return false;
 	}
-	
+
 	/**
 	 * 
 	 * Check if a user can build a hotel
@@ -312,13 +312,13 @@ public class BusinessLogicController extends BaseController {
 	 * @return
 	 */
 	public boolean playerCanBuildHotel(Player currentPlayer, LotField lf) {
-		
-		if (lf.getOwner() == currentPlayer && userCanAffordHotel(currentPlayer.getBalance(), lf) && lf.getHouseCount() == 4	&& lf.getHotelCount() != 1)
+
+		if (lf.getOwner() == currentPlayer && userCanAffordHotel(currentPlayer.getBalance(), lf)
+				&& lf.getHouseCount() == 4 && lf.getHotelCount() != 1)
 			return true;
 
 		return false;
 	}
-
 
 	/**
 	 * Indicates if a user has houses to sell or not.
@@ -335,7 +335,7 @@ public class BusinessLogicController extends BaseController {
 		for (OwnableField field : ownedField) {
 
 			// if lot field check for buildings
-			
+
 			if (field instanceof LotField) {
 				LotField lf = (LotField) field;
 
@@ -348,7 +348,7 @@ public class BusinessLogicController extends BaseController {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Indicates if a user has houses to sell or not.
 	 * 
@@ -364,7 +364,7 @@ public class BusinessLogicController extends BaseController {
 		for (OwnableField field : ownedField) {
 
 			// if lot field check for buildings
-			
+
 			if (field instanceof LotField) {
 				LotField lf = (LotField) field;
 
@@ -377,7 +377,6 @@ public class BusinessLogicController extends BaseController {
 		}
 		return false;
 	}
-	
 
 	/**
 	 * @param result
@@ -403,15 +402,14 @@ public class BusinessLogicController extends BaseController {
 				gui.updateBalance(owner);
 
 				// update GUI FAILSAFE
-				if (lf.getHouseCount() < 0)
-				{
+				if (lf.getHouseCount() < 0) {
 
 					gui.setHouse(0, fields.getFieldNumber());
 
 				} else {
-					
+
 					gui.setHouse(lf.getHouseCount(), fields.getFieldNumber());
-					
+
 				}
 				// confirm in gui
 				Messager.showHouseSold(lf);
@@ -443,25 +441,25 @@ public class BusinessLogicController extends BaseController {
 				gui.updateBalance(owner);
 
 				// update GUI FAILSAFE
-				if (lf.getHotelCount() < 0)
-				{
+				if (lf.getHotelCount() < 0) {
 
 					gui.setHotel(false, fields.getFieldNumber());
 
 				} else {
-					
+
 					gui.setHotel(false, fields.getFieldNumber());
-					
+
 				}
 				// confirm in gui
 				Messager.showHouseSold(lf);
 			}
 		}
 	}
+
 	/**
 	 * @param currentPlayer
-	 * @return Returns an List Of Fields that has houses or returns null if no fields
-	 *         are pawned
+	 * @return Returns an List Of Fields that has houses or returns null if no
+	 *         fields are pawned
 	 * @throws Exception
 	 */
 	public OwnableField[] getFieldsWithHouses(Player currentPlayer) throws Exception {
@@ -514,8 +512,8 @@ public class BusinessLogicController extends BaseController {
 
 	/**
 	 * @param currentPlayer
-	 * @return Returns an List Of Fields that has hotels or returns null if no fields
-	 *         are pawned
+	 * @return Returns an List Of Fields that has hotels or returns null if no
+	 *         fields are pawned
 	 * @throws Exception
 	 */
 	public OwnableField[] getFieldsWithHotels(Player currentPlayer) throws Exception {
@@ -565,8 +563,10 @@ public class BusinessLogicController extends BaseController {
 		}
 		return cleanVersion;
 	}
+
 	/**
 	 * Gets a list of all the all the fields player have that a pawnable
+	 * 
 	 * @param owner
 	 * @return
 	 * @throws IOException
@@ -735,14 +735,16 @@ public class BusinessLogicController extends BaseController {
 		if (!found)
 			throw new Exception("Field never found!");
 	}
-/**
- * Creates a auction And returns the highest bidder.
- * @param field
- * @param players
- * @return
- * @throws Exception
- */
-	
+
+	/**
+	 * Creates a auction And returns the highest bidder.
+	 * 
+	 * @param field
+	 * @param players
+	 * @return
+	 * @throws Exception
+	 */
+
 	public Player auction(Field field, Player[] players) throws Exception {
 		// lige nu laver du en rigtig spiller om til highestbidder, spilleren slettes,
 		// der skal nok sendes noget andet videre
@@ -811,6 +813,7 @@ public class BusinessLogicController extends BaseController {
 
 	/**
 	 * semi removes the player from the game. Removes him as owner.
+	 * 
 	 * @param deadGuy
 	 * @throws Exception
 	 */
@@ -821,11 +824,11 @@ public class BusinessLogicController extends BaseController {
 		for (OwnableField field : OF) {
 			field.setOwner(null);
 		}
-			
-		
-			gui.updatePlayerPosition(deadGuy.getName(), deadGuy.getCurrentField().getFieldNumber(), gbc.getFieldByName(FieldName.Fængslet).getFieldNumber());
-			deadGuy.setCurrentField(gbc.getFieldByName(FieldName.Fængslet));
-			deadGuy.getAccount().setBalance(0);
-		
+
+		gui.updatePlayerPosition(deadGuy.getName(), deadGuy.getCurrentField().getFieldNumber(),
+				gbc.getFieldByName(FieldName.Fængslet).getFieldNumber());
+		deadGuy.setCurrentField(gbc.getFieldByName(FieldName.Fængslet));
+		deadGuy.getAccount().setBalance(0);
+
 	}
 }

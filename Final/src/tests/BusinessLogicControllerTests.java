@@ -1,16 +1,13 @@
 package tests;
 
-import static org.junit.Assert.*;
-
-import java.io.IOException;
-import java.lang.reflect.Field;
-
-import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import java.io.IOException;import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import controllers.BusinessLogicController;
 import controllers.GameBoardController;
 import entities.Player;
@@ -129,8 +126,22 @@ public class BusinessLogicControllerTests {
 		assertEquals(p.getBalance() + 1200 + 2500 + 2000, blc.playerNetWorth(p));
 	}
 
-	public void testBuildHouse() {
-
+	/**
+	 * Test that player can build house on field.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testBuildHouse() throws Exception {
+		/*
+		p.setBalance(10000);
+		
+		LotField lf = (LotField) gbc.getFieldByNumber(4);
+		
+		blc.setOwner(lf, p);
+		
+		blc.buildHouse(p);
+		*/
+		
 	}
 
 	public void testBuildHotel() {
