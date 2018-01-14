@@ -5,6 +5,10 @@ import controllers.GameBoardController;
 import entities.enums.BreweriesOwned;
 import entities.enums.FieldType;
 
+/**
+ * Sub class of OwnableField that represents a BreweryField.
+ *
+ */
 public class BreweryField extends OwnableField {
 
 	private int[] dieModifiers;
@@ -15,6 +19,12 @@ public class BreweryField extends OwnableField {
 		this.dieModifiers = dieModifiers;
 	}
 
+	/**
+	 * Shows the die modifier (eg. is it 100/200 times dice value).
+	 * 
+	 * @param breweriesOwned
+	 * @return
+	 */
 	public int getModifierFor(BreweriesOwned breweriesOwned) {
 		return this.dieModifiers[breweriesOwned.ordinal()];
 	}
@@ -25,11 +35,14 @@ public class BreweryField extends OwnableField {
 	}
 
 	@Override
+	/**
+	 * Calculates rent for this field.
+	 */
 	public int calculateRent(int dieFaceValue) throws IOException {
 
 		int fieldsOwned = GameBoardController.getInstance().countBreweriesOwned(this.getOwner());
 		int modifier = this.getModifierFor((fieldsOwned == 1 ? BreweriesOwned.ONE : BreweriesOwned.TWO));
-		
-		return modifier*dieFaceValue;
+
+		return modifier * dieFaceValue;
 	}
 }
