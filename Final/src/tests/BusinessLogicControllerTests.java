@@ -85,7 +85,7 @@ public class BusinessLogicControllerTests {
 			
 			p.setCurrentField(field);
 			blc.setOwner(field, p);
-			
+
 			// buy lot
 			blc.buyLot(p);			
 
