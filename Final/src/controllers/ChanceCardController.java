@@ -128,7 +128,7 @@ public class ChanceCardController extends BaseController {
 				break;
 			}
 
-			// Gå i fængsel, ryk direkte til fængslet. Selv om de passerer start,
+			// Gå i fængsel, ryk direkte til fængslet. Selvom de passerer start,
 			// indkasserer de ikke kr. 4000.
 			case 4:
 			case 5: {
@@ -149,7 +149,6 @@ public class ChanceCardController extends BaseController {
 			// Ryk tre felter tilbage.
 			case 12: {
 
-				// edgecase = player moves back over start
 				if (player.getCurrentField().getFieldNumber() == 3)
 					toField = gbc.getFieldByNumber(40);
 				// all other fields
@@ -214,7 +213,6 @@ public class ChanceCardController extends BaseController {
 				// update player field
 				player.setCurrentField(toField);
 
-				// TODO: Kan det ikke laves smartere?
 				// update gui
 				gui.updatePlayerPosition(player.getName(), fromField.getFieldNumber(), toField.getFieldNumber());
 
@@ -360,7 +358,7 @@ public class ChanceCardController extends BaseController {
 			// skøder + bygninger ikke overstiger kr. 15000.;
 			case 25:
 				if (blc.playerNetWorth(player) <= 15000) {
-					player.deposit(40000); // TODO: skal komme et eller andet sted fra != HARDCODED
+					player.deposit(40000); 
 					Messager.showReceiveChanceCard(player, 40000);
 				} else {
 					Messager.showMessage("du er aaaaalt for rig til at gælde som værdigt trængende. Du får intet");
@@ -395,7 +393,11 @@ public class ChanceCardController extends BaseController {
 			}
 		}
 	}
-
+	
+	/**
+	 * method used for creating BussinessLogicController
+	 * @param blc
+	 */
 	public void setBlc(BusinessLogicController blc) {
 		this.blc = blc;
 	}

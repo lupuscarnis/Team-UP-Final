@@ -22,7 +22,7 @@ public class GameBoardController {
 	public static final int FIELD_COUNT = 40;
 	private Field[] fieldArray = null;
 	/**
-	 * a contructor that uses the fieldLoader to create an array
+	 * a constructor that uses the fieldLoader to create an array
 	 * @throws IOException
 	 * 
 	 */
@@ -77,7 +77,7 @@ public class GameBoardController {
 			if (field.getFieldType() == FieldType.SHIPPING) {
 				tmp[index] = (ShippingField) field;
 				index++;
-			}
+			} 	
 		}
 
 		return tmp;
@@ -305,11 +305,11 @@ public class GameBoardController {
 	}
 
 	/**
-	 * Helper method: Looks up a "GUI"-player from a "Logic"-player name.
+	 * a method used to find out if you can build on a field. It shows how many fields of the same color are owned by a player
 	 * 
-	 * @param playerNameToFind
-	 * @return
-	 * @throws Exception
+	 * @param owner
+	 * @param lotColor
+	 * @return int
 	 */
 	public int countLotsOwnedByColor(LotColor lotColor, Player owner) {
 
@@ -333,8 +333,8 @@ public class GameBoardController {
 	 * 
 	 * Counts total lots in color group: eg. all lots with the (LotColor)color blue.
 	 * 
-	 * @param blue
-	 * @return
+	 * @param lotColor
+	 * @return int
 	 */
 	public int countLotsInColorGroup(LotColor lotColor) {
 
@@ -348,7 +348,12 @@ public class GameBoardController {
 		return count;
 	}
 
-	// Return number of shipping fields owned by player
+	/**
+	 * helping method, used to get the number of shipping fields owned by a player, used for calculating rent
+	 * 
+	 * @param owner
+	 * @return int
+	 */
 	public int getShippingFieldsOwned(Player owner) {
 
 		int count = 0;
