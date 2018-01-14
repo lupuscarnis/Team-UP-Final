@@ -15,22 +15,46 @@ public class FieldLogicController extends BaseController {
 	private ChanceCardController ccc = null;
 	private GameLogicCtrl glc = null;
 
-	// default constructor.
+ 
+	/**
+	 * default constructor.
+	 * 
+	 * 
+	 */
 	public FieldLogicController() throws IOException {
 	}
-
+	/**
+	 * sets a bussiness logic Controller
+	 * 
+	 * @param BussinessLogicController
+	 */
 	public void setBlc(BusinessLogicController blc) {
 		this.blc = blc;
 	}
-
+	/**
+	 * Sets a ChanceCardController
+	 * 
+	 * @param ChanceCardController
+	 */
 	public void setCcc(ChanceCardController ccc) {
 		this.ccc = ccc;
 	}
+	/**
+	 * sets a GameLogicCtrl
+	 * 
+	 * @param GameLogicCtrl
 
+	 */
 	public void setGlc(GameLogicCtrl glc) {
 		this.glc = glc;
 	}
-
+	/**
+	 * finds the field type, and takes the appropriate action(s) for any field the player lands on
+	 * 
+	 * @param Player
+	 * @param Player[]
+	 * @throws Exception
+	 */
 	public void handleFieldAction(Player currentPlayer, Player[] allPlayers) throws Exception {
 
 		Field currentField = currentPlayer.getCurrentField();
@@ -39,7 +63,7 @@ public class FieldLogicController extends BaseController {
 		switch (currentField.getFieldType()) {
 
 		case LOT:
-			// OwnableField of = (OwnableField) currentField;
+			
 			LotField lf = (LotField) currentField;
 
 			// no owner! Player can buy
@@ -143,7 +167,7 @@ public class FieldLogicController extends BaseController {
 					if (choice == UserOption.BuyField) {
 						blc.buyLot(currentPlayer);
 					}
-
+// if the player can't afford a lot, the lot goes on auction
 				}
 				if (blc.userCanAffordLot(currentPlayer.getBalance(), ofSB) == false) {
 					Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
@@ -156,9 +180,7 @@ public class FieldLogicController extends BaseController {
 						OwnableField of = (OwnableField) currentField;
 						of.setOwner(highestBidder);
 						Messager.showLotBoughtMessage(of);
-						// at opdatere GUI'en crasher programmet, saa lige nu bruger jeg console til at
-						// teste det virker.
-						System.out.println(highestBidder.getBalance());
+					
 
 					}
 				}
@@ -218,7 +240,6 @@ public class FieldLogicController extends BaseController {
 	}
 
 	/**
-	 * Added by Frederik on 23-11-2017 17:50:40
 	 * 
 	 * Calculates and returns next field for player.
 	 * 

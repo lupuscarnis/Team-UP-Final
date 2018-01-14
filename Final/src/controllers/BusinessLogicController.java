@@ -22,10 +22,27 @@ public class BusinessLogicController extends BaseController {
 
 
 	/**
+<<<<<<< HEAD
+	 * Helper method: Looks up a "GUI"-player from a "Logic"-player name.
+	 * 
+	 * @param field
+	 */
+	public void pawnLot(OwnableField field) {
+		// TODO: Implement method
+	}
+
+	/**
+	 * Helper method: Looks up a "GUI"-player from a "Logic"-player name.
+	 * 
+	 * @param playerNameToFind
+	 * @return
+	 * @throws Exception
+=======
 	 * Sets the owner  of the field.
 	 * 
 	 * @param field
 	 * @param owner
+>>>>>>> branch '2.-iteration' of https://github.com/lupuscarnis/Team-UP-Final.git
 	 */
 	public void setOwner(OwnableField field, Player owner) {
 

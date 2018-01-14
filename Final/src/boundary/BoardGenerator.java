@@ -26,13 +26,15 @@ import gui_main.GUI;
 import utilities.FieldLoader;
 
 /**
- * Added by Frederik on 06-01-2018 19:35:29 
- *
  * This class was intended as a "Controller" for board generation of the board and fields,
  * as it would fill too much in the GUICtrl - what do you think?
  */
 public class BoardGenerator {
-
+/**
+ * Creates the full GameBoard 
+ * @return
+ * @throws IOException
+ */
 	public GUI makeBoard() throws IOException {
 
 		FieldLoader fl = new FieldLoader();
@@ -144,7 +146,11 @@ public class BoardGenerator {
 		return new GUI(fields);
 
 	}
-
+/**
+ *  Gets The background Color of the current lot 
+ * @param lotColor
+ * @return
+ */
 	public Color getBgColor(LotColor lotColor) {
 
 		switch (lotColor) {
@@ -176,7 +182,12 @@ public class BoardGenerator {
 			return null;
 		}
 	}
-
+/**
+ * Gets the brewery description
+ * 
+ * @param field
+ * @return
+ */
 	private static String getBreweryDesc(BreweryField field) {
 
 		return String.format(
@@ -184,7 +195,12 @@ public class BoardGenerator {
 						+ "<br>" + "<div>2 bryggerier: %s x terninger</div>" + "<br>",
 				field.getTitle(), field.getModifierFor(BreweriesOwned.ONE), field.getModifierFor(BreweriesOwned.TWO));
 	}
-
+/**
+ * Gets The shipping desc
+ * @param field
+ * @return
+ */
+	
 	private static String getShippingDesc(ShippingField field) {
 
 		String desc = field.getTitle();
@@ -200,7 +216,11 @@ public class BoardGenerator {
 				desc, field.getRentFor(ShippingOwned.One), field.getRentFor(ShippingOwned.Two),
 				field.getRentFor(ShippingOwned.Three), field.getRentFor(ShippingOwned.Four));
 	}
-
+/**
+ * Gets the lot descriptions
+ * @param field
+ * @return
+ */
 	private static String getLotDesc(Field field) {
 
 		LotField lf = (LotField) field;
@@ -214,14 +234,23 @@ public class BoardGenerator {
 				lf.getRentFor(LotRentTier.ThreeHouses), lf.getRentFor(LotRentTier.FourHouses),
 				lf.getRentFor(LotRentTier.Hotel));
 	}
-
+/**
+ * Get color of the foreground 
+ * @param color
+ * @return
+ */
 	private static Color getFgColor(LotColor color) {
 		if (color == LotColor.PURPLE)
 			return Color.white;
 
 		return Color.BLACK;
 	}
-
+/**
+ * Format the text
+ * @param text
+ * @param i
+ * @return
+ */
 	private static String formatText(String text, int i) {
 
 		return String.format("<html><span style='font-size: %spx;'>%s</span></html>", i, text);

@@ -11,17 +11,29 @@ import entities.field.OwnableField;
 import entities.field.ShippingField;
 import utilities.FieldLoader;
 
+/**
+ * Controller in charge of managing the gameboard, and passing on information about it to other classes
+ * 
+ */
 public class GameBoardController {
 
 	// fields
 	private static GameBoardController instance = null;
 	public static final int FIELD_COUNT = 40;
 	private Field[] fieldArray = null;
-
+	/**
+	 * a contructor that uses the fieldLoader to create an array
+	 * @throws IOException
+	 * 
+	 */
 	private GameBoardController() throws IOException {
 		this.fieldArray = new FieldLoader().getFields();
 	}
-
+	/**
+	 * Helper method: Looks up a "GUI"-player from a "Logic"-player name.
+	 * @return instance
+	 * @throws Exception
+	 */
 	public static GameBoardController getInstance() throws IOException {
 		if (instance == null)
 			instance = new GameBoardController();
@@ -29,7 +41,12 @@ public class GameBoardController {
 		return instance;
 	}
 
-	// Find n�rmeste rederi (fra nuv�r. pos)
+	/**
+	 * The methods purpose is to find the nearest shipping type field, for a certain player. Used for a chanceCard
+	 * 
+	 * @param currentPosition
+	 * @throws Exception
+	 */
 	public ShippingField getNearestShipping(int currentPosition) throws Exception {
 
 		int start = currentPosition;
@@ -45,7 +62,12 @@ public class GameBoardController {
 		throw new Exception("Shipping field not found!");
 	};
 
-	// returns all shipping fields
+	/**
+	 * finds every field with the shipping type, from an array, usually all the fields in the game.
+	 * 
+
+	 * @return ShippingField[]
+	 */
 	private ShippingField[] getAllShippingFields() {
 
 		ShippingField[] tmp = new ShippingField[4]; // Only 4 shipping fields
@@ -61,7 +83,12 @@ public class GameBoardController {
 		return tmp;
 	}
 
-	// TODO: Skal hedder "getFieldByTitle"
+	/**
+	 * finds a field, based on the name if the field, using field enums
+	 * 
+	 * @param fieldToFind
+	 * @throws Exception
+	 */
 	public Field getFieldByName(FieldName fieldToFind) throws Exception {
 
 		switch (fieldToFind) {
@@ -80,16 +107,19 @@ public class GameBoardController {
 		}
 	}
 
-	// Finde "Ryk tre felter tilbage" (fra nuv�r. pos)
-	public Field getFieldRelativeToPos(int currentPos, int numberOffields) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	/**
+	 * finds a field, based on it's number
+	 * 
+	 * @param fieldNo
+	 */
 	public Field getFieldByNumber(int fieldNo) {
 		return fieldArray[fieldNo - 1];
 	}
 
+	/**
+	 * returns a fieldArray, that is created in this class
+	 * @return fieldArray
+	 */
 	public Field[] getFields() {
 		return fieldArray;
 	}
@@ -138,6 +168,12 @@ public class GameBoardController {
 		return new OwnableField[0];
 	}
 
+	/**
+	 * getLotFieldsByOwner is used to get an array with all the fields owned by a player, has multiple applications
+	 * 
+	 * @param currentOwner
+	 * 
+	 */
 	public LotField[] getLotFieldsByOwner(Player currentOwner) {
 
 		int count = 0;
@@ -174,8 +210,7 @@ public class GameBoardController {
 
 	/**
 	 * Added by Frederik on 07-01-2018 01:11:42
-	 * 
-	 * I know it's not optimized, but since we can't use ArrayList...
+	 * is used to get an array with all OwnableFields on the gameBoard
 	 * 
 	 * @return All ownable fields
 	 */
@@ -204,7 +239,11 @@ public class GameBoardController {
 		return tmp;
 	}
 
-	// Returns all lot fields
+	/**
+	 * a specialized getOwnableFields that only returns Lots, not breweries and shipping types
+	 * 
+	 * @return all LotFields
+	 */
 	public LotField[] getAllLotFields() {
 
 		LotField[] tmp = new LotField[22];
@@ -220,7 +259,12 @@ public class GameBoardController {
 
 		return tmp;
 	}
-
+	/**
+	 * gets the number of breweries owned by a player, used for calculating rent on this type of field
+	 * 
+	 * @param Owner
+	 * @return int
+	 */
 	// Count breweries owned by player
 	public int countBreweriesOwned(Player owner) {
 
@@ -238,7 +282,12 @@ public class GameBoardController {
 		return count;
 	}
 
-	// Count shipping owned by player
+	/**
+	 * gets the number of shipping type fields owned by a player, used for calculating rent on this type of field
+	 * 
+	 * @param owner
+	 * @return int
+	 */
 	public int countShippingOwned(Player owner) {
 
 		int count = 0;
@@ -255,7 +304,13 @@ public class GameBoardController {
 		return count;
 	}
 
-	// count lot fields owned in same color
+	/**
+	 * Helper method: Looks up a "GUI"-player from a "Logic"-player name.
+	 * 
+	 * @param playerNameToFind
+	 * @return
+	 * @throws Exception
+	 */
 	public int countLotsOwnedByColor(LotColor lotColor, Player owner) {
 
 		int count = 0;
