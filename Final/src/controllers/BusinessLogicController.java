@@ -7,7 +7,7 @@ import entities.enums.UserOption;
 import entities.field.Field;
 import entities.field.LotField;
 import entities.field.OwnableField;
-import utilities.Messager;
+import utilities.Messenger;
 
 /**
  * Class intended to hold logic reg. business transactions etc.
@@ -84,7 +84,7 @@ public class BusinessLogicController extends BaseController {
 		Player payer = currentPlayer;
 
 		// tell user he must pay rent
-		Messager.showMustPayRent(payee.getName(), rent, currentPlayer.getName());
+		Messenger.showMustPayRent(payee.getName(), rent, currentPlayer.getName());
 
 		// withdraw from payer
 		// nothing happends if payer can't pay
@@ -223,7 +223,7 @@ public class BusinessLogicController extends BaseController {
 
 		currentPlayer.withdraw(sumToCollect);
 
-		Messager.showYouPaidIncomeTax(currentPlayer, sumToCollect);
+		Messenger.showYouPaidIncomeTax(currentPlayer, sumToCollect);
 	}
 
 	/**
@@ -398,7 +398,7 @@ public class BusinessLogicController extends BaseController {
 
 				}
 				// confirm in gui
-				Messager.showHouseSold(lf);
+				Messenger.showHouseSold(lf);
 			}
 		}
 	}
@@ -437,7 +437,7 @@ public class BusinessLogicController extends BaseController {
 
 				}
 				// confirm in gui
-				Messager.showHotelSold(lf);
+				Messenger.showHotelSold(lf);
 			}
 		}
 	}
@@ -712,7 +712,7 @@ public class BusinessLogicController extends BaseController {
 				gui.updateBalance(field.getOwner());
 
 				// confirm in gui
-				Messager.showFieldPawned(field.getTitle());
+				Messenger.showFieldPawned(field.getTitle());
 
 				found = true;
 			}
@@ -739,14 +739,14 @@ public class BusinessLogicController extends BaseController {
 		int highestBid = 0;
 		for (int i = 0; i < players.length; i++) {
 			if (players[i].getBalance() != 0) {
-				int newBid = Messager.showAuctionMessage(players[i], field);
+				int newBid = Messenger.showAuctionMessage(players[i], field);
 
 				if (newBid > highestBid) {
 					if (players[i].getBalance() > newBid) {
 						highestBid = newBid;
 						highestBidder = players[i];
 					} else {
-						Messager.showMessage(highestBidder.getName()
+						Messenger.showMessage(highestBidder.getName()
 								+ " bød mere end han har råd til, og er diskvalificeret fra at byde");
 					}
 				}
@@ -792,7 +792,7 @@ public class BusinessLogicController extends BaseController {
 				gui.clearPawnStatus(fields.getFieldNumber(), owner.getName());
 
 				// confirm in gui
-				Messager.showFieldunPawned(fields.getTitle());
+				Messenger.showFieldunPawned(fields.getTitle());
 			}
 		}
 	}

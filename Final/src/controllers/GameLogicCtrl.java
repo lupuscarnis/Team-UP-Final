@@ -9,7 +9,7 @@ import entities.enums.FieldName;
 import entities.enums.UserOption;
 import entities.field.Field;
 import entities.field.LotField;
-import utilities.Messager;
+import utilities.Messenger;
 import utilities.MyRandom;
 
 
@@ -137,7 +137,7 @@ public class GameLogicCtrl extends BaseController {
 			}
 		}
 
-		return Messager.presentOptions(tmp, currentPlayer.getName());
+		return Messenger.presentOptions(tmp, currentPlayer.getName());
 	}
 
 	/**
@@ -268,7 +268,7 @@ public class GameLogicCtrl extends BaseController {
 		}
 		if (currentPlayer.getRollDoubleStreak() == 3) {
 			handleGoToJail(currentPlayer);
-			Messager.showRollStreakJail(currentPlayer);
+			Messenger.showRollStreakJail(currentPlayer);
 		}
 
 	}
@@ -283,7 +283,7 @@ public class GameLogicCtrl extends BaseController {
 	public void checkPassedStart(Player currentPlayer, int faceValue, boolean canReceive) throws Exception {
 		if ((currentPlayer.getCurrentField().getFieldNumber() + faceValue > 40) && (canReceive == true)) {
 			currentPlayer.deposit(BusinessLogicController.MONEY_FOR_PASSING_START);
-			Messager.showPassedStart(currentPlayer);
+			Messenger.showPassedStart(currentPlayer);
 			System.out.println("Du fik 4000 over start! hurray!");
 		}
 	}

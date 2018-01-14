@@ -83,6 +83,12 @@ public class BusinessLogicControllerTests {
 
 		for (OwnableField field : gbc.getAllOwnableFields()) {
 
+			
+			p.setBalance(10000);
+			
+
+
+
 			// field not owned
 			assertTrue(field.getOwner() == null);
 
@@ -93,6 +99,8 @@ public class BusinessLogicControllerTests {
 
 			// field owned
 			assertTrue(field.getOwner() == p);
+			
+			assertTrue(10000-field.getPrice()== p.getBalance());
 		}
 	}
 

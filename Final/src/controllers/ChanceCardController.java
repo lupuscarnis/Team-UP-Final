@@ -12,7 +12,7 @@ import entities.enums.FieldName;
 import entities.field.Field;
 import entities.field.LotField;
 import utilities.ChanceLoader;
-import utilities.Messager;
+import utilities.Messenger;
 import utilities.MyRandom;
 
 /**
@@ -359,9 +359,9 @@ public class ChanceCardController extends BaseController {
 			case 25:
 				if (blc.playerNetWorth(player) <= 15000) {
 					player.deposit(40000); 
-					Messager.showReceiveChanceCard(player, 40000);
+					Messenger.showReceiveChanceCard(player, 40000);
 				} else {
-					Messager.showMessage("du er aaaaalt for rig til at gælde som værdigt trængende. Du får intet");
+					Messenger.showMessage("du er aaaaalt for rig til at gælde som værdigt trængende. Du får intet");
 				}
 				break;
 
