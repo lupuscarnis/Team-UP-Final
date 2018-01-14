@@ -27,12 +27,22 @@ public class BusinessLogicController extends BaseController {
 		return 0;
 	}
 
-	// Pawn lot
+	/**
+	 * Helper method: Looks up a "GUI"-player from a "Logic"-player name.
+	 * 
+	 * @param field
+	 */
 	public void pawnLot(OwnableField field) {
 		// TODO: Implement method
 	}
 
-	// set owner of (ownable)field.
+	/**
+	 * Helper method: Looks up a "GUI"-player from a "Logic"-player name.
+	 * 
+	 * @param playerNameToFind
+	 * @return
+	 * @throws Exception
+	 */
 	public void setOwner(OwnableField field, Player owner) {
 
 		// set owner
