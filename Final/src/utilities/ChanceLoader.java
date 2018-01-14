@@ -16,7 +16,7 @@ import entities.chancecard.ReceiveChanceCard;
  */
 public class ChanceLoader {
 
-	private InputStream getInputStream(String filename) {
+	private InputStream getInputStream(String filename) {	
 		return getClass().getResourceAsStream(filename);
 	}
 

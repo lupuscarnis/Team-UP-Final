@@ -106,15 +106,11 @@ public class GameController extends BaseController {
 				// stopper currentplayer for at blive til next player.
 			} else { // find next player
 				if(currentPlayer.getBalance() == 0) {blc.destroyPlayer(currentPlayer);}
-//					blc.destroyPlayer(currentPlayer);
 					
 				do{
 					currentPlayer = glc.getNextPlayer(players);	
 				}while(currentPlayer.getBalance() == 0);
 			} 
-
-			
-			// gui.showPromt("Det er " + currentPlayer.getName() + "s tur!");
 
 			// present options for user
 			// End when EndTurn is selected
@@ -151,7 +147,7 @@ public class GameController extends BaseController {
 
 					break;
 				case ThrowDice:
-					// TODO: Roll streak?
+					
 					currentPlayer.setDoneThrowing(true);
 
 					// roll and move player

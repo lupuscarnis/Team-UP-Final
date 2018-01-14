@@ -3,7 +3,7 @@ package entities.field;
 import entities.enums.FieldType;
 
 /**
- * Represents all other types of fields that are not represented by a sub class.
+ * Represents all other types of fields that are not represented by a sub class. Main purpose is to be extended from, by other field types.
  *
  */
 public class Field {
@@ -40,7 +40,11 @@ public class Field {
 	public String getTitle() {
 		return title;
 	}
-
+	/**
+	 * returns a long string with all the information of the field. Overrider javas toString metode.
+	 * 
+	 * @return String
+	 */
 	public String toString() {
 		return String.format("Type: %s\n" + "Feltnr: %s\n" + "Text1: %s\n" + "Text2: %s\n", getFieldType(),
 				getFieldNumber(), getTitle(), getDesc());

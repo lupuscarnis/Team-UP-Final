@@ -5,7 +5,7 @@ import boundary.GUIController;
 
 /**
  * Class is base controller for all classes in "controllers" package EXCEPT GameBoardController as it's
- * strictly used as lookup and therefor not using the other controllers.
+ * strictly used as lookup and therefore does not use the other controllers.
  */
 public abstract class BaseController {
 

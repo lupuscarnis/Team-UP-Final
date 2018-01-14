@@ -22,7 +22,6 @@ public class BusinessLogicController extends BaseController {
 
 
 	/**
-<<<<<<< HEAD
 	 * Helper method: Looks up a "GUI"-player from a "Logic"-player name.
 	 * 
 	 * @param field
@@ -148,7 +147,7 @@ public class BusinessLogicController extends BaseController {
 		// update number of houses on lot + 1
 		lf.setHouseCount(lf.getHouseCount() + 1);
 		// update number of houses on lot + 1 (GUI)
-		gui.setHouse(lf.getHouseCount() + 1, lf.getFieldNumber());
+		gui.setHouse(lf.getHouseCount(), lf.getFieldNumber());
 		// update gui
 		gui.updateBalance(player);
 		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
@@ -174,8 +173,14 @@ public class BusinessLogicController extends BaseController {
 		lf.setOwner(player);
 		// update gui
 		gui.updateBalance(player);
+		
+		gui.setHouse(0, lf.getFieldNumber());
+		
+		gui.setHotel(true, lf.getFieldNumber());
 		// gui.updateLotOwner(player.getName(), of.getFieldNumber());
 		gui.showMessage("Du har nu bygget et hotel på grunden: " + lf.getTitle());
+	
+		
 	}
 
 	/** 

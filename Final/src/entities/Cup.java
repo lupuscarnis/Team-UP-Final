@@ -6,7 +6,7 @@ public class Cup {
 
 	private Die d1 = new Die(6, 1);
 	private Die d2 = new Die(6, 1);
-// rough sketch of cup might need more work depending on what it has to do 
+ 
 	
 	
 	/**
@@ -51,7 +51,11 @@ public class Cup {
 		return d1.getValue() + d2.getValue();
 	
 	}
-
+	/**
+	 * Method checks whether the two dice have the same face value
+	 * 
+	 * @return true if a double is rolled
+	 */
 	public boolean rolledDouble() {
 		 if(d1.getValue()==d2.getValue()) {
 			return true;
