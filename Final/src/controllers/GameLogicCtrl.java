@@ -180,7 +180,6 @@ public class GameLogicCtrl extends BaseController {
 		throw new Exception("No players were found!");
 	}
 	/**
-	 * Added by Frederik on 06-01-2018 23:49:04
 	 * 
 	 * Rolls dice, evaluate jail status and move player
 	 * 
