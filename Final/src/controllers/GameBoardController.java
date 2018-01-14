@@ -22,7 +22,7 @@ public class GameBoardController {
 	public static final int FIELD_COUNT = 40;
 	private Field[] fieldArray = null;
 	/**
-	 * a contructor that uses the fieldLoader to create an array
+	 * a constructor that uses the fieldLoader to create an array
 	 * @throws IOException
 	 * 
 	 */
@@ -77,7 +77,7 @@ public class GameBoardController {
 			if (field.getFieldType() == FieldType.SHIPPING) {
 				tmp[index] = (ShippingField) field;
 				index++;
-			}
+			} 	
 		}
 
 		return tmp;
@@ -333,7 +333,7 @@ public class GameBoardController {
 	 * 
 	 * Counts total lots in color group: eg. all lots with the (LotColor)color blue.
 	 * 
-	 * @param blue
+	 * @param lotColor
 	 * @return int
 	 */
 	public int countLotsInColorGroup(LotColor lotColor) {

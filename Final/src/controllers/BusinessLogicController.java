@@ -37,12 +37,10 @@ public class BusinessLogicController extends BaseController {
 	 * @param playerNameToFind
 	 * @return
 	 * @throws Exception
-=======
 	 * Sets the owner  of the field.
 	 * 
 	 * @param field
 	 * @param owner
->>>>>>> branch '2.-iteration' of https://github.com/lupuscarnis/Team-UP-Final.git
 	 */
 	public void setOwner(OwnableField field, Player owner) {
 
@@ -64,8 +62,7 @@ public class BusinessLogicController extends BaseController {
 	}
 
 	/**
-	 * Handles player wants to buy lot. DOES NOT CHECK FOR SUFFICIENT FUNDS!! MUST
-	 * BE DONE BEFORE CALL TO METHOD!
+	 * Handles player wants to buy lot. The player will get field even if it can't afford it.
 	 * 
 	 * @param player
 	 * @throws Exception
@@ -85,7 +82,7 @@ public class BusinessLogicController extends BaseController {
 	}
 
 	/**
-	 * Handles the case where the user has landed of owned field and must pay rent.
+	 * Handles the case where the user has landed on owned field and must pay rent.
 	 * 
 	 * @param currentPlayer
 	 * @throws Exception
@@ -117,7 +114,7 @@ public class BusinessLogicController extends BaseController {
 /**
  * Calculates the players Current NetWorth	
  * @param currentPlayer
- * @return
+ * @return int
  * @throws IOException
  */
 	public int playerNetWorth(Player currentPlayer) throws IOException {
@@ -564,7 +561,7 @@ public class BusinessLogicController extends BaseController {
 	}
 
 	/**
-	 * Re
+	 * semi removes the player from the game. Removes him as owner.
 	 * @param deadGuy
 	 * @throws Exception
 	 */
