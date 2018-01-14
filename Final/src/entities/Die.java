@@ -11,7 +11,7 @@ public class Die {
 	
 	
 	/**
-	 * @author Nicolai Barnett
+	 * Creates A Die with minValue and with maxValue
 	 * @param maxValue the max number the die can roll default is 6
 	 * @param minValue the minimum number the die can roll default is 1
 	 */
@@ -25,7 +25,10 @@ public class Die {
 		
 	}
 	
-	
+	/**
+	 * Creates a random value within the Max and Minimum Values
+	 * @return
+	 */
 	public int roll()
 	{
 		
