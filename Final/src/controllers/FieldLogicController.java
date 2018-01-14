@@ -102,8 +102,13 @@ public class FieldLogicController extends BaseController {
 			}
 			// Player owns this lot, has balance and lot has < 4 houses = Player can build a
 			// house
-			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT
-					&& blc.userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4) {
+			
+			else if (blc.playerCanBuildHouse(currentPlayer, lf)) {
+			
+				// Moved the logic to BLC (playerCanBuildHouse)
+				
+//			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT
+//					&& blc.userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4) {
 
 				// Player wants to buy a house
 				choice = Messager.showWantToBuildHouseMessage(lf.getTitle(), currentPlayer.getName());
@@ -116,9 +121,14 @@ public class FieldLogicController extends BaseController {
 			}
 			// Player owns this lot, has balance and has 4 houses on it and no hotel already
 			// = Player can build a hotel
-			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT
-					&& blc.userCanAffordHotel(currentPlayer.getBalance(), lf) && lf.getHouseCount() == 4
-					&& lf.getHotelCount() != 1) {
+			
+			else if (blc.playerCanBuildHotel(currentPlayer, lf)) {
+			
+				// Moved the logic to BLC (playerCanBuildHotel)
+				
+//			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT
+//					&& blc.userCanAffordHotel(currentPlayer.getBalance(), lf) && lf.getHouseCount() == 4
+//					&& lf.getHotelCount() != 1) {
 
 				// Player wants to buy a house
 				choice = Messager.showWantToBuildHotelMessage(lf.getTitle(), currentPlayer.getName());
