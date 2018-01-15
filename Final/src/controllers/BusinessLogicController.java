@@ -312,7 +312,7 @@ public class BusinessLogicController extends BaseController {
 	public boolean playerCanBuildHotel(Player currentPlayer, LotField lf) {
 
 		if (lf.getOwner() == currentPlayer && userCanAffordHotel(currentPlayer.getBalance(), lf)
-				&& lf.getHouseCount() == 4 && lf.getHotelCount() != 1)
+				&& lf.getHouseCount() == 4 && lf.getHotelCount() != 1 && !lf.isPawned())
 			return true;
 
 		return false;
