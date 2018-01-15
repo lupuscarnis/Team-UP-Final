@@ -210,6 +210,8 @@ public class FieldLogicController extends BaseController {
 			ccc.handleDraw(currentPlayer, allPlayers);
 			break;
 		case EXTRATAX:
+			// pay tax
+			blc.payExtraTax(currentPlayer);
 			break;
 		case START:
 		case FREEPARKING:

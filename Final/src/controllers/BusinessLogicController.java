@@ -225,7 +225,19 @@ public class BusinessLogicController extends BaseController {
 
 		Messenger.showYouPaidIncomeTax(currentPlayer, sumToCollect);
 	}
+	/**
+	 * 
+	 * @param currentPlayer
+	 * @throws Exception
+	 */
+	public void payExtraTax(Player currentPlayer) throws Exception {
 
+		int sumToCollect = 2000;
+		currentPlayer.withdraw(sumToCollect);
+
+		Messenger.showYouPaidExtraTax(currentPlayer, sumToCollect);
+	}
+	
 	/**
 	 * 
 	 * Check if user can afford lot
