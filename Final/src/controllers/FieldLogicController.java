@@ -56,14 +56,14 @@ public class FieldLogicController extends BaseController {
 	 * @throws Exception
 	 */
 	public void handleFieldAction(Player currentPlayer, Player[] allPlayers) throws Exception {
-
+		{
 		Field currentField = currentPlayer.getCurrentField();
 		UserOption choice = null;
 
 		switch (currentField.getFieldType()) {
 
 		case LOT:
-			
+			{
 			LotField lf = (LotField) currentField;
 
 			// no owner! Player can buy
@@ -109,10 +109,7 @@ public class FieldLogicController extends BaseController {
 			
 			else if (blc.playerCanBuildHouse(currentPlayer, lf)) {
 			
-				// Moved the logic to BLC (playerCanBuildHouse)
-				
-//			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT
-//					&& blc.userCanAffordHouse(currentPlayer.getBalance(), lf) && lf.getHouseCount() < 4) {
+			
 
 				// Player wants to buy a house
 				choice = Messenger.showWantToBuildHouseMessage(lf.getTitle(), currentPlayer.getName());
@@ -122,18 +119,13 @@ public class FieldLogicController extends BaseController {
 					blc.buildHouse(currentPlayer);
 				}
 
-			}
 			
-			// Player owns this lot, has balance and has 4 houses on it and no hotel already
-			// = Player can build a hotel
+			
+			
 			
 			else if (blc.playerCanBuildHotel(currentPlayer, lf)) {
 			
-				// Moved the logic to BLC (playerCanBuildHotel)
 				
-//			else if (lf.getOwner() == currentPlayer && currentField.getFieldType() == FieldType.LOT
-//					&& blc.userCanAffordHotel(currentPlayer.getBalance(), lf) && lf.getHouseCount() == 4
-//					&& lf.getHotelCount() != 1) {
 
 				// Player wants to buy a house
 				choice = Messenger.showWantToBuildHotelMessage(lf.getTitle(), currentPlayer.getName());
@@ -154,7 +146,8 @@ public class FieldLogicController extends BaseController {
 				gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
 			}
 			break;
-
+			}
+			}
 		case SHIPPING:
 		case BREWERY:
 			OwnableField ofSB = (OwnableField) currentField;
@@ -169,10 +162,13 @@ public class FieldLogicController extends BaseController {
 					// user opted to buy field
 					if (choice == UserOption.BuyField) {
 						blc.buyLot(currentPlayer);
+						
+						// update gui
+						Messenger.showLotBoughtMessage((OwnableField) currentPlayer.getCurrentField());
 					}
 // if the player can't afford a lot, the lot goes on auction
 				}
-				if (blc.userCanAffordLot(currentPlayer.getBalance(), ofSB) == false) {
+				if (blc.userCanAffordLot(currentPlayer.getBalance(), ofSB) == false | ofSB.getOwner()==null) {
 					Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
 
 					if (highestBidder.getName() == "NoBid") {
@@ -207,6 +203,8 @@ public class FieldLogicController extends BaseController {
 			ccc.handleDraw(currentPlayer, allPlayers);
 			break;
 		case EXTRATAX:
+			// pay tax
+			blc.payExtraTax(currentPlayer);
 			break;
 		case START:
 		case FREEPARKING:
@@ -238,7 +236,7 @@ public class FieldLogicController extends BaseController {
 
 		default:
 			throw new Exception("Case not found!");
-		}
+			}}
 	}
 
 	/**

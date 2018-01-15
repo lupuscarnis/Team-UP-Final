@@ -93,6 +93,14 @@ public class Messenger {
 
 		GUIController.getInstance().updateBalance(payer);
 	}
+	
+	public static void showYouPaidExtraTax(Player payer, int sumToCollect) throws Exception {
+
+		GUIController.getInstance().showMessage(String.format("Du har nu betalt %s i Ekstra Skat.", sumToCollect));
+
+		GUIController.getInstance().updateBalance(payer);
+	}
+
 
 	public static void showMustGoToJail(Player currentPlayer) throws Exception {
 

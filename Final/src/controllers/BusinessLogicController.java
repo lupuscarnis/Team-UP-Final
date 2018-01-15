@@ -225,7 +225,19 @@ public class BusinessLogicController extends BaseController {
 
 		Messenger.showYouPaidIncomeTax(currentPlayer, sumToCollect);
 	}
+	/**
+	 * 
+	 * @param currentPlayer
+	 * @throws Exception
+	 */
+	public void payExtraTax(Player currentPlayer) throws Exception {
 
+		int sumToCollect = 2000;
+		currentPlayer.withdraw(sumToCollect);
+
+		Messenger.showYouPaidExtraTax(currentPlayer, sumToCollect);
+	}
+	
 	/**
 	 * 
 	 * Check if user can afford lot
@@ -372,36 +384,29 @@ public class BusinessLogicController extends BaseController {
 	 * @throws Exception
 	 */
 	public void sellHouse(String result, Player owner) throws Exception {
-		OwnableField[] fieldsOwned = gbc.getFieldsByOwner(owner);
+		
+		LotField[] fieldsWithHouse = getFieldsWithHouses(owner);
+		
+			for(LotField field : fieldsWithHouse) {
+				
+				if(field.getTitle()==result) {
+					
 
-		for (OwnableField fields : fieldsOwned) {
-
-			if (fields instanceof LotField) {
-				LotField lf = (LotField) fields;
-
-				// Determine desposit amount for the seller
-				int depositAmount = (lf.getHousePrice() * lf.getHouseCount()) / 2;
-
-				lf.setHouseCount(lf.getHouseCount() - 1);
-
-				owner.deposit(depositAmount);
-				gui.updateBalance(owner);
-
-				// update GUI FAILSAFE
-				if (lf.getHouseCount() < 0) {
-
-					gui.setHouse(0, fields.getFieldNumber());
-
-				} else {
-
-					gui.setHouse(lf.getHouseCount(), fields.getFieldNumber());
-
+					field.setHouseCount(field.getHouseCount() - 1);
+		
+					owner.deposit(field.getHousePrice() / 2);
+						
+					//gui update
+					gui.updateBalance(owner);
+					gui.setHouse(field.getHouseCount(), field.getFieldNumber());
+					
+					// confirm in gui
+					Messenger.showHouseSold(field);
 				}
-				// confirm in gui
-				Messenger.showHouseSold(lf);
+			
 			}
-		}
 	}
+	
 
 	/**
 	 * @param result
@@ -448,52 +453,26 @@ public class BusinessLogicController extends BaseController {
 	 *         fields are pawned
 	 * @throws Exception
 	 */
-	public OwnableField[] getFieldsWithHouses(Player currentPlayer) throws Exception {
-		// Get the fields owned by our player
-		OwnableField[] ownedFields = gbc.getFieldsByOwner(currentPlayer);
-		// Creates temporary storage
-		OwnableField[] tmp = new OwnableField[40];
-		// Creates Variables
+	public LotField[] getFieldsWithHouses(Player currentPlayer) throws Exception {
+		LotField[] fieldsOwned = gbc.getLotFieldsByOwner(currentPlayer);
+
 		int index = 0;
-		int count = 0;
-		int index2 = 0;
-		// runs all owned fields trough checking if pawned adding them to tmp
-		for (OwnableField field : ownedFields) {
-
-			// if lot field then make sure no buildings are on it
-			if (field instanceof LotField) {
-				LotField lf = (LotField) field;
-
-				int buildingCount = lf.getHouseCount();
-
-				// count of Pawnedfields
-				// uses Count to create a semi Dynamic array
-
-				if (buildingCount >= 1 && !lf.isPawned()) {
-
-					tmp[index] = ownedFields[index];
-					index++;
-					count++;
-				} else {
-					index++;
-				}
+		for (LotField field : fieldsOwned) {
+			if(field.getHouseCount()>0) {
+				index++;
 			}
-
 		}
-		// Creates a New OwnedFields to the right value of pawned fields while clearing
-		// all null posts
-		OwnableField[] cleanVersion = new OwnableField[count];
-		// clear all null posts
-
-		for (OwnableField housesFields : tmp) {
-
-			if (housesFields != null) {
-				cleanVersion[index2] = housesFields;
-				index2++;
+		
+		LotField[] fieldsWithHouse = new LotField[index];
+		int fieldCount = 0;
+		for(LotField fieldWithHouse : fieldsOwned) {
+			if(fieldWithHouse.getHouseCount()>0) {
+			fieldsWithHouse[fieldCount] = fieldWithHouse;
+			fieldCount++;
 			}
-
 		}
-		return cleanVersion;
+		
+		return fieldsWithHouse;
 	}
 
 	/**
