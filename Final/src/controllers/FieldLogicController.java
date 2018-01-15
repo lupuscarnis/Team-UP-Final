@@ -169,10 +169,13 @@ public class FieldLogicController extends BaseController {
 					// user opted to buy field
 					if (choice == UserOption.BuyField) {
 						blc.buyLot(currentPlayer);
+						
+						// update gui
+						Messenger.showLotBoughtMessage((OwnableField) currentPlayer.getCurrentField());
 					}
 // if the player can't afford a lot, the lot goes on auction
 				}
-				if (blc.userCanAffordLot(currentPlayer.getBalance(), ofSB) == false) {
+				if (blc.userCanAffordLot(currentPlayer.getBalance(), ofSB) == false | ofSB.getOwner()==null) {
 					Player highestBidder = blc.auction(currentPlayer.getCurrentField(), allPlayers);
 
 					if (highestBidder.getName() == "NoBid") {
