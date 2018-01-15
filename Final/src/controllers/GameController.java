@@ -134,23 +134,23 @@ public class GameController extends BaseController {
 
 				case SellHouse:
 
-					OwnableField[] houseList = blc.getFieldsWithHouses(currentPlayer);
+					LotField[] fieldsWithHouseList = blc.getFieldsWithHouses(currentPlayer);
 
-					String[] houseNameList = new String[houseList.length + 1];
+					String[] fieldNameList = new String[fieldsWithHouseList.length + 1];
 
-					houseNameList[0] = "Annuller!";
+					fieldNameList[0] = "Annuller!";
 					int index2 = 1;
 
-					for (OwnableField field : houseList) {
+					for (LotField field : fieldsWithHouseList) {
 
-						houseNameList[index2] = field.getTitle();
+						fieldNameList[index2] = field.getTitle();
 						index2++;
 
 					}
 
-					String answerSell = Messenger.getSelectionResult(houseNameList, currentPlayer.getName());
+					String answerSell = Messenger.getSelectionResult(fieldNameList, currentPlayer.getName());
 
-					// unpawn selected lot
+					// sell house on selected lot
 					if (!answerSell.equals("Annuller!"))
 						blc.sellHouse(answerSell, currentPlayer);
 
