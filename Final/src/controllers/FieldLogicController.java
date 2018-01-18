@@ -145,9 +145,10 @@ public class FieldLogicController extends BaseController {
 			} else {
 				gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
 			}
+			
+			}
+			}
 			break;
-			}
-			}
 		case SHIPPING:
 		case BREWERY:
 			OwnableField ofSB = (OwnableField) currentField;
