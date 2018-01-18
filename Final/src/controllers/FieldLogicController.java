@@ -63,7 +63,7 @@ public class FieldLogicController extends BaseController {
 		switch (currentField.getFieldType()) {
 
 		case LOT:
-			{
+			
 			LotField lf = (LotField) currentField;
 
 			// no owner! Player can buy
@@ -120,7 +120,7 @@ public class FieldLogicController extends BaseController {
 				}
 
 			
-			
+			}
 			
 			
 			else if (blc.playerCanBuildHotel(currentPlayer, lf)) {
@@ -140,14 +140,16 @@ public class FieldLogicController extends BaseController {
 			// pay rent
 			else if (!lf.isPawned() | !lf.getOwner().isInJail()) {
 				blc.payRent(currentPlayer);
-			} else if (lf.getOwner().isInJail()) {
-				gui.showMessage("Du skal ikke betale leje da feltets ejer er fængslet!");
-			} else {
-				gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
-			}
+			} 
 			
-			}
-			}
+			else if (lf.getOwner().isInJail()) {
+				gui.showMessage("Du skal ikke betale leje da feltets ejer er fængslet!");
+			} 
+			
+				else {
+				gui.showMessage("Du skal ikke betale leje da feltet er pantsat!");
+				}
+			
 			break;
 		case SHIPPING:
 		case BREWERY:
